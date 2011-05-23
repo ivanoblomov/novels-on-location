@@ -1,3 +1,5 @@
+// Adapted from http://gmaps-samples-v3.googlecode.com/svn/trunk/latlng-to-coord-control/latlng-to-coord-control.html
+
 /**
  * LatLngControl class displays the LatLng and pixel coordinates
  * underneath the mouse within a container anchored to it.
@@ -69,25 +71,23 @@ LatLngControl.prototype.updatePosition = function(latLng) {
   ].join('');
 };
 
-/*
-  Adapted from:
-
-  http://gmaps-samples-v3.googlecode.com/svn/trunk/latlng-to-coord-control/latlng-to-coord-control.html
-  http://code.google.com/apis/maps/documentation/javascript/examples/marker-animations.html
-  http://gmaps-samples-v3.googlecode.com/svn/trunk/draggable-markers/draggable-markers.html
-*/
+// Adapted from http://code.google.com/apis/maps/documentation/javascript/examples/icon-complex.html
 
 var map;
 var openWindow;
 
 function initializeMap() {
   var myOptions = {
-    center: new google.maps.LatLng(37.09024, -95.712891),
+    center: locations[0] && locations[0]['latLng'] || new google.maps.LatLng(0, 0),
     mapTypeId: google.maps.MapTypeId.ROADMAP,
-    zoom: 4
+    zoom: 3
   };
 
   map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+
+  for (var i = 0; i < locations.length; i++) {
+    addBookMarker(locations[i]['latLng'], locations[i]['content']);
+  }
 
   // Create new control to display latlng and coordinates under mouse.
   var latLngControl = new LatLngControl(map);
@@ -117,12 +117,12 @@ function promptForTitle(mEvent) {
   }
 }
 
-function addBookMarker(mEvent, content) {
+function addBookMarker(latLng, content) {
   var marker = new google.maps.Marker({
-    map:map,
-    draggable:true,
+    map: map,
+    draggable: true,
     animation: google.maps.Animation.DROP,
-    position: mEvent.latLng
+    position: latLng
   });
 
   google.maps.event.addListener(marker, 'click', function() {
