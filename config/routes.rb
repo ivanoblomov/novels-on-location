@@ -1,5 +1,5 @@
 NovelsOnLocation::Application.routes.draw do
-  resources :novels
+  resources :locations
 
-  root :to => 'novels#index', :via => :get
+  root :to => 'locations#index', :via => :get
 end
