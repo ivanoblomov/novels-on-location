@@ -1,0 +1,16 @@
+defaults: &defaults
+  allow_dynamic_fields: false
+
+development:
+  <<: *defaults
+  database: novels-on-location_development
+  host: localhost
+
+test:
+  <<: *defaults
+  database: novels-on-location_test
+  host: localhost
+
+production:
+  <<: *defaults
+  uri: <%= ENV['MONGOHQ_URL'] %>

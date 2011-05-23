@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NovelsOnLocation</title>
+  <%= stylesheet_link_tag :all %>
+  <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+  <%= javascript_include_tag :defaults %>
+  <%= csrf_meta_tag %>
+</head>
+<body style="margin: 0 0;" onLoad="initializeMap();">
+
+<%= yield %>
+
+</body>
+</html>
