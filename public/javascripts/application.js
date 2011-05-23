@@ -140,6 +140,6 @@ function findBook(mEvent, title) {
   new Ajax.Request('/locations/' + title + '?lat_lng=' + mEvent.latLng.toUrlValue(), {
     method: 'get',
     onSuccess: function(response) {
-      addBookMarker(mEvent, response.responseText);
+      addBookMarker(mEvent.latLng, response.responseText);
     }
 });}
