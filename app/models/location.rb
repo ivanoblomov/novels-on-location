@@ -1,9 +1,11 @@
-class Novel
+class Location
   include Mongoid::Document
 
   field :asin
   field :author
+  field :lat_lng, :type => Array
   field :title
+  field :url
 
   def self.look_up(title)
     request = Sucker.new(
@@ -20,6 +22,10 @@ class Novel
 
     response = request.get
 
-    Novel.new :asin => response.find('ASIN').first, :author => response.find('Author').first, :title => response.find('Title').first
+    Location.new :asin => response.find('ASIN').first, :author => response.find('Author').first, :title => response.find('Title').first, :url => response.find('DetailPageURL').first
+  end
+
+  def latLng=(value)
+    self.lat_lng = value.split ','
   end
 end
