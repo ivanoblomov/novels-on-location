@@ -14,4 +14,11 @@ class LocationsController < ApplicationController
     @location.save
     render :layout => false
   end
+
+  def update
+    @location = Location.find params[:id]
+    @location.latLng = params[:lat_lng]
+    @location.save
+    redirect_to locations_path
+  end
 end

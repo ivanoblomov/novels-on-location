@@ -86,7 +86,7 @@ function initializeMap() {
   map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
 
   for (var i = 0; i < locations.length; i++) {
-    addBookMarker(locations[i]['latLng'], locations[i]['content']);
+    addBookMarker(locations[i]['id'], locations[i]['latLng'], locations[i]['content']);
   }
 
   // Create new control to display latlng and coordinates under mouse.
@@ -117,7 +117,7 @@ function promptForTitle(mEvent) {
   }
 }
 
-function addBookMarker(latLng, content) {
+function addBookMarker(id, latLng, content) {
   var marker = new google.maps.Marker({
     map: map,
     draggable: true,
@@ -138,6 +138,9 @@ function addBookMarker(latLng, content) {
       openBalloon.parentNode.style.overflow = 'visible';
     }
   });
+
+  google.maps.event.addListener(marker, 'dragend', function() {
+    updateCoordinates(id, marker.getPosition());
   });
 }
 
@@ -145,6 +148,13 @@ function findBook(mEvent, title) {
   new Ajax.Request('/locations/' + title + '?lat_lng=' + mEvent.latLng.toUrlValue(), {
     method: 'get',
     onSuccess: function(response) {
-      addBookMarker(mEvent.latLng, response.responseText);
+      addBookMarker(null, mEvent.latLng, response.responseText);
     }
-});}
+  });
+}
+
+function updateCoordinates(id, latLng) {
+  new Ajax.Request('/locations/' + id + '?lat_lng=' + latLng.toUrlValue(), {
+    method: 'put'
+  });
+}
