@@ -80,8 +80,8 @@ var openWindow;
 function initializeMap() {
   var myOptions = {
     center: locations[0] && locations[0]['latLng'] || new google.maps.LatLng(0, 0),
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    zoom: 3
+    mapTypeId: google.maps.MapTypeId.SATELLITE,
+    zoom: 7
   };
 
   geocoder = new google.maps.Geocoder();
