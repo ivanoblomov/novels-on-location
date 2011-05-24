@@ -132,7 +132,12 @@ function addBookMarker(latLng, content) {
 
     openWindow = new google.maps.InfoWindow( {content: content} );
     openWindow.open(map, marker);
-    $('open-balloon').parentNode.style.overflow = 'visible';
+    openBalloon = $('open-balloon');
+
+    if (openBalloon) {
+      openBalloon.parentNode.style.overflow = 'visible';
+    }
+  });
   });
 }
 
