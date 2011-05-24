@@ -6,7 +6,7 @@
       <%-
         Location.all.each do |@location|
       -%>
-        {'latLng': new google.maps.LatLng(<%= @location.lat_lng * ', ' -%>), 'content': '<%= render("location").strip -%>'},
+        {'id': '<%= @location.id -%>', 'latLng': new google.maps.LatLng(<%= @location.lat_lng * ', ' -%>), 'content': '<%= render("location").strip -%>'},
       <%- end -%>
     ];
 //]]>
