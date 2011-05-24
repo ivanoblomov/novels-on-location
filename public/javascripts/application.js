@@ -73,6 +73,7 @@ LatLngControl.prototype.updatePosition = function(latLng) {
 
 // Adapted from http://code.google.com/apis/maps/documentation/javascript/examples/icon-complex.html
 
+var geocoder;
 var map;
 var openWindow;
 
@@ -83,7 +84,8 @@ function initializeMap() {
     zoom: 3
   };
 
-  map = new google.maps.Map(document.getElementById('map_canvas'), myOptions);
+  geocoder = new google.maps.Geocoder();
+  map = new google.maps.Map($('map_canvas'), myOptions);
 
   for (var i = 0; i < locations.length; i++) {
     addBookMarker(locations[i]['id'], locations[i]['latLng'], locations[i]['content']);
@@ -104,6 +106,11 @@ function initializeMap() {
   });
   google.maps.event.addListener(map, 'click', function(mEvent) {
     promptForTitle(mEvent);
+  });
+  Event.observe($('search-input'), 'keydown', function(mEvent) {
+    if (mEvent.keyCode == Event.KEY_RETURN) {
+      codeAddress();
+    }
   });
 }
 
@@ -139,6 +146,17 @@ function findBook(mEvent, title) {
     method: 'get',
     onSuccess: function(response) {
       addBookMarker(null, mEvent.latLng, response.responseText);
+    }
+  });
+}
+
+function codeAddress() {
+  geocoder.geocode( { 'address': $('search-input').value}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      map.setCenter(results[0].geometry.location);
+      map.setZoom(8);
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
     }
   });
 }

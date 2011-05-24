@@ -1,5 +1,9 @@
 <div id="map_canvas" style="margin: 0 0; width: 100%; height: 750px; float: left;"></div><br />
 
+<div id="search_box" style="position: absolute; top: 10px; left: 75px;">
+  <%= text_field_tag 'criteria', params[:criteria], :id => 'search-input', :size => 40 -%>
+</div>
+
 <script type="text/javascript">
 //<![CDATA[
     var locations = [
