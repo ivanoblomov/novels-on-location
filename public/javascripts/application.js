@@ -126,17 +126,7 @@ function addBookMarker(id, latLng, content) {
   });
 
   google.maps.event.addListener(marker, 'click', function() {
-    if (openWindow != undefined) {
-      openWindow.close();
-    }
-
-    openWindow = new google.maps.InfoWindow( {content: content} );
-    openWindow.open(map, marker);
-    openBalloon = $('open-balloon');
-
-    if (openBalloon) {
-      openBalloon.parentNode.style.overflow = 'visible';
-    }
+    openBalloon(marker, content);
   });
 
   google.maps.event.addListener(marker, 'dragend', function() {
@@ -151,6 +141,20 @@ function findBook(mEvent, title) {
       addBookMarker(null, mEvent.latLng, response.responseText);
     }
   });
+}
+
+function openBalloon(marker, content) {
+  if (openWindow != undefined) {
+    openWindow.close();
+  }
+
+  openWindow = new google.maps.InfoWindow( {content: content} );
+  openWindow.open(map, marker);
+  openBalloonDiv = $('open-balloon');
+
+  if (openBalloonDiv) {
+    openBalloonDiv.parentNode.style.overflow = 'visible';
+  }
 }
 
 function updateCoordinates(id, latLng) {
