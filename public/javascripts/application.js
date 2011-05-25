@@ -155,16 +155,17 @@ function codeAddress() {
   geocoder.geocode( { 'address': $('search-input').value}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       myLatLng = results[0].geometry.location
-      map.setCenter(myLatLng);
-      zoom(myLatLng);
+      zoomIn(myLatLng);
     } else {
       alert("Couldn't geocode! The error was " + status);
     }
   });
 }
 
-function zoom(latLng) {
+function zoomIn(latLng) {
   zoomer.getMaxZoomAtLatLng(latLng, function(response) {
+    map.setCenter(latLng);
+
     if (response.status != google.maps.MaxZoomStatus.OK) {
       alert("Couldn't zoom!");
       map.setZoom(8);
