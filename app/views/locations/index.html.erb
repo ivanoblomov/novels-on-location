@@ -1,16 +1,20 @@
 <div id="map-canvas"></div><br />
 
-<div id="search-box">
-  <%= text_field_tag 'criteria', params[:criteria], :id => 'search-input', :size => 40 -%>
+<div id="places-search-box">
+  <%= text_field_tag 'place_criteria', params[:place_criteria] || 'Find a place', :id => 'place-input' -%>
+</div>
+
+<div id="books-search-box">
+  <%= text_field_tag 'book_criteria', params[:book_criteria] || 'Find a mapped book', :id => 'book-input' -%>
 </div>
 
 <script type="text/javascript">
 //<![CDATA[
     var locations = [
       <%-
-        Location.all.each do |@location|
+        @locations.each do |@location|
       -%>
-        {'id': '<%= @location.id -%>', 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip -%>'},
+        {'id': '<%= @location.id -%>', 'title': '<%= @location.title -%>', 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip -%>'},
       <%- end -%>
     ];
 //]]>

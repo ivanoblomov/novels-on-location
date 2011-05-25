@@ -7,6 +7,8 @@ class Location
   field :title
   field :url
 
+  scope :search, lambda { |title| {:where => {:title => /#{title}/i}} }
+
   def self.look_up(title)
     request = Sucker.new(
       :locale => :us,

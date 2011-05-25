@@ -109,9 +109,20 @@ function initializeMap() {
   google.maps.event.addListener(map, 'click', function(mEvent) {
     promptForTitle(mEvent);
   });
-  Event.observe($('search-input'), 'keydown', function(mEvent) {
+  Event.observe($('book-input'), 'focus', function(mEvent) {
+    $('book-input').value = '';
+  });
+  Event.observe($('book-input'), 'keydown', function(mEvent) {
     if (mEvent.keyCode == Event.KEY_RETURN) {
-      codeAddress();
+      findMappedBooks($('book-input').value);
+    }
+  });
+  Event.observe($('place-input'), 'focus', function(mEvent) {
+    $('place-input').value = '';
+  });
+  Event.observe($('place-input'), 'keydown', function(mEvent) {
+    if (mEvent.keyCode == Event.KEY_RETURN) {
+      codeAddress($('place-input').value);
     }
   });
 }
@@ -145,14 +156,30 @@ function addBookMarker(id, latLng, content) {
   });
 }
 
+function hideBookMarkers(keyword) {
+  for (var i = 0; i < locations.length; i++) {
+    if (keyword != '' && locations[i]['title'].search(eval('/' + keyword + '/i')) == -1) {
+      markers[locations[i]['id']].setMap(null);
+    } else {
+      markers[locations[i]['id']].setMap(map);
+    }
+  }
+}
+
 function findBook(mEvent, title) {
   new Ajax.Request('/locations/' + title + '?lat_lng=' + mEvent.latLng.toUrlValue(), {
     method: 'get'
   });
 }
 
-function codeAddress() {
-  geocoder.geocode( { 'address': $('search-input').value}, function(results, status) {
+function findMappedBooks(title) {
+  new Ajax.Request('/locations?title=' + title, {
+    method: 'get'
+  });
+}
+
+function codeAddress(input) {
+  geocoder.geocode( { 'address': input}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       myLatLng = results[0].geometry.location
       zoomIn(myLatLng);

@@ -1,10 +1,15 @@
 class LocationsController < ApplicationController
+  # CRUD ===========================================================================================
   def destroy
     @location = Location.find params[:id]
     @location.destroy
   end
 
   def index
+    respond_to do |format|
+      format.html { @locations = Location.all }
+      format.js {}
+    end
   end
 
   def show

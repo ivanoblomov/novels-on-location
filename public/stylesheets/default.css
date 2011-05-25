@@ -8,6 +8,10 @@ body {
   padding: 0;
 }
 
+input {
+  width: 225px;
+}
+
 #map-canvas {
   height: auto;
   position: absolute;
@@ -17,10 +21,16 @@ body {
   top:0;
 }
 
-#search-box {
+#books-search-box {
   position: absolute;
-  top: 3px;
-  right: 105px;
+  top: 4px;
+  right: 338px;
+}
+
+#places-search-box {
+  position: absolute;
+  top: 4px;
+  right: 106px;
 }
 
 @media print {
