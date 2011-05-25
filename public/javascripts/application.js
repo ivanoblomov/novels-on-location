@@ -75,7 +75,7 @@ LatLngControl.prototype.updatePosition = function(latLng) {
 
 var geocoder;
 var map;
-var myMarkers = {};
+var markers = {};
 var openWindow;
 
 function initializeMap() {
@@ -134,7 +134,7 @@ function addBookMarker(id, latLng, content) {
     position: latLng
   });
 
-  myMarkers[id] = marker;
+  markers[id] = marker;
 
   google.maps.event.addListener(marker, 'click', function() {
     openBalloon(marker, content);
@@ -156,17 +156,21 @@ function codeAddress() {
     if (status == google.maps.GeocoderStatus.OK) {
       myLatLng = results[0].geometry.location
       map.setCenter(myLatLng);
-
-      zoomer.getMaxZoomAtLatLng(myLatLng, function(response) {
-        if (response.status != google.maps.MaxZoomStatus.OK) {
-          map.setZoom(8);
-          return;
-        } else {
-          map.setZoom(response.zoom);
-        }
-      });
+      zoom(myLatLng);
     } else {
       alert("Couldn't geocode! The error was " + status);
+    }
+  });
+}
+
+function zoom(latLng) {
+  zoomer.getMaxZoomAtLatLng(latLng, function(response) {
+    if (response.status != google.maps.MaxZoomStatus.OK) {
+      alert('x');
+      map.setZoom(8);
+      return;
+    } else {
+      map.setZoom(response.zoom);
     }
   });
 }
