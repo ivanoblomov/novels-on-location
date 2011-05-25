@@ -1,1 +1,1 @@
-addBookMarker('<%= @location.id -%>', new google.maps.LatLng(<%= @location.lat_lng * ', ' -%>), '<%= render('location').strip -%>');
+addBookMarker('<%= @location.id -%>', <%= to_google_lat_lng(@location.lat_lng) -%>), '<%= render('location').strip -%>');
