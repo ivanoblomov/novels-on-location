@@ -10,7 +10,7 @@
       <%-
         Location.all.each do |@location|
       -%>
-        {'id': '<%= @location.id -%>', 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>), 'content': '<%= render("location").strip -%>'},
+        {'id': '<%= @location.id -%>', 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip -%>'},
       <%- end -%>
     ];
 //]]>
