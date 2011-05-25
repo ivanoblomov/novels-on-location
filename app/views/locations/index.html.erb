@@ -1,11 +1,11 @@
 <div id="map-canvas"></div><br />
 
 <div id="places-search-box">
-  <%= text_field_tag 'place_criteria', params[:place_criteria] || 'Find a place', :id => 'place-input' -%>
+  <%= text_field_tag 'place_criteria', 'Find a place', :class => 'search', :id => 'place-input' -%>
 </div>
 
 <div id="books-search-box">
-  <%= text_field_tag 'book_criteria', params[:book_criteria] || 'Find a mapped book', :id => 'book-input' -%>
+  <%= text_field_tag 'book_criteria', 'Find a mapped book', :class => 'search', :id => 'book-input' -%>
 </div>
 
 <script type="text/javascript">
