@@ -85,7 +85,8 @@ function initializeMap() {
   };
 
   geocoder = new google.maps.Geocoder();
-  map = new google.maps.Map($('map_canvas'), myOptions);
+  map = new google.maps.Map($('map-canvas'), myOptions);
+  zoomer = new google.maps.MaxZoomService();
 
   for (var i = 0; i < locations.length; i++) {
     addBookMarker(locations[i]['id'], locations[i]['latLng'], locations[i]['content']);
@@ -153,8 +154,17 @@ function findBook(mEvent, title) {
 function codeAddress() {
   geocoder.geocode( { 'address': $('search-input').value}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      map.setCenter(results[0].geometry.location);
-      map.setZoom(8);
+      myLatLng = results[0].geometry.location
+      map.setCenter(myLatLng);
+
+      zoomer.getMaxZoomAtLatLng(myLatLng, function(response) {
+        if (response.status != google.maps.MaxZoomStatus.OK) {
+          map.setZoom(8);
+          return;
+        } else {
+          map.setZoom(response.zoom);
+        }
+      });
     } else {
       alert('Geocode was not successful for the following reason: ' + status);
     }
