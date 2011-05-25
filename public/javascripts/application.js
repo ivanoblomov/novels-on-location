@@ -166,7 +166,7 @@ function codeAddress() {
 function zoom(latLng) {
   zoomer.getMaxZoomAtLatLng(latLng, function(response) {
     if (response.status != google.maps.MaxZoomStatus.OK) {
-      alert('x');
+      alert("Couldn't zoom!");
       map.setZoom(8);
       return;
     } else {
