@@ -75,6 +75,7 @@ LatLngControl.prototype.updatePosition = function(latLng) {
 
 var geocoder;
 var map;
+var myMarkers = {};
 var openWindow;
 
 function initializeMap() {
@@ -133,6 +134,8 @@ function addBookMarker(id, latLng, content) {
     position: latLng
   });
 
+  myMarkers[id] = marker;
+
   google.maps.event.addListener(marker, 'click', function() {
     openBalloon(marker, content);
   });
@@ -144,10 +147,7 @@ function addBookMarker(id, latLng, content) {
 
 function findBook(mEvent, title) {
   new Ajax.Request('/locations/' + title + '?lat_lng=' + mEvent.latLng.toUrlValue(), {
-    method: 'get',
-    onSuccess: function(response) {
-      addBookMarker(null, mEvent.latLng, response.responseText);
-    }
+    method: 'get'
   });
 }
 
@@ -166,7 +166,7 @@ function codeAddress() {
         }
       });
     } else {
-      alert('Geocode was not successful for the following reason: ' + status);
+      alert("Couldn't geocode! The error was " + status);
     }
   });
 }
