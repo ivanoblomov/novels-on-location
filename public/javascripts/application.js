@@ -80,7 +80,7 @@ var openWindow;
 function initializeMap() {
   var myOptions = {
     center: locations[0] && locations[0]['latLng'] || new google.maps.LatLng(0, 0),
-    mapTypeId: google.maps.MapTypeId.SATELLITE,
+    mapTypeId: google.maps.MapTypeId.HYBRID,
     zoom: 7
   };
 
