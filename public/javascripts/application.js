@@ -131,7 +131,7 @@ function initializeMap() {
 //
 
 function promptForTitle(event) {
-  var bookTitle = prompt('Title', '');
+  var bookTitle = prompt("Enter the book's title", null);
 
   if (bookTitle) {
     findBook(event, bookTitle);
@@ -163,7 +163,7 @@ function addBookMarker(id, latLng, content) {
 
 function hideBookMarkers(keyword) {
   for (var i = 0; i < locations.length; i++) {
-    if (keyword != '' && locations[i]['title'].search(eval('/' + keyword + '/i')) == -1) {
+    if (keyword != '' && locations[i]['terms'].search(eval('/' + keyword + '/i')) == -1) {
       hideMarker(locations[i]['id']);
     } else {
       markers[locations[i]['id']].setMap(map);

@@ -14,7 +14,7 @@
     <%-
       @locations.each do |@location|
     -%>
-      {'id': '<%= @location.id -%>', 'title': '<%= @location.title -%>', 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip -%>'},
+      {'id': '<%= @location.id -%>', 'terms': '<%= @location.author -%> <%= @location.title -%>', 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip -%>'},
     <%- end -%>
   ];
 //]]>
