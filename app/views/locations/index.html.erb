@@ -1,4 +1,4 @@
-<div id="map-canvas"></div><br />
+<div id="map-canvas"></div>
 
 <div id="places-search-box">
   <%= text_field_tag 'place_criteria', 'Find a place', :class => 'search', :id => 'place-input' -%>
@@ -10,12 +10,12 @@
 
 <script type="text/javascript">
 //<![CDATA[
-    var locations = [
-      <%-
-        @locations.each do |@location|
-      -%>
-        {'id': '<%= @location.id -%>', 'title': '<%= @location.title -%>', 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip -%>'},
-      <%- end -%>
-    ];
+  var locations = [
+    <%-
+      @locations.each do |@location|
+    -%>
+      {'id': '<%= @location.id -%>', 'title': '<%= @location.title -%>', 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip -%>'},
+    <%- end -%>
+  ];
 //]]>
 </script>
