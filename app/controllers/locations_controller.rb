@@ -13,7 +13,7 @@ class LocationsController < ApplicationController
   end
 
   def show
-    @location = Location.look_up params[:id]
+    @location = Location.look_up params[:id], request.remote_ip
     @location.latLng = params[:lat_lng] if @location
     @location.save
     render :layout => false
