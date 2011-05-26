@@ -80,6 +80,7 @@ var openWindow;
 
 function initializeMap() {
   var myOptions = {
+    backgroundColor: 'white',
     center: locations[0] && locations[0]['latLng'] || new google.maps.LatLng(0, 0),
     mapTypeId: google.maps.MapTypeId.HYBRID,
     zoom: 2
@@ -152,7 +153,11 @@ function addBookMarker(id, latLng, content) {
   });
 
   google.maps.event.addListener(marker, 'dragend', function() {
-    updateCoordinates(id, marker.getPosition());
+    if (confirm('Move this pin?')) {
+      updateCoordinates(id, marker.getPosition());
+    } else {
+      marker.setPosition(latLng);
+    }
   });
 }
 

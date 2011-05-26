@@ -23,6 +23,6 @@ class LocationsController < ApplicationController
     @location = Location.find params[:id]
     @location.latLng = params[:lat_lng]
     @location.save
-    redirect_to locations_path
+    render :nothing => true
   end
 end
