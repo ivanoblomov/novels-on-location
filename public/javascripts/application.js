@@ -159,11 +159,15 @@ function addBookMarker(id, latLng, content) {
 function hideBookMarkers(keyword) {
   for (var i = 0; i < locations.length; i++) {
     if (keyword != '' && locations[i]['title'].search(eval('/' + keyword + '/i')) == -1) {
-      markers[locations[i]['id']].setMap(null);
+      hideMarker(locations[i]['id']);
     } else {
       markers[locations[i]['id']].setMap(map);
     }
   }
+}
+
+function hideMarker(id) {
+  markers[id].setMap(null);
 }
 
 function findBook(mEvent, title) {
