@@ -98,43 +98,43 @@ function initializeMap() {
   var latLngControl = new LatLngControl(map);
 
   // Register event listeners
-  google.maps.event.addListener(map, 'mouseover', function(mEvent) {
+  google.maps.event.addListener(map, 'mouseover', function(e) {
     latLngControl.set('visible', true);
   });
-  google.maps.event.addListener(map, 'mouseout', function(mEvent) {
+  google.maps.event.addListener(map, 'mouseout', function(e) {
     latLngControl.set('visible', false);
   });
-  google.maps.event.addListener(map, 'mousemove', function(mEvent) {
-    latLngControl.updatePosition(mEvent.latLng);
+  google.maps.event.addListener(map, 'mousemove', function(e) {
+    latLngControl.updatePosition(e.latLng);
   });
-  google.maps.event.addListener(map, 'click', function(mEvent) {
-    promptForTitle(mEvent);
+  google.maps.event.addListener(map, 'click', function(e) {
+    promptForTitle(e);
   });
-  Event.observe($('book-input'), 'focus', function(mEvent) {
-    $('book-input').value = '';
+  Event.observe($('book-input'), 'focus', function(e) {
+    Event.element(e).value = '';
   });
-  Event.observe($('book-input'), 'keydown', function(mEvent) {
-    if (mEvent.keyCode == Event.KEY_RETURN) {
+  Event.observe($('book-input'), 'keydown', function(e) {
+    if (e.keyCode == Event.KEY_RETURN) {
       findMappedBooks($('book-input').value);
     }
   });
-  Event.observe($('place-input'), 'focus', function(mEvent) {
-    $('place-input').value = '';
+  Event.observe($('place-input'), 'focus', function(e) {
+    Event.element(e).value = '';
   });
-  Event.observe($('place-input'), 'keydown', function(mEvent) {
-    if (mEvent.keyCode == Event.KEY_RETURN) {
-      codeAddress($('place-input').value);
+  Event.observe($('place-input'), 'keydown', function(e) {
+    if (e.keyCode == Event.KEY_RETURN) {
+      codeAddress(Event.element(e).value);
     }
   });
 }
 
 //
 
-function promptForTitle(mEvent) {
+function promptForTitle(event) {
   var bookTitle = prompt('Title', '');
 
   if (bookTitle) {
-    findBook(mEvent, bookTitle);
+    findBook(event, bookTitle);
   }
 }
 
@@ -175,8 +175,8 @@ function hideMarker(id) {
   markers[id].setMap(null);
 }
 
-function findBook(mEvent, title) {
-  new Ajax.Request('/locations/' + title + '?lat_lng=' + mEvent.latLng.toUrlValue(), {
+function findBook(event, title) {
+  new Ajax.Request('/locations/' + title + '?lat_lng=' + event.latLng.toUrlValue(), {
     method: 'get'
   });
 }
@@ -219,11 +219,6 @@ function openBalloon(marker, content) {
 
   openWindow = new google.maps.InfoWindow( {content: content} );
   openWindow.open(map, marker);
-  openBalloonDiv = $('open-balloon');
-
-  if (openBalloonDiv) {
-    openBalloonDiv.parentNode.style.overflow = 'visible';
-  }
 }
 
 function updateCoordinates(id, latLng) {
