@@ -1,5 +1,6 @@
 class LocationsController < ApplicationController
   load_and_authorize_resource
+  helper_method :current_user
 
   # CRUD ===========================================================================================
   def destroy
