@@ -27,10 +27,6 @@ class Location
     self[:title] = response.find('Title').first
   end
 
-  def claim(user_id)
-    self.update_attribute :user_id, user_id
-  end
-
   def latLng=(value)
     self.lat_lng = value.split ','
   end

@@ -1,7 +1,8 @@
 class LocationsController < ApplicationController
+  load_and_authorize_resource
+
   # CRUD ===========================================================================================
   def destroy
-    @location = Location.find params[:id]
     @location.destroy if can? :destroy, @location
   end
 
@@ -18,8 +19,10 @@ class LocationsController < ApplicationController
   end
 
   def update
-    Location.find(params[:id]).update_attributes params[:location]
-    render :nothing => true
+    params[:location][:user_id] = current_user.id
+    @location.update_attributes params[:location]
+
+    render :nothing => true unless params[:location][:user_id]
   end
 
   private
