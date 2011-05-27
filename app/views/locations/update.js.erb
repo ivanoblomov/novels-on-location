@@ -1,2 +1,2 @@
 hideMarker('<%= @location.id -%>');
-addBookMarker('<%= @location.id -%>', <%= to_google_lat_lng(@location.lat_lng) -%>, '<%= render('location').strip -%>');
+addPin('<%= @location.id -%>', <%= to_google_lat_lng(@location.lat_lng) -%>, '<%= render('location').strip -%>');

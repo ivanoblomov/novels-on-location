@@ -92,7 +92,7 @@ function initializeMap() {
   zoomer = new google.maps.MaxZoomService();
 
   for (var i = 0; i < locations.length; i++) {
-    addBookMarker(locations[i]['id'], locations[i]['latLng'], locations[i]['content']);
+    addPin(locations[i]['id'], locations[i]['latLng'], locations[i]['content']);
   }
 
   // Create new control to display latlng and coordinates under mouse.
@@ -109,7 +109,7 @@ function initializeMap() {
     latLngControl.updatePosition(e.latLng);
   });
   google.maps.event.addListener(map, 'click', function(e) {
-    promptForTitle(e);
+    promptForTitle(e.latLng);
   });
   Event.observe($('book-input'), 'focus', function(e) {
     Event.element(e).value = '';
@@ -124,22 +124,22 @@ function initializeMap() {
   });
   Event.observe($('place-input'), 'keydown', function(e) {
     if (e.keyCode == Event.KEY_RETURN) {
-      codeAddress(Event.element(e).value);
+      codePlace(Event.element(e).value);
     }
   });
 }
 
 //
 
-function promptForTitle(event) {
+function promptForTitle(latLng) {
   var bookTitle = prompt("Enter the book's title", null);
 
   if (bookTitle) {
-    findBook(event, bookTitle);
+    findBook(latLng, bookTitle);
   }
 }
 
-function addBookMarker(id, latLng, content) {
+function addPin(id, latLng, content) {
   var marker = new google.maps.Marker({
     map: map,
     draggable: true,
@@ -162,6 +162,19 @@ function addBookMarker(id, latLng, content) {
   });
 }
 
+function shouldAddPin(googleResults) {
+  var types = googleResults['types'];
+  var typesToPin = ['establishment', 'point_of_interest', 'street_address']
+
+  for (var i = 0; i < typesToPin.length; i++) {
+    if (types.indexOf(typesToPin[i]) >= 0) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 function hideBookMarkers(keyword) {
   for (var i = 0; i < locations.length; i++) {
     if (keyword != '' && locations[i]['terms'].search(eval('/' + keyword + '/i')) == -1) {
@@ -176,8 +189,8 @@ function hideMarker(id) {
   markers[id].setMap(null);
 }
 
-function findBook(event, title) {
-  new Ajax.Request('/locations?location[title]=' + title + '&location[latLng]=' + event.latLng.toUrlValue(), {
+function findBook(latLng, title) {
+  new Ajax.Request('/locations?location[title]=' + title + '&location[latLng]=' + latLng.toUrlValue(), {
     method: 'post'
   });
 }
@@ -188,12 +201,15 @@ function findMappedBooks(title) {
   });
 }
 
-function codeAddress(input) {
+function codePlace(input) {
   geocoder.geocode( { 'address': input}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
-      r = results;
-      myLatLng = results[0].geometry.location
-      zoomIn(myLatLng);
+      r = results[0];
+      zoomIn(r.geometry.location);
+
+      if (shouldAddPin(r)) {
+        promptForTitle(r.geometry.location);
+      }
     } else {
       alert("Couldn't geocode! The error was " + status);
     }
