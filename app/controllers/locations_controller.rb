@@ -13,7 +13,7 @@ class LocationsController < ApplicationController
   end
 
   def show
-    @location = Location.look_up params[:id], request
+    @location = Location.look_up params[:id], current_user.id
     @location.latLng = params[:lat_lng] if @location
     @location.save
     render :layout => false
@@ -29,6 +29,6 @@ class LocationsController < ApplicationController
   private
 
   def current_user
-    user ||= User.new request
+    user ||= User.new session[:_csrf_token]
   end
 end

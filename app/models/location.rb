@@ -5,10 +5,10 @@ class Location
   field :author
   field :lat_lng, :type => Array
   field :title
-  field :token
   field :url
+  field :user_id
 
-  def self.look_up(title, request)
+  def self.look_up(title, user_id)
     suck = Sucker.new(
       :locale => :us,
       :key => Rails.application.config.amazon_access_key_id,
@@ -23,7 +23,11 @@ class Location
 
     response = suck.get
 
-    Location.new :asin => response.find('ASIN').first, :author => response.find('Author').first, :title => response.find('Title').first, :token => request.session[:_csrf_token], :url => response.find('DetailPageURL').first
+    Location.new :asin => response.find('ASIN').first, :author => response.find('Author').first, :title => response.find('Title').first, :user_id => user_id, :url => response.find('DetailPageURL').first
+  end
+
+  def claim(user_id)
+    self.update_attribute :user_id, user_id
   end
 
   def latLng=(value)

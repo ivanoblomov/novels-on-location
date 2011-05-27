@@ -1,7 +1,7 @@
 class User
-  attr_accessor :token
+  attr_accessor :id
 
-  def initialize(request)
-    self.token = request.session[:_csrf_token]
+  def initialize(id)
+    self.id = id
   end
 end
