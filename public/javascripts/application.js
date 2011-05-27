@@ -176,8 +176,8 @@ function hideMarker(id) {
 }
 
 function findBook(event, title) {
-  new Ajax.Request('/locations/' + title + '?lat_lng=' + event.latLng.toUrlValue(), {
-    method: 'get'
+  new Ajax.Request('/locations?title=' + title + '&latLng=' + event.latLng.toUrlValue(), {
+    method: 'post'
   });
 }
 

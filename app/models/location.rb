@@ -8,7 +8,7 @@ class Location
   field :url
   field :user_id
 
-  def self.look_up(title, user_id)
+  def title=(value)
     suck = Sucker.new(
       :locale => :us,
       :key => Rails.application.config.amazon_access_key_id,
@@ -18,12 +18,13 @@ class Location
     suck << {
       'Operation' => 'ItemSearch',
       'SearchIndex' => 'Books',
-      'Keywords' => title
+      'Keywords' => value
     }
 
     response = suck.get
 
-    Location.new :asin => response.find('ASIN').first, :author => response.find('Author').first, :title => response.find('Title').first, :user_id => user_id, :url => response.find('DetailPageURL').first
+    self.attributes = {:asin => response.find('ASIN').first, :author => response.find('Author').first, :user_id => user_id, :url => response.find('DetailPageURL').first}
+    self[:title] = response.find('Title').first
   end
 
   def claim(user_id)

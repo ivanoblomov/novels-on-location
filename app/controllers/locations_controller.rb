@@ -12,10 +12,8 @@ class LocationsController < ApplicationController
     end
   end
 
-  def show
-    @location = Location.look_up params[:id], current_user.id
-    @location.latLng = params[:lat_lng] if @location
-    @location.save
+  def create
+    @location = Location.create :latLng => params[:latLng], :title => params[:title], :user_id => current_user.id
     render :layout => false
   end
 
