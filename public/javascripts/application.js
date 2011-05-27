@@ -77,6 +77,7 @@ var geocoder;
 var map;
 var markers = {};
 var openWindow;
+var r;
 
 function initializeMap() {
   var myOptions = {
@@ -190,6 +191,7 @@ function findMappedBooks(title) {
 function codeAddress(input) {
   geocoder.geocode( { 'address': input}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
+      r = results;
       myLatLng = results[0].geometry.location
       zoomIn(myLatLng);
     } else {
