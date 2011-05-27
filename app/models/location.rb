@@ -8,6 +8,8 @@ class Location
   field :url
   field :user_id
 
+  validates_presence_of :title
+
   def title=(value)
     suck = Sucker.new(
       :locale => :us,
