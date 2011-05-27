@@ -2,7 +2,7 @@ class LocationsController < ApplicationController
   # CRUD ===========================================================================================
   def destroy
     @location = Location.find params[:id]
-    @location.destroy
+    @location.destroy if can? :destroy, @location
   end
 
   def index
@@ -13,7 +13,7 @@ class LocationsController < ApplicationController
   end
 
   def show
-    @location = Location.look_up params[:id], request.remote_ip
+    @location = Location.look_up params[:id], request
     @location.latLng = params[:lat_lng] if @location
     @location.save
     render :layout => false
@@ -24,5 +24,11 @@ class LocationsController < ApplicationController
     @location.latLng = params[:lat_lng]
     @location.save
     render :nothing => true
+  end
+
+  private
+
+  def current_user
+    user ||= User.new request
   end
 end

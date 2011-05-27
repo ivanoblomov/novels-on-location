@@ -3,27 +3,27 @@ class Location
 
   field :asin
   field :author
-  field :ip_address
   field :lat_lng, :type => Array
   field :title
+  field :token
   field :url
 
-  def self.look_up(title, ip_address)
-    request = Sucker.new(
+  def self.look_up(title, request)
+    suck = Sucker.new(
       :locale => :us,
       :key => Rails.application.config.amazon_access_key_id,
       :secret => Rails.application.config.amazon_secret_access_key
     )
 
-    request << {
+    suck << {
       'Operation' => 'ItemSearch',
       'SearchIndex' => 'Books',
       'Keywords' => title
     }
 
-    response = request.get
+    response = suck.get
 
-    Location.new :asin => response.find('ASIN').first, :author => response.find('Author').first, :ip_address => ip_address, :title => response.find('Title').first, :url => response.find('DetailPageURL').first
+    Location.new :asin => response.find('ASIN').first, :author => response.find('Author').first, :title => response.find('Title').first, :token => request.session[:_csrf_token], :url => response.find('DetailPageURL').first
   end
 
   def latLng=(value)
