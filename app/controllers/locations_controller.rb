@@ -13,14 +13,12 @@ class LocationsController < ApplicationController
   end
 
   def create
-    @location = Location.create :latLng => params[:latLng], :title => params[:title], :user_id => current_user.id
+    @location = Location.create params[:location].merge :user_id => current_user.id
     render :layout => false
   end
 
   def update
-    @location = Location.find params[:id]
-    @location.latLng = params[:lat_lng]
-    @location.save
+    Location.find(params[:id]).update_attributes params[:location]
     render :nothing => true
   end
 

@@ -176,13 +176,13 @@ function hideMarker(id) {
 }
 
 function findBook(event, title) {
-  new Ajax.Request('/locations?title=' + title + '&latLng=' + event.latLng.toUrlValue(), {
+  new Ajax.Request('/locations?location[title]=' + title + '&location[latLng]=' + event.latLng.toUrlValue(), {
     method: 'post'
   });
 }
 
 function findMappedBooks(title) {
-  new Ajax.Request('/locations?title=' + title, {
+  new Ajax.Request('/locations?location[title]=' + title, {
     method: 'get'
   });
 }
@@ -222,7 +222,7 @@ function openBalloon(marker, content) {
 }
 
 function updateCoordinates(id, latLng) {
-  new Ajax.Request('/locations/' + id + '?lat_lng=' + latLng.toUrlValue(), {
+  new Ajax.Request('/locations/' + id + '?location[latLng]=' + latLng.toUrlValue(), {
     method: 'put'
   });
 }
