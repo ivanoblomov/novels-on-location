@@ -10,6 +10,10 @@ class Location
 
   validates_presence_of :title
 
+  def self.book_count
+    Location.all.map{ |l| l.asin }.uniq.size
+  end
+
   def title=(value)
     suck = Sucker.new(
       :locale => :us,
