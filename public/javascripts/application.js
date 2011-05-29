@@ -40,7 +40,7 @@ function initializeMap() {
   });
   Event.observe($('book-input'), 'keydown', function(e) {
     if (e.keyCode == Event.KEY_RETURN) {
-      findMappedBooks($('book-input').value);
+      hideBookMarkers($('book-input').value);
     }
   });
   Event.observe($('place-input'), 'blur', function(e) {
@@ -119,12 +119,6 @@ function hideMarker(id) {
 function findBook(latLng, title) {
   new Ajax.Request('/locations?location[amazon_title]=' + title + '&location[latLng]=' + latLng.toUrlValue(), {
     method: 'post'
-  });
-}
-
-function findMappedBooks(title) {
-  new Ajax.Request('/locations?location[title]=' + title, {
-    method: 'get'
   });
 }
 

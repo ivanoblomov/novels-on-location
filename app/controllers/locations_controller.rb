@@ -8,10 +8,7 @@ class LocationsController < ApplicationController
   end
 
   def index
-    respond_to do |format|
-      format.html { @locations = Location.all }
-      format.js {}
-    end
+    @locations = Location.all
   end
 
   def create
