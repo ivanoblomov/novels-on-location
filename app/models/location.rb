@@ -15,19 +15,7 @@ class Location
   end
 
   def title=(value)
-    suck = Sucker.new(
-      :locale => :us,
-      :key => Rails.application.config.amazon_access_key_id,
-      :secret => Rails.application.config.amazon_secret_access_key
-    )
-
-    suck << {
-      'Operation' => 'ItemSearch',
-      'SearchIndex' => 'Books',
-      'Keywords' => value
-    }
-
-    response = suck.get
+    response = CandyWrapper.findBook(value)
 
     self.attributes = {:asin => response.find('ASIN').first, :author => response.find('Author').first, :user_id => user_id, :url => response.find('DetailPageURL').first}
     self[:title] = response.find('Title').first
