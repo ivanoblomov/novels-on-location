@@ -73,10 +73,12 @@ LatLngControl.prototype.updatePosition = function(latLng) {
 
 // Adapted from http://code.google.com/apis/maps/documentation/javascript/examples/icon-complex.html
 
+var bookPrompt = 'Find a mapped book';
 var geocoder;
 var map;
 var markers = {};
 var openWindow;
+var placePrompt = 'Find a place and map a book to it';
 var r;
 
 function initializeMap() {
@@ -95,6 +97,10 @@ function initializeMap() {
     addPin(locations[i]['id'], locations[i]['latLng'], locations[i]['content']);
   }
 
+  // Set prompts
+  $('book-input').value = bookPrompt;
+  $('place-input').value = placePrompt;
+
   // Create new control to display latlng and coordinates under mouse.
   var latLngControl = new LatLngControl(map);
 
@@ -111,6 +117,9 @@ function initializeMap() {
   google.maps.event.addListener(map, 'click', function(e) {
     promptForTitle(e.latLng);
   });
+  Event.observe($('book-input'), 'blur', function(e) {
+    Event.element(e).value = bookPrompt;
+  });
   Event.observe($('book-input'), 'focus', function(e) {
     Event.element(e).value = '';
   });
@@ -118,6 +127,9 @@ function initializeMap() {
     if (e.keyCode == Event.KEY_RETURN) {
       findMappedBooks($('book-input').value);
     }
+  });
+  Event.observe($('place-input'), 'blur', function(e) {
+    Event.element(e).value = placePrompt;
   });
   Event.observe($('place-input'), 'focus', function(e) {
     Event.element(e).value = '';
