@@ -13,7 +13,18 @@ class CandyWrapper
       :url => r.find('DetailPageURL').first
     }
 
-    book.merge self.thumbnail(book[:asin])
+    book.merge(self.thumbnail(book[:asin])).merge self.review(book[:asin])
+  end
+
+  def self.review( asin )
+    {
+      :review => self.open(
+        :operation      => 'ItemLookup',
+        :id_type        => 'ASIN',
+        :item_id        => asin,
+        :response_group => 'EditorialReview'
+      ).find('EditorialReview')[0]['Content']
+    }
   end
 
   def self.thumbnail( asin )

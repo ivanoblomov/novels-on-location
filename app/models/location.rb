@@ -7,6 +7,7 @@ class Location
   field :image_url
   field :image_width
   field :lat_lng, :type => Array
+  field :review
   field :title
   field :url
   field :user_id
