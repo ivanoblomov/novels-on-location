@@ -3,6 +3,9 @@ class Location
 
   field :asin
   field :author
+  field :image_height
+  field :image_url
+  field :image_width
   field :lat_lng, :type => Array
   field :title
   field :url
@@ -14,11 +17,13 @@ class Location
     Location.all.map{ |l| l.asin }.uniq.size
   end
 
-  def title=(value)
-    response = CandyWrapper.findBook(value)
+  def self.reload
+    Location.all.map{ |l| l.amazon_title = l.title; l.save }
+  end
 
-    self.attributes = {:asin => response.find('ASIN').first, :author => response.find('Author').first, :user_id => user_id, :url => response.find('DetailPageURL').first}
-    self[:title] = response.find('Title').first
+  def amazon_title=(value)
+    self.attributes = CandyWrapper.book(value)
+    Rails.logger.info self.inspect
   end
 
   def latLng=(value)

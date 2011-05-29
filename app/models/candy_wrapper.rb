@@ -1,12 +1,36 @@
 class CandyWrapper
-  def self.findBook( value )
+  def self.book( keyword )
     r = self.open(
-      {
-        'Operation' => 'ItemSearch',
-        'SearchIndex' => 'Books',
-        'Keywords' => value
-      }
+      :operation => 'ItemSearch',
+      :search_index => 'Books',
+      :keywords => keyword
     )
+
+    book = {
+      :asin => r.find('ASIN').first,
+      :author => r.find('Author').first,
+      :title => r.find('Title').first,
+      :url => r.find('DetailPageURL').first
+    }
+
+    book.merge self.thumbnail(book[:asin])
+  end
+
+  def self.thumbnail( asin )
+    r = self.open(
+      :operation      => 'ItemLookup',
+      :id_type        => 'ASIN',
+      :item_id        => asin,
+      :response_group => 'Images'
+    )
+
+    i = r.find('ThumbnailImage')[0]
+
+    {
+      :image_url => i['URL'],
+      :image_width => i['Width']['__content__'],
+      :image_height => i['Height']['__content__']
+    }
   end
 
   private
