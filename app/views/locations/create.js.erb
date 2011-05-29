@@ -1,5 +1,5 @@
 <%- if @location.valid? -%>
   addPin('<%= @location.id -%>', <%= to_google_lat_lng(@location.lat_lng) -%>, '<%= render('location').strip -%>');
 <%- else -%>
-  alert("Can't find the book '<%= escape_javascript params[:location][:title] -%>'!");
+  alert("Can't find the book '<%= escape_javascript params[:location][:amazon_title] -%>'!");
 <%- end -%>

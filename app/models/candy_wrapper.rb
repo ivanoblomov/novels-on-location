@@ -13,6 +13,7 @@ class CandyWrapper
       :url => r.find('DetailPageURL').first
     }
 
+    return if book[:asin].blank?
     book.merge(self.thumbnail(book[:asin])).merge self.review(book[:asin])
   end
 
