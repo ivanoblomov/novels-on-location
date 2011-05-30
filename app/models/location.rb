@@ -9,6 +9,7 @@ class Location
   field :lat_lng, :type => Array
   field :review
   field :title
+  field :tags
   field :url
   field :user_id
 
