@@ -5,7 +5,7 @@ var geocoder;
 var map;
 var markers = {};
 var openWindow;
-var placePrompt = 'Find a place and map a book to it';
+var placePrompt = 'Find a place & map a book to it';
 var r;
 
 function initializeMap() {
