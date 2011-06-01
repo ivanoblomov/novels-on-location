@@ -38,10 +38,8 @@ function initializeMap() {
   Event.observe($('book-input'), 'focus', function(e) {
     Event.element(e).value = '';
   });
-  Event.observe($('book-input'), 'keydown', function(e) {
-    if (e.keyCode == Event.KEY_RETURN) {
-      hideBookMarkers($('book-input').value);
-    }
+  Event.observe($('book-input'), 'keyup', function(e) {
+    hideBookMarkers($('book-input').value);
   });
   Event.observe($('place-input'), 'blur', function(e) {
     Event.element(e).value = placePrompt;
@@ -54,6 +52,8 @@ function initializeMap() {
       codePlace(Event.element(e).value);
     }
   });
+
+  applesearch.init();
 }
 
 //
@@ -179,3 +179,64 @@ function updateCoordinates(id, latLng) {
     method: 'put'
   });
 }
+
+/*
+  Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html
+  START applesearch object
+*/
+
+var applesearch;
+if (!applesearch)	applesearch = {};
+
+applesearch.init = function ()
+{
+	// add applesearch css for non-safari, dom-capable browsers
+	if ( navigator.userAgent.toLowerCase().indexOf('safari') < 0  && document.getElementById )
+	{
+		this.clearBtn = false;
+
+		// add style sheet if not safari
+		var dummy = document.getElementById("search-stylesheet");
+		if (dummy) dummy.href = "stylesheets/not_safari.css";
+	}
+}
+
+// called when on user input - toggles clear fld btn
+applesearch.onChange = function (fldID, btnID)
+{
+	// check whether to show delete button
+	var fld = document.getElementById( fldID );
+	var btn = document.getElementById( btnID );
+	if (fld.value.length > 0 && !this.clearBtn)
+	{
+		btn.style.background = "white url('/images/srch_r_f2.gif') no-repeat top left";
+		btn.fldID = fldID; // btn remembers it's field
+		btn.onclick = this.clearBtnClick;
+		this.clearBtn = true;
+	} else if (fld.value.length == 0 && this.clearBtn)
+	{
+		btn.style.background = "white url('/images/srch_r.gif') no-repeat top left";
+		btn.onclick = null;
+		this.clearBtn = false;
+	}
+}
+
+// clears field
+applesearch.clearFld = function (fldID,btnID)
+{
+	var fld = document.getElementById( fldID );
+	fld.value = "";
+	this.onChange(fldID,btnID);
+
+	if (fldID == 'book-input') {
+    hideBookMarkers($('book-input').value);
+	}
+}
+
+// called by btn.onclick event handler - calls clearFld for this button
+applesearch.clearBtnClick = function ()
+{
+	applesearch.clearFld(this.fldID, this.id);
+}
+
+/* END applesearch object */

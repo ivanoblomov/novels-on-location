@@ -25,7 +25,6 @@ class Location
 
   def amazon_title=(value)
     self.attributes = CandyWrapper.book(value)
-    Rails.logger.info self.inspect
   end
 
   def latLng=(value)

@@ -1,0 +1,9 @@
+#applesearch .sbox input {
+	/*default styling*/
+	width: 180px;
+	float:left;
+}
+
+#content {
+	clear: both;
+}
