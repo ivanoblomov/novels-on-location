@@ -5,7 +5,7 @@
 }
 
 #applesearch .sbox_l  {
-	background: red url('/images/srch_l.gif') no-repeat top left;
+	background: white url('/images/srch_l.gif') no-repeat top left;
 	float: left;
 	width: 19px;
 	height: 19px;
