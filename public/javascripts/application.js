@@ -155,7 +155,7 @@ function zoomIn(latLng) {
       map.setZoom(8);
       return;
     } else {
-      map.setZoom(response.zoom - 3);
+      map.setZoom(map.getZoom() == response.zoom - 5 ? response.zoom - 3: response.zoom - 5);
     }
   });
 }
