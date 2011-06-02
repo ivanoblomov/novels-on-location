@@ -22,7 +22,7 @@ function initializeMap() {
   zoomer = new google.maps.MaxZoomService();
 
   for (var i = 0; i < locations.length; i++) {
-    addPin(locations[i]['id'], locations[i]['latLng'], locations[i]['content']);
+    addPin(locations[i]['id'], locations[i]['latLng'], locations[i]['content'], locations[i]['draggable']);
   }
 
   // Set prompts
@@ -75,10 +75,10 @@ function promptForBook(place, latLng) {
   }
 }
 
-function addPin(id, latLng, content) {
+function addPin(id, latLng, content, draggable) {
   var marker = new google.maps.Marker({
     map: map,
-    draggable: true,
+    draggable: draggable,
     animation: google.maps.Animation.DROP,
     position: latLng
   });
