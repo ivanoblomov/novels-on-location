@@ -1,6 +1,7 @@
 class Location
   include Mongoid::Document
 
+  field :address
   field :asin
   field :author
   field :image_height
@@ -20,11 +21,15 @@ class Location
   end
 
   def self.reload
-    Location.all.map{ |l| l.amazon_title = l.title; l.save }
+    Location.all.map{ |l| l.amazon_title = l.title; l.geocode; l.save }
   end
 
   def amazon_title=(value)
     self.attributes = CandyWrapper.book(value)
+  end
+
+  def geocode
+    self.address = GoogleMapsGeocoder.new(self.lat_lng * ', ').formatted_address
   end
 
   def latLng=(value)
