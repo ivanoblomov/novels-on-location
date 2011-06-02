@@ -11,7 +11,7 @@ var r;
 function initializeMap() {
   var myOptions = {
     backgroundColor: 'white',
-    center: locations[0] && locations[0]['latLng'] || new google.maps.LatLng(0, 0),
+    center: new google.maps.LatLng(0, 0),
     mapTypeId: google.maps.MapTypeId.HYBRID,
     minZoom: 2,
     zoom: 2
