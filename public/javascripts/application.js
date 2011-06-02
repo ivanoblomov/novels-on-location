@@ -1,6 +1,7 @@
 // Adapted from http://code.google.com/apis/maps/documentation/javascript/examples/icon-complex.html
 
 var bookPrompt = 'Find a mapped book';
+var clickListener;
 var geocoder;
 var map;
 var markers = {};
@@ -30,9 +31,8 @@ function initializeMap() {
   $('place-input').value = placePrompt;
 
   // Register event listeners
-  google.maps.event.addListener(map, 'click', function(e) {
-    promptForBook('', e.latLng);
-  });
+  listenForClick(map, "promptForBook('', e.latLng)");
+
   Event.observe($('book-input'), 'blur', function(e) {
     Event.element(e).value = bookPrompt;
   });
@@ -57,7 +57,13 @@ function initializeMap() {
   applesearch.init();
 }
 
-//
+function listenForClick(element, args) {
+  if (clickListener != undefined) {
+    google.maps.event.removeListener(clickListener);
+  }
+
+  clickListener = google.maps.event.addListener(element, 'click', function(e) {eval(args)});
+}
 
 function promptForTag(id, tags) {
   var value = prompt("Enter some descriptive words. These will be linked to a Google search.", tags);
@@ -167,6 +173,7 @@ function openBalloon(marker, content) {
 
   openWindow = new google.maps.InfoWindow( {content: content} );
   openWindow.open(map, marker);
+  listenForClick(map, "openWindow.close(); listenForClick(map, \"promptForBook('', e.latLng)\");");
 }
 
 function tagLocation(id, tags) {
