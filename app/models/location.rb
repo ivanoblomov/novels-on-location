@@ -21,10 +21,10 @@ class Location
   end
 
   def self.reload
-    Location.all.map{ |l| l.amazon_title = l.title; l.geocode; l.save }
+    Location.all.map{ |l| l.book_keywords = l.title; l.geocode; l.save }
   end
 
-  def amazon_title=(value)
+  def book_keywords=(value)
     self.attributes = CandyWrapper.book(value)
   end
 
@@ -34,5 +34,6 @@ class Location
 
   def latLng=(value)
     self.lat_lng = value.split ','
+    self.geocode
   end
 end
