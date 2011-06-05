@@ -1,3 +1,11 @@
+#book-input {
+  width: 101px;
+}
+
+#place-input {
+  width: 153px;
+}
+
 #applesearch {
   position: absolute;
   top: 6px;
@@ -24,7 +32,6 @@
 	border: 0;
 	padding: 3px;
 	font: 11px/13px arial;
-	color: #000;
 }
 
 #content {

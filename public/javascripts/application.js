@@ -205,7 +205,7 @@ applesearch.init = function ()
 
 		// add style sheet if not safari
 		var dummy = document.getElementById("search-stylesheet");
-		if (dummy) dummy.href = "stylesheets/not_safari.css";
+		if (dummy) dummy.href = "/stylesheets/not_safari.css";
 	}
 }
 

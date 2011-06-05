@@ -1,7 +1,13 @@
+#book-input {
+  width: 153px;
+}
+
+#place-input {
+  width: 210px;
+}
+
 #applesearch .sbox input {
-	/*default styling*/
-	width: 180px;
-	float:left;
+	float: left;
 }
 
 #content {
