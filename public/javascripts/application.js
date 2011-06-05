@@ -202,10 +202,6 @@ applesearch.init = function ()
 	if ( navigator.userAgent.toLowerCase().indexOf('safari') < 0  && document.getElementById )
 	{
 		this.clearBtn = false;
-
-		// add style sheet if not safari
-		var dummy = document.getElementById("search-stylesheet");
-		if (dummy) dummy.href = "/stylesheets/not_safari.css";
 	}
 }
 

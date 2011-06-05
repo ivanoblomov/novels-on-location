@@ -7,9 +7,7 @@
 }
 
 #applesearch {
-  position: absolute;
   top: 6px;
-  right: 106px;
 }
 
 #applesearch .sbox_l  {
@@ -28,12 +26,7 @@
 
 #applesearch .sbox input {
 	background: white url('/images/srch_bg.gif') repeat-x top left;
-	float: left;
 	border: 0;
 	padding: 3px;
 	font: 11px/13px arial;
-}
-
-#content {
-	clear: both;
 }
