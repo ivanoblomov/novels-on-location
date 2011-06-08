@@ -14,6 +14,7 @@ class Location
   field :url
   field :user_id
 
+  before_save :geocode
   validates_presence_of :title
 
   def self.book_count
@@ -21,7 +22,7 @@ class Location
   end
 
   def self.reload
-    Location.all.map{ |l| l.book_keywords = l.title; l.geocode; l.save }
+    Location.all.map{ |l| l.book_keywords = l.title; l.save }
   end
 
   def book_keywords=(value)
@@ -29,11 +30,10 @@ class Location
   end
 
   def geocode
-    self.address = GoogleMapsGeocoder.new(self.lat_lng * ', ').formatted_address
+    self.address = GoogleMapsGeocoder.new(self.lat_lng * ', ').formatted_address if self.address.blank?
   end
 
   def latLng=(value)
     self.lat_lng = value.split ','
-    self.geocode
   end
 end

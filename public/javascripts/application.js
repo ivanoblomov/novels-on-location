@@ -31,7 +31,7 @@ function initializeMap() {
   $('place-input').value = placePrompt;
 
   // Register event listeners
-  listenForClick(map, "promptForBook('', e.latLng)");
+  listenForClick(map, "promptForBook(e.latLng)");
 
   Event.observe($('book-input'), 'blur', function(e) {
     Event.element(e).value = bookPrompt;
@@ -73,11 +73,11 @@ function promptForTag(id, tags) {
   }
 }
 
-function promptForBook(place, latLng) {
+function promptForBook(latLng, place, address) {
   var keywords = prompt("Enter keywords describing the book: title, author, etc.", null);
 
   if (keywords) {
-    findBook(place, latLng, keywords);
+    findBook(latLng, place || '', address, keywords);
   }
 }
 
@@ -131,8 +131,8 @@ function hideMarker(id) {
   markers[id].setMap(null);
 }
 
-function findBook(place, latLng, keywords) {
-  new Ajax.Request('/locations?location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue(), {
+function findBook(latLng, place, address, keywords) {
+  new Ajax.Request('/locations?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue(), {
     method: 'post'
   });
 }
@@ -144,7 +144,7 @@ function codePlace(input) {
       zoomIn(r.geometry.location);
 
       if (shouldAddPin(r)) {
-        promptForBook(input, r.geometry.location);
+        promptForBook(r.geometry.location, input, r.formatted_address);
       }
     } else {
       alert("Couldn't geocode! The error was " + status);
@@ -173,7 +173,7 @@ function openBalloon(marker, content) {
 
   openWindow = new google.maps.InfoWindow( {content: content} );
   openWindow.open(map, marker);
-  listenForClick(map, "openWindow.close(); listenForClick(map, \"promptForBook('', e.latLng)\");");
+  listenForClick(map, "openWindow.close(); listenForClick(map, \"promptForBook(e.latLng)\");");
 }
 
 function tagLocation(id, tags) {
