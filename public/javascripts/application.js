@@ -88,10 +88,10 @@ function toggleMapMode() {
       google.maps.event.removeListener(clickListener);
     }
 
-    $('mode-button').value = 'Double-Clicking Zooms';
+    $('mode-button').value = 'Double-Click Map to Zoom';
   } else {
     listenForClick(map, "promptForBook(e.latLng)");
-    $('mode-button').value = 'Double-Clicking Add Pins';
+    $('mode-button').value = 'Double-Click Map to Add Pins';
   }
 }
 

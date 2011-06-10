@@ -2,6 +2,12 @@
   width: 101px;
 }
 
+#mode-div {
+  position: absolute;
+  top: 7px;
+  right: 447px;
+}
+
 #place-input {
   width: 153px;
 }
