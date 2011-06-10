@@ -1,6 +1,7 @@
 // Adapted from http://code.google.com/apis/maps/documentation/javascript/examples/icon-complex.html
 
 var bookPrompt = 'Find a mapped book';
+var clickingZooms = true;
 var clickListener;
 var geocoder;
 var map;
@@ -31,8 +32,6 @@ function initializeMap() {
   $('place-input').value = placePrompt;
 
   // Register event listeners
-  listenForClick(map, "promptForBook(e.latLng)");
-
   Event.observe($('book-input'), 'blur', function(e) {
     Event.element(e).value = bookPrompt;
   });
@@ -62,7 +61,7 @@ function listenForClick(element, args) {
     google.maps.event.removeListener(clickListener);
   }
 
-  clickListener = google.maps.event.addListener(element, 'click', function(e) {eval(args)});
+  clickListener = google.maps.event.addListener(element, 'dblclick', function(e) {eval(args)});
 }
 
 function promptForTag(id, tags) {
@@ -78,6 +77,21 @@ function promptForBook(latLng, place, address) {
 
   if (keywords) {
     findBook(latLng, place || '', address, keywords);
+  }
+}
+
+function toggleMapMode() {
+  clickingZooms = ! clickingZooms;
+
+  if (clickingZooms) {
+    if (clickListener != undefined) {
+      google.maps.event.removeListener(clickListener);
+    }
+
+    $('mode-button').value = 'Double-Clicking Zooms';
+  } else {
+    listenForClick(map, "promptForBook(e.latLng)");
+    $('mode-button').value = 'Double-Clicking Add Pins';
   }
 }
 
