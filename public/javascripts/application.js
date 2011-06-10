@@ -56,12 +56,12 @@ function initializeMap() {
   applesearch.init();
 }
 
-function listenForClick(element, args) {
+function listenFor(element, event, args) {
   if (clickListener != undefined) {
     google.maps.event.removeListener(clickListener);
   }
 
-  clickListener = google.maps.event.addListener(element, 'dblclick', function(e) {eval(args)});
+  clickListener = google.maps.event.addListener(element, event, function(e) {eval(args)});
 }
 
 function promptForTag(id, tags) {
@@ -90,7 +90,7 @@ function toggleMapMode() {
 
     $('mode-button').value = 'Double-Click Map to Zoom';
   } else {
-    listenForClick(map, "promptForBook(e.latLng)");
+    listenFor(map, 'dblclick', "promptForBook(e.latLng)");
     $('mode-button').value = 'Double-Click Map to Add Pins';
   }
 }
@@ -187,7 +187,7 @@ function openBalloon(marker, content) {
 
   openWindow = new google.maps.InfoWindow( {content: content} );
   openWindow.open(map, marker);
-  listenForClick(map, "openWindow.close(); listenForClick(map, \"promptForBook(e.latLng)\");");
+  listenFor(map, 'click', "openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()");
 }
 
 function tagLocation(id, tags) {
