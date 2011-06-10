@@ -1,6 +1,12 @@
 class LocationsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :except => :show
   helper_method :current_user
+
+  # Custom =========================================================================================
+  def show
+    @location = Location.new params[:location].merge :user_id => current_user.id
+    render :layout => false
+  end
 
   # CRUD ===========================================================================================
   def destroy

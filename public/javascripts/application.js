@@ -145,9 +145,15 @@ function hideMarker(id) {
   markers[id].setMap(null);
 }
 
-function findBook(latLng, place, address, keywords) {
+function createBook(latLng, place, address, keywords) {
   new Ajax.Request('/locations?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue(), {
     method: 'post'
+  });
+}
+
+function findBook(latLng, place, address, keywords) {
+  new Ajax.Request('/locations/1?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue(), {
+    method: 'get'
   });
 }
 

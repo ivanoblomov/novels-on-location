@@ -1,0 +1,7 @@
+<%- if @location.valid? -%>
+  if (confirm('Is this the book you meant? <%= escape_javascript @location.title -%> by <%= escape_javascript @location.author -%>')) {
+    createBook(<%= to_google_lat_lng @location.lat_lng -%>, <%= filter_param @location.tags -%>, <%= filter_param @location.address -%>, <%= filter_param @location.asin -%>);
+  }
+<%- else -%>
+  alert("Can't find the book '<%= escape_javascript params[:location][:book_keywords] -%>'!");
+<%- end -%>

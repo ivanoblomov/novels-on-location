@@ -14,6 +14,7 @@ class Location
   field :url
   field :user_id
 
+  attr_reader :book_keywords
   before_save :geocode
   validates_presence_of :title
 
@@ -26,6 +27,7 @@ class Location
   end
 
   def book_keywords=(value)
+    self[:book_keywords] = value
     self.attributes = CandyWrapper.book(value)
   end
 
