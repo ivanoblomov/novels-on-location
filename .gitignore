@@ -1,4 +1,5 @@
 .bundle
 db/backups
+git.rake
 log/*.log
 tmp/
