@@ -15,6 +15,7 @@ class LocationsController < ApplicationController
 
   def index
     @locations = Location.all
+    render :file => 'app/views/layouts/application'
   end
 
   def create
