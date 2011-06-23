@@ -88,8 +88,7 @@
   </style>
   <%= stylesheet_link_tag 'not_safari', :id => 'search-stylesheet' unless request.user_agent =~ /safari/i -%>
   <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-  <%= javascript_include_tag :defaults %>
-  <%= csrf_meta_tag %>
+  <%= csrf_meta_tag -%>
 </head>
 <body onLoad="initializeMap();">
 
@@ -116,3 +115,4 @@
 
 </body>
 </html>
+<%= javascript_include_tag 'prototype', 'application' -%>
