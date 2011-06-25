@@ -20,7 +20,7 @@ function initializeMap() {
   };
 
   geocoder = new google.maps.Geocoder();
-  map = new google.maps.Map($('map-canvas'), myOptions);
+  map = new google.maps.Map($('#map-canvas')[0], myOptions);
   zoomer = new google.maps.MaxZoomService();
 
   for (var i = 0; i < locations.length; i++) {
@@ -28,28 +28,28 @@ function initializeMap() {
   }
 
   // Set prompts
-  $('book-input').value = bookPrompt;
-  $('place-input').value = placePrompt;
+  $('#book-input')[0].value = bookPrompt;
+  $('#place-input')[0].value = placePrompt;
 
   // Register event listeners
-  Event.observe($('book-input'), 'blur', function(e) {
-    Event.element(e).value = bookPrompt;
+  $('#book-input').blur( function() {
+    $(this).attr('value', bookPrompt);
   });
-  Event.observe($('book-input'), 'focus', function(e) {
-    Event.element(e).value = '';
+  $('#book-input').focus( function() {
+    $(this).attr('value', '');
   });
-  Event.observe($('book-input'), 'keyup', function(e) {
-    hideBookMarkers($('book-input').value);
+  $('#book-input').keyup( function() {
+    hideBookMarkers($('#book-input')[0].value);
   });
-  Event.observe($('place-input'), 'blur', function(e) {
-    Event.element(e).value = placePrompt;
+  $('#place-input').blur( function() {
+    $(this).attr('value', placePrompt);
   });
-  Event.observe($('place-input'), 'focus', function(e) {
-    Event.element(e).value = '';
+  $('#place-input').focus( function() {
+    $(this).attr('value', '');
   });
-  Event.observe($('place-input'), 'keydown', function(e) {
-    if (e.keyCode == Event.KEY_RETURN) {
-      codePlace(Event.element(e).value);
+  $('#place-input').keypress( function(e) {
+    if (e.keyCode || e.which == Event.KEY_RETURN) {
+      codePlace($(this).val());
     }
   });
 
@@ -88,10 +88,10 @@ function toggleMapMode() {
       google.maps.event.removeListener(clickListener);
     }
 
-    $('mode-button').value = 'Double-Click Map to Zoom';
+    $('#mode-button')[0].value = 'Double-Click Map to Zoom';
   } else {
     listenFor(map, 'dblclick', "promptForBook(e.latLng)");
-    $('mode-button').value = 'Double-Click Map to Add Pins';
+    $('#mode-button')[0].value = 'Double-Click Map to Add Pins';
   }
 }
 
@@ -146,15 +146,13 @@ function hideMarker(id) {
 }
 
 function createBook(latLng, place, address, keywords) {
-  new Ajax.Request('/locations?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue(), {
-    method: 'post'
-  });
+  $.post('/locations?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue());
 }
 
 function findBook(latLng, place, address, keywords) {
-  new Ajax.Request('/locations/1?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue(), {
-    method: 'get'
-  });
+  $.get(
+    '/locations/1?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue()
+  );
 }
 
 function codePlace(input) {
@@ -197,14 +195,16 @@ function openBalloon(marker, content) {
 }
 
 function tagLocation(id, tags) {
-  new Ajax.Request('/locations/' + id + '?location[tags]=' + tags, {
-    method: 'put'
+  $.ajax({
+    type: 'PUT',
+    url: '/locations/' + id + '?location[tags]=' + tags
   });
 }
 
 function updateCoordinates(id, latLng) {
-  new Ajax.Request('/locations/' + id + '?location[latLng]=' + latLng.toUrlValue(), {
-    method: 'put'
+  $.ajax({
+    type: 'PUT',
+    url: '/locations/' + id + '?location[latLng]=' + latLng.toUrlValue()
   });
 }
 
@@ -253,7 +253,7 @@ applesearch.clearFld = function (fldID,btnID)
 	this.onChange(fldID,btnID);
 
 	if (fldID == 'book-input') {
-    hideBookMarkers($('book-input').value);
+    hideBookMarkers($('#book-input')[0].value);
 	}
 }
 
