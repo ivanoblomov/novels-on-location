@@ -10,6 +10,9 @@ gem 'sucker'
 gem 'SystemTimer'
 
 group :test do
+  gem 'capybara'
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
   gem 'mocha'
   gem 'rspec-rails'
 end
