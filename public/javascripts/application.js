@@ -48,7 +48,7 @@ function initializeMap() {
     $(this).attr('value', '');
   });
   $('#place-input').keypress( function(e) {
-    if (e.keyCode || e.which == Event.KEY_RETURN) {
+    if ((e.keyCode || e.which) == 13) {
       codePlace($(this).val());
     }
   });
