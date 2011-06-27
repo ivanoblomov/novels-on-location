@@ -13,6 +13,7 @@ group :test do
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'database_cleaner'
+  gem 'jasmine'
   gem 'mocha'
   gem 'rspec-rails'
 end
