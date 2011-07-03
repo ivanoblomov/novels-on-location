@@ -48,18 +48,14 @@ function initializeMap() {
     $(this).attr('value', '');
   });
   $('#place-input').keypress( function(e) {
-    if ((e.keyCode || e.which) == 13) {
-      codePlace($(this).val());
-    }
+    if ((e.keyCode || e.which) == 13) codePlace($(this).val());
   });
 
   applesearch.init();
 }
 
 function listenFor(element, event, args) {
-  if (clickListener != undefined) {
-    google.maps.event.removeListener(clickListener);
-  }
+  if (clickListener != undefined) google.maps.event.removeListener(clickListener);
 
   clickListener = google.maps.event.addListener(element, event, function(e) {eval(args)});
 }
@@ -67,26 +63,20 @@ function listenFor(element, event, args) {
 function promptForTag(id, tags) {
   var value = prompt("Enter some descriptive words. These will be linked to a Google search.", tags);
 
-  if (value) {
-    tagLocation(id, value);
-  }
+  if (value) tagLocation(id, value);
 }
 
 function promptForBook(latLng, place, address) {
   var keywords = prompt("Enter keywords describing the book: title, author, etc.", null);
 
-  if (keywords) {
-    findBook(latLng, place || '', address, keywords);
-  }
+  if (keywords) findBook(latLng, place || '', address, keywords);
 }
 
 function toggleMapMode() {
   clickingZooms = ! clickingZooms;
 
   if (clickingZooms) {
-    if (clickListener != undefined) {
-      google.maps.event.removeListener(clickListener);
-    }
+    if (clickListener != undefined) google.maps.event.removeListener(clickListener);
 
     $('#mode-button')[0].value = 'Double-Click Map to Zoom';
   } else {
@@ -110,11 +100,10 @@ function addPin(id, latLng, content, draggable) {
   });
 
   google.maps.event.addListener(marker, 'dragend', function() {
-    if (confirm('Move this pin?')) {
+    if (confirm('Move this pin?'))
       updateCoordinates(id, marker.getPosition());
-    } else {
+    else
       marker.setPosition(latLng);
-    }
   });
 }
 
@@ -123,9 +112,7 @@ function shouldAddPin(googleResults) {
   var typesToPin = ['establishment', 'point_of_interest', 'street_address']
 
   for (var i = 0; i < typesToPin.length; i++) {
-    if (types.indexOf(typesToPin[i]) >= 0) {
-      return true;
-    }
+    if (types.indexOf(typesToPin[i]) >= 0) return true;
   }
 
   return false;
@@ -133,11 +120,10 @@ function shouldAddPin(googleResults) {
 
 function hideBookMarkers(keyword) {
   for (var i = 0; i < locations.length; i++) {
-    if (keyword != '' && locations[i]['terms'].search(eval('/' + keyword + '/i')) == -1) {
+    if (keyword != '' && locations[i]['terms'].search(eval('/' + keyword + '/i')) == -1)
       hideMarker(locations[i]['id']);
-    } else {
+    else
       markers[locations[i]['id']].setMap(map);
-    }
   }
 }
 
@@ -164,9 +150,8 @@ function codePlace(input) {
       if (shouldAddPin(r)) {
         promptForBook(r.geometry.location, input, r.formatted_address);
       }
-    } else {
+    } else
       alert("Couldn't geocode! The error was " + status);
-    }
   });
 }
 
@@ -178,17 +163,13 @@ function zoomIn(latLng) {
       alert("Couldn't zoom!");
       map.setZoom(8);
       return;
-    } else {
+    } else
       map.setZoom(map.getZoom() == response.zoom - 5 ? response.zoom - 3: response.zoom - 5);
-    }
   });
 }
 
 function openBalloon(marker, content) {
-  if (openWindow != undefined) {
-    openWindow.close();
-  }
-
+  if (openWindow != undefined) openWindow.close();
   openWindow = new google.maps.InfoWindow( {content: content} );
   openWindow.open(map, marker);
   listenFor(map, 'click', "openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()");
