@@ -1,2 +1,2 @@
-hideMarker('<%= @location.id -%>');
+hidePin('<%= @location.id -%>');
 addPin('<%= @location.id -%>', <%= to_google_lat_lng(@location.lat_lng) -%>, '<%= render('location').strip.html_safe -%>', true);

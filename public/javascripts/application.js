@@ -5,7 +5,7 @@ var clickingZooms = true;
 var clickListener;
 var geocoder;
 var map;
-var markers = {};
+var pins = {};
 var openWindow;
 var placePrompt = 'Find a place & map a book to it';
 var r;
@@ -39,7 +39,7 @@ function initializeMap() {
     $(this).attr('value', '');
   });
   $('#book-input').keyup( function() {
-    hideBookMarkers($('#book-input')[0].value);
+    hidePins($('#book-input')[0].value);
   });
   $('#place-input').blur( function() {
     $(this).attr('value', placePrompt);
@@ -86,24 +86,24 @@ function toggleMapMode() {
 }
 
 function addPin(id, latLng, content, draggable) {
-  var marker = new google.maps.Marker({
+  var pin = new google.maps.Marker({
     map: map,
     draggable: draggable,
     animation: google.maps.Animation.DROP,
     position: latLng
   });
 
-  markers[id] = marker;
+  pins[id] = pin;
 
-  google.maps.event.addListener(marker, 'click', function() {
-    openBalloon(marker, content);
+  google.maps.event.addListener(pin, 'click', function() {
+    openBalloon(pin, content);
   });
 
-  google.maps.event.addListener(marker, 'dragend', function() {
+  google.maps.event.addListener(pin, 'dragend', function() {
     if (confirm('Move this pin?'))
-      updateCoordinates(id, marker.getPosition());
+      updateCoordinates(id, pin.getPosition());
     else
-      marker.setPosition(latLng);
+      pin.setPosition(latLng);
   });
 }
 
@@ -118,20 +118,20 @@ function shouldAddPin(googleResults) {
   return false;
 }
 
-function hideBookMarkers(keyword) {
+function hidePins(keyword) {
   for (var i = 0; i < locations.length; i++) {
     if (keyword != '' && locations[i]['terms'].search(eval('/' + keyword + '/i')) == -1)
-      hideMarker(locations[i]['id']);
+      hidePin(locations[i]['id']);
     else
-      markers[locations[i]['id']].setMap(map);
+      pins[locations[i]['id']].setMap(map);
   }
 }
 
-function hideMarker(id) {
-  markers[id].setMap(null);
+function hidePin(id) {
+  pins[id].setMap(null);
 }
 
-function createBook(latLng, place, address, keywords) {
+function createPin(latLng, place, address, keywords) {
   $.post('/locations?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue());
 }
 
@@ -168,10 +168,10 @@ function zoomIn(latLng) {
   });
 }
 
-function openBalloon(marker, content) {
+function openBalloon(pin, content) {
   if (openWindow != undefined) openWindow.close();
   openWindow = new google.maps.InfoWindow( {content: content} );
-  openWindow.open(map, marker);
+  openWindow.open(map, pin);
   listenFor(map, 'click', "openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()");
 }
 
@@ -234,7 +234,7 @@ applesearch.clearFld = function (fldID,btnID)
 	this.onChange(fldID,btnID);
 
 	if (fldID == 'book-input') {
-    hideBookMarkers($('#book-input')[0].value);
+    hidePins($('#book-input')[0].value);
 	}
 }
 
