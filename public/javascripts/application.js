@@ -63,7 +63,7 @@ function listenFor(element, event, args) {
 function promptForTag(id, tags) {
   var value = prompt("Enter some descriptive words. These will be linked to a Google search.", tags);
 
-  if (value) tagLocation(id, value);
+  if (value) tagPin(id, value);
 }
 
 function promptForBook(latLng, place, address) {
@@ -101,7 +101,7 @@ function addPin(id, latLng, content, draggable) {
 
   google.maps.event.addListener(pin, 'dragend', function() {
     if (confirm('Move this pin?'))
-      updateCoordinates(id, pin.getPosition());
+      updatePin(id, pin.getPosition());
     else
       pin.setPosition(latLng);
   });
@@ -129,16 +129,6 @@ function hidePins(keyword) {
 
 function hidePin(id) {
   pins[id].setMap(null);
-}
-
-function createPin(latLng, place, address, keywords) {
-  $.post('/locations?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue());
-}
-
-function findBook(latLng, place, address, keywords) {
-  $.get(
-    '/locations/1?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue()
-  );
 }
 
 function codePlace(input) {
@@ -175,14 +165,24 @@ function openBalloon(pin, content) {
   listenFor(map, 'click', "openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()");
 }
 
-function tagLocation(id, tags) {
+function createPin(latLng, place, address, keywords) {
+  $.post('/locations?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue());
+}
+
+function findBook(latLng, place, address, keywords) {
+  $.get(
+    '/locations/1?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue()
+  );
+}
+
+function tagPin(id, tags) {
   $.ajax({
     type: 'PUT',
     url: '/locations/' + id + '?location[tags]=' + tags
   });
 }
 
-function updateCoordinates(id, latLng) {
+function updatePin(id, latLng) {
   $.ajax({
     type: 'PUT',
     url: '/locations/' + id + '?location[latLng]=' + latLng.toUrlValue()
