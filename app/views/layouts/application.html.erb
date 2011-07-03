@@ -88,30 +88,10 @@
   </style>
   <%= stylesheet_link_tag 'not_safari', :id => 'search-stylesheet' unless request.user_agent =~ /safari/i -%>
   <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
-  <script type="text/javascript">
-  //<![CDATA[
-    // Add a script element as a child of the body
-    function downloadJSAtOnload() {
-      var sources = ['/javascripts/jquery.min.js', '/javascripts/jquery_ujs.js', '/javascripts/application.js'];
-
-      for (var i = 0; i < sources.length; i++) {
-       var element = document.createElement('script');
-       element.src = sources[i];
-       document.body.appendChild(element);
-      }
-    }
-
-    // Check for browser support of event handling capability
-    if (window.addEventListener)
-      window.addEventListener('load', downloadJSAtOnload, false);
-    else if (window.attachEvent)
-      window.attachEvent('onload', downloadJSAtOnload);
-    else window.onload = downloadJSAtOnload;
-  //]]>
-  </script>
+  <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
 </head>
-<body>
+<body onLoad="initializeMap();">
 
 <div id="map-canvas"></div>
 
@@ -133,5 +113,6 @@
   ];
 //]]>
 </script>
+
 </body>
 </html>
