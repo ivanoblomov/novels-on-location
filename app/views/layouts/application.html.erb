@@ -108,7 +108,7 @@
     <%-
       @locations.each do |@location|
     -%>
-      {'id': '<%= @location.id -%>', 'terms': "<%= escape_javascript @location.author -%> <%= escape_javascript @location.title -%>", 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip.html_safe -%>', 'draggable': <%= can? :update, @location -%>},
+      {'id': '<%= @location.id -%>', 'terms': "<%= escape_javascript( [@location.author, @location.title, @location.tags] * ' ').strip -%>", 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip.html_safe -%>', 'draggable': <%= can? :update, @location -%>},
     <%- end -%>
   ];
 //]]>
