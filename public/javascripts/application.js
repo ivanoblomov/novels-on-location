@@ -264,3 +264,5 @@ applesearch.clearBtnClick = function ()
 }
 
 /* END applesearch object */
+
+initializeMap();
