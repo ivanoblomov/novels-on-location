@@ -1,5 +1,4 @@
 // Adapted from http://code.google.com/apis/maps/documentation/javascript/examples/icon-complex.html
-
 var bookPrompt = 'Find a mapped book';
 var clickingZooms = true;
 var clickListener;
@@ -56,19 +55,16 @@ function initializeMap() {
 
 function listenFor(element, event, args) {
   if (clickListener != undefined) google.maps.event.removeListener(clickListener);
-
   clickListener = google.maps.event.addListener(element, event, function(e) {eval(args)});
 }
 
 function promptForTag(id, tags) {
   var value = prompt("Enter some descriptive words. These will be linked to a Google search.", tags);
-
   if (value) tagPin(id, value);
 }
 
 function promptForBook(latLng, place, address) {
   var keywords = prompt("Enter keywords describing the book: title, author, etc.", null);
-
   if (keywords) findBook(latLng, place || '', address, keywords);
 }
 
@@ -77,7 +73,6 @@ function toggleMapMode() {
 
   if (clickingZooms) {
     if (clickListener != undefined) google.maps.event.removeListener(clickListener);
-
     $('#mode-button')[0].value = 'Double-Click Map to Zoom';
   } else {
     listenFor(map, 'dblclick', "promptForBook(e.latLng)");
@@ -166,34 +161,44 @@ function openBalloon(pin, content) {
 }
 
 function createPin(latLng, place, address, keywords) {
-  $.post('/locations?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue());
+  $.post('/locations', {
+    'location[address]': (address || ''),
+    'location[tags]': place,
+    'location[book_keywords]': keywords,
+    'location[latLng]': latLng.toUrlValue()
+  });
 }
 
 function findBook(latLng, place, address, keywords) {
-  $.get(
-    '/locations/1?location[address]=' + (address || '') + '&location[tags]=' + place + '&location[book_keywords]=' + keywords + '&location[latLng]=' + latLng.toUrlValue()
-  );
+  $.get('/locations/1', {
+    'location[address]': (address || ''),
+    'location[tags]': place,
+    'location[book_keywords]': keywords,
+    'location[latLng]': latLng.toUrlValue()
+  });
 }
 
 function tagPin(id, tags) {
   $.ajax({
     type: 'PUT',
-    url: '/locations/' + id + '?location[tags]=' + tags
+    url: '/locations/' + id,
+    data: {
+      'location[tags]': tags
+    }
   });
 }
 
 function updatePin(id, latLng) {
   $.ajax({
     type: 'PUT',
-    url: '/locations/' + id + '?location[latLng]=' + latLng.toUrlValue()
+    url: '/locations/' + id,
+    data: {
+      'location[latLng]': latLng.toUrlValue()
+    }
   });
 }
 
-/*
-  Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html
-  START applesearch object
-*/
-
+// Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html
 var applesearch;
 if (!applesearch)	applesearch = {};
 
@@ -243,5 +248,3 @@ applesearch.clearBtnClick = function ()
 {
 	applesearch.clearFld(this.fldID, this.id);
 }
-
-/* END applesearch object */
