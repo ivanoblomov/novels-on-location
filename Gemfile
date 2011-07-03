@@ -5,9 +5,8 @@ gem 'cancan'
 gem 'jasmine', :group => [:development, :test]
 gem 'jquery-rails', '>= 1.0.3'
 gem 'mongoid'
-gem 'rake', '~> 0.8.7'
-gem 'rails', '3.0.7'
-gem 'sucker'
+gem 'rails', '>= 3.0.9'
+gem 'sucker', '~> 1'
 gem 'SystemTimer'
 
 group :test do
