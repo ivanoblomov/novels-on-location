@@ -50,6 +50,7 @@ function initializeMap() {
     if ((e.keyCode || e.which) == 13) codePlace($(this).val());
   });
 
+  initializeFacebook();
   FB.getLoginStatus(function(response) {
     if (response.session)
       $('.fb_button_text').replaceWith('<span class="fb_button_text" onclick="logOut()">Log Out</span>');
@@ -159,8 +160,20 @@ function zoomIn(latLng) {
   });
 }
 
+function initializeFacebook() {
+  FB.init({
+    appId:'<%= Rails.application.config.facebook_app_id -%>',
+    cookie:true,
+    status:true,
+    xfbml:true
+  });
+}
+
 function logOut() {
-  FB.logout(function(response) {});
+  FB.logout(function(response) {
+    $('fb\\:login-button').replaceWith('<fb:login-button>Log In</fb:login-button>');
+    initializeFacebook();
+  });
 }
 
 function openBalloon(pin, content) {

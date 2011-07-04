@@ -115,13 +115,6 @@
       {'id': '<%= @location.id -%>', 'terms': "<%= escape_javascript( [@location.author, @location.title, @location.address, @location.tags] * ' ').strip -%>", 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip.html_safe -%>', 'draggable': <%= can? :update, @location -%>},
     <%- end -%>
   ];
-
-  FB.init({
-    appId:'<%= Rails.application.config.facebook_app_id -%>',
-    cookie:true,
-    status:true,
-    xfbml:true
-  });
 //]]>
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
