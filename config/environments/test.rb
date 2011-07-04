@@ -32,4 +32,7 @@ NovelsOnLocation::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+
+  # Custom settings
+  config.main_host = 'localhost'
 end
