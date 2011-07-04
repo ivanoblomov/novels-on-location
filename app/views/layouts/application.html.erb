@@ -92,6 +92,7 @@
   </style>
   <%= stylesheet_link_tag 'not_safari', :id => 'search-stylesheet' unless request.user_agent =~ /safari/i -%>
   <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+  <script src="http://connect.facebook.net/en_US/all.js"></script>
   <%= csrf_meta_tag -%>
 </head>
 <body onLoad="initializeMap();">
@@ -104,17 +105,23 @@
     <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="place-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('place-input','clear_place')" /></span><span class="sbox_r" id="clear_place"></span>
     <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="book-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('book-input','clear_book')" /></span><span class="sbox_r" id="clear_book"></span>
   </div>
+  <div id="fb-root" style="float: left"></div><fb:login-button>Login with Facebook</fb:login-button>
 </div>
 
 <script type="text/javascript">
 //<![CDATA[
   var locations = [
-    <%-
-      @locations.each do |@location|
-    -%>
+    <%- @locations.each do |@location| -%>
       {'id': '<%= @location.id -%>', 'terms': "<%= escape_javascript( [@location.author, @location.title, @location.address, @location.tags] * ' ').strip -%>", 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip.html_safe -%>', 'draggable': <%= can? :update, @location -%>},
     <%- end -%>
   ];
+
+  FB.init({
+    appId:'<%= Rails.application.config.facebook_app_id -%>',
+    cookie:true,
+    status:true,
+    xfbml:true
+  });
 //]]>
 </script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>

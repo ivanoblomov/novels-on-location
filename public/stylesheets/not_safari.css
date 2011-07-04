@@ -2,6 +2,12 @@
   width: 101px;
 }
 
+#login-button {
+  position: absolute;
+  top: 7px;
+  right: 609px;
+}
+
 #mode-button {
   float: left;
   margin: 1px -1px;
