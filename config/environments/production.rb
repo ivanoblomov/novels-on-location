@@ -50,5 +50,5 @@ NovelsOnLocation::Application.configure do
   config.active_support.deprecation = :notify
 
   # Custom settings
-  config.main_host = 'NovelsOnLocation.com'
+  config.main_host = 'novelsonlocation.com'
 end
