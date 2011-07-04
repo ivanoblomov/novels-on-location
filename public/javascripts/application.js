@@ -160,15 +160,6 @@ function zoomIn(latLng) {
   });
 }
 
-function initializeFacebook() {
-  FB.init({
-    appId:'<%= Rails.application.config.facebook_app_id -%>',
-    cookie:true,
-    status:true,
-    xfbml:true
-  });
-}
-
 function logOut() {
   FB.logout(function(response) {
     $('fb\\:login-button').replaceWith('<fb:login-button>Log In</fb:login-button>');
