@@ -52,9 +52,7 @@ function initializeMap() {
 
   FB.getLoginStatus(function(response) {
     if (response.session)
-      $('#fb-root').html('<fb:login-button>Log Out</fb:login-button>');
-    else
-      $('#fb-root').html('<fb:login-button>Log In</fb:login-button>');
+      $('fb_button_text').replaceWith('<span class="fb_button_text" onclick="logOut()">Log Out</span>');
   });
   applesearch.init();
 }
