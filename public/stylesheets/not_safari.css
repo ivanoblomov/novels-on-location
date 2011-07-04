@@ -3,13 +3,18 @@
 }
 
 #mode-button {
-  position: absolute;
-  top: 7px;
-  right: 447px;
+  float: left;
+  margin: 1px -1px;
 }
 
 #place-input {
   width: 153px;
+}
+
+#toolbar {
+  position: absolute;
+  right: 105px;
+  top: 6px;
 }
 
 #applesearch {

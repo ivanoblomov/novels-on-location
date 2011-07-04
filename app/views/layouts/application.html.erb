@@ -52,9 +52,9 @@
     }
 
     #mode-button {
-      position: absolute;
-      top: 5px;
-      right: 467px;
+      float: left;
+      margin: 3px 0;
+      padding: 0;
     }
 
     #place-input {
@@ -70,10 +70,14 @@
       top:0;
     }
 
-    #applesearch {
+    #toolbar {
       position: absolute;
-      top: 4px;
       right: 106px;
+      top: 4px;
+    }
+
+    #applesearch {
+      float: left;
     }
 
     #applesearch .sbox input {
@@ -94,12 +98,13 @@
 
 <div id="map-canvas"></div>
 
-<div id="applesearch">
-  <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="place-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('place-input','clear_place')" /></span><span class="sbox_r" id="clear_place"></span>
-  <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="book-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('book-input','clear_book')" /></span><span class="sbox_r" id="clear_book"></span>
+<div id="toolbar">
+  <input type="button" id="mode-button" onclick="toggleMapMode()" value="Double-Click Map to Zoom" />
+  <div id="applesearch">
+    <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="place-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('place-input','clear_place')" /></span><span class="sbox_r" id="clear_place"></span>
+    <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="book-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('book-input','clear_book')" /></span><span class="sbox_r" id="clear_book"></span>
+  </div>
 </div>
-
-<input type="button" id="mode-button" onclick="toggleMapMode()" value="Double-Click Map to Zoom" />
 
 <script type="text/javascript">
 //<![CDATA[
