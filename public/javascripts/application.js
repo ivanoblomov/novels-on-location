@@ -50,6 +50,12 @@ function initializeMap() {
     if ((e.keyCode || e.which) == 13) codePlace($(this).val());
   });
 
+  FB.getLoginStatus(function(response) {
+    if (response.session)
+      $('#fb-root').html('<fb:login-button>Log Out</fb:login-button>');
+    else
+      $('#fb-root').html('<fb:login-button>Log In</fb:login-button>');
+  });
   applesearch.init();
 }
 
@@ -151,6 +157,10 @@ function zoomIn(latLng) {
     } else
       map.setZoom(map.getZoom() == response.zoom - 5 ? response.zoom - 3: response.zoom - 5);
   });
+}
+
+function logOut() {
+  FB.logout(function(response) {});
 }
 
 function openBalloon(pin, content) {
