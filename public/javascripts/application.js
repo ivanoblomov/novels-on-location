@@ -50,7 +50,6 @@ function initializeMap() {
     if ((e.keyCode || e.which) == 13) codePlace($(this).val());
   });
 
-  initializeFacebook();
   applesearch.init();
   FB.getLoginStatus(function(response) {
     if (response.session)
