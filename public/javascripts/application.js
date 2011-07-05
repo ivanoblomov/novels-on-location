@@ -51,12 +51,6 @@ function initializeMap() {
   });
 
   applesearch.init();
-  FB.getLoginStatus(function(response) {
-    if (response.session)
-      listenForLogout();
-    else
-      listenForLogin();
-  });
 }
 
 function labelFacebookButton(value) {

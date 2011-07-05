@@ -108,7 +108,7 @@
   <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
   <%= csrf_meta_tag -%>
 </head>
-<body>
+<body onload="initializeMap()">
 
 <div id="map-canvas"></div>
 
@@ -136,7 +136,12 @@
       status:true,
       xfbml:true
     });
-    initializeMap();
+    FB.getLoginStatus(function(response) {
+      if (response.session)
+        listenForLogout();
+      else
+        listenForLogin();
+    });
   };
   (function() {
     var e = document.createElement('script');
