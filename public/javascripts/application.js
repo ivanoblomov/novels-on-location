@@ -51,10 +51,6 @@ function initializeMap() {
   });
 
   initializeFacebook();
-  FB.getLoginStatus(function(response) {
-    if (response.session)
-      $('.fb_button_text').replaceWith('<span class="fb_button_text" onclick="logOut()">Log Out</span>');
-  });
   applesearch.init();
 }
 
@@ -157,13 +153,6 @@ function zoomIn(latLng) {
       return;
     } else
       map.setZoom(map.getZoom() == response.zoom - 5 ? response.zoom - 3: response.zoom - 5);
-  });
-}
-
-function logOut() {
-  FB.logout(function(response) {
-    $('fb\\:login-button').replaceWith('<fb:login-button>Log In</fb:login-button>');
-    initializeFacebook();
   });
 }
 
