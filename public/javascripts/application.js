@@ -52,7 +52,12 @@ function initializeMap() {
 
   initializeFacebook();
   applesearch.init();
-  listenForLogin();
+  FB.getLoginStatus(function(response) {
+    if (response.session)
+      listenForLogout();
+    else
+      listenForLogin();
+  });
 }
 
 function labelFacebookButton(value) {
@@ -65,12 +70,14 @@ function listenFor(event, args) {
 }
 
 function listenForLogin() {
+  labelFacebookButton('Log In \u00a0 ');
   $('#fb-root').click( function() {
     logIn();
   });
 }
 
 function listenForLogout() {
+  labelFacebookButton('Log Out\u00a0');
   $('#fb-root').click( function() {
     logOut();
   });
@@ -78,16 +85,12 @@ function listenForLogout() {
 
 function logIn() {
   FB.login(function(response) {
-    if (response.session) {
-      labelFacebookButton('Log Out\u00a0');
-      listenForLogout();
-    }
+    if (response.session) listenForLogout();
   });
 }
 
 function logOut() {
   FB.logout(function(response) {
-    labelFacebookButton('Log In \u00a0 ');
     listenForLogin();
   });
 }
@@ -168,9 +171,7 @@ function codePlace(input) {
       r = results[0];
       zoomIn(r.geometry.location);
 
-      if (shouldAddPin(r)) {
-        promptForBook(r.geometry.location, input, r.formatted_address);
-      }
+      if (shouldAddPin(r)) promptForBook(r.geometry.location, input, r.formatted_address);
     } else
       alert("Couldn't geocode! The error was " + status);
   });
