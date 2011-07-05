@@ -52,11 +52,44 @@ function initializeMap() {
 
   initializeFacebook();
   applesearch.init();
+  listenForLogin();
+}
+
+function labelFacebookButton(value) {
+  $('#fb-root')[0].value = value;
 }
 
 function listenFor(event, args) {
   if (clickListener != undefined) google.maps.event.removeListener(clickListener);
   clickListener = google.maps.event.addListener(map, event, function(e) {eval(args)});
+}
+
+function listenForLogin() {
+  $('#fb-root').click( function() {
+    logIn();
+  });
+}
+
+function listenForLogout() {
+  $('#fb-root').click( function() {
+    logOut();
+  });
+}
+
+function logIn() {
+  FB.login(function(response) {
+    if (response.session) {
+      labelFacebookButton('Log Out\u00a0');
+      listenForLogout();
+    }
+  });
+}
+
+function logOut() {
+  FB.logout(function(response) {
+    labelFacebookButton('Log In \u00a0 ');
+    listenForLogin();
+  });
 }
 
 function promptForTag(id, tags) {
