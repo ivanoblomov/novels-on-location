@@ -39,4 +39,8 @@ class Location
   def latLng=(value)
     self.lat_lng = value.split ','
   end
+
+  def orphan?
+    self.user_id.nil?
+  end
 end

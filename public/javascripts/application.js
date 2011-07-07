@@ -194,6 +194,17 @@ function openBalloon(pin, content) {
   listenFor('click', "openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()");
 }
 
+function claimPin(id) {
+  $.ajax({
+    type: 'PUT',
+    url: '/locations/' + id,
+    data: {
+      'caller': 'claim',
+      'location[user_id]': fb_session && fb_session.uid || null
+    }
+  });
+}
+
 function createPin(latLng, place, address, keywords) {
   $.post('/locations', {
     'location[address]': (address || ''),
