@@ -1,5 +1,6 @@
 class Location
   include Mongoid::Document
+  include Mongoid::Timestamps
 
   field :address
   field :asin

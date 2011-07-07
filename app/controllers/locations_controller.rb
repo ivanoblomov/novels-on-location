@@ -1,5 +1,5 @@
 class LocationsController < ApplicationController
-  load_and_authorize_resource :except => :show
+  load_and_authorize_resource :only => [:destroy, :update]
   helper_method :current_user
 
   # Custom =========================================================================================
@@ -10,7 +10,7 @@ class LocationsController < ApplicationController
 
   # CRUD ===========================================================================================
   def destroy
-    @location.destroy if can? :destroy, @location
+    @location.destroy
   end
 
   def index
