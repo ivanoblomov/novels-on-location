@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
 
   # Custom =========================================================================================
   def show
-    @location = Location.new location_attr
+    @location = Location.new params[:location]
     render :layout => false
   end
 
@@ -24,9 +24,7 @@ class LocationsController < ApplicationController
   end
 
   def update
-    params[:location][:user_id] ||= current_user.id
-    @location.update_attributes params[:location]
-    render :nothing => true unless params[:location][:user_id]
+    @location.update_attributes location_attr
   end
 
   private
@@ -36,6 +34,8 @@ class LocationsController < ApplicationController
   end
 
   def location_attr
+    # discard null user ID if one exists
+    params[:location].delete :user_id if params[:location] && params[:location][:user_id] == 'null'
     {:user_id => current_user.id}.merge params[:location]
   end
 end
