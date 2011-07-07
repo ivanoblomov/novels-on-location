@@ -197,9 +197,10 @@ function openBalloon(pin, content) {
 function createPin(latLng, place, address, keywords) {
   $.post('/locations', {
     'location[address]': (address || ''),
-    'location[tags]': place,
     'location[book_keywords]': keywords,
-    'location[latLng]': latLng.toUrlValue()
+    'location[latLng]': latLng.toUrlValue(),
+    'location[tags]': place,
+    'location[user_id]': fb_session && fb_session.uid || null
   });
 }
 

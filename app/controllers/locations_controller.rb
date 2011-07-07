@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
 
   # Custom =========================================================================================
   def show
-    @location = Location.new params[:location].merge :user_id => current_user.id
+    @location = Location.new location_attr
     render :layout => false
   end
 
@@ -19,14 +19,13 @@ class LocationsController < ApplicationController
   end
 
   def create
-    @location = Location.create params[:location].merge :user_id => current_user.id
+    @location = Location.create location_attr
     render :layout => false
   end
 
   def update
-    params[:location][:user_id] = current_user.id
+    params[:location][:user_id] ||= current_user.id
     @location.update_attributes params[:location]
-
     render :nothing => true unless params[:location][:user_id]
   end
 
@@ -34,5 +33,9 @@ class LocationsController < ApplicationController
 
   def current_user
     user ||= User.new session[:_csrf_token]
+  end
+
+  def location_attr
+    {:user_id => current_user.id}.merge params[:location]
   end
 end
