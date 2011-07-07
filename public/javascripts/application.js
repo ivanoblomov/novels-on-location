@@ -2,6 +2,7 @@
 var bookPrompt = 'Find a mapped book';
 var clickingZooms = true;
 var clickListener;
+var fb_session;
 var geocoder;
 var map;
 var pins = {};
@@ -78,7 +79,10 @@ function listenForLogout() {
 
 function logIn() {
   FB.login(function(response) {
-    if (response.session) listenForLogout();
+    if (response.session) {
+      fb_session = response.session
+      listenForLogout();
+    }
   });
 }
 
