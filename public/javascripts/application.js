@@ -132,7 +132,7 @@ function addPin(id, latLng, content, draggable) {
 
   google.maps.event.addListener(pin, 'dragend', function() {
     if (confirm('Move this pin?'))
-      updatePin(id, pin.getPosition());
+      movePin(id, pin.getPosition());
     else
       pin.setPosition(latLng);
   });
@@ -213,22 +213,22 @@ function findBook(latLng, place, address, keywords) {
   });
 }
 
+function movePin(id, latLng) {
+  $.ajax({
+    type: 'PUT',
+    url: '/locations/' + id,
+    data: {
+      'location[latLng]': latLng.toUrlValue()
+    }
+  });
+}
+
 function tagPin(id, tags) {
   $.ajax({
     type: 'PUT',
     url: '/locations/' + id,
     data: {
       'location[tags]': tags
-    }
-  });
-}
-
-function updatePin(id, latLng) {
-  $.ajax({
-    type: 'PUT',
-    url: '/locations/' + id,
-    data: {
-      'location[latLng]': latLng.toUrlValue()
     }
   });
 }
