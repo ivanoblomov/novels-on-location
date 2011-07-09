@@ -31,6 +31,8 @@ class LocationsController < ApplicationController
 
   def current_user
     user ||= User.new(session[:fb_id] || session[:_csrf_token])
+    Rails.logger.info "!!! #{user.inspect}"
+    user
   end
 
   def location_attr
