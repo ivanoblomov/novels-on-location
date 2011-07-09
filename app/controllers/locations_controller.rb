@@ -30,7 +30,7 @@ class LocationsController < ApplicationController
   private
 
   def current_user
-    user = User.new(request.cookies['fb_id'] || session[:_csrf_token])
+    user = User.new request.cookies['fb_id'], session[:_csrf_token]
     Rails.logger.info "Found user: #{user.inspect}"
     Rails.logger.info "with cookies: #{request.cookies.inspect}"
     user
@@ -39,6 +39,6 @@ class LocationsController < ApplicationController
   def location_attr
     # discard null user ID if one exists
     params[:location].delete :user_id if params[:location] && params[:location][:user_id] == 'null'
-    {:user_id => current_user.id}.merge params[:location]
+    {:user_id => current_user.id, :user_token => current_user.token}.merge params[:location]
   end
 end

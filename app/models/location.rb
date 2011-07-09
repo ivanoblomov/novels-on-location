@@ -14,6 +14,7 @@ class Location
   field :tags
   field :url
   field :user_id
+  field :user_token
 
   attr_reader :book_keywords
   before_save :geocode
