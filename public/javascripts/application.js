@@ -80,6 +80,7 @@ function logIn() {
   FB.login(function(response) {
     if (response.session) {
       fb_session = response.session
+      $.cookie('fb_id', fb_session.uid)
       listenForLogout();
     }
   });
