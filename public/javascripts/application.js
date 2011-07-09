@@ -1,4 +1,3 @@
-// Adapted from http://code.google.com/apis/maps/documentation/javascript/examples/icon-complex.html
 var bookPrompt = 'Find a mapped book';
 var clickingZooms = true;
 var clickListener;
