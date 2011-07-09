@@ -41,7 +41,11 @@ class Location
     self.lat_lng = value.split ','
   end
 
-  def orphan?
-    self.user_id.nil?
+  def owned?
+    self.user_id || self.user_token
+  end
+
+  def unowned?
+    ! self.owned?
   end
 end
