@@ -81,6 +81,7 @@ function logIn() {
     if (response.session) {
       fb_session = response.session
       $.cookie('fb_id', fb_session.uid)
+      window.location.reload();
       listenForLogout();
     }
   });
@@ -88,6 +89,8 @@ function logIn() {
 
 function logOut() {
   FB.logout(function(response) {
+    $.cookie('fb_id', null)
+    window.location.reload();
     listenForLogin();
   });
 }
