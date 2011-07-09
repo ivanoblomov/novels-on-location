@@ -30,8 +30,8 @@ class LocationsController < ApplicationController
   private
 
   def current_user
-    user ||= User.new(session[:fb_id] || session[:_csrf_token])
-    Rails.logger.info "!!! #{user.inspect}"
+    user ||= User.new(request.cookies[:fb_id] || session[:_csrf_token])
+    Rails.logger.info "Found user: #{user.inspect}"
     user
   end
 
