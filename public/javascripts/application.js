@@ -2,7 +2,7 @@ var bookPrompt = 'Find a mapped book';
 var clickingZooms = true;
 var clickListener;
 var fb_session;
-var friendIds;
+var friendIds = [];
 var friends;
 var geocoder;
 var map;
@@ -183,11 +183,13 @@ function hidePin(id) {
 
 function hideStrangersPins() {
   for (var i = 0; i < locations.length; i++) {
+    var pinId = locations[i]['id'];
     var pinUserId = locations[i]['user_id'];
-    if (pinUserId != fb_session.uid && ! $.inArray(pinUserID, friendIds))
-      hidePin(locations[i]['id']);
+
+    if (pinUserId != $.cookie('fb_id') && $.inArray(pinUserId, friendIds) == -1)
+      hidePin(pinId);
     else
-      pins[locations[i]['id']].setMap(map);
+      pins[pinId].setMap(map);
   }
 }
 
