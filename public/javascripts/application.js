@@ -22,7 +22,7 @@ function initializeMap() {
   map = new google.maps.Map($('#map-canvas')[0], myOptions);
   zoomer = new google.maps.MaxZoomService();
 
-  for (var i = 0; i < locations.length; i++) {
+  for (var i = 0; i < locations.length - 1; i++) {
     addPin(locations[i]['id'], locations[i]['latLng'], locations[i]['content'], locations[i]['draggable']);
   }
 
