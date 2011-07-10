@@ -52,7 +52,17 @@
     }
 
     #fb-root {
+      background: #3B5998 url(http://static.ak.fbcdn.net/rsrc.php/v1/zL/r/FGFbc80dUKj.png) no-repeat;
+      background-position: 0% -188px;
+      border: 0;
+      color: white;
       float: left;
+      font-weight: bold;
+      margin: 1px 0;
+      padding: 0;
+      text-align: right;
+      width: 77px;
+      height: 22px;
     }
 
     #mode-button {
@@ -108,7 +118,7 @@
     <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="place-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('place-input','clear_place')" /></span><span class="sbox_r" id="clear_place"></span>
     <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="book-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('book-input','clear_book')" /></span><span class="sbox_r" id="clear_book"></span>
   </div>
-  <div id="fb-root"></div><fb:login-button show-faces="false" width="200" max-rows="1"></fb:login-button>
+  <input type="button" id="fb-root" title="Log in to Facebook" value="Log In &nbsp; " />
 </div>
 
 <script type="text/javascript">
