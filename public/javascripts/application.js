@@ -100,9 +100,9 @@ function promptForTag(id, tags) {
   if (value) tagPin(id, value);
 }
 
-function promptForBook(latLng, place, address) {
+function promptForBook(gLatLng, place, address) {
   var keywords = prompt("Enter keywords describing the book: title, author, etc.", null);
-  if (keywords) findBook(latLng, place || '', address, keywords);
+  if (keywords) findBook(gLatLng, place || '', address, keywords);
 }
 
 function toggleMapMode() {
@@ -120,11 +120,12 @@ function toggleMapMode() {
 }
 
 function addPin(id, latLng, content, draggable) {
+  gLatLng = toGoogleCoordinates(latLng);
   var pin = new google.maps.Marker({
     map: map,
     draggable: draggable,
     animation: google.maps.Animation.DROP,
-    position: latLng
+    position: gLatLng
   });
 
   pins[id] = pin;
@@ -137,7 +138,7 @@ function addPin(id, latLng, content, draggable) {
     if (confirm('Move this pin?'))
       movePin(id, pin.getPosition());
     else
-      pin.setPosition(latLng);
+      pin.setPosition(gLatLng);
   });
 }
 
@@ -177,9 +178,9 @@ function codePlace(input) {
   });
 }
 
-function zoomIn(latLng) {
-  zoomer.getMaxZoomAtLatLng(latLng, function(response) {
-    map.setCenter(latLng);
+function zoomIn(gLatLng) {
+  zoomer.getMaxZoomAtLatLng(gLatLng, function(response) {
+    map.setCenter(gLatLng);
 
     if (response.status != google.maps.MaxZoomStatus.OK) {
       alert("Couldn't zoom!");
@@ -212,27 +213,27 @@ function createPin(latLng, place, address, keywords) {
   $.post('/locations', {
     'location[address]': (address || ''),
     'location[book_keywords]': keywords,
-    'location[latLng]': latLng.toUrlValue(),
+    'location[latLng]': toGoogleCoordinates(latLng).toUrlValue(),
     'location[tags]': place,
     'location[user_id]': fb_session && fb_session.uid || null
   });
 }
 
-function findBook(latLng, place, address, keywords) {
+function findBook(gLatLng, place, address, keywords) {
   $.get('/locations/1', {
     'location[address]': (address || ''),
     'location[tags]': place,
     'location[book_keywords]': keywords,
-    'location[latLng]': latLng.toUrlValue()
+    'location[latLng]': gLatLng.toUrlValue()
   });
 }
 
-function movePin(id, latLng) {
+function movePin(id, gLatLng) {
   $.ajax({
     type: 'PUT',
     url: '/locations/' + id,
     data: {
-      'location[latLng]': latLng.toUrlValue()
+      'location[latLng]': gLatLng.toUrlValue()
     }
   });
 }
@@ -245,6 +246,10 @@ function tagPin(id, tags) {
       'location[tags]': tags
     }
   });
+}
+
+function toGoogleCoordinates( latLng ) {
+	return new google.maps.LatLng(latLng[0], latLng[1]);
 }
 
 // Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html

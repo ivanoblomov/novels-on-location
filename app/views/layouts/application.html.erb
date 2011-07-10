@@ -129,7 +129,7 @@
 //<![CDATA[
   var locations = [];
   <%- @locations.each_with_index do |@location, i| -%>
-  locations[<%= i -%>] = {'id': '<%= @location.id -%>', 'terms': "<%= escape_javascript( [@location.author, @location.title, @location.address, @location.tags] * ' ').strip -%>", 'latLng': <%= to_google_lat_lng(@location.lat_lng) -%>, 'content': '<%= render("location").strip.html_safe -%>', 'draggable': <%= can? :update, @location -%>};
+  locations[<%= i -%>] = {'id': '<%= @location.id -%>', 'terms': "<%= escape_javascript( [@location.author, @location.title, @location.address, @location.tags] * ' ').strip -%>", 'latLng': [<%= @location.lat_lng * ',' -%>], 'content': '<%= render("location").strip.html_safe -%>', 'draggable': <%= can? :update, @location -%>};
   <%- end -%>
 
   window.fbAsyncInit = function() {
