@@ -52,6 +52,10 @@
     }
 
     #fb-root {
+      display: none;
+    }
+
+    #login {
       background: #3B5998 url(http://static.ak.fbcdn.net/rsrc.php/v1/zL/r/FGFbc80dUKj.png) no-repeat;
       background-position: 0% -188px;
       border: 0;
@@ -118,7 +122,7 @@
     <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="place-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('place-input','clear_place')" /></span><span class="sbox_r" id="clear_place"></span>
     <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="book-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('book-input','clear_book')" /></span><span class="sbox_r" id="clear_book"></span>
   </div>
-  <input type="button" id="fb-root" title="Log in to Facebook" value="Log In &nbsp; " />
+  <div id="fb-root"></div><input type="button" id="login" title="Log in to Facebook" value="Log In &nbsp; " />
 </div>
 
 <script type="text/javascript">

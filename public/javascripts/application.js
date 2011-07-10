@@ -54,7 +54,7 @@ function initializeMap() {
 }
 
 function labelFacebookButton(value) {
-  $('#fb-root')[0].value = value;
+  $('#login')[0].value = value;
 }
 
 function listenFor(event, args) {
@@ -64,14 +64,14 @@ function listenFor(event, args) {
 
 function listenForLogin() {
   labelFacebookButton('Log In \u00a0 ');
-  $('#fb-root').click( function() {
+  $('#login').click( function() {
     logIn();
   });
 }
 
 function listenForLogout() {
   labelFacebookButton('Log Out\u00a0');
-  $('#fb-root').click( function() {
+  $('#login').click( function() {
     logOut();
   });
 }
