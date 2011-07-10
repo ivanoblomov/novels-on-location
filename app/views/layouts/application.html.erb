@@ -129,7 +129,7 @@
 //<![CDATA[
   var locations = [];
   <%- @locations.each_with_index do |@location, i| -%>
-  locations[<%= i -%>] = {'id': '<%= @location.id -%>', 'draggable': <%= can? :update, @location -%>, 'latLng': [<%= @location.lat_lng * ',' -%>], 'terms': "<%= escape_javascript( [@location.author, @location.title, @location.address, @location.tags] * ' ').strip -%>", 'content': '<%= render("location").strip.html_safe -%>'};
+  locations[<%= i -%>] = {'id': '<%= @location.id -%>', 'user_id': '<%= @location.user_id -%>', 'draggable': <%= can? :update, @location -%>, 'latLng': [<%= @location.lat_lng * ',' -%>], 'terms': "<%= escape_javascript( [@location.author, @location.title, @location.address, @location.tags] * ' ').strip -%>", 'content': '<%= render("location").strip.html_safe -%>'};
   <%- end -%>
 
   window.fbAsyncInit = function() {
@@ -140,9 +140,11 @@
       xfbml:true
     });
     FB.getLoginStatus(function(response) {
-      if (response.session)
+      if (response.session) {
+        getFriends();
+        hideStrangersPins();
         listenForLogout();
-      else
+      } else
         listenForLogin();
     });
   };

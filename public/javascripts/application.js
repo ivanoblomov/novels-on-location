@@ -2,6 +2,8 @@ var bookPrompt = 'Find a mapped book';
 var clickingZooms = true;
 var clickListener;
 var fb_session;
+var friendIds;
+var friends;
 var geocoder;
 var map;
 var pins = {};
@@ -51,6 +53,19 @@ function initializeMap() {
   });
 
   applesearch.init();
+}
+
+function getFriendIds() {
+  for (var i = 0; i < friends.length; i++) {
+    friendIds[i] = friends[i]['id'];
+  }
+}
+
+function getFriends() {
+  FB.api('/me/friends', function(response) {
+    friends = response.data;
+    getFriendIds();
+  });
 }
 
 function labelFacebookButton(value) {
@@ -164,6 +179,16 @@ function hidePins(keyword) {
 
 function hidePin(id) {
   pins[id].setMap(null);
+}
+
+function hideStrangersPins() {
+  for (var i = 0; i < locations.length; i++) {
+    var pinUserId = locations[i]['user_id'];
+    if (pinUserId != fb_session.uid && ! $.inArray(pinUserID, friendIds))
+      hidePin(locations[i]['id']);
+    else
+      pins[locations[i]['id']].setMap(map);
+  }
 }
 
 function codePlace(input) {
