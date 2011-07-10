@@ -146,7 +146,7 @@ function shouldAddPin(googleResults) {
   var typesToPin = ['establishment', 'point_of_interest', 'street_address']
 
   for (var i = 0; i < typesToPin.length; i++) {
-    if (types.indexOf(typesToPin[i]) >= 0) return true;
+    if ($.inArray(typesToPin[i], types)) return true;
   }
 
   return false;
