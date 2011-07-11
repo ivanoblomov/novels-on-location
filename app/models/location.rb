@@ -16,6 +16,7 @@ class Location
   field :user_id
   field :user_token
 
+  attr_accessor :writable
   attr_reader :book_keywords
   before_save :geocode
   validates_presence_of :title

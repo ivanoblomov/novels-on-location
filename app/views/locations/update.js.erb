@@ -1,2 +1,2 @@
 hidePin('<%= @location.id -%>');
-addPin('<%= @location.id -%>', [<%= @location.lat_lng * ',' -%>], '<%= render('location').strip.html_safe -%>', true);
+addPin(<%= to_json(inject_writable_flag @location).html_safe -%>);
