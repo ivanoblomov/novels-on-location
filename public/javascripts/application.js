@@ -55,6 +55,11 @@ function initializeMap() {
   applesearch.init();
 }
 
+function captureFacebookSession(session) {
+  fb_session = session
+  $.cookie('fb_id', fb_session.uid)
+}
+
 function getFriendIds() {
   for (var i = 0; i < friends.length; i++) {
     friendIds[i] = friends[i]['id'];
@@ -94,8 +99,7 @@ function listenForLogout() {
 function logIn() {
   FB.login(function(response) {
     if (response.session) {
-      fb_session = response.session
-      $.cookie('fb_id', fb_session.uid)
+      captureFacebookSession(response.session);
       window.location.reload();
       listenForLogout();
     }
