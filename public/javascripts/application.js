@@ -11,6 +11,7 @@ var pins = {};
 var openWindow;
 var placePrompt = 'Find a place & map a book to it';
 var r;
+var showingAllPins = true;
 
 function initializeMap() {
   var myOptions = {
@@ -82,6 +83,7 @@ function listenFor(event, args) {
 
 function listenForLogin() {
   labelFacebookButton('Log In \u00a0 ');
+  $('#pin-display-button').hide();
   $('#login').click( function() {
     logIn();
   });
@@ -89,6 +91,7 @@ function listenForLogin() {
 
 function listenForLogout() {
   labelFacebookButton('Log Out\u00a0');
+  $('#pin-display-button').show();
   $('#login').click( function() {
     logOut();
   });
@@ -133,6 +136,20 @@ function toggleMapMode() {
     listenFor('dblclick', "promptForBook(e.latLng)");
     $('#mode-button')[0].title = 'Double-Click Map to Add Pins';
     $('#mode-button')[0].value = 'Add Pins';
+  }
+}
+
+function togglePinDisplay() {
+  showingAllPins = ! showingAllPins;
+
+  if (showingAllPins) {
+    showAllPins();
+    $('#pin-display-button')[0].title = "Click to show only friend's pins";
+    $('#pin-display-button')[0].value = 'All Pins';
+  } else {
+    hideStrangersPins();
+    $('#pin-display-button')[0].title = 'Click to show all pins';
+    $('#pin-display-button')[0].value = "Friends' Pins";
   }
 }
 
@@ -198,6 +215,12 @@ function hideStrangersPins() {
       hidePin(pinId);
     else
       pins[pinId].setMap(map);
+  }
+}
+
+function showAllPins() {
+  for (var i = 0; i < locations.length; i++) {
+    pins[locations[i]['_id']].setMap(map);
   }
 }
 

@@ -75,6 +75,13 @@
       padding: 0;
     }
 
+    #pin-display-button {
+      display: none;
+      float: left;
+      margin: 3px 0;
+      padding: 0;
+    }
+
     #place-input {
       width: 210px;
     }
@@ -123,6 +130,7 @@
     <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="book-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('book-input','clear_book')" /></span><span class="sbox_r" id="clear_book"></span>
   </div>
   <div id="fb-root"></div><input type="button" id="login" title="Log in to Facebook" value="Log In &nbsp; " />
+  <input type="button" id="pin-display-button" onclick="togglePinDisplay()" title="Click to show only friend's pins" value="Show All Pins" />
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
