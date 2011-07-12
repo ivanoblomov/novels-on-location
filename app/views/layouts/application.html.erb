@@ -148,7 +148,6 @@
       if (response.session) {
         captureFacebookSession(response.session);
         getFriends();
-        hideStrangersPins();
         listenForLogout();
       } else
         listenForLogin();
