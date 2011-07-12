@@ -72,8 +72,9 @@ function getFriends() {
   });
 }
 
-function labelFacebookButton(value) {
+function labelFacebookButton(value, title) {
   $('#login')[0].value = value;
+  $('#login')[0].title = title;
 }
 
 function listenFor(event, args) {
@@ -82,7 +83,7 @@ function listenFor(event, args) {
 }
 
 function listenForLogin() {
-  labelFacebookButton('Log In \u00a0 ');
+  labelFacebookButton('Log In \u00a0 ', 'Log into Facebook');
   $('#pin-display-button').hide();
   $('#login').click( function() {
     logIn();
@@ -90,7 +91,7 @@ function listenForLogin() {
 }
 
 function listenForLogout() {
-  labelFacebookButton('Log Out\u00a0');
+  labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
   $('#pin-display-button').show();
   $('#login').click( function() {
     logOut();
