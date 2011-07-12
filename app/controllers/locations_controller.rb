@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
   load_and_authorize_resource :only => [:destroy, :update]
-  helper_method :current_user, :inject_writable_flag, :to_json
+  helper_method :current_user, :inject_writable_flag
   respond_to :html, :json
 
   # Custom =========================================================================================
@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => to_json(inject_writable_flag @locations), :layout => false }
+      format.json { render :json => inject_writable_flag(@locations).to_json(:methods => [:keywords, :writable]), :layout => false }
     end
   end
 
@@ -55,9 +55,5 @@ class LocationsController < ApplicationController
     # discard null user ID if one exists
     params[:location].delete :user_id if params[:location] && params[:location][:user_id] == 'null'
     {:user_id => current_user.id, :user_token => current_user.token}.merge params[:location]
-  end
-
-  def to_json(locations)
-    locations.to_json :methods => :writable
   end
 end

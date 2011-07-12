@@ -16,7 +16,7 @@ class Location
   field :user_id
   field :user_token
 
-  attr_accessor :writable
+  attr_accessor :keywords, :writable
   attr_reader :book_keywords
   before_save :geocode
   validates_presence_of :title
@@ -29,6 +29,12 @@ class Location
     Location.all.map{ |l| l.book_keywords = l.title; l.save }
   end
 
+  # Overrides ======================================================================================
+  def to_json
+    super :methods => [:keywords, :writable]
+  end
+
+  # Instance methods ===============================================================================
   def book_keywords=(value)
     self[:book_keywords] = value
     self.attributes = CandyWrapper.book(value)
