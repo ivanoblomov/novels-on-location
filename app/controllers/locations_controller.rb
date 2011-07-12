@@ -45,7 +45,7 @@ class LocationsController < ApplicationController
     if locations.is_a?(Array)
       locations = locations.map{ |l| l.writable = l.owned? && can?(:update, l); l }
     else
-      locations.writable = l.owned? && can?(:update, locations)
+      locations.writable = locations.owned? && can?(:update, locations)
     end
 
     locations
