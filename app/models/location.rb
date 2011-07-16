@@ -2,6 +2,8 @@ class Location
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  VIRTUAL_ATTRIBUTES = [:keywords, :terms, :writable]
+
   field :address
   field :asin
   field :author
@@ -31,7 +33,7 @@ class Location
 
   # Overrides ======================================================================================
   def to_json
-    super :methods => [:keywords, :writable]
+    super :methods => Location::VIRTUAL_ATTRIBUTES
   end
 
   # Instance methods ===============================================================================
@@ -50,6 +52,10 @@ class Location
 
   def owned?
     self.user_id || self.user_token
+  end
+
+  def terms
+    [self.address, self.author, self.title, self.tags].compact * ' '
   end
 
   def unowned?

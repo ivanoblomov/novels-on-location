@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => inject_writable_flag(@locations).to_json(:methods => [:keywords, :writable]), :layout => false }
+      format.json { render :json => inject_writable_flag(@locations).to_json(:methods => Location::VIRTUAL_ATTRIBUTES), :layout => false }
     end
   end
 
