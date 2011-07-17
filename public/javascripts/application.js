@@ -117,12 +117,12 @@ function logOut() {
 }
 
 function promptForTag(id, tags) {
-  var value = prompt("Enter some descriptive words. These will be linked to a Google search.", tags);
+  var value = prompt('Enter some descriptive words. These will be linked to a Google search.', tags);
   if (value) tagPin(id, value);
 }
 
 function promptForBook(gLatLng, place, address) {
-  var keywords = prompt("Enter keywords describing the book: title, author, etc.", null);
+  var keywords = prompt('Enter keywords describing the book: title, author, etc.', null);
   if (keywords) findBook(gLatLng, place || '', address, keywords);
 }
 
@@ -134,7 +134,7 @@ function toggleMapMode() {
     $('#mode-button')[0].title = 'Double-click map to zoom. Click to toggle';
     $('#mode-button')[0].value = 'Zoom';
   } else {
-    listenFor('dblclick', "promptForBook(e.latLng)");
+    listenFor('dblclick', 'promptForBook(e.latLng)');
     $('#mode-button')[0].title = 'Double-click map to add pins. Click to toggle';
     $('#mode-button')[0].value = 'Add Pins';
   }
@@ -145,7 +145,7 @@ function togglePinDisplay() {
 
   if (showingAllPins) {
     showAllPins();
-    $('#pin-display-button')[0].title = "Click to show only friend's pins";
+    $('#pin-display-button')[0].title = "Click to show only friends' pins";
     $('#pin-display-button')[0].value = 'All Pins';
   } else {
     hideStrangersPins();
@@ -370,7 +370,7 @@ applesearch.onChange = function (fldID, btnID)
 applesearch.clearFld = function (fldID,btnID)
 {
 	var fld = document.getElementById( fldID );
-	fld.value = "";
+	fld.value = '';
 	this.onChange(fldID,btnID);
 
 	if (fldID == 'book-input') {
