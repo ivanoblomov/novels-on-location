@@ -11,6 +11,7 @@ class Location
   field :image_url
   field :image_width
   field :lat_lng, :type => Array
+  field :notes
   field :review
   field :title
   field :tags
