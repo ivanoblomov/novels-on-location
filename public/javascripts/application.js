@@ -61,7 +61,7 @@ function captureFacebookSession(session) {
 
 function getFriendIds() {
   for (var i = 0; i < friends.length; i++) {
-    friendIds[i] = friends[i]['id'];
+    friendIds[i] = friends[i].id;
   }
 }
 
@@ -155,15 +155,15 @@ function togglePinDisplay() {
 }
 
 function addPin(location) {
-  gLatLng = toGoogleCoordinates(location['lat_lng']);
+  gLatLng = toGoogleCoordinates(location.lat_lng);
   var pin = new google.maps.Marker({
     map: map,
-    draggable: location['writable'],
+    draggable: location.writable,
     animation: google.maps.Animation.DROP,
     position: gLatLng
   });
 
-  pins[location['_id']] = pin;
+  pins[location._id] = pin;
 
   google.maps.event.addListener(pin, 'click', function() {
     openBalloon(location);
@@ -171,7 +171,7 @@ function addPin(location) {
 
   google.maps.event.addListener(pin, 'dragend', function() {
     if (confirm('Move this pin?'))
-      movePin(location['_id'], pin.getPosition());
+      movePin(location._id, pin.getPosition());
     else
       pin.setPosition(gLatLng);
   });
@@ -184,7 +184,7 @@ function addPins() {
 }
 
 function shouldAddPin(googleResults) {
-  var types = googleResults['types'];
+  var types = googleResults.types;
   var typesToPin = ['establishment', 'point_of_interest', 'street_address']
 
   for (var i = 0; i < typesToPin.length; i++) {
@@ -196,10 +196,10 @@ function shouldAddPin(googleResults) {
 
 function hidePins(keyword) {
   for (var i = 0; i < locations.length; i++) {
-    if (keyword != '' && locations[i]['terms'].search(eval('/' + keyword + '/i')) == -1)
-      hidePin(locations[i]['_id']);
+    if (keyword != '' && locations[i].terms.search(eval('/' + keyword + '/i')) == -1)
+      hidePin(locations[i]._id);
     else
-      pins[locations[i]['_id']].setMap(map);
+      pins[locations[i]._id].setMap(map);
   }
 }
 
@@ -209,8 +209,8 @@ function hidePin(id) {
 
 function hideStrangersPins() {
   for (var i = 0; i < locations.length; i++) {
-    var pinId = locations[i]['_id'];
-    var pinUserId = locations[i]['user_id'];
+    var pinId = locations[i]._id;
+    var pinUserId = locations[i].user_id;
 
     if ($.cookie('fb_id') && pinUserId != $.cookie('fb_id') && $.inArray(pinUserId, friendIds) == -1)
       hidePin(pinId);
@@ -221,7 +221,7 @@ function hideStrangersPins() {
 
 function showAllPins() {
   for (var i = 0; i < locations.length; i++) {
-    pins[locations[i]['_id']].setMap(map);
+    pins[locations[i]._id].setMap(map);
   }
 }
 
@@ -253,13 +253,13 @@ function zoomIn(gLatLng) {
 function openBalloon(location) {
   if (openWindow != undefined) openWindow.close();
   html = '<div class="map-balloon">';
-  if (location['user_id'] == null && location['user_token'] == null) html += '<input class="button" onClick="claimPin(\'' + location['_id'] + '\')" type="button" value="Claim" title="Claim This Pin" />';
-  if (location['writable']) html += '<input class="button" onClick="deletePin(\'' + location['_id'] + '\')" type="button" value="Delete" title="Delete This Pin" /><input class="button" onClick="promptForTag(\'' + location['_id'] + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag Pin" />';
-  html += '<input class="button" onClick="zoomIn(new google.maps.LatLng(' + location.lat_lng + '))" type="button" value="Zoom" title="Zoom to Pin" /><h1><a href="' + location['url'] + '" target="_blank"><img src="' + location['image_url'] + '" alt="Cover of ' + location['title'] + '" class="thumbnail" height=' + location['image_height'] + ' width=' + location['image_width'] + ' />' + location['title'] + '</a></h1> <h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location['author']) + '" target="_blank">' + location['author'] + '</a></h2><h2>' + location['address'] + '</h2><p>' + location['review'] + '</p>';
-  if (location['tags']) html += '<p>Tags: <a href="http://www.google.com/search?q=' + encodeURI(location['tags']) + '" target="_blank">' + location['tags'] + '</a></p>'
+  if (location.user_id == null && location.user_token == null) html += '<input class="button" onClick="claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim This Pin" />';
+  if (location.writable) html += '<input class="button" onClick="deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete This Pin" /><input class="button" onClick="promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag Pin" />';
+  html += '<input class="button" onClick="zoomIn(new google.maps.LatLng(' + location.lat_lng + '))" type="button" value="Zoom" title="Zoom to Pin" /><h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + ' />' + location.title + '</a></h1> <h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2><p>' + location.review + '</p>';
+  if (location.tags) html += '<p>Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a></p>'
   html += '</div>';
   openWindow = new google.maps.InfoWindow( {content: html} );
-  openWindow.open(map, pins[location['_id']]);
+  openWindow.open(map, pins[location._id]);
   listenFor('click', "openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()");
 }
 
