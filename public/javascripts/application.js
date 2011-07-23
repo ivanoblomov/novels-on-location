@@ -65,6 +65,13 @@ function getFriendIds() {
   }
 }
 
+function getFriendName(id) {
+  for (var i = 0; i < friends.length; i++) {
+    if (friends[i].id == id)
+      return friends[i].name;
+  }
+}
+
 function getFriends() {
   FB.api('/me/friends', function(response) {
     friends = response.data;
@@ -263,6 +270,7 @@ function openBalloon(location) {
   html += '<input class="button" onClick="zoomIn(new google.maps.LatLng(' + location.lat_lng + '))" type="button" value="Zoom" title="Zoom to Pin" /><h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + ' />' + location.title + '</a></h1> <h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2><p>' + location.review + '</p>';
   if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p>'
   if (location.tags) html += '<p>Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a></p>'
+  if (fb_session && location.user_id) html += '<p>Added by: <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" target="_blank">' + getFriendName(location.user_id) + '</a></p>'
   html += '</div>';
   openWindow = new google.maps.InfoWindow( {content: html} );
   openWindow.open(map, pins[location._id]);
