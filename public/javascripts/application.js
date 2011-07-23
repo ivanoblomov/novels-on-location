@@ -150,11 +150,11 @@ function toggleMapMode() {
   if (clickingZooms) {
     if (clickListener != undefined) google.maps.event.removeListener(clickListener);
     $('#mode-button')[0].title = 'Double-click map to zoom. Click to toggle';
-    $('#mode-button')[0].value = 'Zoom';
+    $('#mode-button')[0].value = 'Mode: Zoom';
   } else {
     listenFor('dblclick', 'promptForBook(e.latLng)');
     $('#mode-button')[0].title = 'Double-click map to add pins. Click to toggle';
-    $('#mode-button')[0].value = 'Add Pins';
+    $('#mode-button')[0].value = 'Mode: Add Pins';
   }
 }
 
@@ -164,11 +164,11 @@ function togglePinDisplay() {
   if (showingAllPins) {
     showAllPins();
     $('#pin-display-button')[0].title = "Click to show only friends' pins";
-    $('#pin-display-button')[0].value = 'All Pins';
+    $('#pin-display-button')[0].value = "Show Friends'";
   } else {
     hideStrangersPins();
     $('#pin-display-button')[0].title = 'Click to show all pins';
-    $('#pin-display-button')[0].value = "Friends' Pins";
+    $('#pin-display-button')[0].value = "Show All";
   }
 }
 
