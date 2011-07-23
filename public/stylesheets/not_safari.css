@@ -2,6 +2,10 @@
   width: 101px;
 }
 
+#login {
+  margin: -1px 0;
+}
+
 #login-button {
   position: absolute;
   top: 7px;
