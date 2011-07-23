@@ -66,6 +66,8 @@ function getFriendIds() {
 }
 
 function getFriendName(id) {
+  if (id == fb_session.uid)
+    return 'You';
   for (var i = 0; i < friends.length; i++) {
     if (friends[i].id == id)
       return friends[i].name;
@@ -268,10 +270,14 @@ function openBalloon(location) {
   if (location.user_id == null && location.user_token == null) html += '<input class="button" onClick="claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim This Pin" />';
   if (location.writable) html += '<input class="button" onClick="deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete This Pin" /><input class="button" onClick="promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag Pin" /><input class="button" onClick="promptForNotes(\'' + location._id + '\', \'' + (location.notes || '') + '\')" type="button" value="Annotate" title="Annotate Pin" />';
   html += '<input class="button" onClick="zoomIn(new google.maps.LatLng(' + location.lat_lng + '))" type="button" value="Zoom" title="Zoom to Pin" /><h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + ' />' + location.title + '</a></h1> <h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2><p>' + location.review + '</p>';
-  if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p>'
-  if (location.tags) html += '<p>Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a></p>'
-  if (fb_session && location.user_id) html += '<p>Added by: <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" target="_blank">' + getFriendName(location.user_id) + '</a></p>'
-  html += '</div>';
+  if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p><p>'
+  if (fb_session && location.user_id) {
+    html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" target="_blank">' + getFriendName(location.user_id) + '</a> on ' + location.added_at + '<br />';
+  } else {
+    html += 'Added on ' + location.added_at + '<br />';
+  }
+  if (location.tags) html += 'Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a>'
+  html += '</p></div>';
   openWindow = new google.maps.InfoWindow( {content: html} );
   openWindow.open(map, pins[location._id]);
   listenFor('click', "openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()");

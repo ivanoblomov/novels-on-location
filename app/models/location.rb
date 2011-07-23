@@ -2,7 +2,7 @@ class Location
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  VIRTUAL_ATTRIBUTES = [:keywords, :terms, :writable]
+  VIRTUAL_ATTRIBUTES = [:added_at, :keywords, :terms, :writable]
 
   field :address
   field :asin
@@ -38,6 +38,11 @@ class Location
   end
 
   # Instance methods ===============================================================================
+  def added_at
+    t = self.created_at || self.updated_at
+    t && t.to_s(:date_time)
+  end
+
   def book_keywords=(value)
     self[:book_keywords] = value
     self.attributes = CandyWrapper.book(value)
