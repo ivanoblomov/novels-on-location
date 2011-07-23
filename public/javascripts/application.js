@@ -34,18 +34,22 @@ function initializeMap() {
   // Register event listeners
   $('#book-input').blur( function() {
     $(this).attr('value', bookPrompt);
+    $(this).css('color', '#777');
   });
   $('#book-input').focus( function() {
     $(this).attr('value', '');
+    $(this).css('color', 'black');
   });
   $('#book-input').keyup( function() {
     hidePins($('#book-input')[0].value);
   });
   $('#place-input').blur( function() {
     $(this).attr('value', placePrompt);
+    $(this).css('color', '#777');
   });
   $('#place-input').focus( function() {
     $(this).attr('value', '');
+    $(this).css('color', 'black');
   });
   $('#place-input').keypress( function(e) {
     if ((e.keyCode || e.which) == 13) codePlace($(this).val());
