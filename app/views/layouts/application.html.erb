@@ -153,6 +153,7 @@
       if (response.session) {
         captureFacebookSession(response.session);
         getFriends();
+        claimMyPins();
         listenForLogout();
       } else
         listenForLogin();

@@ -197,6 +197,15 @@ function addPins() {
   }
 }
 
+function claimMyPins() {
+  for (var i = 0; i < locations.length; i++) {
+    // does the pin writable but missing an fb id?
+    if (locations[i].writable && locations.user_id == undefined) {
+      claimPin(locations[i]._id);
+    }
+  }
+}
+
 function shouldAddPin(googleResults) {
   var types = googleResults.types;
   var typesToPin = ['establishment', 'point_of_interest', 'street_address']
