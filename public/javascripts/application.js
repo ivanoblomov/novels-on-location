@@ -34,11 +34,15 @@ function initializeMap() {
 
   // Register event listeners
   $('#book-input').blur( function() {
-    $(this).attr('value', bookPrompt);
+    if ($(this).attr('value') == '') {
+      $(this).attr('value', bookPrompt);
+      hidePins('');
+    }
     $(this).css('color', '#777');
   });
   $('#book-input').focus( function() {
-    $(this).attr('value', '');
+    if ($(this).attr('value') == bookPrompt)
+      $(this).attr('value', '');
     $(this).css('color', 'black');
   });
   $('#book-input').keyup( function() {
