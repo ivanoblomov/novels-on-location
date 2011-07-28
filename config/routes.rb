@@ -7,8 +7,8 @@ NovelsOnLocation::Application.routes.draw do
   end
 
   constraints(WrongHost.new) do
-    match '/', :to => redirect("http://#{Rails.application.config.main_host}")
-    match '*path', :to => redirect{ |params| "http://#{Rails.application.config.main_host}/#{params[:path]}" }
+    get '/', :to => redirect("http://#{Rails.application.config.main_host}")
+    get '*path', :to => redirect{ |params| "http://#{Rails.application.config.main_host}/#{params[:path]}" }
   end
 
   resources :locations
