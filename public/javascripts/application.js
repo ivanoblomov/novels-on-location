@@ -175,7 +175,7 @@ function togglePinDisplay() {
   } else {
     hideStrangersPins();
     $('#pin-display-button')[0].title = 'Click to show all pins';
-    $('#pin-display-button')[0].value = "Show All";
+    $('#pin-display-button')[0].value = 'Show All Pins';
   }
 }
 
