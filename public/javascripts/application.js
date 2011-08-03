@@ -69,9 +69,11 @@ function captureFacebookSession(session) {
 }
 
 function getFacebookName(location) {
-  FB.api('/' + location.user_id, function(response) {
-    location.user_name = response.name;
-  });
+  if (location.user_name == undefined) {
+    FB.api('/' + location.user_id, function(response) {
+      location.user_name = response.name;
+    });
+  }
 }
 
 function getFriendIds() {
@@ -81,25 +83,18 @@ function getFriendIds() {
 }
 
 function getFriendName(id) {
-  var name;
-
   if (id == fb_session.uid)
-    name = 'You';
-  else {
-    for (var i = 0; i < friends.length; i++) {
-      if (friends[i].id == id) {
-        name = friends[i].name;
-        break;
-      }
-    }
+    return 'You';
+  for (var i = 0; i < friends.length; i++) {
+    if (friends[i].id == id)
+      return friends[i].name;
   }
-
-  return name || 'a Facebook user';
 }
 
 function getFriends() {
   FB.api('/me/friends', function(response) {
     friends = response.data;
+    setLocationUserNames();
     getFriendIds();
   });
 }
@@ -269,9 +264,8 @@ function hideStrangersPins() {
 
 function setLocationUserNames() {
   for (var i = 0; i < locations.length; i++) {
-    if (locations[i].user_id) {
-      getFacebookName(locations[i]);
-    }
+    if (locations[i].user_name == undefined && locations[i].user_id)
+      locations[i].user_name = getFriendName(locations[i].user_id) || getFacebookName(locations[i]);
   }
 }
 
@@ -378,7 +372,6 @@ function getLocations() {
   $.get('/locations.json', function(data) {
     locations = data;
     addPins();
-    setLocationUserNames();
   });
 }
 
