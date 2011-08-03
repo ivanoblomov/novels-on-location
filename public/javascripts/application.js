@@ -68,6 +68,12 @@ function captureFacebookSession(session) {
   $.cookie('fb_id', fb_session.uid)
 }
 
+function getFacebookName(location) {
+  FB.api('/' + location.user_id, function(response) {
+    location.user_name = response.name;
+  });
+}
+
 function getFriendIds() {
   for (var i = 0; i < friends.length; i++) {
     friendIds[i] = friends[i].id;
@@ -261,6 +267,14 @@ function hideStrangersPins() {
   }
 }
 
+function setLocationUserNames() {
+  for (var i = 0; i < locations.length; i++) {
+    if (locations[i].user_id) {
+      getFacebookName(locations[i]);
+    }
+  }
+}
+
 function showAllPins() {
   for (var i = 0; i < locations.length; i++) {
     pins[locations[i]._id].setMap(map);
@@ -300,7 +314,7 @@ function openBalloon(location) {
   html += '<input class="button" onClick="zoomIn(new google.maps.LatLng(' + location.lat_lng + '))" type="button" value="Zoom" title="Zoom to Pin" /><h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + ' />' + location.title + '</a></h1> <h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2><p>' + location.review + '</p>';
   if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p><p>'
   if (fb_session && location.user_id) {
-    html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" target="_blank">' + getFriendName(location.user_id) + '</a> on ' + location.added_at + '<br />';
+    html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + location.user_name + '</a> on ' + location.added_at + '<br />';
   } else {
     html += 'Added on ' + location.added_at + '<br />';
   }
@@ -364,6 +378,7 @@ function getLocations() {
   $.get('/locations.json', function(data) {
     locations = data;
     addPins();
+    setLocationUserNames();
   });
 }
 
