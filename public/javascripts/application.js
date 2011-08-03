@@ -75,12 +75,20 @@ function getFriendIds() {
 }
 
 function getFriendName(id) {
+  var name;
+
   if (id == fb_session.uid)
-    return 'You';
-  for (var i = 0; i < friends.length; i++) {
-    if (friends[i].id == id)
-      return friends[i].name;
+    name = 'You';
+  else {
+    for (var i = 0; i < friends.length; i++) {
+      if (friends[i].id == id) {
+        name = friends[i].name;
+        break;
+      }
+    }
   }
+
+  return name || 'a Facebook user';
 }
 
 function getFriends() {
