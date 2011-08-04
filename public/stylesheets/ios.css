@@ -1,0 +1,38 @@
+body {
+  font-size: 12pt;
+}
+
+#applesearch .sbox input {
+  font-size: 12pt;
+  height: 26px;
+}
+
+#book-input {
+  width: 166px;
+}
+
+#place-input {
+  width: 240px;
+}
+
+#toolbar {
+  right: 125px;
+  top: 5px;
+}
+
+#login {
+  background-position: 0% -138px;
+  font-size: 12pt;
+  width: 97px;
+  height: 26px;
+}
+
+#mode-button {
+  font-size: 12pt;
+  width: 153px;
+  height: 26px;
+}
+
+#pin-display-button {
+  height: 26px;
+}
