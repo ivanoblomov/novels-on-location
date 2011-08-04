@@ -8,7 +8,8 @@
     }
 
     body {
-      font: 10pt helvetica,sans-serif;
+      font-family: "Helvetica Neue", helvetica, arial, "Lucida Grande", sans-serif;
+      font-size: 10pt;
       height: auto;
       margin: 0;
       padding: 0;
@@ -32,13 +33,28 @@
       margin-bottom: -10px;
     }
 
-    .button {
-      float: right;
-      margin-top: 0;
+    input[type="button"] {
+      background: #3B5998;
+      border: 0;
+      color: white;
+      cursor: pointer;
+      float: left;
+      font-weight: bold;
+      margin: 1px 0;
+      padding: 0 0 0 5px;
+      text-align: left;
     }
 
     .map-balloon {
       margin-right: 15px;
+    }
+
+    .map-balloon input[type="button"] {
+      background: white;
+      color: blue;
+      float: right;
+      font-size: 10pt;
+      padding: 3px;
     }
 
     .search {
@@ -63,12 +79,6 @@
     #login {
       background: #3B5998 url(http://static.ak.fbcdn.net/rsrc.php/v1/zL/r/FGFbc80dUKj.png) no-repeat;
       background-position: 0% -188px;
-      border: 0;
-      color: white;
-      cursor: pointer;
-      float: left;
-      font-weight: bold;
-      margin: 1px 0;
       padding: 0;
       text-align: right;
       width: 77px;
@@ -76,30 +86,12 @@
     }
 
     #mode-button {
-      background: #3B5998;
-      border: 0;
-      color: white;
-      cursor: pointer;
-      float: left;
-      font-weight: bold;
-      margin: 1px 0;
-      padding: 0 0 0 5px;
-      text-align: left;
       width: 96px;
       height: 22px;
     }
 
     #pin-display-button {
-      background: #3B5998;
-      border: 0;
-      color: white;
-      cursor: pointer;
       display: none;
-      float: left;
-      font-weight: bold;
-      margin: 1px 0;
-      padding: 0 0 0 5px;
-      text-align: left;
       width: 90px;
       height: 22px;
     }
