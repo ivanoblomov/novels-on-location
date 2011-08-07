@@ -117,7 +117,6 @@
     }
 
     #pin-display-button {
-      display: none;
       width: 90px;
       height: 22px;
     }
@@ -162,8 +161,8 @@
     <span class="sbox_l"></span><span class="sbox"><input type="search" class="search" id="book-input" placeholder="Search..." autosave="applestyle_srch" results="5" onkeyup="applesearch.onChange('book-input','clear_book')" /></span><span class="sbox_r" id="clear_book"></span>
   </div>
   <input type="button" id="mode-button" onclick="toggleMapMode()" title="Double-click map to zoom. Click to toggle" value="Mode: Zoom" />
+  <input type="button" id="pin-display-button" onclick="togglePinDisplay()" title="Click to show only my pins" value="Show My Pins" />
   <div id="fb-root"></div><input type="button" id="login-button" title="Log into Facebook" value="Log In &nbsp; " />
-  <input type="button" id="pin-display-button" onclick="togglePinDisplay()" title="Click to show only friends' pins" value="Show Friends'" />
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
@@ -183,6 +182,7 @@
         getFriends();
         claimMyPins();
         listenForLogout();
+        setPinDisplayPrompt();
       } else
         listenForLogin();
     });
