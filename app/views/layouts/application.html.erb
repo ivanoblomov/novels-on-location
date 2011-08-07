@@ -40,7 +40,6 @@
       cursor: pointer;
       float: left;
       font-weight: bold;
-      margin: 1px 0;
       padding: 0 0 0 5px;
       text-align: left;
     }
@@ -68,8 +67,35 @@
       margin-right: 5px;
     }
 
+    #applesearch {
+      float: left;
+      top: 6px;
+    }
+
+    #applesearch .sbox_l  {
+      background: url('/images/srch_l.gif') no-repeat top left;
+      float: left;
+      width: 19px;
+      height: 19px;
+    }
+
+    #applesearch .sbox_r  {
+      background: url('/images/srch_r.gif') no-repeat top left;
+      float: left;
+      width: 19px;
+      height: 19px;
+    }
+
+    #applesearch .sbox input {
+      background: url('/images/srch_bg.gif') repeat-x top left;
+      border: 0;
+      float: left;
+      font: 11px/13px arial;
+      padding: 3px;
+    }
+
     #book-input {
-      width: 153px;
+      width: 101px;
     }
 
     #fb-root {
@@ -86,7 +112,7 @@
     }
 
     #mode-button {
-      width: 96px;
+      width: 98px;
       height: 22px;
     }
 
@@ -97,7 +123,7 @@
     }
 
     #place-input {
-      width: 210px;
+      width: 153px;
     }
 
     #map-canvas {
@@ -111,16 +137,8 @@
 
     #toolbar {
       position: absolute;
-      right: 106px;
+      right: 105px;
       top: 4px;
-    }
-
-    #applesearch {
-      float: left;
-    }
-
-    #applesearch .sbox input {
-      float: left;
     }
 
     @media print {
@@ -129,8 +147,8 @@
       }
     }
   </style>
+  <%= stylesheet_link_tag 'safari' if request.user_agent =~ /safari/i -%>
   <%= stylesheet_link_tag 'ios' if request.user_agent =~ /ipad|iphone/i -%>
-  <%= stylesheet_link_tag 'not_safari' unless request.user_agent =~ /safari/i -%>
   <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
   <%= csrf_meta_tag -%>
 </head>
