@@ -2,6 +2,10 @@ body {
   font-size: 12pt;
 }
 
+input[type="button"] {
+  -webkit-appearance: none;
+}
+
 #applesearch .sbox input {
   font-size: 12pt;
   height: 26px;
@@ -29,10 +33,12 @@ body {
 
 #mode-button {
   font-size: 12pt;
-  width: 153px;
+  width: 131px;
   height: 26px;
 }
 
 #pin-display-button {
+  font-size: 12pt;
   height: 26px;
+  width: 118px;
 }
