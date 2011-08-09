@@ -179,10 +179,10 @@
     FB.getLoginStatus(function(response) {
       if (response.session) {
         captureFacebookSession(response.session);
+        setPinDisplayPrompt();
         getFriends();
         claimMyPins();
         listenForLogout();
-        setPinDisplayPrompt();
       } else
         listenForLogin();
     });
