@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
   load_and_authorize_resource :only => [:destroy, :update]
-  helper_method :current_user, :inject_writable_flag
+  helper_method :inject_writable_flag
   respond_to :html, :json
 
   # Custom =========================================================================================
@@ -19,7 +19,10 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       format.html
-      format.json { render :json => inject_writable_flag(@locations).to_json(:methods => Location::VIRTUAL_ATTRIBUTES), :layout => false }
+      format.json do
+        cookies.permanent[:user_token] = params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
+        render :json => inject_writable_flag(@locations).to_json(:methods => Location::VIRTUAL_ATTRIBUTES), :layout => false
+      end
     end
   end
 
@@ -35,10 +38,7 @@ class LocationsController < ApplicationController
   private
 
   def current_user
-    user = User.new request.cookies['fb_id'], session[:_csrf_token]
-    Rails.logger.info "Found user: #{user.inspect}"
-    Rails.logger.info "with cookies: #{request.cookies.inspect}"
-    user
+    User.new request.cookies['fb_id'], request.cookies['user_token']
   end
 
   def inject_writable_flag(locations)

@@ -337,7 +337,8 @@ function claimPin(id) {
     url: '/locations/' + id,
     data: {
       'caller': 'claim',
-      'location[user_id]': fb_session && fb_session.uid || null
+      'location[user_id]': fb_session && fb_session.uid || null,
+      'location[user_token]': $.cookie('user_token')
     }
   });
 }
@@ -348,7 +349,8 @@ function createPin(latLng, place, address, keywords) {
     'location[book_keywords]': keywords,
     'location[latLng]': toGoogleCoordinates(latLng).toUrlValue(),
     'location[tags]': place,
-    'location[user_id]': fb_session && fb_session.uid || null
+    'location[user_id]': fb_session && fb_session.uid || null,
+    'location[user_token]': $.cookie('user_token')
   });
 }
 
@@ -371,7 +373,7 @@ function findBook(gLatLng, place, address, keywords) {
 }
 
 function getLocations() {
-  $.get('/locations.json', function(data) {
+  $.get('/locations.json', {'user_token': $.cookie('user_token')}, function(data) {
     locations = data;
     addPins();
   });
