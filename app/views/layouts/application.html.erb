@@ -182,9 +182,10 @@
         setPinDisplayPrompt();
         getFriends();
         claimMyPins();
-        listenForLogout();
-      } else
-        listenForLogin();
+        labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
+      }
+
+      listenForLogin();
     });
   };
   (function() {

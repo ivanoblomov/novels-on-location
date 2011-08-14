@@ -59,6 +59,7 @@ function initializeMap() {
   $('#place-input').keypress( function(e) {
     if ((e.keyCode || e.which) == 13) codePlace($(this).val());
   });
+  shortcut.add('l', toggleLogin);
   shortcut.add('m', toggleMapMode);
   shortcut.add('s', togglePinDisplay);
 
@@ -112,22 +113,15 @@ function listenFor(event, args) {
 }
 
 function listenForLogin() {
-  labelFacebookButton('Log In \u00a0 ', 'Log into Facebook');
   $('#login-button').click( function() {
-    logIn();
-  });
-}
-
-function listenForLogout() {
-  labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
-  $('#login-button').click( function() {
-    logOut();
+    toggleLogin();
   });
 }
 
 function logIn() {
   FB.login(function(response) {
     if (response.session) {
+      labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
       captureFacebookSession(response.session);
       window.location.reload();
       listenForLogout();
@@ -137,10 +131,15 @@ function logIn() {
 
 function logOut() {
   FB.logout(function(response) {
+    labelFacebookButton('Log In \u00a0 ', 'Log into Facebook');
     $.cookie('fb_id', null)
     window.location.reload();
     listenForLogin();
   });
+}
+
+function toggleLogin() {
+  $.cookie('fb_id') ? logOut() : logIn();
 }
 
 function promptForTag(id, tags) {
