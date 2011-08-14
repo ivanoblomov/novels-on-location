@@ -164,12 +164,18 @@ function toggleMapMode() {
     if (clickListener != undefined) google.maps.event.removeListener(clickListener);
     $('#mode-button')[0].title = 'Double-click map to zoom. Click to toggle';
     $('#mode-button')[0].value = 'Mode: Zoom';
-    map.setOptions({draggableCursor: 'default'});
+    map.setOptions({
+      draggableCursor: 'default',
+      disableDoubleClickZoom: false
+    });
   } else {
     listenFor('dblclick', 'promptForBook(e.latLng)');
     $('#mode-button')[0].title = 'Double-click map to add pins. Click to toggle';
     $('#mode-button')[0].value = 'Mode: Add Pins';
-    map.setOptions({draggableCursor: 'crosshair'});
+    map.setOptions({
+      draggableCursor: 'crosshair',
+      disableDoubleClickZoom: true
+    });
   }
 }
 
