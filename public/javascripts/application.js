@@ -198,12 +198,11 @@ function togglePinDisplay() {
 }
 
 function addPin(location) {
-  gLatLng = toGoogleCoordinates(location.lat_lng);
   var pin = new google.maps.Marker({
     map: map,
     draggable: location.writable,
     animation: google.maps.Animation.DROP,
-    position: gLatLng
+    position: toGoogleCoordinates(location.lat_lng)
   });
 
   pins[location._id] = pin;
@@ -216,7 +215,7 @@ function addPin(location) {
     if (confirm('Move this pin?'))
       movePin(location._id, pin.getPosition());
     else
-      pin.setPosition(gLatLng);
+      pin.setPosition(toGoogleCoordinates(location.lat_lng));
   });
 }
 
