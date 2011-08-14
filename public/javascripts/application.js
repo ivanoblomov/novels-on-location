@@ -59,6 +59,8 @@ function initializeMap() {
   $('#place-input').keypress( function(e) {
     if ((e.keyCode || e.which) == 13) codePlace($(this).val());
   });
+  shortcut.add('m', toggleMapMode);
+  shortcut.add('s', togglePinDisplay);
 
   applesearch.init();
 }
@@ -318,7 +320,7 @@ function openBalloon(location) {
   html += '</p></div>';
   openWindow = new google.maps.InfoWindow( {content: html} );
   openWindow.open(map, pins[location._id]);
-  listenFor('click', "openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()");
+  listenFor('click', 'openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()');
 }
 
 function annotatePin(id, notes) {
