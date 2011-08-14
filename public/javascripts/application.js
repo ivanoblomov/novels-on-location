@@ -118,6 +118,10 @@ function listenForLogin() {
   });
 }
 
+function loggedIn() {
+  return !! $.cookie('fb_id');
+}
+
 function logIn() {
   FB.login(function(response) {
     if (response.session) {
@@ -139,7 +143,7 @@ function logOut() {
 }
 
 function toggleLogin() {
-  $.cookie('fb_id') ? logOut() : logIn();
+  loggedIn() ? logOut() : logIn();
 }
 
 function promptForTag(id, tags) {
@@ -180,8 +184,8 @@ function toggleMapMode() {
 }
 
 function setPinDisplayPrompt() {
-  $('#pin-display-button')[0].title = $.cookie('fb_id') ? "Click to show only friends' pins" : 'Click to show only my pins';
-  $('#pin-display-button')[0].value = $.cookie('fb_id') ? "Show Friends'" : 'Show My Pins';
+  $('#pin-display-button')[0].title = loggedIn() ? "Click to show only friends' pins" : 'Click to show only my pins';
+  $('#pin-display-button')[0].value = loggedIn() ? "Show Friends'" : 'Show My Pins';
 }
 
 function togglePinDisplay() {
@@ -263,7 +267,7 @@ function hideStrangersPins() {
     var pinId = locations[i]._id;
     var pinUserId = locations[i].user_id;
 
-    if ((! $.cookie('fb_id') && ! locations[i].writable) || ($.cookie('fb_id') && pinUserId != $.cookie('fb_id') && $.inArray(pinUserId, friendIds) == -1))
+    if (! locations[i].writable && (! loggedIn() || (loggedIn() && $.inArray(pinUserId, friendIds) == -1)))
       hidePin(pinId);
     else
       pins[pinId].setMap(map);
