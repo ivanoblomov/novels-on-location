@@ -48,6 +48,8 @@ function initializeMap() {
   $('#book-input').keyup( function() {
     hidePins($('#book-input')[0].value);
   });
+  $('#mode-button').click(toggleMapMode);
+  $('#pin-display-button').click(togglePinDisplay);
   $('#place-input').blur( function() {
     $(this).attr('value', placePrompt);
     $(this).css('color', '#777');
