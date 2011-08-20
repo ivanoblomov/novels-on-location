@@ -39,11 +39,13 @@ function initializeMap() {
       hidePins('');
     }
     $(this).css('color', '#777');
+    listenForShortcuts();
   });
   $('#book-input').focus( function() {
     if ($(this).attr('value') == bookPrompt)
       $(this).attr('value', '');
     $(this).css('color', 'black');
+    dontListenForShortcuts();
   });
   $('#book-input').keyup( function() {
     hidePins($('#book-input')[0].value);
@@ -53,18 +55,18 @@ function initializeMap() {
   $('#place-input').blur( function() {
     $(this).attr('value', placePrompt);
     $(this).css('color', '#777');
+    listenForShortcuts();
   });
   $('#place-input').focus( function() {
     $(this).attr('value', '');
     $(this).css('color', 'black');
+    dontListenForShortcuts();
   });
   $('#place-input').keypress( function(e) {
     if ((e.keyCode || e.which) == 13) codePlace($(this).val());
   });
-  shortcut.add('l', toggleLogin);
-  shortcut.add('m', toggleMapMode);
-  shortcut.add('s', togglePinDisplay);
 
+  listenForShortcuts();
   applesearch.init();
 }
 
@@ -118,6 +120,18 @@ function listenForLogin() {
   $('#login-button').click( function() {
     toggleLogin();
   });
+}
+
+function dontListenForShortcuts() {
+  shortcut.remove('l');
+  shortcut.remove('m');
+  shortcut.remove('s');
+}
+
+function listenForShortcuts() {
+  shortcut.add('l', toggleLogin);
+  shortcut.add('m', toggleMapMode);
+  shortcut.add('s', togglePinDisplay);
 }
 
 function loggedIn() {
