@@ -21,6 +21,10 @@
       text-decoration: none;
     }
 
+    a img{
+      border: 0;
+    }
+
     h1 {
       font-size: 12pt;
     }
@@ -113,6 +117,11 @@
       height: 22px;
     }
 
+    #mail-button {
+      float: right;
+      margin: 3px 7px 2px -3px;
+    }
+
     #mode-button {
       width: 98px;
       height: 22px;
@@ -167,6 +176,7 @@
   <input type="button" id="pin-display-button" title="Click to show only my pins" value="Show My Pins" />
   <div id="fb-root"></div><input type="button" id="login-button" title="Log into Facebook" value="Log In &nbsp; " />
   <fb:like layout="button_count" />
+  <span id="mail-button"><%= mail_to 'admin@novelsonlocation.com', image_tag('mail.png', :alt => 'Mail Icon', :width => 15, :height => 10), :encode => 'hex', :title => 'Send Feedback' -%></span>
 </div>
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
