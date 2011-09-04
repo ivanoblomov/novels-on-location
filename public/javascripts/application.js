@@ -399,7 +399,7 @@ function findBook(gLatLng, place, address, keywords) {
 }
 
 function getLocations() {
-  $.get('/locations.json', {'user_token': $.cookie('user_token')}, function(data) {
+  $.get('/locations.json', {'t': new Date().getTime(), 'user_token': $.cookie('user_token')}, function(data) {
     locations = data;
     addPins();
   });
