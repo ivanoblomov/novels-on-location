@@ -384,7 +384,7 @@ function deletePin(id) {
   if (confirm('Are you sure? This action cannot be undone.')) {
     $.ajax({
       type: 'DELETE',
-      url: '/locations/' + id,
+      url: '/locations/' + id
     })
   }
 }
