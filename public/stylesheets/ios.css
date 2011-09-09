@@ -13,15 +13,21 @@ input[type="button"] {
 }
 
 #book-input {
-  width: 166px;
+  width: 153px;
+}
+
+#mail-button {
+  position: absolute;
+  right: 0;
+  top: 15px;
 }
 
 #place-input {
-  width: 240px;
+  width: 230px;
 }
 
 #toolbar {
-  right: 125px;
+  right: 123px;
   top: 5px;
 }
 
