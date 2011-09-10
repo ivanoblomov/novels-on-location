@@ -7,10 +7,16 @@ input[type="button"] {
 }
 
 #mail-button {
-  margin: 3px 7px 2px -10px;
+  margin: 3px 7px 2px 7px;
+}
+
+#pin-display-button {
+  width: 90px;
+  height: 22px;
 }
 
 #toolbar {
+  float: right;
   right: 101px;
   top: 6px;
 }

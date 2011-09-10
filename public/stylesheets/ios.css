@@ -17,13 +17,16 @@ input[type="button"] {
 }
 
 #mail-button {
-  position: absolute;
-  right: 0;
-  top: 15px;
+  float: right;
+  margin: 3px 10px 3px 8px !important;
 }
 
 #place-input {
   width: 230px;
+}
+
+#social-toolbar {
+  margin-left: 15%;
 }
 
 #toolbar {
