@@ -5,6 +5,6 @@ namespace :sync do
   end
 
   task :backup => :environment do
-    system "mongodump -d #{Rails.application.config.production_mongohq_db} -h flame.mongohq.com:#{Rails.application.config.production_mongohq_port} -o db/backups -p #{Rails.application.config.production_mongohq_password} -u heroku"
+    system "mongodump -d #{Rails.application.config.production_mongohq_db} -h #{Rails.application.config.production_mongohq_host}:#{Rails.application.config.production_mongohq_port} -o db/backups -p #{Rails.application.config.production_mongohq_password} -u heroku"
   end
 end
