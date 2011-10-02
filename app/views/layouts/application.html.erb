@@ -23,6 +23,7 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 #applesearch .sbox_r{background:url('/images/srch_r.gif') no-repeat top left;float:left;width:19px;height:19px;}
 #applesearch .sbox input{background:url('/images/srch_bg.gif') repeat-x top left;border:0;float:left;font:11px/13px arial;padding:3px;}
 #book-input{width:101px;}
+#fb-page{float:right;margin:3px 0px 2px 5px;}
 #fb-root{display:none;}
 #login-button{background:#3B5998 url(http://static.ak.fbcdn.net/rsrc.php/v1/zL/r/FGFbc80dUKj.png) no-repeat;background-position:0% -188px;padding:0;text-align:right;width:77px;height:22px;}
 #mail-button{float:right;margin:3px 5px 2px 5px;}
@@ -49,7 +50,8 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 </div>
 <input type=button id=mode-button title="Double-click map to zoom. Click to toggle" value="Mode: Zoom"/>
 <input type=button id=pin-display-button title="Click to show only my pins" value="Show My Pins"/>
-<span id=mail-button><%= mail_to 'admin@novelsonlocation.com', image_tag('mail.png', :alt => 'Mail Icon', :width => 15, :height => 10), :encode => 'hex', :title => 'Send Feedback' -%></span>
+<%= mail_to 'admin@novelsonlocation.com', image_tag('mail.png', :alt => 'Mail Icon', :width => 15, :height => 10), :encode => 'hex', :id => 'mail-button', :title => 'Send Feedback' -%>
+<%= link_to image_tag('facebook.png', :alt => 'Novels: On Location on Facebook', :width => 16, :height => 16), "http://www.facebook.com/apps/application.php?id=#{Rails.application.config.facebook_app_id}", :id => 'fb-page' -%>
 </div>
 <div id=social-toolbar>
 <div id=fb-root></div><input type=button id=login-button title="Log into Facebook" value="Log In &nbsp; "/>
