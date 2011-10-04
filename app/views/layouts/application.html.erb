@@ -23,7 +23,7 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 #applesearch .sbox_r{background:url('/images/srch_r.gif') no-repeat top left;float:left;width:19px;height:19px;}
 #applesearch .sbox input{background:url('/images/srch_bg.gif') repeat-x top left;border:0;float:left;font:11px/13px arial;padding:3px;}
 #book-input{width:101px;}
-#fb-page{float:right;margin:3px 0px 2px 5px;}
+#fb-page{float:right;margin:3px 0 2px 5px;}
 #fb-root{display:none;}
 #headers{bottom:10px;color:#fff;margin:10px;position:absolute;z-index:-1}
 #login-button{background:#3B5998 url(http://static.ak.fbcdn.net/rsrc.php/v1/zL/r/FGFbc80dUKj.png) no-repeat;background-position:0% -188px;padding:0;text-align:right;width:77px;height:22px;}
@@ -37,9 +37,9 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 @media print{@page{size:landscape}
 .no-print{display:none}
 #headers{z-index:1}}</style>
-<%= stylesheet_link_tag 'safari' if request.user_agent =~ /safari/i -%>
-<%= stylesheet_link_tag 'ie' if request.user_agent =~ /msie/i -%>
-<%= stylesheet_link_tag 'ios' if request.user_agent =~ /ipad|iphone/i -%>
+<%= stylesheet_link_tag 'safari' if safari_pc? -%>
+<%= stylesheet_link_tag 'ie' if ie? -%>
+<%= stylesheet_link_tag 'ios' if ios? -%>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <%= csrf_meta_tag -%> <script>var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-25642977-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
 </head>

@@ -12,13 +12,27 @@ input[type="button"] {
   height: 26px;
 }
 
+#applesearch .sbox_l {
+  background: none;
+  width: 0;
+  height: 0;
+}
+
+#applesearch .sbox_r {
+  background: none;
+  width: 0;
+  height: 0;
+}
+
 #book-input {
   width: 153px;
 }
 
+#fb-page{margin:5px 0 2px 5px}
+
 #mail-button {
   float: right;
-  margin: 3px 10px 3px 8px !important;
+  margin-right: 10px;
 }
 
 #place-input {

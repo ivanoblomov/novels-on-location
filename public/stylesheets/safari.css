@@ -1,10 +1,10 @@
-#applesearch .sbox_l  {
+#applesearch .sbox_l {
   background: none;
   width: 0;
   height: 0;
 }
 
-#applesearch .sbox_r  {
+#applesearch .sbox_r {
   background: none;
   width: 0;
   height: 0;
@@ -14,7 +14,7 @@
   width: 153px;
 }
 
-#fb-page{margin-top:2px;}
+#fb-page{margin-top:2px}
 
 #mode-button {
   width: 96px;
