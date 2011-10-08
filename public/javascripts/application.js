@@ -13,7 +13,7 @@ var placePrompt = 'Find a place & map a book to it';
 var r;
 var showingAllPins = true;
 
-function initializeMap() {
+function initializeMap(callback) {
   var myOptions = {
     backgroundColor: 'white',
     center: new google.maps.LatLng(0, 0),
@@ -68,6 +68,9 @@ function initializeMap() {
 
   listenForShortcuts();
   applesearch.init();
+
+  if(callback)
+    callback();
 }
 
 function captureFacebookSession(session) {

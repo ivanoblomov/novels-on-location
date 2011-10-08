@@ -1,15 +1,15 @@
 class LocationsController < ApplicationController
   load_and_authorize_resource :only => [:destroy, :update]
+  load_resource :only => :show
   helper_method :inject_writable_flag
   respond_to :html, :json
 
-  # Custom =========================================================================================
-  def new
-    @location = Location.new params[:location]
+  # CRUD ===========================================================================================
+  def create
+    @location = Location.create location_attr
     render :layout => false
   end
 
-  # CRUD ===========================================================================================
   def destroy
     @location.destroy
   end
@@ -26,9 +26,13 @@ class LocationsController < ApplicationController
     end
   end
 
-  def create
-    @location = Location.create location_attr
+  def new
+    @location = Location.new params[:location]
     render :layout => false
+  end
+
+  def show
+    render :action => 'index'
   end
 
   def update
