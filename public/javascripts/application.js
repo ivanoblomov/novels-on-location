@@ -228,6 +228,7 @@ function addPin(location) {
   pins[location._id] = pin;
 
   google.maps.event.addListener(pin, 'click', function() {
+    history.pushState(null, location.title, '/locations/' + location._id);
     openBalloon(location);
   });
 
