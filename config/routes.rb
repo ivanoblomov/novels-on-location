@@ -11,6 +11,7 @@ NovelsOnLocation::Application.routes.draw do
     get '*path', :to => redirect{ |params| "http://#{Rails.application.config.main_host}/#{params[:path]}" }
   end
 
+  get 'sitemap' => 'locations#sitemap'
   resources :locations
   root :to => 'locations#index', :via => :get
 end
