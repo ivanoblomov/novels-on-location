@@ -4,7 +4,7 @@ class LocationsController < ApplicationController
   respond_to :html, :json
 
   # Custom =========================================================================================
-  def show
+  def new
     @location = Location.new params[:location]
     render :layout => false
   end

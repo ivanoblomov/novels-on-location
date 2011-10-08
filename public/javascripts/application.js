@@ -390,7 +390,7 @@ function deletePin(id) {
 }
 
 function findBook(gLatLng, place, address, keywords) {
-  $.get('/locations/1', {
+  $.get('/locations/new', {
     'location[address]': (address || ''),
     'location[tags]': place,
     'location[book_keywords]': keywords,

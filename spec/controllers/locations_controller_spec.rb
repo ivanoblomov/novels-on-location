@@ -12,10 +12,10 @@ describe LocationsController do
     response.should render_template('layouts/application')
   end
 
-  it 'gets show action' do
+  it 'gets new action' do
     controller.stubs(:render)
     Location.expects(:new)
-    get :show, :id => 1
+    get :new, @location.attributes
     asserts assigns(:location).instance_of(Location)
   end
 
