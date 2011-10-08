@@ -13,7 +13,7 @@ var placePrompt = 'Find a place & map a book to it';
 var r;
 var showingAllPins = true;
 
-function initializeMap(callback) {
+function initializeMap(selectedLocationId) {
   var myOptions = {
     backgroundColor: 'white',
     center: new google.maps.LatLng(0, 0),
@@ -26,7 +26,7 @@ function initializeMap(callback) {
   geocoder = new google.maps.Geocoder();
   map = new google.maps.Map($('#map-canvas')[0], myOptions);
   zoomer = new google.maps.MaxZoomService();
-  getLocations();
+  getLocations(selectedLocationId);
 
   // Set prompts
   $('#book-input')[0].value = bookPrompt;
@@ -68,9 +68,6 @@ function initializeMap(callback) {
 
   listenForShortcuts();
   applesearch.init();
-
-  if(callback)
-    callback();
 }
 
 function captureFacebookSession(session) {
@@ -225,7 +222,7 @@ function addPin(location) {
     map: map,
     draggable: location.writable,
     animation: google.maps.Animation.DROP,
-    position: toGoogleCoordinates(location.lat_lng)
+    position: toLatLng(location.lat_lng)
   });
 
   pins[location._id] = pin;
@@ -238,13 +235,18 @@ function addPin(location) {
     if (confirm('Move this pin?'))
       movePin(location._id, pin.getPosition());
     else
-      pin.setPosition(toGoogleCoordinates(location.lat_lng));
+      pin.setPosition(toLatLng(location.lat_lng));
   });
 }
 
-function addPins() {
+function addPins(selectedLocationId) {
   for (var i = 0; i < locations.length; i++) {
     addPin(locations[i]);
+
+    if (selectedLocationId && locations[i]._id == selectedLocationId) {
+      openBalloon(locations[i]);
+      zoomIn(toLatLng(locations[i].lat_lng));
+    }
   }
 }
 
@@ -336,7 +338,7 @@ function openBalloon(location) {
   html = '<div class="map-balloon">';
   if (location.user_id == null && location.user_token == null) html += '<input onClick="claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim This Pin" />';
   if (location.writable) html += '<input onClick="deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete This Pin" /><input onClick="promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag Pin" /><input onClick="promptForNotes(\'' + location._id + '\', \'' + (location.notes || '') + '\')" type="button" value="Annotate" title="Annotate Pin" />';
-  html += '<input onClick="zoomIn(new google.maps.LatLng(' + location.lat_lng + '))" type="button" value="Zoom" title="Zoom to Pin" /><h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + ' />' + location.title + '</a></h1> <h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2><p>' + location.review + '</p>';
+  html += '<input onClick="zoomIn(toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to Pin" /><h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + ' />' + location.title + '</a></h1> <h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2><p>' + location.review + '</p>';
   if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p><p>'
   if (fb_session && location.user_id) {
     html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || 'You') + '</a> on ' + location.added_at + '<br />';
@@ -376,7 +378,7 @@ function createPin(latLng, place, address, keywords) {
   $.post('/locations', {
     'location[address]': (address || ''),
     'location[book_keywords]': keywords,
-    'location[latLng]': toGoogleCoordinates(latLng).toUrlValue(),
+    'location[latLng]': toLatLng(latLng).toUrlValue(),
     'location[tags]': place,
     'location[user_id]': fb_session && fb_session.uid || null,
     'location[user_token]': $.cookie('user_token')
@@ -401,10 +403,10 @@ function findBook(gLatLng, place, address, keywords) {
   });
 }
 
-function getLocations() {
+function getLocations(selectedLocationId) {
   $.get('/locations.json', {'t': new Date().getTime(), 'user_token': $.cookie('user_token')}, function(data) {
     locations = data;
-    addPins();
+    addPins(selectedLocationId);
   });
 }
 
@@ -428,7 +430,7 @@ function tagPin(id, tags) {
   });
 }
 
-function toGoogleCoordinates( latLng ) {
+function toLatLng( latLng ) {
 	return new google.maps.LatLng(latLng[0], latLng[1]);
 }
 
