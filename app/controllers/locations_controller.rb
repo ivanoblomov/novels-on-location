@@ -32,7 +32,6 @@ class LocationsController < ApplicationController
   end
 
   def show
-    render :action => 'index'
   end
 
   def update
