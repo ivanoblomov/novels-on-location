@@ -8,20 +8,28 @@ var geocoder;
 var host;
 var locations;
 var map;
-var pins = {};
 var openWindow;
+var pins = {};
 var placePrompt = 'Find a place & map a book to it';
+var portrait = false;
 var r;
 var showingAllPins = true;
 
 function initializeMap(selectedLocationId) {
+  if (window.orientation != null) {
+    portrait = Math.abs(orientation) != 90;
+  }
+
+  x = portrait ? 24.686952 : 0;
+  y = portrait ? -41.308594 : 0;
+
   var myOptions = {
     backgroundColor: 'white',
-    center: new google.maps.LatLng(0, 0),
+    center: new google.maps.LatLng(x, y),
     draggableCursor: 'default',
     mapTypeId: google.maps.MapTypeId.HYBRID,
     minZoom: 2,
-    zoom: 2
+    zoom: portrait ? 3 : 2
   };
 
   geocoder = new google.maps.Geocoder();
