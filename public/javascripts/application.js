@@ -5,6 +5,7 @@ var fb_session;
 var friendIds = [];
 var friends;
 var geocoder;
+var host;
 var locations;
 var map;
 var pins = {};
@@ -109,6 +110,11 @@ function getFriends() {
 function labelFacebookButton(value, title) {
   $('#login-button')[0].value = value;
   $('#login-button')[0].title = title;
+}
+
+function updateFacebookLikeButton(path) {
+  var iframe = $('#fb-like')[0];
+  iframe.src = iframe.src.replace(/href=.+/, 'href=' + host + path);
 }
 
 function listenFor(event, args) {
@@ -228,7 +234,10 @@ function addPin(location) {
   pins[location._id] = pin;
 
   google.maps.event.addListener(pin, 'click', function() {
-    history.pushState(null, location.title, '/locations/' + location._id);
+    var path = '/locations/' + location._id;
+    if (history.pushState)
+      history.pushState(null, location.title, path);
+    updateFacebookLikeButton(path);
     openBalloon(location);
   });
 
@@ -350,7 +359,7 @@ function openBalloon(location) {
   html += '</p></div>';
   openWindow = new google.maps.InfoWindow( {content: html} );
   openWindow.open(map, pins[location._id]);
-  listenFor('click', 'openWindow.close(); clickingZooms = ! clickingZooms; toggleMapMode()');
+  listenFor('click', 'openWindow.close(); updateFacebookLikeButton(""); clickingZooms = ! clickingZooms; toggleMapMode()');
 }
 
 function annotatePin(id, notes) {

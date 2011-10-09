@@ -23,6 +23,7 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 #applesearch .sbox_r{background:url('/images/srch_r.gif') no-repeat top left;float:left;width:19px;height:19px;}
 #applesearch .sbox input{background:url('/images/srch_bg.gif') repeat-x top left;border:0;float:left;font:11px/13px arial;padding:3px;}
 #book-input{width:101px;}
+#fb-like{border:none;float:left;width:100px;height:20px}
 #fb-page{float:right;margin:3px 0 2px 5px;}
 #fb-root{display:none;}
 #headers{bottom:10px;color:#fff;margin:10px;position:absolute;z-index:-1}
@@ -32,7 +33,7 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 #pin-display-button{width:90px;height:22px;}
 #place-input{width:153px;}
 #map-canvas{height:100%;position:absolute;bottom:0;left:0;right:0;top:0;}
-#social-toolbar{bottom:0;margin-left:42%;position:absolute;}
+#social-toolbar{bottom:0;margin-left:40%;position:absolute;}
 #toolbar{position:absolute;right:105px;top:4px;}
 @media print{@page{size:landscape}
 .no-print{display:none}
@@ -61,12 +62,24 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 </div>
 <div class=no-print id=social-toolbar>
 <div id=fb-root></div><input type=button id=login-button title="Log into Facebook" value="Log In &nbsp; "/>
-<fb:like layout=button_count />
+<iframe id=fb-like src="https://www.facebook.com/plugins/like.php?layout=button_count&href=<%= Rails.application.config.main_host -%>" scrolling="no" frameborder="0"></iframe>
 <a href="http://twitter.com/share" class=twitter-share-button data-count=none>Tweet</a>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script src="http://platform.twitter.com/widgets.js"></script>
-<%= javascript_include_tag 'jquery_ujs', 'shortcut', Rails.env.development? ? 'application' : 'application.min' -%><script>window.fbAsyncInit=function(){initializeMap(<%= params[:id] ? "'#{params[:id]}'" : '' -%>);FB.init({appId:'<%= Rails.application.config.facebook_app_id -%>',cookie:true,status:true,xfbml:true});FB.getLoginStatus(function(response){if(response.session){captureFacebookSession(response.session);setPinDisplayPrompt();getFriends();claimMyPins();labelFacebookButton('Log Out\u00a0','Log out of Facebook');}
-listenForLogin();});};(function(){var e=document.createElement('script');e.async=true;e.src=document.location.protocol+'//connect.facebook.net/en_US/all.js';document.getElementById('fb-root').appendChild(e);}());</script>
+<%= javascript_include_tag 'jquery_ujs', 'shortcut', Rails.env.development? ? 'application' : 'application.min' -%>
+<script>host = '<%= Rails.application.config.main_host -%>';
+window.fbAsyncInit=function(){
+initializeMap(<%= params[:id] ? "'#{params[:id]}'" : '' -%>);
+FB.init({appId:'<%= Rails.application.config.facebook_app_id -%>',cookie:true,status:true});
+FB.getLoginStatus(function(response){if(response.session){captureFacebookSession(response.session);setPinDisplayPrompt();getFriends();claimMyPins();labelFacebookButton('Log Out\u00a0','Log out of Facebook');};listenForLogin();});};
+(function(d, s, id) {
+var js, fjs = d.getElementsByTagName(s)[0];
+if (d.getElementById(id)) {return;}
+js = d.createElement(s); js.id = id;
+js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
+fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+</script>
 </body>
 </html>
