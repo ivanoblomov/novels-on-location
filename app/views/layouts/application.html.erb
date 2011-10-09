@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
+<html>
 <head>
 <title>Novels: On Location - <%= "#{Location.book_count} Novels/#{Location.count} Locations" -%></title>
 <meta name=description content="A Google-Maps/Amazon mash-up for finding books that take place where you're traveling. Browse or search the map and make your next destination come alive!"/>
@@ -62,7 +62,7 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 </div>
 <div class=no-print id=social-toolbar>
 <div id=fb-root></div><input type=button id=login-button title="Log into Facebook" value="Log In &nbsp; "/>
-<iframe id=fb-like src="https://www.facebook.com/plugins/like.php?layout=button_count&href=<%= Rails.application.config.main_host -%>" scrolling="no" frameborder="0"></iframe>
+<iframe id=fb-like src="https://www.facebook.com/plugins/like.php?layout=button_count&href=<%= Rails.application.config.main_host -%>"></iframe>
 <a href="http://twitter.com/share" class=twitter-share-button data-count=none>Tweet</a>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
