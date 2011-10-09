@@ -57,7 +57,7 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 </div>
 <input type=button id=mode-button title="Double-click map to zoom. Click to toggle" value="Mode: Zoom"/>
 <input type=button id=pin-display-button title="Click to show only my pins" value="Show My Pins"/>
-<%= mail_to "admin@#{Rails.application.config.main_host}", image_tag('mail.png', :alt => 'Mail Icon', :width => 15, :height => 10), :encode => 'hex', :id => 'mail-button', :title => 'Send feedback' -%>
+<%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon', :width => 15, :height => 10), :encode => 'hex', :id => 'mail-button', :title => 'Send feedback' -%>
 <%= link_to image_tag('facebook.png', :alt => 'Facebook Icon', :width => 16, :height => 16), "http://www.facebook.com/apps/application.php?id=#{Rails.application.config.facebook_app_id}", :id => 'fb-page', :title => 'Visit our Facebook page' -%>
 </div>
 <div class=no-print id=social-toolbar>
@@ -72,7 +72,7 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 window.fbAsyncInit=function(){
 initializeMap(<%= params[:id] ? "'#{params[:id]}'" : '' -%>);
 FB.init({appId:'<%= Rails.application.config.facebook_app_id -%>',cookie:true,status:true});
-FB.getLoginStatus(function(response){if(response.session){captureFacebookSession(response.session);setPinDisplayPrompt();getFriends();claimMyPins();labelFacebookButton('Log Out\u00a0','Log out of Facebook');};listenForLogin();});};
+FB.getLoginStatus(function(response){if(response.session){captureFacebookSession(response.session);setPinDisplayPrompt();getFriends();claimMyPins();labelFacebookButton('Log Out\u00a0','Log out of Facebook');};listenForLogin();});<%- if flash[:error] -%>alert("<%= flash[:error] -%>");<%- end -%>};
 (function(d, s, id) {
 var js, fjs = d.getElementsByTagName(s)[0];
 if (d.getElementById(id)) {return;}
