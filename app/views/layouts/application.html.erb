@@ -45,10 +45,7 @@ input[type="button"]{background:#3B5998;border:0;color:white;cursor:pointer;floa
 <%= csrf_meta_tag -%> <script>var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-25642977-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
 </head>
 <body>
-<div id=headers>
-<h1>Novels: On Location</h1>
-<h2><%= Rails.application.config.main_host -%> is a Google-Maps/Amazon mash-up for finding books that take place where you're traveling. Browse or search the map and make your next destination come alive!</h2>
-</div>
+<%= yield -%>
 <div id=map-canvas></div>
 <div class=no-print id=toolbar>
 <div id=applesearch>

@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  helper_method :current_user
   protect_from_forgery
 
   unless Rails.application.config.consider_all_requests_local
@@ -15,6 +16,12 @@ class ApplicationController < ActionController::Base
         @locations = Location.all
       end
     end
+  end
+
+  protected
+
+  def current_user
+    User.new request.cookies['fb_id'], request.cookies['user_token']
   end
 
   private

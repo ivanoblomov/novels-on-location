@@ -40,10 +40,6 @@ class LocationsController < ApplicationController
 
   private
 
-  def current_user
-    User.new request.cookies['fb_id'], request.cookies['user_token']
-  end
-
   def inject_writable_flag(locations)
     if locations.is_a?(Array)
       locations = locations.map{ |l| l.writable = l.owned? && can?(:update, l); l }
