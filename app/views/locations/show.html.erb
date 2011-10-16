@@ -6,5 +6,5 @@
 <h2>by <%= link_to @location.author, "http://en.wikipedia.org/wiki/#{u @location.author}", :target => '_blank', :title => "Go to author #{@location.author}'s bio" -%></h2>
 <h2><%= @location.address -%></h2>
 <p><%= @location.review.html_safe -%></p>
-<p>Added on <%= @location.added_at -%><%- if current_user.facebook? -%> by <%= link_to (@location.user_name || 'You'), "http://www.facebook.com/profile.php?id=#{@location.user_id}", :target => '_blank', :title => "Go to #{@location.user_name}'s profile" -%><%- end -%><br/>
+<p>Added on <%= @location.added_at -%><br/>
 <%- unless @location.tags.blank? -%>Tags: <%= link_to @location.tags, "http://www.google.com/search?q=#{u @location.tags}", :target => '_blank', :title => "Search for #{@location.tags}" -%><%- end -%></p>
