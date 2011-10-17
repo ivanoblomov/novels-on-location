@@ -11,17 +11,13 @@ var map;
 var openWindow;
 var pins = {};
 var placePrompt = 'Find a place & map a book to it';
-var portrait = false;
 var r;
 var showingAllPins = true;
 
 function initializeMap(selectedLocationId) {
-  if (window.orientation != null) {
-    portrait = Math.abs(orientation) != 90;
-  }
-
-  x = portrait ? 24.686952 : 0;
-  y = portrait ? -41.308594 : 0;
+  var portrait = checkOrientation();
+  var x = portrait ? 24.686952 : 0;
+  var y = portrait ? -41.308594 : 0;
 
   var myOptions = {
     backgroundColor: 'white',
@@ -45,7 +41,7 @@ function initializeMap(selectedLocationId) {
   $('#book-input').blur( function() {
     if ($(this).attr('value') == '') {
       $(this).attr('value', bookPrompt);
-      hidePins('');
+      hidePins();
     }
     $(this).css('color', '#777');
     listenForShortcuts();
@@ -57,7 +53,8 @@ function initializeMap(selectedLocationId) {
     dontListenForShortcuts();
   });
   $('#book-input').keyup( function() {
-    hidePins($('#book-input')[0].value);
+    hidePins();
+    showPins($('#book-input')[0].value);
   });
   $('#mode-button').click(toggleMapMode);
   $('#pin-display-button').click(togglePinDisplay);
@@ -82,6 +79,15 @@ function initializeMap(selectedLocationId) {
 function captureFacebookSession(session) {
   fb_session = session
   $.cookie('fb_id', fb_session.uid)
+}
+
+function checkOrientation() {
+  var portrait = false;
+
+  if (window.orientation != null)
+    portrait = Math.abs(orientation) != 90;
+
+  return portrait;
 }
 
 function getFacebookName(location) {
@@ -288,17 +294,14 @@ function shouldAddPin(googleResults) {
   return false;
 }
 
-function hidePins(keyword) {
-  for (var i = 0; i < locations.length; i++) {
-    if (keyword != '' && locations[i].terms.search(eval('/' + keyword + '/i')) == -1)
-      hidePin(locations[i]._id);
-    else
-      pins[locations[i]._id].setMap(map);
-  }
-}
-
 function hidePin(id) {
   pins[id].setMap(null);
+}
+
+function hidePins() {
+  for (var i = 0; i < locations.length; i++) {
+    hidePin(locations[i]._id);
+  }
 }
 
 function hideStrangersPins() {
@@ -323,6 +326,13 @@ function setLocationUserNames() {
 function showAllPins() {
   for (var i = 0; i < locations.length; i++) {
     pins[locations[i]._id].setMap(map);
+  }
+}
+
+function showPins(keyword) {
+  for (var i = 0; i < locations.length; i++) {
+    if (keyword != '' && locations[i].terms.search(eval('/' + keyword + '/i')) > 0)
+      pins[locations[i]._id].setMap(map);
   }
 }
 
@@ -351,18 +361,23 @@ function zoomIn(gLatLng) {
   });
 }
 
+function zoomOut() {
+  map.setZoom(checkOrientation() ? 3 : 2);
+}
+
 function openBalloon(location) {
   if (openWindow != undefined) openWindow.close();
   html = '<div class="map-balloon">';
-  if (location.user_id == null && location.user_token == null) html += '<input onClick="claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim This Pin" />';
-  if (location.writable) html += '<input onClick="deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete This Pin" /><input onClick="promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag Pin" /><input onClick="promptForNotes(\'' + location._id + '\', \'' + (location.notes || '') + '\')" type="button" value="Annotate" title="Annotate Pin" />';
-  html += '<input onClick="zoomIn(toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to Pin" /><h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + ' />' + location.title + '</a></h1> <h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2><p>' + location.review + '</p>';
-  if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p><p>'
+  if (location.user_id == null && location.user_token == null) html += '<input onClick="claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim this pin" />';
+  if (location.writable) html += '<input onClick="deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin" /><input onClick="promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag pin" /><input onClick="promptForNotes(\'' + location._id + '\', \'' + (location.notes || '') + '\')" type="button" value="Annotate" title="Annotate pin" />';
+  html += '<input onClick="zoomIn(toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin" /><h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + ' />' + location.title + '</a></h1> <h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2><p>' + location.review + '</p><p>';
+  if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p>';
   if (fb_session && location.user_id) {
     html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || 'You') + '</a> on ' + location.added_at + '<br />';
   } else {
     html += 'Added on ' + location.added_at + '<br />';
   }
+  html += '<input onClick="hidePins();showPins(\'' + location.author + '\');zoomOut()" type="button" value="Other Books" title="Show other books by the same author" /><span class="bullet">|</span><input onClick="hidePins();showPins(\'' + location.title + '\');zoomOut()" type="button" value="Other Locations" title="Show other locations for the same book" />';
   if (location.tags) html += 'Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a>'
   html += '</p></div>';
   openWindow = new google.maps.InfoWindow( {content: html} );
@@ -493,7 +508,8 @@ applesearch.clearFld = function (fldID,btnID)
 	this.onChange(fldID,btnID);
 
 	if (fldID == 'book-input') {
-    hidePins($('#book-input')[0].value);
+    hidePins();
+    showPins($('#book-input')[0].value);
 	}
 }
 
