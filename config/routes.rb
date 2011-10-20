@@ -14,4 +14,5 @@ NovelsOnLocation::Application.routes.draw do
   get 'sitemap' => 'locations#sitemap'
   resources :locations
   root :to => 'locations#index', :via => :get
+  get '*a', :to => 'application#error_404'
 end
