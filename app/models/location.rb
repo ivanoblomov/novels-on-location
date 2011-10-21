@@ -60,6 +60,10 @@ class Location
     self.user_id || self.user_token
   end
 
+  def show_info?
+    self.id.to_s[-1].to_i.odd?
+  end
+
   def terms
     [self.address, self.author, self.title, self.tags].compact * ' '
   end
