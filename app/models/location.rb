@@ -28,6 +28,10 @@ class Location
     Location.all.map{ |l| l.asin }.uniq.size
   end
 
+  def self.last_updated
+    Location.order_by([:updated_at, :desc]).limit(1).first
+  end
+
   def self.reload
     Location.all.map{ |l| l.book_keywords = l.title; l.save }
   end
