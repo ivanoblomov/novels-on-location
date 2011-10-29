@@ -197,6 +197,12 @@ function promptForBook(gLatLng, place, address) {
   if (keywords) findBook(gLatLng, place || '', address, keywords);
 }
 
+function listenForDoubleClick() {
+  updateFacebookLikeButton('')
+  clickingZooms = ! clickingZooms; // negate effect of toggle
+  toggleMapMode();
+}
+
 function toggleMapMode() {
   clickingZooms = ! clickingZooms;
 
@@ -382,7 +388,8 @@ function openBalloon(location) {
   html += '</p></div>';
   openWindow = new google.maps.InfoWindow( {content: html} );
   openWindow.open(map, pins[location._id]);
-  listenFor('click', 'openWindow.close(); updateFacebookLikeButton(""); clickingZooms = ! clickingZooms; toggleMapMode()');
+  google.maps.event.addListener(openWindow, 'closeclick', function() {listenForDoubleClick()});
+  listenFor('click', 'openWindow.close(); listenForDoubleClick()');
 }
 
 function annotatePin(id, notes) {
