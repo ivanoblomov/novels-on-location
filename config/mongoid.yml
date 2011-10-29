@@ -3,12 +3,12 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: novels-on-location_development
+  database: novels
   host: localhost
 
 test:
   <<: *defaults
-  database: novels-on-location_test
+  database: novels_test
   host: localhost
 
 production:
