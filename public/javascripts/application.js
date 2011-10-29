@@ -383,7 +383,7 @@ function openBalloon(location) {
   } else {
     html += 'Added on ' + location.added_at + '<br />';
   }
-  html += '<input onClick="hidePins();showPins(\'' + location.author + '\');zoomOut()" type="button" value="Other Books" title="Show other books by the same author" /><span class="bullet">|</span><input onClick="hidePins();showPins(\'' + location.title + '\');zoomOut()" type="button" value="Other Locations" title="Show other locations for the same book" />';
+  html += '<input onClick="hidePins();showPins(\'' + location.author + '\');zoomOut()" type="button" value="Other Books" title="Show other books by the same author" /><span class="bullet">|</span><input onClick="hidePins();showPins(\'' + location.title_for_regex + '\');zoomOut()" type="button" value="Other Locations" title="Show other locations for the same book" />';
   if (location.tags) html += 'Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a>'
   html += '</p></div>';
   openWindow = new google.maps.InfoWindow( {content: html} );

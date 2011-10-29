@@ -2,7 +2,7 @@ class Location
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  VIRTUAL_ATTRIBUTES = [:added_at, :keywords, :terms, :writable]
+  VIRTUAL_ATTRIBUTES = [:added_at, :keywords, :terms, :title_for_regex, :writable]
 
   field :address
   field :asin
@@ -70,6 +70,12 @@ class Location
 
   def terms
     [self.address, self.author, self.title, self.tags].compact * ' '
+  end
+
+  def title_for_regex
+    i = self.title.index('(')
+    return title if i.nil?
+    self.title[0..(i-1)].strip
   end
 
   def unowned?
