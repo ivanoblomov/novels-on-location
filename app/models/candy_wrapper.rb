@@ -48,12 +48,7 @@ class CandyWrapper
   private
 
   def self.open( request )
-    s = Sucker.new(
-      :locale => :us,
-      :key => Rails.application.config.amazon_access_key_id,
-      :secret => Rails.application.config.amazon_secret_access_key
-    )
-
+    s = Sucker.new
     s << request
     s.get
   end

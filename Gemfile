@@ -5,11 +5,10 @@ gem 'cancan'
 gem 'google_maps_geocoder'
 gem 'jquery-rails', '>= 1.0.3'
 gem 'mongoid'
-gem 'rails', '3.0.10'
-gem 'sucker', '~> 1'
+gem 'rails'
+gem 'sucker'
 
 group :test do
-  gem 'capybara'
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'mocha'
