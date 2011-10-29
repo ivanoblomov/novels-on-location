@@ -2,7 +2,7 @@ class Location
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  VIRTUAL_ATTRIBUTES = [:added_at, :keywords, :terms, :title_for_regex, :writable]
+  VIRTUAL_ATTRIBUTES = [:added_at, :terms, :title_for_regex, :writable]
 
   field :address
   field :asin
@@ -19,7 +19,7 @@ class Location
   field :user_id
   field :user_token
 
-  attr_accessor :keywords, :writable
+  attr_accessor :writable
   attr_reader :book_keywords
   before_save :geocode
   validates_presence_of :title
