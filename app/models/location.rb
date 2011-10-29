@@ -69,7 +69,7 @@ class Location
   end
 
   def terms
-    [self.address, self.author, self.title, self.tags].compact * ' '
+    [self.address, self.author, self.title, self.tags, self.user_id].compact * ' '
   end
 
   def title_for_regex
