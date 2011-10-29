@@ -1,9 +1,5 @@
-# Load the rails application
 require File.expand_path('../application', __FILE__)
-
-# Initialize the rails application
 NovelsOnLocation::Application.initialize!
-
 NovelsOnLocation::Application.configure do
   config.admin_email = 'admin@novelsonlocation.com'
   config.amazon_access_key_id = 'AKIAINFSZKSQ4ZTKFDZA'
