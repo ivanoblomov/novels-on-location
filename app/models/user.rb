@@ -6,6 +6,10 @@ class User
     self.id, self.token = id, token
   end
 
+  def admin?
+    self.id == '666325406'
+  end
+
   def facebook?
     self.id
   end

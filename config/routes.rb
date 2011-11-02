@@ -11,8 +11,14 @@ NovelsOnLocation::Application.routes.draw do
     get '*path', :to => redirect{ |params| "http://#{Rails.application.config.main_host}/#{params[:path]}" }
   end
 
+  namespace :admin do
+    resources :locations, :only => :index
+  end
+
+  get 'admin' => 'admin/locations#index'
   get 'sitemap' => 'locations#sitemap'
   resources :locations
   root :to => 'locations#index', :via => :get
+
   get '*a', :to => 'application#error_404'
 end

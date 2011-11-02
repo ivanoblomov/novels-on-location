@@ -1,0 +1,22 @@
+body,table.standard,table.standard th,table.standard td,table.standard th{text-align:left}
+body{font:.8em helvetica,sans-serif}
+table.standard td a:visited,table.standard td a:link{text-decoration:none}
+table.standard td.crud_links{text-align:right}
+table.standard td.nowrap,table.standard td.nowrap{white-space:nowrap}
+table.standard td{padding:.5em;font-size:.9em}
+table.standard th a,table.standard th a{text-decoration:none !important}
+table.standard th a.arrow-asc:after,table.standard th a.arrow-asc:after{content:"\25B2"}
+table.standard th a.arrow-desc:after,table.standard th a.arrow-asc:after,table.standard th a.arrow-desc:after,table.standard th a.arrow-asc:after{margin-left:1em}
+table.standard th a.arrow-desc:after,table.standard th a.arrow-desc:after{content:"\25BC"}
+table.standard th a{color:white !important}
+table.standard th,table.standard td span.emphasis,table.standard th{font-weight:bold}
+table.standard th,table.standard th{text-transform:uppercase;font-size:.8em;padding:1em .5em 1em .5em}
+table.standard th{background:#7e7587;border:1px solid #7e7587;color:white;color:#444;background:#7e7587 url(../images/layout/table_header.png)}
+table.standard tr:hover{background:#ddd}
+table.standard tr.even{background:#efefef}
+table.standard tr.muted th{background:#999;border:1px solid #999}
+table.standard tr.odd{background:white}
+table.standard tr.summary{background:#ccc;border-top:1px solid #999}
+table.standard{width:100%;margin-top:0em;margin-bottom:0em;border:1px solid #999}
+table{border-collapse:collapse;border-spacing:0}
+tr:hover td,table.standard tr:hover td{background:#ccc !important}

@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include ScaffoldLogic::Helper
+
   def filter_param(value)
     "'#{value.blank? ? nil : j(value)}'"
   end

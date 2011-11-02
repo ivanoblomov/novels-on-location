@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def authenticate_user!
+    redirect_to root_url unless current_user.admin? || Rails.env.development?
+  end
+
   def sitemap
     respond_to do |format|
       format.xml do
