@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe CandyWrapper do
-  before(:all) do
+  before :all do
     begin
       @book = CandyWrapper.book 'sun also rises'
+      @null_result = CandyWrapper.book 'muchachitas'
       @review = CandyWrapper.review @book[:asin]
       @thumbnail = CandyWrapper.thumbnail @book[:asin]
     rescue SocketError
@@ -13,7 +14,7 @@ describe CandyWrapper do
     end
   end
 
-  before(:each) do
+  before :each do
     pending 'waiting for a network connection', :if => @no_network
     pending 'waiting for query limit to pass', :if => @query_limit
   end
