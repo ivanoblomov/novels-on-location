@@ -2,9 +2,9 @@
   @meta_description = "#{@location.review[0..151]}..." if @location.review
   @meta_keywords = @location.tags
   @title = "#{@location.title} - Novels: On Location"
--%><%- if @location.show_info? -%><h1><%- if @location.image_url -%><%= link_to image_tag(@location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :width => @location.image_width), @location.url, :target => '_blank', :title => "Go to #{@location.title} on Amazon" -%><%- end -%><%= link_to @location.title, @location.url, :target => '_blank', :title => "Go to #{@location.title} on Amazon" -%></h1><%- end -%>
-<h2>by <%= wikipedia_link_to @location.author, :target => '_blank', :title => "Go to author #{@location.author}'s bio" -%></h2>
+-%><%- if @location.show_info? -%><h1><%= link_to image_tag(@location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :width => @location.image_width), @location.url, :target => '_blank', :title => "Check out #{@location.title} on Amazon" if @location.image_url -%><%= link_to @location.title, @location.url, :target => '_blank', :title => "Check out #{@location.title} on Amazon" -%></h1><%- end -%>
+<h2>by <%= wikipedia_link_to @location.author -%></h2>
 <h2><%= @location.address -%></h2>
 <p><%= @location.review.html_safe -%></p>
 <p>Added on <%= @location.added_at -%><br/>
-<%- unless @location.tags.blank? -%>Tags: <%= google_link_to @location.tags, :target => '_blank', :title => "Search for #{@location.tags}" -%></p><%- end -%>
+<%- unless @location.tags.blank? -%>Tags: <%= google_link_to @location.tags -%></p><%- end -%>

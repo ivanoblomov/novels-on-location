@@ -6,7 +6,7 @@ module ApplicationHelper
   end
 
   def google_link_to link_text, options={}
-    link_to link_text, "http://www.google.com/search?q=#{u link_text}", options
+    link_to link_text, "http://www.google.com/search?q=#{u link_text}", {:target => '_blank', :title => "Google #{link_text}"}.merge(options)
   end
 
   def ie?
@@ -22,6 +22,6 @@ module ApplicationHelper
   end
 
   def wikipedia_link_to link_text, options={}
-    link_to link_text, "http://en.wikipedia.org/wiki/#{u link_text}", options
+    link_to link_text, "http://en.wikipedia.org/wiki/#{link_text}", {:target => '_blank', :title => "Read about #{link_text} on Wikipedia"}.merge(options)
   end
 end
