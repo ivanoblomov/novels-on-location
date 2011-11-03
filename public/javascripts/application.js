@@ -32,6 +32,7 @@ function initializeMap(selectedLocationId) {
   map = new google.maps.Map($('#map-canvas')[0], myOptions);
   zoomer = new google.maps.MaxZoomService();
   getLocations(selectedLocationId);
+  claimMyPins();
 
   // Set prompts
   $('#book-input')[0].value = bookPrompt;

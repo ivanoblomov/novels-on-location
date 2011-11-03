@@ -4,7 +4,7 @@
 <title><%= @title || "Novels: On Location - #{Location.book_count} Novels/#{Location.count} Locations" -%></title>
 <meta name=description content="<%= @meta_description || "A Google-Maps/Amazon mash-up for finding books that take place where you're traveling. Search the map and make your next destination come alive!" -%>"/>
 <meta name=keywords content="<%= @meta_keywords || 'google maps, amazon, mash-up, novels, location, books, settings, map, travel' -%>"/>
-<%= auto_discovery_link_tag :rss, "http://www.facebook.com/feeds/page.php?id=#{Rails.application.config.facebook_app_id}&format=atom10" -%>
+<%= auto_discovery_link_tag :rss, "https://www.facebook.com/feeds/page.php?id=#{Rails.application.config.facebook_app_id}&format=atom10" -%>
 <style>html{height:100%;}
 body{font-family:"Helvetica Neue", helvetica, arial, "Lucida Grande", sans-serif;font-size:10pt;height:100%;margin:0;padding:0;}
 a{text-decoration:none;}
@@ -71,7 +71,7 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 window.fbAsyncInit=function(){
 initializeMap(<%= params[:id] ? "'#{params[:id]}'" : '' -%>);
 FB.init({appId:'<%= Rails.application.config.facebook_app_id -%>',cookie:true,status:true});
-FB.getLoginStatus(function(response){if(response.session){captureFacebookSession(response.session);setPinDisplayPrompt();getFriends();claimMyPins();labelFacebookButton('Log Out\u00a0','Log out of Facebook');};listenForLogin();});<%- if flash[:error] -%>alert("<%= flash[:error] -%>");<%- end -%>};
+FB.getLoginStatus(function(response){if(response.session){captureFacebookSession(response.session);setPinDisplayPrompt();getFriends();labelFacebookButton('Log Out\u00a0','Log out of Facebook');};listenForLogin();});<%- if flash[:error] -%>alert("<%= flash[:error] -%>");<%- end -%>};
 (function(d, s, id) {
 var js, fjs = d.getElementsByTagName(s)[0];
 if (d.getElementById(id)) {return;}
