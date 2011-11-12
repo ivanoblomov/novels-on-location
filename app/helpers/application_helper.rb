@@ -22,6 +22,6 @@ module ApplicationHelper
   end
 
   def wikipedia_link_to link_text, options={}
-    link_to link_text, "http://en.wikipedia.org/wiki/#{link_text}", {:target => '_blank', :title => "Read about #{link_text} on Wikipedia"}.merge(options)
+    link_to link_text, "http://en.wikipedia.org/wiki/#{link_text.gsub ' ', '_'}", {:target => '_blank', :title => "Read about #{link_text} on Wikipedia"}.merge(options)
   end
 end

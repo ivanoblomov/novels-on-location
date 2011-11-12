@@ -10,6 +10,7 @@
       <th><%= sort_link 'admin/locations', 'tags', params -%></th>
       <th><%= sort_link 'admin/locations', 'notes', params -%></th>
       <th><%= sort_link 'admin/locations', 'show_info?', params -%></th>
+      <th><%= sort_link 'admin/locations', 'updated_at', params -%></th>
       <th>Added by</th>
     </tr>
 <%-
@@ -27,6 +28,7 @@
       <td><%= google_link_to location.tags unless location.tags.blank? -%></td>
       <td><%= location.notes -%></td>
       <td><%= location.show_info? ? '√' : nil -%></td>
+      <td class="nowrap"><%= location.updated_at.to_s :date_time -%></td>
       <td> </td>
     </tr>
 <%-
