@@ -32,7 +32,6 @@ function initializeMap(selectedLocationId) {
   map = new google.maps.Map($('#map-canvas')[0], myOptions);
   zoomer = new google.maps.MaxZoomService();
   getLocations(selectedLocationId);
-  claimMyPins();
 
   // Set prompts
   $('#book-input')[0].value = bookPrompt;
@@ -279,6 +278,7 @@ function addPins(selectedLocationId) {
       zoomIn(toLatLng(locations[i].lat_lng));
     }
   }
+  claimMyPins();
 }
 
 function claimMyPins() {
@@ -384,7 +384,7 @@ function openBalloon(location) {
     html += '<h1><a href="' + location.url + '" target="_blank">' + location.title + '</a></h1>';
   html += '<h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2>'
   if (location.review)
-    html += '<p>' + location.review + '</p>';
+    html += '<p class="clear">' + location.review + '</p>';
   else
     html += '<p><em>No reviews found.</em></p>';
   if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p>';
