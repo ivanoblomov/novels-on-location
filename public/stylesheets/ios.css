@@ -1,68 +1,14 @@
-body {
-  font-size: 12pt;
-}
-
-input[type="button"] {
-  -webkit-appearance: none;
-}
-
-#applesearch .sbox input {
-  background: white;
-  font-size: 12pt;
-  height: 26px;
-}
-
-#applesearch .sbox_l {
-  background: none;
-  width: 0;
-  height: 0;
-}
-
-#applesearch .sbox_r {
-  background: none;
-  width: 0;
-  height: 0;
-}
-
-#book-input {
-  width: 153px;
-}
-
+#applesearch .sbox input{background:white;font-size:12pt;height:26px}
+#applesearch .sbox_l{background:none;width:0;height:0}
+#applesearch .sbox_r{background:none;width:0;height:0}
+#book-input{width:153px}
 #fb-page{margin:4px 0 2px 2px}
-
-#mail-button {
-  float: right;
-  margin-right: 10px;
-}
-
-#place-input {
-  width: 230px;
-}
-
-#social-toolbar {
-  margin-left: 15%;
-}
-
-#toolbar {
-  right: 118px;
-  top: 5px;
-}
-
-#login-button {
-  background-position: 0% -138px;
-  font-size: 12pt;
-  width: 97px;
-  height: 26px;
-}
-
-#mode-button {
-  font-size: 12pt;
-  width: 131px;
-  height: 26px;
-}
-
-#pin-display-button {
-  font-size: 12pt;
-  height: 26px;
-  width: 118px;
-}
+#login-button{background-position:0% -138px;font-size:12pt;width:97px;height:26px}
+#mail-button{float:right;margin-right:10px}
+#mode-button{font-size:12pt;width:131px;height:26px}
+#pin-display-button{font-size:12pt;height:26px;width:118px}
+#place-input{width:230px}
+#social-toolbar{margin-left:15%}
+#toolbar{right:118px;top:5px}
+body{font-size:12pt}
+input[type="button"]{-webkit-appearance:none}

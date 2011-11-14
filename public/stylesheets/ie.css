@@ -1,22 +1,5 @@
-input[type="button"] {
-  font-size: 8pt;
-}
-
-.map-balloon input[type="button"] {
-  padding: 3px;
-}
-
-#mail-button {
-  margin: 3px 7px 2px 7px;
-}
-
-#pin-display-button {
-  width: 90px;
-  height: 22px;
-}
-
-#toolbar {
-  float: right;
-  right: 101px;
-  top: 6px;
-}
+.map-balloon input[type="button"]{padding:3px}
+#mail-button{margin:3px 7px 2px 7px}
+#pin-display-button{width:90px;height:22px}
+#toolbar{float:right;right:101px;top:6px}
+input[type="button"]{font-size:8pt}
