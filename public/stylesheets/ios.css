@@ -28,7 +28,7 @@ input[type="button"] {
   width: 153px;
 }
 
-#fb-page{margin:5px 0 2px 5px}
+#fb-page{margin:4px 0 2px 2px}
 
 #mail-button {
   float: right;
@@ -44,7 +44,7 @@ input[type="button"] {
 }
 
 #toolbar {
-  right: 123px;
+  right: 118px;
   top: 5px;
 }
 
