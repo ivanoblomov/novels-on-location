@@ -41,7 +41,7 @@ function initializeMap(selectedLocationId) {
   $('#book-input').blur( function() {
     if ($(this).attr('value') == '') {
       $(this).attr('value', bookPrompt);
-      hidePins();
+      showAllPins();
     }
     $(this).css('color', '#777');
     listenForShortcuts();
@@ -338,8 +338,11 @@ function showAllPins() {
 
 function showPins(keyword) {
   for (var i = 0; i < locations.length; i++) {
-    if (keyword != '' && locations[i].terms.search(eval('/' + keyword + '/i')) > 0)
+    if (keyword != '' && locations[i].terms.toLowerCase().indexOf(keyword.toLowerCase()) > 0) {
       pins[locations[i]._id].setMap(map);
+    } else if (keyword == '') {
+      showAllPins();
+    }
   }
 }
 
