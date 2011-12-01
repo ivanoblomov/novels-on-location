@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
 
-gem 'bson_ext', '~> 1.3'
+gem 'bson_ext'
 gem 'cancan'
 gem 'google_maps_geocoder'
-gem 'jquery-rails', '>= 1.0.3'
+gem 'jquery-rails'
 gem 'mongoid'
 gem 'rails'
 gem 'scaffold_logic'
