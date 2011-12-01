@@ -27,7 +27,7 @@
       <td class="nowrap"><%= wikipedia_link_to location.author -%></td>
       <td><%= google_link_to location.tags unless location.tags.blank? -%></td>
       <td><%= location.notes -%></td>
-      <td><%= location.show_info? ? '√' : nil -%></td>
+      <td><%= '√' if location.show_info? -%></td>
       <td class="nowrap"><%= location.updated_at.to_s :date_time -%></td>
       <td> </td>
     </tr>

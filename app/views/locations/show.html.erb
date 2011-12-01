@@ -2,7 +2,7 @@
   @meta_description = "#{@location.review[0..151]}..." if @location.review
   @meta_keywords = @location.tags
   @title = "#{@location.title} - Novels: On Location"
--%><%- if @location.show_info? -%><h1><%= link_to image_tag(@location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :width => @location.image_width), @location.url, :target => '_blank', :title => "Check out #{@location.title} on Amazon" if @location.image_url -%><%= link_to @location.title, @location.url, :target => '_blank', :title => "Check out #{@location.title} on Amazon" -%></h1><%- end -%>
+-%><%- if true || @location.show_info? -%><h1><%= link_to image_tag(@location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :width => @location.image_width), @location.url, :target => '_blank', :title => "Check out #{@location.title} on Amazon" if @location.image_url -%><%= link_to @location.title, @location.url, :target => '_blank', :title => "Check out #{@location.title} on Amazon" -%></h1><%- end -%>
 <h2>by <%= wikipedia_link_to @location.author -%></h2>
 <h2><%= @location.address -%></h2>
 <p><%= @location.review.html_safe -%></p>
