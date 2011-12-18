@@ -76,9 +76,12 @@ function initializeMap(selectedLocationId) {
   applesearch.init();
 }
 
-function captureFacebookSession(session) {
-  fb_session = session
-  $.cookie('fb_id', fb_session.uid)
+function initFacebookSession(session) {
+  fb_session = session;
+  $.cookie('fb_id', fb_session.userID);
+  labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
+  setPinDisplayPrompt();
+  getFriends();
 }
 
 function checkOrientation() {
@@ -105,7 +108,7 @@ function getFriendIds() {
 }
 
 function getFriendName(id) {
-  if (id == fb_session.uid)
+  if (id == fb_session.userID)
     return 'You';
   for (var i = 0; i < friends.length; i++) {
     if (friends[i].id == id)
@@ -160,11 +163,9 @@ function loggedIn() {
 
 function logIn() {
   FB.login(function(response) {
-    if (response.session) {
-      labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
-      captureFacebookSession(response.session);
+    if (response.authResponse) {
+      initFacebookSession(response.authResponse);
       window.location.reload();
-      listenForLogout();
     }
   });
 }
@@ -423,7 +424,7 @@ function claimPin(id) {
     url: '/locations/' + id,
     data: {
       'caller': 'claim',
-      'location[user_id]': fb_session && fb_session.uid || null,
+      'location[user_id]': fb_session && fb_session.userID || null,
       'location[user_token]': $.cookie('user_token')
     }
   });
@@ -435,7 +436,7 @@ function createPin(latLng, place, address, keywords) {
     'location[book_keywords]': keywords,
     'location[latLng]': toLatLng(latLng).toUrlValue(),
     'location[tags]': place,
-    'location[user_id]': fb_session && fb_session.uid || null,
+    'location[user_id]': fb_session && fb_session.userID || null,
     'location[user_token]': $.cookie('user_token')
   });
 }
