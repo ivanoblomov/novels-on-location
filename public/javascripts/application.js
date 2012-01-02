@@ -1,21 +1,23 @@
-var bookPrompt = 'Find a mapped book';
-var clickingZooms = true;
-var clickListener;
-var fb_session;
-var friendIds = [];
-var friends;
-var geocoder;
-var host;
-var locations;
-var map;
-var openWindow;
-var pins = {};
-var placePrompt = 'Find a place & map a book to it';
-var r;
-var showingAllPins = true;
+var nOL = {};
+nOL.bookPrompt = 'Find a mapped book';
+nOL.clickingZooms = true;
+nOL.clickListener;
+nOL.fb_session;
+nOL.friendIds = [];
+nOL.friends;
+nOL.geocoder = new google.maps.Geocoder();
+nOL.host;
+nOL.locations;
+nOL.map;
+nOL.openWindow;
+nOL.pins = {};
+nOL.placePrompt = 'Find a place & map a book to it';
+nOL.r;
+nOL.showingAllPins = true;
+nOL.zoomer = new google.maps.MaxZoomService();
 
-function initializeMap(selectedLocationId) {
-  var portrait = checkOrientation();
+nOL.init = function(selectedLocationId) {
+  var portrait = nOL.checkOrientation();
   var x = portrait ? 24.686952 : 0;
   var y = portrait ? -41.308594 : 0;
 
@@ -28,63 +30,61 @@ function initializeMap(selectedLocationId) {
     zoom: portrait ? 3 : 2
   };
 
-  geocoder = new google.maps.Geocoder();
   map = new google.maps.Map($('#map-canvas')[0], myOptions);
-  zoomer = new google.maps.MaxZoomService();
-  getLocations(selectedLocationId);
+  nOL.getLocations(selectedLocationId);
 
   // Set prompts
-  $('#book-input')[0].value = bookPrompt;
-  $('#place-input')[0].value = placePrompt;
+  $('#book-input')[0].value = nOL.bookPrompt;
+  $('#place-input')[0].value = nOL.placePrompt;
 
   // Register event listeners
   $('#book-input').blur( function() {
     if ($(this).attr('value') == '') {
-      $(this).attr('value', bookPrompt);
-      showAllPins();
+      $(this).attr('value', nOL.bookPrompt);
+      nOL.showAllPins();
     }
     $(this).css('color', '#777');
-    listenForShortcuts();
+    nOL.listenForShortcuts();
   });
   $('#book-input').focus( function() {
-    if ($(this).attr('value') == bookPrompt)
+    if ($(this).attr('value') == nOL.bookPrompt)
       $(this).attr('value', '');
     $(this).css('color', 'black');
-    dontListenForShortcuts();
+    nOL.dontListenForShortcuts();
   });
   $('#book-input').keyup( function() {
-    hidePins();
-    showPins($('#book-input')[0].value);
+    nOL.hidePins();
+    nOL.showPins($('#book-input')[0].value);
   });
-  $('#mode-button').click(toggleMapMode);
-  $('#pin-display-button').click(togglePinDisplay);
+  $('#mode-button').click(nOL.toggleMapMode);
+  $('#pin-display-button').click(nOL.togglePinDisplay);
   $('#place-input').blur( function() {
-    $(this).attr('value', placePrompt);
+    $(this).attr('value', nOL.placePrompt);
     $(this).css('color', '#777');
-    listenForShortcuts();
+    nOL.listenForShortcuts();
   });
   $('#place-input').focus( function() {
     $(this).attr('value', '');
     $(this).css('color', 'black');
-    dontListenForShortcuts();
+    nOL.dontListenForShortcuts();
   });
   $('#place-input').keypress( function(e) {
-    if ((e.keyCode || e.which) == 13) codePlace($(this).val());
+    if ((e.keyCode || e.which) == 13) nOL.codePlace($(this).val());
   });
 
-  listenForShortcuts();
+  nOL.listenForShortcuts();
   applesearch.init();
 }
 
-function initFacebookSession(session) {
-  fb_session = session;
-  $.cookie('fb_id', fb_session.userID);
-  labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
-  setPinDisplayPrompt();
-  getFriends();
+nOL.initFacebookSession = function(session) {
+  nOL.fb_session = session;
+  $.cookie('fb_id', nOL.fb_session.userID);
+  nOL.labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
+  nOL.setPinDisplayPrompt();
+  nOL.getFriends();
 }
 
-function checkOrientation() {
+nOL.checkOrientation = function() {
   var portrait = false;
 
   if (window.orientation != null)
@@ -93,7 +93,7 @@ function checkOrientation() {
   return portrait;
 }
 
-function getFacebookName(location) {
+nOL.getFacebookName = function(location) {
   if (location.user_name == undefined) {
     FB.api('/' + location.user_id, function(response) {
       location.user_name = response.name;
@@ -101,114 +101,114 @@ function getFacebookName(location) {
   }
 }
 
-function getFriendIds() {
-  for (var i = 0; i < friends.length; i++) {
-    friendIds[i] = friends[i].id;
+nOL.getFriendIds = function() {
+  for (var i = 0; i < nOL.friends.length; i++) {
+    nOL.friendIds[i] = nOL.friends[i].id;
   }
 }
 
-function getFriendName(id) {
-  if (id == fb_session.userID)
+nOL.getFriendName = function(id) {
+  if (id == nOL.fb_session.userID)
     return 'You';
-  for (var i = 0; i < friends.length; i++) {
-    if (friends[i].id == id)
-      return friends[i].name;
+  for (var i = 0; i < nOL.friends.length; i++) {
+    if (nOL.friends[i].id == id)
+      return nOL.friends[i].name;
   }
 }
 
-function getFriends() {
+nOL.getFriends = function() {
   FB.api('/me/friends', function(response) {
-    friends = response.data;
-    setLocationUserNames();
-    getFriendIds();
+    nOL.friends = response.data;
+    nOL.setLocationUserNames();
+    nOL.getFriendIds();
   });
 }
 
-function labelFacebookButton(value, title) {
+nOL.labelFacebookButton = function(value, title) {
   $('#login-button')[0].value = value;
   $('#login-button')[0].title = title;
 }
 
-function updateFacebookLikeButton(path) {
+nOL.updateFacebookLikeButton = function(path) {
   var iframe = $('#fb-like')[0];
   iframe.src = iframe.src.replace(/href=.+/, 'href=' + host + path);
 }
 
-function listenFor(event, args) {
-  if (clickListener != undefined) google.maps.event.removeListener(clickListener);
-  clickListener = google.maps.event.addListener(map, event, function(e) {eval(args)});
+nOL.listenFor = function(event, args) {
+  if (nOL.clickListener != undefined) google.maps.event.removeListener(nOL.clickListener);
+  nOL.clickListener = google.maps.event.addListener(map, event, function(e) {eval(args)});
 }
 
-function listenForLogin() {
+nOL.listenForLogin = function() {
   $('#login-button').click( function() {
-    toggleLogin();
+    nOL.toggleLogin();
   });
 }
 
-function dontListenForShortcuts() {
+nOL.dontListenForShortcuts = function() {
   shortcut.remove('l');
   shortcut.remove('m');
   shortcut.remove('s');
 }
 
-function listenForShortcuts() {
-  shortcut.add('l', toggleLogin);
-  shortcut.add('m', toggleMapMode);
-  shortcut.add('s', togglePinDisplay);
+nOL.listenForShortcuts = function() {
+  shortcut.add('l', nOL.toggleLogin);
+  shortcut.add('m', nOL.toggleMapMode);
+  shortcut.add('s', nOL.togglePinDisplay);
 }
 
-function loggedIn() {
+nOL.loggedIn = function() {
   return !! $.cookie('fb_id');
 }
 
-function logIn() {
+nOL.logIn = function() {
   FB.login(function(response) {
     if (response.authResponse) {
-      initFacebookSession(response.authResponse);
+      nOL.initFacebookSession(response.authResponse);
       window.location.reload();
     }
   });
 }
 
-function logOut() {
+nOL.logOut = function() {
   FB.logout(function(response) {
-    labelFacebookButton('Log In \u00a0 ', 'Log into Facebook');
+    nOL.labelFacebookButton('Log In \u00a0 ', 'Log into Facebook');
     $.cookie('fb_id', null)
     window.location.reload();
-    listenForLogin();
+    nOL.listenForLogin();
   });
 }
 
-function toggleLogin() {
-  loggedIn() ? logOut() : logIn();
+nOL.toggleLogin = function() {
+  nOL.loggedIn() ? nOL.logOut() : nOL.logIn();
 }
 
-function promptForTag(id, tags) {
+nOL.promptForTag = function(id, tags) {
   var value = prompt('Enter some descriptive words. These will be linked to a Google search.', tags);
-  if (value) tagPin(id, value);
+  if (value) nOL.tagPin(id, value);
 }
 
-function promptForNotes(id, notes) {
+nOL.promptForNotes = function(id, notes) {
   var value = prompt('Add any comments you would like readers to know.', notes);
-  if (value) annotatePin(id, value);
+  if (value) nOL.annotatePin(id, value);
 }
 
-function promptForBook(gLatLng, place, address) {
+nOL.promptForBook = function(gLatLng, place, address) {
   var keywords = prompt('Enter keywords describing the book: title, author, etc.', null);
-  if (keywords) findBook(gLatLng, place || '', address, keywords);
+  if (keywords) nOL.findBook(gLatLng, place || '', address, keywords);
 }
 
-function listenForDoubleClick() {
-  updateFacebookLikeButton('')
-  clickingZooms = ! clickingZooms; // negate effect of toggle
-  toggleMapMode();
+nOL.listenForDoubleClick = function() {
+  nOL.updateFacebookLikeButton('')
+  nOL.clickingZooms = ! nOL.clickingZooms; // negate effect of toggle
+  nOL.toggleMapMode();
 }
 
-function toggleMapMode() {
-  clickingZooms = ! clickingZooms;
+nOL.toggleMapMode = function() {
+  nOL.clickingZooms = ! nOL.clickingZooms;
 
-  if (clickingZooms) {
-    if (clickListener != undefined) google.maps.event.removeListener(clickListener);
+  if (nOL.clickingZooms) {
+    if (nOL.clickListener != undefined) google.maps.event.removeListener(nOL.clickListener);
     $('#mode-button')[0].title = 'Double-click map to zoom. Click to toggle';
     $('#mode-button')[0].value = 'Mode: Zoom';
     map.setOptions({
@@ -216,7 +216,7 @@ function toggleMapMode() {
       disableDoubleClickZoom: false
     });
   } else {
-    listenFor('dblclick', 'promptForBook(e.latLng)');
+    nOL.listenFor('dblclick', 'nOL.promptForBook(e.latLng)');
     $('#mode-button')[0].title = 'Double-click map to add pins. Click to toggle';
     $('#mode-button')[0].value = 'Mode: Add Pins';
     map.setOptions({
@@ -226,72 +226,72 @@ function toggleMapMode() {
   }
 }
 
-function setPinDisplayPrompt() {
-  $('#pin-display-button')[0].title = loggedIn() ? "Click to show only friends' pins" : 'Click to show only my pins';
-  $('#pin-display-button')[0].value = loggedIn() ? "Show Friends'" : 'Show My Pins';
+nOL.setPinDisplayPrompt = function() {
+  $('#pin-display-button')[0].title = nOL.loggedIn() ? "Click to show only friends' pins" : 'Click to show only my pins';
+  $('#pin-display-button')[0].value = nOL.loggedIn() ? "Show Friends'" : 'Show My Pins';
 }
 
-function togglePinDisplay() {
-  showingAllPins = ! showingAllPins;
+nOL.togglePinDisplay = function() {
+  nOL.showingAllPins = ! nOL.showingAllPins;
 
-  if (showingAllPins) {
-    showAllPins();
-    setPinDisplayPrompt();
+  if (nOL.showingAllPins) {
+    nOL.showAllPins();
+    nOL.setPinDisplayPrompt();
   } else {
-    hideStrangersPins();
+    nOL.hideStrangersPins();
     $('#pin-display-button')[0].title = 'Click to show all pins';
     $('#pin-display-button')[0].value = 'Show All Pins';
   }
 }
 
-function addPin(location) {
+nOL.addPin = function(location) {
   var pin = new google.maps.Marker({
     map: map,
     draggable: location.writable,
     animation: google.maps.Animation.DROP,
-    position: toLatLng(location.lat_lng)
+    position: nOL.toLatLng(location.lat_lng)
   });
 
-  pins[location._id] = pin;
+  nOL.pins[location._id] = pin;
 
   google.maps.event.addListener(pin, 'click', function() {
     var path = '/locations/' + location._id;
     if (history.pushState)
       history.pushState(null, location.title, path);
-    updateFacebookLikeButton(path);
-    openBalloon(location);
+    nOL.updateFacebookLikeButton(path);
+    nOL.openBalloon(location);
   });
 
   google.maps.event.addListener(pin, 'dragend', function() {
     if (confirm('Move this pin?'))
-      movePin(location._id, pin.getPosition());
+      nOL.movePin(location._id, pin.getPosition());
     else
-      pin.setPosition(toLatLng(location.lat_lng));
+      pin.setPosition(nOL.toLatLng(location.lat_lng));
   });
 }
 
-function addPins(selectedLocationId) {
+nOL.addPins = function(selectedLocationId) {
   for (var i = 0; i < locations.length; i++) {
-    addPin(locations[i]);
+    nOL.addPin(locations[i]);
 
     if (selectedLocationId && locations[i]._id == selectedLocationId) {
-      openBalloon(locations[i]);
-      zoomIn(toLatLng(locations[i].lat_lng));
+      nOL.openBalloon(locations[i]);
+      nOL.zoomIn(nOL.toLatLng(locations[i].lat_lng));
     }
   }
-  claimMyPins();
+  nOL.claimMyPins();
 }
 
-function claimMyPins() {
+nOL.claimMyPins = function() {
   for (var i = 0; i < locations.length; i++) {
     // does the pin writable but missing an fb id?
     if (locations[i].writable && locations[i].user_id == undefined) {
-      claimPin(locations[i]._id);
+      nOL.claimPin(locations[i]._id);
     }
   }
 }
 
-function shouldAddPin(googleResults) {
+nOL.shouldAddPin = function(googleResults) {
   var types = googleResults.types;
   var typesToPin = ['establishment', 'point_of_interest', 'street_address']
 
@@ -302,65 +302,65 @@ function shouldAddPin(googleResults) {
   return false;
 }
 
-function hidePin(id) {
-  pins[id].setMap(null);
+nOL.hidePin = function(id) {
+  nOL.pins[id].setMap(null);
 }
 
-function hidePins() {
+nOL.hidePins = function() {
   for (var i = 0; i < locations.length; i++) {
-    hidePin(locations[i]._id);
+    nOL.hidePin(locations[i]._id);
   }
 }
 
-function hideStrangersPins() {
+nOL.hideStrangersPins = function() {
   for (var i = 0; i < locations.length; i++) {
     var pinId = locations[i]._id;
     var pinUserId = locations[i].user_id;
 
-    if (! locations[i].writable && (! loggedIn() || (loggedIn() && $.inArray(pinUserId, friendIds) == -1)))
-      hidePin(pinId);
+    if (! locations[i].writable && (! nOL.loggedIn() || (nOL.loggedIn() && $.inArray(pinUserId, nOL.friendIds) == -1)))
+      nOL.hidePin(pinId);
     else
-      pins[pinId].setMap(map);
+      nOL.pins[pinId].setMap(map);
   }
 }
 
-function setLocationUserNames() {
+nOL.setLocationUserNames = function() {
   for (var i = 0; i < locations.length; i++) {
     if (locations[i].user_name == undefined && locations[i].user_id)
-      locations[i].user_name = getFriendName(locations[i].user_id) || getFacebookName(locations[i]);
+      locations[i].user_name = nOL.getFriendName(locations[i].user_id) || nOL.getFacebookName(locations[i]);
   }
 }
 
-function showAllPins() {
+nOL.showAllPins = function() {
   for (var i = 0; i < locations.length; i++) {
-    pins[locations[i]._id].setMap(map);
+    nOL.pins[locations[i]._id].setMap(map);
   }
 }
 
-function showPins(keyword) {
+nOL.showPins = function(keyword) {
   for (var i = 0; i < locations.length; i++) {
     if (keyword != '' && locations[i].terms.toLowerCase().indexOf(keyword.toLowerCase()) > 0) {
-      pins[locations[i]._id].setMap(map);
+      nOL.pins[locations[i]._id].setMap(map);
     } else if (keyword == '') {
-      showAllPins();
+      nOL.showAllPins();
     }
   }
 }
 
-function codePlace(input) {
-  geocoder.geocode( { 'address': input}, function(results, status) {
+nOL.codePlace = function(input) {
+  nOL.geocoder.geocode( { 'address': input}, function(results, status) {
     if (status == google.maps.GeocoderStatus.OK) {
       r = results[0];
-      zoomIn(r.geometry.location);
+      nOL.zoomIn(r.geometry.location);
 
-      if (shouldAddPin(r)) promptForBook(r.geometry.location, input, r.formatted_address);
+      if (nOL.shouldAddPin(r)) nOL.promptForBook(r.geometry.location, input, r.formatted_address);
     } else
       alert("Couldn't geocode! The error was " + status);
   });
 }
 
-function zoomIn(gLatLng) {
-  zoomer.getMaxZoomAtLatLng(gLatLng, function(response) {
+nOL.zoomIn = function(gLatLng) {
+  nOL.zoomer.getMaxZoomAtLatLng(gLatLng, function(response) {
     map.setCenter(gLatLng);
 
     if (response.status != google.maps.MaxZoomStatus.OK) {
@@ -372,16 +372,16 @@ function zoomIn(gLatLng) {
   });
 }
 
-function zoomOut() {
-  map.setZoom(checkOrientation() ? 3 : 2);
+nOL.zoomOut = function() {
+  map.setZoom(nOL.checkOrientation() ? 3 : 2);
 }
 
-function openBalloon(location) {
-  if (openWindow != undefined) openWindow.close();
+nOL.openBalloon = function(location) {
+  if (nOL.openWindow != undefined) nOL.openWindow.close();
   html = '<div class="map-balloon">';
-  if (location.user_id == null && location.user_token == null) html += '<input onClick="claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim this pin"/>';
-  if (location.writable) html += '<input onClick="deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag pin"/><input onClick="promptForNotes(\'' + location._id + '\', \'' + (location.notes || '') + '\')" type="button" value="Annotate" title="Annotate pin"/>';
-  html += '<input onClick="zoomIn(toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin"/>'
+  if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim this pin"/>';
+  if (location.writable) html += '<input onClick="nOL.deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (location.notes || '') + '\')" type="button" value="Annotate" title="Annotate pin"/>';
+  html += '<input onClick="nOL.zoomIn(nOL.toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin"/>'
   if (location.image_url)
     html += '<h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '/>' + location.title + '</a></h1>';
   else
@@ -392,23 +392,23 @@ function openBalloon(location) {
   else
     html += '<p><em>No reviews found.</em></p>';
   if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p>';
-  if (fb_session && location.user_id) {
+  if (nOL.fb_session && location.user_id) {
     html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || 'You') + '</a> on ' + location.added_at + '<br/>';
   } else {
     html += 'Added on ' + location.added_at + '<br/>';
   }
   if (location.user_id)
-    html += '<input onClick="hidePins();showPins(\'' + location.user_id + '\');zoomOut()" type="button" value="Other Pins" title="Show other pins added by the same reader"/><span class="bullet">|</span>';
-  html += '<input onClick="hidePins();showPins(\'' + location.author + '\');zoomOut()" type="button" value="Other Books" title="Show other books by the same author"/><span class="bullet">|</span><input onClick="hidePins();showPins(\'' + location.title_for_regex + '\');zoomOut()" type="button" value="Other Locations" title="Show other locations for this book"/>';
+    html += '<input onClick="nOL.hidePins();nOL.showPins(\'' + location.user_id + '\');nOL.zoomOut()" type="button" value="Other Pins" title="Show other pins added by the same reader"/><span class="bullet">|</span>';
+  html += '<input onClick="nOL.hidePins();nOL.showPins(\'' + location.author + '\');nOL.zoomOut()" type="button" value="Other Books" title="Show other books by the same author"/><span class="bullet">|</span><input onClick="nOL.hidePins();nOL.showPins(\'' + location.title_for_regex + '\');nOL.zoomOut()" type="button" value="Other Locations" title="Show other locations for this book"/>';
   if (location.tags) html += 'Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a>'
   html += '</p></div>';
-  openWindow = new google.maps.InfoWindow( {content: html} );
-  openWindow.open(map, pins[location._id]);
-  google.maps.event.addListener(openWindow, 'closeclick', function() {listenForDoubleClick()});
-  listenFor('click', 'openWindow.close(); listenForDoubleClick()');
+  nOL.openWindow = new google.maps.InfoWindow( {content: html} );
+  nOL.openWindow.open(map, nOL.pins[location._id]);
+  google.maps.event.addListener(nOL.openWindow, 'closeclick', function() {nOL.listenForDoubleClick()});
+  nOL.listenFor('click', 'nOL.openWindow.close(); nOL.listenForDoubleClick()');
 }
 
-function annotatePin(id, notes) {
+nOL.annotatePin = function(id, notes) {
   $.ajax({
     type: 'PUT',
     url: '/locations/' + id,
@@ -418,30 +418,30 @@ function annotatePin(id, notes) {
   });
 }
 
-function claimPin(id) {
+nOL.claimPin = function(id) {
   $.ajax({
     type: 'PUT',
     url: '/locations/' + id,
     data: {
       'caller': 'claim',
-      'location[user_id]': fb_session && fb_session.userID || null,
+      'location[user_id]': nOL.fb_session && nOL.fb_session.userID || null,
       'location[user_token]': $.cookie('user_token')
     }
   });
 }
 
-function createPin(latLng, place, address, keywords) {
+nOL.createPin = function(latLng, place, address, keywords) {
   $.post('/locations', {
     'location[address]': (address || ''),
     'location[book_keywords]': keywords,
-    'location[latLng]': toLatLng(latLng).toUrlValue(),
+    'location[latLng]': nOL.toLatLng(latLng).toUrlValue(),
     'location[tags]': place,
-    'location[user_id]': fb_session && fb_session.userID || null,
+    'location[user_id]': nOL.fb_session && nOL.fb_session.userID || null,
     'location[user_token]': $.cookie('user_token')
   });
 }
 
-function deletePin(id) {
+nOL.deletePin = function(id) {
   if (confirm('Are you sure? This action cannot be undone.')) {
     $.ajax({
       type: 'DELETE',
@@ -450,7 +450,7 @@ function deletePin(id) {
   }
 }
 
-function findBook(gLatLng, place, address, keywords) {
+nOL.findBook = function(gLatLng, place, address, keywords) {
   $.get('/locations/new', {
     'location[address]': (address || ''),
     'location[tags]': place,
@@ -459,14 +459,14 @@ function findBook(gLatLng, place, address, keywords) {
   });
 }
 
-function getLocations(selectedLocationId) {
+nOL.getLocations = function(selectedLocationId) {
   $.get('/locations.json', {'t': new Date().getTime(), 'user_token': $.cookie('user_token')}, function(data) {
     locations = data;
-    addPins(selectedLocationId);
+    nOL.addPins(selectedLocationId);
   });
 }
 
-function movePin(id, gLatLng) {
+nOL.movePin = function(id, gLatLng) {
   $.ajax({
     type: 'PUT',
     url: '/locations/' + id,
@@ -476,7 +476,7 @@ function movePin(id, gLatLng) {
   });
 }
 
-function tagPin(id, tags) {
+nOL.tagPin = function(id, tags) {
   $.ajax({
     type: 'PUT',
     url: '/locations/' + id,
@@ -486,7 +486,7 @@ function tagPin(id, tags) {
   });
 }
 
-function toLatLng( latLng ) {
+nOL.toLatLng = function( latLng ) {
 	return new google.maps.LatLng(latLng[0], latLng[1]);
 }
 
@@ -494,7 +494,7 @@ function toLatLng( latLng ) {
 var applesearch;
 if (!applesearch)	applesearch = {};
 
-applesearch.init = function ()
+applesearch.init = function()
 {
 	// add applesearch css for non-safari, dom-capable browsers
 	if ( navigator.userAgent.toLowerCase().indexOf('safari') < 0  && document.getElementById )
@@ -504,7 +504,7 @@ applesearch.init = function ()
 }
 
 // called when on user input - toggles clear fld btn
-applesearch.onChange = function (fldID, btnID)
+applesearch.onChange = function(fldID, btnID)
 {
 	// check whether to show delete button
 	var fld = document.getElementById( fldID );
@@ -524,20 +524,20 @@ applesearch.onChange = function (fldID, btnID)
 }
 
 // clears field
-applesearch.clearFld = function (fldID,btnID)
+applesearch.clearFld = function(fldID,btnID)
 {
 	var fld = document.getElementById( fldID );
 	fld.value = '';
 	this.onChange(fldID,btnID);
 
 	if (fldID == 'book-input') {
-    hidePins();
-    showPins($('#book-input')[0].value);
+    nOL.hidePins();
+    nOL.showPins($('#book-input')[0].value);
 	}
 }
 
 // called by btn.onclick event handler - calls clearFld for this button
-applesearch.clearBtnClick = function ()
+applesearch.clearBtnClick = function()
 {
 	applesearch.clearFld(this.fldID, this.id);
 }

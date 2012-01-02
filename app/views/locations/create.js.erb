@@ -1,5 +1,5 @@
 <%- if @location.valid? -%>
-  addPin(<%= inject_writable_flag(@location).to_json.html_safe -%>);
+  nOL.addPin(<%= inject_writable_flag(@location).to_json.html_safe -%>);
 <%- else -%>
   alert("Can't find the book '<%= j params[:location][:book_keywords] -%>'!");
 <%- end -%>
