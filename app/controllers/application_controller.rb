@@ -33,6 +33,7 @@ class ApplicationController < ActionController::Base
 
   def error_500
     Mailer.error(request, @exception).deliver
+    flash[:error] = @exception.message.include?('query limit') ? "Sorry, can't geocode your location. Google Maps only allows us to query their server so many times a day. Please try again tomorrow!" : @exception.message
     render :template => 'error', :status => :internal_server_error
   end
 end
