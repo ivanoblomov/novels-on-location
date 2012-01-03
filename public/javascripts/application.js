@@ -202,6 +202,8 @@ nOL.listenForDoubleClick = function() {
   nOL.updateFacebookLikeButton('')
   nOL.clickingZooms = ! nOL.clickingZooms; // negate effect of toggle
   nOL.toggleMapMode();
+  if (history.pushState)
+    history.pushState(null, '', '/');
 }
 
 nOL.toggleMapMode = function() {
