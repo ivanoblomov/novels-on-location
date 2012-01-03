@@ -1,39 +1,39 @@
-<%- if @locations.empty? -%>
-<p><em>No locations found. Why don't you <%= link_to 'add some', root_path -%>?
+<% if @locations.empty? %>
+<p><em>No locations found. Why don't you <%= link_to 'add some', root_path %>?
 </em></p>
-<%- else -%>
+<% else %>
 <table class=standard>
 <tr>
 <th colspan=2></th>
-<th><%= sort_link 'admin/locations', 'title', params -%> / <%= sort_link 'admin/locations', 'address', params -%></th>
-<th><%= sort_link 'admin/locations', 'author', params -%></th>
-<th><%= sort_link 'admin/locations', 'tags', params -%></th>
-<th><%= sort_link 'admin/locations', 'notes', params -%></th>
-<th><%= sort_link 'admin/locations', 'show_info?', params -%></th>
-<th><%= sort_link 'admin/locations', 'updated_at', params -%></th>
+<th><%= sort_link 'admin/locations', 'title', params %> / <%= sort_link 'admin/locations', 'address', params %></th>
+<th><%= sort_link 'admin/locations', 'author', params %></th>
+<th><%= sort_link 'admin/locations', 'tags', params %></th>
+<th><%= sort_link 'admin/locations', 'notes', params %></th>
+<th><%= sort_link 'admin/locations', 'show_info?', params %></th>
+<th><%= sort_link 'admin/locations', 'updated_at', params %></th>
 <th>Added by</th>
 </tr>
-<%-
+<%
       i = 1
       for location in @locations
--%>
-<tr class=<%= cycle('odd', 'even') -%>>
-<td><%= i -%></td>
-<td><%= link_to image_tag(location.image_url, :alt => "Cover of #{location.title}", :class => 'thumbnail', :height => location.image_height, :width => location.image_width), location.url, :target => '_blank', :title => "Check out #{location.title} on Amazon" if location.image_url -%></td>
+%>
+<tr class=<%= cycle('odd', 'even') %>>
+<td><%= i %></td>
+<td><%= link_to image_tag(location.image_url, :alt => "Cover of #{location.title}", :class => 'thumbnail', :height => location.image_height, :width => location.image_width), location.url, :target => '_blank', :title => "Check out #{location.title} on Amazon" if location.image_url %></td>
 <td>
-<%= link_to location.title, location.url, :target => '_blank' -%><br/>
-<%= link_to location.address, location -%>
+<%= link_to location.title, location.url, :target => '_blank' %><br/>
+<%= link_to location.address, location %>
 </td>
-<td class=nowrap><%= wikipedia_link_to location.author -%></td>
-<td><%= google_link_to location.tags unless location.tags.blank? -%></td>
-<td><%= location.notes -%></td>
-<td><%= '√' if location.show_info? -%></td>
-<td class=nowrap><%= location.updated_at.to_s :date_time -%></td>
+<td class=nowrap><%= wikipedia_link_to location.author %></td>
+<td><%= google_link_to location.tags unless location.tags.blank? %></td>
+<td><%= location.notes %></td>
+<td><%= '√' if location.show_info? %></td>
+<td class=nowrap><%= location.updated_at.to_s :date_time %></td>
 <td> </td>
 </tr>
-<%-
+<%
         i += 1
       end
--%>
+%>
 </table>
-<%- end -%>
+<% end %>

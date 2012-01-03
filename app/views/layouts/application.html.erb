@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"/>
-<title><%= @title || "Novels: On Location - #{Location.book_count} Novels/#{Location.count} Locations" -%></title>
+<title><%= @title || "Novels: On Location - #{Location.book_count} Novels/#{Location.count} Locations" %></title>
 <meta name=apple-mobile-web-app-capable content="yes"/>
-<meta name=description content="<%= @meta_description || "A Google-Maps/Amazon mash-up for finding books that take place where you're traveling. Search the map and make your next destination come alive!" -%>"/>
-<meta name=keywords content="<%= @meta_keywords || 'google maps, amazon, mash-up, novels, location, books, settings, map, travel' -%>"/>
-<%= auto_discovery_link_tag :rss, "https://www.facebook.com/feeds/page.php?id=#{Rails.application.config.facebook_app_id}&format=atom10" -%>
+<meta name=description content="<%= @meta_description || "A Google-Maps/Amazon mash-up for finding books that take place where you're traveling. Search the map and make your next destination come alive!" %>"/>
+<meta name=keywords content="<%= @meta_keywords || 'google maps, amazon, mash-up, novels, location, books, settings, map, travel' %>"/>
+<%= auto_discovery_link_tag :rss, "https://www.facebook.com/feeds/page.php?id=#{Rails.application.config.facebook_app_id}&format=atom10" %>
 <style>html{height:100%}
 body{font-family:"Helvetica Neue", helvetica, arial, "Lucida Grande", sans-serif;font-size:10pt;height:100%;margin:0;padding:0}
 a{text-decoration:none}
@@ -42,38 +42,38 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 @media print{@page{size:landscape}
 .no-print{display:none}
 #headers{z-index:1}}</style>
-<%= stylesheet_link_tag 'safari' if safari_pc? -%>
-<%= stylesheet_link_tag 'ie' if ie? -%>
-<%= stylesheet_link_tag 'ios' if ios? -%>
+<%= stylesheet_link_tag 'safari' if safari_pc? %>
+<%= stylesheet_link_tag 'ie' if ie? %>
+<%= stylesheet_link_tag 'ios' if ios? %>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<%= csrf_meta_tag -%> <script>var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-25642977-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
+<%= csrf_meta_tag %> <script>var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-25642977-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
 </head>
 <body>
-<%= yield -%>
+<%= yield %>
 <div id=map-canvas></div>
 <div class=no-print id=toolbar>
 <div id=applesearch>
-<span class=sbox_l></span><span class=sbox><input type=search class=search id=place-input placeholder=Search...<%- if safari_pc? -%> autosave=applestyle_srch results=5<%- end -%> onkeyup="applesearch.onChange('place-input','clear_place')"/></span><span class=sbox_r id=clear_place></span>
-<span class=sbox_l></span><span class=sbox><input type=search class=search id=book-input placeholder=Search...<%- if safari_pc? -%> autosave=applestyle_srch results=5<%- end -%> onkeyup="applesearch.onChange('book-input','clear_book')"/></span><span class=sbox_r id=clear_book></span>
+<span class=sbox_l></span><span class=sbox><input type=search class=search id=place-input placeholder=Search...<% if safari_pc? %> autosave=applestyle_srch results=5<% end %> onkeyup="applesearch.onChange('place-input','clear_place')"/></span><span class=sbox_r id=clear_place></span>
+<span class=sbox_l></span><span class=sbox><input type=search class=search id=book-input placeholder=Search...<% if safari_pc? %> autosave=applestyle_srch results=5<% end %> onkeyup="applesearch.onChange('book-input','clear_book')"/></span><span class=sbox_r id=clear_book></span>
 </div>
 <input type=button class=map id=mode-button title="Double-click map to zoom. Click to toggle" value="Mode: Zoom"/>
 <input type=button class=map id=pin-display-button title="Click to show only my pins" value="Show My Pins"/>
-<%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon', :width => 20, :height => 12), :encode => 'hex', :id => 'mail-button', :title => 'Send feedback' -%>
-<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon', :width => 18, :height => 18), "http://www.facebook.com/apps/application.php?id=#{Rails.application.config.facebook_app_id}", :id => 'fb-page', :title => 'Visit our Facebook page' -%>
+<%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon', :width => 20, :height => 12), :encode => 'hex', :id => 'mail-button', :title => 'Send feedback' %>
+<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon', :width => 18, :height => 18), "http://www.facebook.com/apps/application.php?id=#{Rails.application.config.facebook_app_id}", :id => 'fb-page', :title => 'Visit our Facebook page' %>
 </div>
 <div class=no-print id=social-toolbar>
 <div id=fb-root></div><input type=button class=map id=login-button title="Log into Facebook" value="Log In &nbsp; "/>
-<iframe<%- if ie? -%> allowTransparency="true" frameBorder="0"<%- end -%> id=fb-like src="https://www.facebook.com/plugins/like.php?layout=button_count&amp;href=<%= @location ? location_url(@location) : Rails.application.config.main_host -%>"></iframe>
+<iframe<% if ie? %> allowTransparency="true" frameBorder="0"<% end %> id=fb-like src="https://www.facebook.com/plugins/like.php?layout=button_count&amp;href=<%= @location ? location_url(@location) : Rails.application.config.main_host %>"></iframe>
 <a href="http://twitter.com/share" class=twitter-share-button data-count=none>Tweet</a>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script src="http://platform.twitter.com/widgets.js"></script>
-<%= javascript_include_tag 'jquery_ujs', 'shortcut', Rails.env.development? ? 'application' : 'application.min' -%>
-<script>host = '<%= Rails.application.config.main_host -%>';
+<%= javascript_include_tag 'jquery_ujs', 'shortcut', Rails.env.development? ? 'application' : 'application.min' %>
+<script>host = '<%= Rails.application.config.main_host %>';
 window.fbAsyncInit=function(){
-nOL.init(<%= params[:id] ? "'#{params[:id]}'" : '' -%>);
-FB.init({appId:'<%= Rails.application.config.facebook_app_id -%>',cookie:true,status:true});
-FB.getLoginStatus(function(response){if(response.authResponse){nOL.initFacebookSession(response.authResponse)}else{$.cookie('fb_id', null)};nOL.listenForLogin();});<%- if flash[:error] -%>alert("<%= flash[:error] -%>");<%- end -%>};
+nOL.init(<%= params[:id] ? "'#{params[:id]}'" : '' %>);
+FB.init({appId:'<%= Rails.application.config.facebook_app_id %>',cookie:true,status:true});
+FB.getLoginStatus(function(response){if(response.authResponse){nOL.initFacebookSession(response.authResponse)}else{$.cookie('fb_id', null)};nOL.listenForLogin();});<% if flash[:error] %>alert("<%= flash[:error] %>");<% end %>};
 (function(d, s, id) {
 var js, fjs = d.getElementsByTagName(s)[0];
 if (d.getElementById(id)) {return;}
