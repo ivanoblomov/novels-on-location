@@ -74,13 +74,12 @@ window.fbAsyncInit=function(){
 nOL.init(<%= params[:id] ? "'#{params[:id]}'" : '' %>);
 FB.init({appId:'<%= Rails.application.config.facebook_app_id %>',cookie:true,status:true});
 FB.getLoginStatus(function(response){if(response.authResponse){nOL.initFacebookSession(response.authResponse)}else{$.cookie('fb_id', null)};nOL.listenForLogin();});<% if flash[:error] %>alert("<%= flash[:error] %>");<% end %>};
-(function(d, s, id) {
-var js, fjs = d.getElementsByTagName(s)[0];
-if (d.getElementById(id)) {return;}
-js = d.createElement(s); js.id = id;
-js.src = "//connect.facebook.net/en_US/all.js#xfbml=1";
-fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));
+(function(d){
+var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
+js = d.createElement('script'); js.id = id; js.async = true;
+js.src = "//connect.facebook.net/en_US/all.js";
+d.getElementsByTagName('head')[0].appendChild(js);
+}(document));
 </script>
 </body>
 </html>
