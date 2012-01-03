@@ -18,6 +18,7 @@ class Location
   field :url
   field :user_id
   field :user_token
+  scope :with_lat_lng, lambda{ |lat_lng| {:where => {:lat_lng => lat_lng}} }
 
   attr_accessor :writable
   attr_reader :book_keywords
@@ -26,6 +27,18 @@ class Location
 
   def self.book_count
     Location.all.map{ |l| l.asin }.uniq.size
+  end
+
+  def self.displace_duplicate_coordinates locations = Location.duplicate_coordinates
+    return if locations.blank?
+    l = locations.last
+    l.send :displace
+    l.save
+    Location.displace_duplicate_coordinates
+  end
+
+  def self.duplicate_coordinates
+    Location.all.select{ |l| ! l.matching_coordinates.blank? }
   end
 
   def self.last_updated
@@ -52,12 +65,12 @@ class Location
     self.attributes = CandyWrapper.book(value)
   end
 
-  def geocode
-    self.address = GoogleMapsGeocoder.new(self.lat_lng * ', ').formatted_address if self.address.blank?
-  end
-
   def latLng=(value)
     self.lat_lng = value.split ','
+  end
+
+  def matching_coordinates
+    Location.with_lat_lng(self.lat_lng) - [self]
   end
 
   def owned?
@@ -80,5 +93,20 @@ class Location
 
   def unowned?
     ! self.owned?
+  end
+
+  private
+
+  def displace
+    x = rand / 10000.0
+    y = rand / 10000.0
+    x = -x if rand(1) == 0
+    y = -y if rand(1) == 0
+    self.lat_lng = [(self.lat_lng[0].to_f + x).to_s, (self.lat_lng[1].to_f + y).to_s]
+  end
+
+  def geocode
+    self.send :displace unless self.matching_coordinates.blank?
+    self.address = GoogleMapsGeocoder.new(self.lat_lng * ', ').formatted_address if self.address.blank?
   end
 end
