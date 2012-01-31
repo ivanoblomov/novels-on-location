@@ -1,4 +1,5 @@
 class User
+  ADMINS = ['666325406', '1492670787'].freeze
   attr_accessor :id
   attr_accessor :token
 
@@ -7,7 +8,7 @@ class User
   end
 
   def admin?
-    self.id == '666325406'
+    ADMINS.include? self.id
   end
 
   def facebook?
