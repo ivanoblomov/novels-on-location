@@ -194,7 +194,7 @@ nOL.promptForNotes = function(id, notes) {
 }
 
 nOL.promptForBook = function(gLatLng, place, address) {
-  var keywords = prompt('Enter keywords describing the book: title, author, etc.', null);
+  var keywords = prompt('Add a novel to the map. Our only requirement: that it be evocative of the place.\n\nEnter keywords describing the book: title, author, etc.', null);
   if (keywords) nOL.findBook(gLatLng, place || '', address, keywords);
 }
 
