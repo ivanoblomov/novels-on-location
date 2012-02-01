@@ -1,5 +1,6 @@
 var nOL = {};
 nOL.bookPrompt = 'Find a mapped book';
+nOL.bounds = new google.maps.LatLngBounds();
 nOL.clickingZooms = true;
 nOL.clickListener;
 nOL.fb_session;
@@ -17,17 +18,11 @@ nOL.showingAllPins = true;
 nOL.zoomer = new google.maps.MaxZoomService();
 
 nOL.init = function(selectedLocationId) {
-  var portrait = nOL.checkOrientation();
-  var x = portrait ? 24.686952 : 0;
-  var y = portrait ? -41.308594 : 0;
-
   var myOptions = {
     backgroundColor: 'white',
-    center: new google.maps.LatLng(x, y),
     draggableCursor: 'default',
     mapTypeId: google.maps.MapTypeId.HYBRID,
-    minZoom: 2,
-    zoom: portrait ? 3 : 2
+    minZoom: 2
   };
 
   map = new google.maps.Map($('#map-canvas')[0], myOptions);
@@ -255,6 +250,7 @@ nOL.addPin = function(location) {
     position: latLng
   });
 
+  nOL.bounds.extend(latLng);
   nOL.pins[location._id] = pin;
 
   google.maps.event.addListener(pin, 'click', function() {
@@ -287,6 +283,7 @@ nOL.addPins = function(selectedLocationId) {
       nOL.zoomIn(nOL.toLatLng(locations[i].lat_lng));
     }
   }
+  map.fitBounds(nOL.bounds);
 }
 
 nOL.shouldAddPin = function(googleResults) {
