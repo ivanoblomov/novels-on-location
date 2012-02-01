@@ -247,11 +247,12 @@ nOL.togglePinDisplay = function() {
 }
 
 nOL.addPin = function(location) {
+  var latLng = nOL.toLatLng(location.lat_lng);
   var pin = new google.maps.Marker({
     map: map,
     draggable: location.writable,
     animation: google.maps.Animation.DROP,
-    position: nOL.toLatLng(location.lat_lng)
+    position: latLng
   });
 
   nOL.pins[location._id] = pin;
@@ -268,7 +269,7 @@ nOL.addPin = function(location) {
     if (confirm('Move this pin?'))
       nOL.movePin(location._id, pin.getPosition());
     else
-      pin.setPosition(nOL.toLatLng(location.lat_lng));
+      pin.setPosition(latLng);
   });
 }
 
@@ -276,19 +277,14 @@ nOL.addPins = function(selectedLocationId) {
   for (var i = 0; i < locations.length; i++) {
     nOL.addPin(locations[i]);
 
-    if (selectedLocationId && locations[i]._id == selectedLocationId) {
-      nOL.openBalloon(locations[i]);
-      nOL.zoomIn(nOL.toLatLng(locations[i].lat_lng));
-    }
-  }
-  nOL.claimMyPins();
-}
-
-nOL.claimMyPins = function() {
-  for (var i = 0; i < locations.length; i++) {
     // does the pin writable but missing an fb id?
     if (locations[i].writable && locations[i].user_id == undefined) {
       nOL.claimPin(locations[i]._id);
+    }
+
+    if (selectedLocationId && locations[i]._id == selectedLocationId) {
+      nOL.openBalloon(locations[i]);
+      nOL.zoomIn(nOL.toLatLng(locations[i].lat_lng));
     }
   }
 }
