@@ -69,17 +69,25 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script src="http://platform.twitter.com/widgets.js"></script>
 <%= javascript_include_tag 'jquery_ujs', 'shortcut', Rails.env.development? ? 'application' : 'application.min' %>
-<script>host = '<%= Rails.application.config.main_host %>';
-window.fbAsyncInit=function(){
-nOL.init(<%= params[:id] ? "'#{params[:id]}'" : '' %>);
-FB.init({appId:'<%= Rails.application.config.facebook_app_id %>',cookie:true,status:true});
-FB.getLoginStatus(function(response){if(response.authResponse){nOL.initFacebookSession(response.authResponse)}else{$.cookie('fb_id', null)};nOL.listenForLogin();});<% if flash[:error] %>alert("<%= flash[:error] %>");<% end %>};
-(function(d){
-var js, id = 'facebook-jssdk'; if (d.getElementById(id)) {return;}
-js = d.createElement('script'); js.id = id; js.async = true;
-js.src = "//connect.facebook.net/en_US/all.js";
-d.getElementsByTagName('head')[0].appendChild(js);
-}(document));
+<script>
+  window.fbAsyncInit=function(){
+    nOL.init({
+      <%= "error: \"#{flash[:error]}\",".html_safe if flash[:error] %>
+      fbAppId: <%= Rails.application.config.facebook_app_id %>,
+      host: '<%= Rails.application.config.main_host %>',
+      selectedLocationId: <%= params[:id] ? "'#{params[:id]}'" : 'null' %>,
+    });
+  };
+  (function(d){
+    var js, id = 'facebook-jssdk';
+    if (d.getElementById(id))
+      return;
+    js = d.createElement('script');
+    js.id = id;
+    js.async = true;
+    js.src = '//connect.facebook.net/en_US/all.js';
+    d.getElementsByTagName('head')[0].appendChild(js);
+  }(document));
 </script>
 </body>
 </html>

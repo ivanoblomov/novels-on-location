@@ -17,7 +17,19 @@ nOL.r;
 nOL.showingAllPins = true;
 nOL.zoomer = new google.maps.MaxZoomService();
 
-nOL.init = function(selectedLocationId) {
+nOL.init = function(settings) {
+  nOL.host = settings['host'];
+
+  FB.init({appId:settings['fbAppId'],cookie:true,status:true});
+  FB.getLoginStatus(function(response){
+    if(response.authResponse){
+      nOL.initFacebookSession(response.authResponse)
+    }else{
+      $.cookie('fb_id', null)
+    };
+    nOL.listenForLogin();
+  });
+
   var myOptions = {
     backgroundColor: 'white',
     draggableCursor: 'default',
@@ -26,7 +38,7 @@ nOL.init = function(selectedLocationId) {
   };
 
   map = new google.maps.Map($('#map-canvas')[0], myOptions);
-  nOL.getLocations(selectedLocationId);
+  nOL.getLocations(settings['selectedLocationId']);
 
   // Set prompts
   $('#book-input')[0].value = nOL.bookPrompt;
@@ -69,6 +81,9 @@ nOL.init = function(selectedLocationId) {
 
   nOL.listenForShortcuts();
   applesearch.init();
+
+  if (settings['error'])
+    alert(settings['error']);
 }
 
 nOL.initFacebookSession = function(session) {
@@ -126,7 +141,7 @@ nOL.labelFacebookButton = function(value, title) {
 
 nOL.updateFacebookLikeButton = function(path) {
   var iframe = $('#fb-like')[0];
-  iframe.src = iframe.src.replace(/href=.+/, 'href=' + host + path);
+  iframe.src = iframe.src.replace(/href=.+/, 'href=' + nOL.host + path);
 }
 
 nOL.listenFor = function(event, args) {
