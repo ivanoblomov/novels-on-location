@@ -106,6 +106,7 @@ nOL.checkOrientation = function() {
 nOL.getFacebookName = function(location) {
   if (location.user_name == undefined) {
     FB.api('/' + location.user_id, function(response) {
+      $('#' + location.user_id).text(response.name)
       location.user_name = response.name;
     });
   }
@@ -117,19 +118,9 @@ nOL.getFriendIds = function() {
   }
 }
 
-nOL.getFriendName = function(id) {
-  if (id == nOL.fb_session.userID)
-    return 'You';
-  for (var i = 0; i < nOL.friends.length; i++) {
-    if (nOL.friends[i].id == id)
-      return nOL.friends[i].name;
-  }
-}
-
 nOL.getFriends = function() {
   FB.api('/me/friends', function(response) {
     nOL.friends = response.data;
-    nOL.setLocationUserNames();
     nOL.getFriendIds();
   });
 }
@@ -334,13 +325,6 @@ nOL.hideStrangersPins = function() {
   }
 }
 
-nOL.setLocationUserNames = function() {
-  for (var i = 0; i < locations.length; i++) {
-    if (locations[i].user_name == undefined && locations[i].user_id)
-      locations[i].user_name = nOL.getFriendName(locations[i].user_id) || nOL.getFacebookName(locations[i]);
-  }
-}
-
 nOL.showAllPins = function() {
   for (var i = 0; i < locations.length; i++) {
     nOL.pins[locations[i]._id].setMap(map);
@@ -387,6 +371,8 @@ nOL.zoomOut = function() {
 }
 
 nOL.openBalloon = function(location) {
+  if (location.user_name == null)
+    nOL.getFacebookName(location);
   if (nOL.openWindow != undefined) nOL.openWindow.close();
   html = '<div class="map-balloon">';
   if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim this pin"/>';
@@ -403,7 +389,7 @@ nOL.openBalloon = function(location) {
     html += '<p><em>No reviews found.</em></p>';
   if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p>';
   if (nOL.fb_session && location.user_id) {
-    html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || 'You') + '</a> on ' + location.added_at + '<br/>';
+    html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || '(loading...)') + '</a> on ' + location.added_at + '<br/>';
   } else {
     html += 'Added on ' + location.added_at + '<br/>';
   }
