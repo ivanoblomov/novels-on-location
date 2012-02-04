@@ -1,6 +1,6 @@
 class LocationsController < ApplicationController
+  before_filter :find_location, :only => :show
   load_and_authorize_resource :only => [:destroy, :update]
-  load_resource :only => :show
   helper_method :inject_writable_flag
   respond_to :html, :json
 
@@ -39,6 +39,16 @@ class LocationsController < ApplicationController
   end
 
   private
+
+  def find_location
+    if @location = Location.find_by_slug(params[:id])
+    elsif Location.exists? :conditions => {:id => params[:id]}
+      @location = Location.find params[:id]
+      redirect_to location_url(@location, :canonical_url => location_url(@location)), :status => :moved_permanently
+    else
+      error_404
+    end
+  end
 
   def inject_writable_flag(locations)
     if locations.is_a?(Array)

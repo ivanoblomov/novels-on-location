@@ -1,8 +1,9 @@
 class Location
   include Mongoid::Document
+  include Mongoid::Slug
   include Mongoid::Timestamps
 
-  VIRTUAL_ATTRIBUTES = [:added_at, :terms, :title_for_regex, :writable]
+  VIRTUAL_ATTRIBUTES = [:added_at, :slug, :terms, :title_for_regex, :writable]
 
   field :address
   field :asin
@@ -23,6 +24,7 @@ class Location
   attr_accessor :writable
   attr_reader :book_keywords
   before_save :geocode
+  slug :title
   validates_presence_of :title
 
   def self.book_count

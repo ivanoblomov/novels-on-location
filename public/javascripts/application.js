@@ -38,7 +38,7 @@ nOL.init = function(settings) {
   };
 
   map = new google.maps.Map($('#map-canvas')[0], myOptions);
-  nOL.getLocations(settings['selectedLocationId']);
+  nOL.getLocations(settings['selectedLocationSlug']);
 
   // Set prompts
   $('#book-input')[0].value = nOL.bookPrompt;
@@ -260,7 +260,7 @@ nOL.addPin = function(location) {
   nOL.pins[location._id] = pin;
 
   google.maps.event.addListener(pin, 'click', function() {
-    var path = '/locations/' + location._id;
+    var path = '/locations/' + location.slug;
     if (history.pushState)
       history.pushState(null, location.title, path);
     nOL.updateFacebookLikeButton(path);
@@ -275,16 +275,16 @@ nOL.addPin = function(location) {
   });
 }
 
-nOL.addPins = function(selectedLocationId) {
+nOL.addPins = function(selectedLocationSlug) {
   for (var i = 0; i < locations.length; i++) {
     nOL.addPin(locations[i]);
 
-    // does the pin writable but missing an fb id?
-    if (locations[i].writable && locations[i].user_id == undefined) {
+    // is the pin writable but missing an fb id?
+    if (nOL.fb_session && locations[i].writable && locations[i].user_id == undefined) {
       nOL.claimPin(locations[i]._id);
     }
 
-    if (selectedLocationId && locations[i]._id == selectedLocationId) {
+    if (selectedLocationSlug && locations[i].slug == selectedLocationSlug) {
       nOL.openBalloon(locations[i]);
       nOL.zoomIn(nOL.toLatLng(locations[i].lat_lng));
     }
@@ -455,10 +455,10 @@ nOL.findBook = function(gLatLng, place, address, keywords) {
   });
 }
 
-nOL.getLocations = function(selectedLocationId) {
+nOL.getLocations = function(selectedLocationSlug) {
   $.get('/locations.json', {'t': new Date().getTime(), 'user_token': $.cookie('user_token')}, function(data) {
     locations = data;
-    nOL.addPins(selectedLocationId);
+    nOL.addPins(selectedLocationSlug);
   });
 }
 
