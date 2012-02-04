@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
 
   def sitemap
     respond_to do |format|
+      format.html { error_404 }
       format.xml do
         @locations = Location.all
       end

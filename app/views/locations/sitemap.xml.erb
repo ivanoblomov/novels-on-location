@@ -8,7 +8,7 @@
   </url>
 <% @locations.each do |location| %>
   <url>
-    <loc><%= location_url location.id %></loc>
+    <loc><%= location_url location %></loc>
   <% if location.updated_at %>
     <lastmod><%= location.updated_at.to_s :w3c_datetime %></lastmod>
   <% end %>
