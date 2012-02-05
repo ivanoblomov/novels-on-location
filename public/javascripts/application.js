@@ -3,6 +3,7 @@ nOL.bookPrompt = 'Find a mapped book';
 nOL.bounds = new google.maps.LatLngBounds();
 nOL.clickingZooms = true;
 nOL.clickListener;
+nOL.defaultTitle;
 nOL.fb_session;
 nOL.friendIds = [];
 nOL.friends;
@@ -18,6 +19,7 @@ nOL.showingAllPins = true;
 nOL.zoomer = new google.maps.MaxZoomService();
 
 nOL.init = function(settings) {
+  nOL.defaultTitle = settings['defaultTitle'];
   nOL.host = settings['host'];
 
   FB.init({appId:settings['fbAppId'],cookie:true,status:true});
@@ -135,10 +137,9 @@ nOL.updateFacebookLikeButton = function(path) {
   iframe.src = iframe.src.replace(/href=.+/, 'href=' + nOL.host + path);
 }
 
-nOL.updateTweetButton = function(path, text) {
-  var iframe = $('.twitter-share-button')[0];
-  iframe.src = iframe.src.replace(/url=.+/, 'url=' + nOL.host + path);
-  iframe.src = iframe.src.replace(/text=.+/, 'text=' + nOL.host + path);
+nOL.updateTweetButton = function(path) {
+  var iframe = $('#tweet')[0];
+  iframe.src = iframe.src.replace(/url=.+/, 'url=http://' + nOL.host + path);
 }
 
 nOL.listenFor = function(event, args) {
@@ -206,8 +207,9 @@ nOL.promptForBook = function(gLatLng, place, address) {
 }
 
 nOL.listenForDoubleClick = function() {
+  document.title = nOL.defaultTitle;
   nOL.updateFacebookLikeButton('');
-  nOL.updateTweetButton('', document.title);
+  nOL.updateTweetButton('');
   nOL.clickingZooms = ! nOL.clickingZooms; // negate effect of toggle
   nOL.toggleMapMode();
   if (history.pushState)
@@ -268,10 +270,12 @@ nOL.addPin = function(location) {
 
   google.maps.event.addListener(pin, 'click', function() {
     var path = '/locations/' + location.slug;
+    var title = location.title + ', a novel by ' + location.author + ', set in ' + location.address;
     if (history.pushState)
       history.pushState(null, location.title, path);
+    document.title = title
     nOL.updateFacebookLikeButton(path);
-    nOL.updateTweetButton(path, location.title + ', a novel by ' + location.author + ', set in ' + location.address);
+    nOL.updateTweetButton(path);
     nOL.openBalloon(location);
   });
 
