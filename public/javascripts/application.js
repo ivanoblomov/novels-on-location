@@ -273,7 +273,7 @@ nOL.addPin = function(location) {
     var title = location.title + ', a novel by ' + location.author + ', set in ' + location.address;
     if (history.pushState)
       history.pushState(null, location.title, path);
-    document.title = title
+    document.title = location.title + ' - Novels: On Location';
     nOL.updateFacebookLikeButton(path);
     nOL.updateTweetButton(path);
     nOL.openBalloon(location);

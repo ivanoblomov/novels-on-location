@@ -1,6 +1,10 @@
 module ApplicationHelper
   include ScaffoldLogic::Helper
 
+  def default_title
+    "Novels: On Location - #{Location.book_count} Novels/#{Location.count} Locations"
+  end
+
   def filter_param(value)
     "'#{value.blank? ? nil : j(value)}'"
   end
