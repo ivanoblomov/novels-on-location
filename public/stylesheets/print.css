@@ -1,0 +1,3 @@
+@page{size:landscape}
+.no-print{display:none}
+#headers{z-index:1}
