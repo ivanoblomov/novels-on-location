@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user, :facebook?
+  helper_method :current_user, :facebook?, :nibbler?
   protect_from_forgery
 
   unless Rails.application.config.consider_all_requests_local
@@ -31,6 +31,10 @@ class ApplicationController < ActionController::Base
 
   def facebook?
     request.user_agent.include? 'facebookexternalhit'
+  end
+
+  def nibbler?
+    request.user_agent == 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3'
   end
 
   def sitemap

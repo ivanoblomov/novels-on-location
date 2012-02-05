@@ -76,8 +76,8 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 </div>
 <div class=no-print id=social-toolbar>
 <div id=fb-root></div><input type=button class=map id=login-button title="Log into Facebook" value="Log In &nbsp; "/>
-<iframe<% if ie? %> allowTransparency="true" frameBorder="0"<% end %> id=fb-like src="https://www.facebook.com/plugins/like.php?layout=button_count&amp;href=<%= @location ? location_url(@location) : Rails.application.config.main_host %>"></iframe>
-<iframe allowtransparency=true frameborder=0 id=tweet scrolling=no src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>"></iframe>
+<iframe<% if ie? %> allowTransparency="true" frameBorder="0"<% end %> id=fb-like src="https://www.facebook.com/plugins/like.php?layout=button_count&amp;href=<%= @location ? location_url(@location) : Rails.application.config.main_host %>"></iframe><% unless nibbler? %>
+<iframe allowtransparency=true frameborder=0 id=tweet scrolling=no src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>"></iframe><% end %>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script src="http://platform.twitter.com/widgets.js"></script>
