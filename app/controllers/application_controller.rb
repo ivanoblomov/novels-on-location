@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user
+  helper_method :current_user, :facebook?
   protect_from_forgery
 
   unless Rails.application.config.consider_all_requests_local
@@ -12,15 +12,6 @@ class ApplicationController < ActionController::Base
 
   def authenticate_user!
     redirect_to root_url unless current_user.admin? || Rails.env.development?
-  end
-
-  def sitemap
-    respond_to do |format|
-      format.html { error_404 }
-      format.xml do
-        @locations = Location.all
-      end
-    end
   end
 
   def current_user
@@ -36,5 +27,18 @@ class ApplicationController < ActionController::Base
     Mailer.error(request, @exception).deliver
     flash[:error] = @exception.message.include?('query limit') ? "Sorry, can't geocode your location. Google Maps only allows us to query their server so many times a day. Please try again tomorrow!" : @exception.message
     render :template => 'error', :status => :internal_server_error
+  end
+
+  def facebook?
+    request.user_agent.include? 'facebookexternalhit'
+  end
+
+  def sitemap
+    respond_to do |format|
+      format.html { error_404 }
+      format.xml do
+        @locations = Location.all
+      end
+    end
   end
 end
