@@ -32,7 +32,7 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 .map-balloon input[type="button"]{background:white;color:blue;float:right;font-size:10pt;padding:0}
 .search{color:#777;margin:0}
 .thumbnail{border:black 1px solid;float:left;margin-bottom:5px;margin-right:5px}
-.twitter-share-button{float:right;width:61px !important}
+.twitter-share-button{float:right}
 #applesearch{float:left;top:6px}
 #applesearch .sbox_l{background:url('/images/srch_l.gif') no-repeat top left;float:left;width:19px;height:19px}
 #applesearch .sbox_r{background:url('/images/srch_r.gif') no-repeat top left;float:left;width:19px;height:19px}
@@ -75,7 +75,7 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 <div class=no-print id=social-toolbar>
 <div id=fb-root></div><input type=button class=map id=login-button title="Log into Facebook" value="Log In &nbsp; "/>
 <iframe<% if ie? %> allowTransparency="true" frameBorder="0"<% end %> id=fb-like src="https://www.facebook.com/plugins/like.php?layout=button_count&amp;href=<%= @location ? location_url(@location) : Rails.application.config.main_host %>"></iframe>
-<a href="http://twitter.com/share" class=twitter-share-button data-count=none>Tweet</a>
+<a href="http://twitter.com/share" class=twitter-share-button data-count=horizontal>Tweet</a>
 </div>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
 <script src="http://platform.twitter.com/widgets.js"></script>

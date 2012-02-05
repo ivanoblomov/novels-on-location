@@ -135,6 +135,12 @@ nOL.updateFacebookLikeButton = function(path) {
   iframe.src = iframe.src.replace(/href=.+/, 'href=' + nOL.host + path);
 }
 
+nOL.updateTweetButton = function(path, text) {
+  var iframe = $('.twitter-share-button')[0];
+  iframe.src = iframe.src.replace(/url=.+/, 'url=' + nOL.host + path);
+  iframe.src = iframe.src.replace(/text=.+/, 'text=' + nOL.host + path);
+}
+
 nOL.listenFor = function(event, args) {
   if (nOL.clickListener != undefined) google.maps.event.removeListener(nOL.clickListener);
   nOL.clickListener = google.maps.event.addListener(map, event, function(e) {eval(args)});
@@ -200,7 +206,8 @@ nOL.promptForBook = function(gLatLng, place, address) {
 }
 
 nOL.listenForDoubleClick = function() {
-  nOL.updateFacebookLikeButton('')
+  nOL.updateFacebookLikeButton('');
+  nOL.updateTweetButton('', document.title);
   nOL.clickingZooms = ! nOL.clickingZooms; // negate effect of toggle
   nOL.toggleMapMode();
   if (history.pushState)
@@ -264,6 +271,7 @@ nOL.addPin = function(location) {
     if (history.pushState)
       history.pushState(null, location.title, path);
     nOL.updateFacebookLikeButton(path);
+    nOL.updateTweetButton(path, location.title + ', a novel by ' + location.author + ', set in ' + location.address);
     nOL.openBalloon(location);
   });
 
