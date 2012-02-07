@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   def facebook?
-    request.user_agent.include? 'facebookexternalhit'
+    request.user_agent.try(:include?, 'facebookexternalhit')
   end
 
   def nibbler?
