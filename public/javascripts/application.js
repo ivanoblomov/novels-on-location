@@ -332,9 +332,12 @@ nOL.hideStrangersPins = function() {
 
     if (! locations[i].writable && (! nOL.loggedIn() || (nOL.loggedIn() && $.inArray(pinUserId, nOL.friendIds) == -1)))
       nOL.hidePin(pinId);
-    else
+    else {
       nOL.showPin(nOL.pins[pinId]);
+      nOL.bounds.extend(nOL.pins[pinId].getPosition());
+    }
   }
+  nOL.map.fitBounds(nOL.bounds);
 }
 
 nOL.showAllPins = function() {
