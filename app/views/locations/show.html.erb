@@ -6,7 +6,7 @@
 
   @og_tags = {
     'og:title' => description,
-    'og:description' => strip_tags(@location.review).strip,
+    'og:description' => strip_tags(@location.review).try(:strip),
     'og:type' => 'book',
     'og:image' => @location.image_url,
     'og:site_name' => 'Novels: On Location'
