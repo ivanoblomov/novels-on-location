@@ -32,14 +32,12 @@ nOL.init = function(settings) {
     nOL.listenForLogin();
   });
 
-  var myOptions = {
+  map = new google.maps.Map($('#map-canvas')[0], {
     backgroundColor: 'white',
     draggableCursor: 'default',
     mapTypeId: google.maps.MapTypeId.HYBRID,
     minZoom: 2
-  };
-
-  map = new google.maps.Map($('#map-canvas')[0], myOptions);
+  });
   nOL.getLocations(settings['selectedLocationSlug']);
 
   // Set prompts
@@ -344,11 +342,13 @@ nOL.showAllPins = function() {
 }
 
 nOL.showPins = function(keyword) {
-  for (var i = 0; i < locations.length; i++) {
-    if (keyword != '' && locations[i].terms.toLowerCase().indexOf(keyword.toLowerCase()) > 0) {
-      nOL.pins[locations[i]._id].setMap(map);
-    } else if (keyword == '') {
-      nOL.showAllPins();
+  if (keyword == '')
+    nOL.showAllPins();
+  else {
+    for (var i = 0; i < locations.length; i++) {
+      if (locations[i].terms.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
+        nOL.pins[locations[i]._id].setMap(map);
+      }
     }
   }
 }
