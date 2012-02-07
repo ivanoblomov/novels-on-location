@@ -28,11 +28,11 @@ h2{font-size:10pt;margin:-10px 0 10px 0}
 h3{font-size:10pt;margin-bottom:-10px}
 input[type="button"]{border:0;cursor:pointer;font-weight:bold;padding:0 0 0 5px;text-align:left}
 input.map[type="button"]{background:#3B5998;color:white;float:left}
-.bullet{float:right;margin:2px .5em 0 .5em}
+.bullet{margin:2px .5em 0 .5em}
 .clear{clear:both}
 .map-balloon{margin-right:15px}
-.map-balloon input[type="button"]{background:white;color:blue;float:right;font-size:10pt;padding:0}
 .search{color:#777;margin:0}
+.search-links{float:right;font-size:10pt;font-weight:bold;padding:0}
 .thumbnail{border:black 1px solid;float:left;margin-bottom:5px;margin-right:5px}
 #applesearch{float:left;top:6px}
 #applesearch .sbox_l{background:url('/images/srch_l.gif') no-repeat top left;float:left;width:19px;height:19px}
@@ -55,10 +55,7 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 @media print{@page{size:landscape}
 .no-print{display:none}
 #headers{z-index:1}}</style>
-<%= stylesheet_link_tag 'safari' if safari_pc? %>
-<%= stylesheet_link_tag 'ie' if ie? %>
-<%= stylesheet_link_tag 'ios' if ios? %>
-<%= stylesheet_link_tag 'print', :media => 'print' if nibbler? %>
+<%= stylesheet_link_tag 'safari' if safari_pc? %><%= stylesheet_link_tag 'ie' if ie? %><%= stylesheet_link_tag 'ios' if ios? %><%= stylesheet_link_tag 'print', :media => 'print' if nibbler? %>
 <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
 <%= csrf_meta_tag %> <script>var _gaq=_gaq||[];_gaq.push(['_setAccount','UA-25642977-1']);_gaq.push(['_trackPageview']);(function(){var ga=document.createElement('script');ga.type='text/javascript';ga.async=true;ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';var s=document.getElementsByTagName('script')[0];s.parentNode.insertBefore(ga,s);})();</script>
 </head>

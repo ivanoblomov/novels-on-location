@@ -1,7 +1,6 @@
 var nOL = {};
 nOL.bookPrompt = 'Find a mapped book';
 nOL.bounds = new google.maps.LatLngBounds();
-nOL.boundsAllPins;
 nOL.clickingZooms = true;
 nOL.clickListener;
 nOL.defaultTitle;
@@ -61,7 +60,7 @@ nOL.init = function(settings) {
     nOL.dontListenForShortcuts();
   });
   $('#book-input').keyup( function() {
-    nOL.showPins($('#book-input')[0].value);
+    nOL.showPins($('#book-input')[0].value, true);
   });
   $('#mode-button').click(nOL.toggleMapMode);
   $('#pin-display-button').click(nOL.togglePinDisplay);
@@ -255,7 +254,7 @@ nOL.togglePinDisplay = function() {
 }
 
 nOL.addPin = function(location) {
-  var anchor = window.location.hash.substring(1);
+  var anchor = unescape(window.location.hash.substring(1));
   var latLng = nOL.toLatLng(location.lat_lng);
   var pin = new google.maps.Marker({
     draggable: location.writable,
@@ -302,7 +301,6 @@ nOL.addPins = function(selectedLocationSlug) {
     }
   }
   nOL.map.fitBounds(nOL.bounds);
-  nOL.boundsAllPins = nOL.bounds;
 }
 
 nOL.shouldAddPin = function(googleResults) {
@@ -340,10 +338,12 @@ nOL.hideStrangersPins = function() {
 }
 
 nOL.showAllPins = function() {
+  nOL.bounds = new google.maps.LatLngBounds();
   for (var i = 0; i < locations.length; i++) {
     nOL.pins[locations[i]._id].setMap(nOL.map);
+    nOL.bounds.extend(nOL.pins[locations[i]._id].getPosition());
   }
-  nOL.map.fitBounds(nOL.boundsAllPins);
+  nOL.map.fitBounds(nOL.bounds);
 }
 
 nOL.showPin = function(pin) {
@@ -351,17 +351,19 @@ nOL.showPin = function(pin) {
   nOL.bounds.extend(pin.getPosition());
 }
 
-nOL.showPins = function(keyword) {
+nOL.showPins = function(keyword, updateHistory) {
   if (keyword == '') {
     nOL.showAllPins();
   } else {
     nOL.hidePins();
     nOL.bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < locations.length; i++) {
-      if (locations[i].terms.toLowerCase().indexOf(keyword.toLowerCase()) > -1)
+      if (locations[i].terms.toLowerCase().indexOf(unescape(keyword).toLowerCase()) > -1)
         nOL.showPin(nOL.pins[locations[i]._id]);
     }
     nOL.map.fitBounds(nOL.bounds);
+    if (updateHistory && history.pushState)
+      history.pushState(null, null, '#' + keyword);
   }
 }
 
@@ -403,7 +405,7 @@ nOL.openBalloon = function(location) {
   if (location.writable) html += '<input onClick="nOL.deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (location.notes || '') + '\')" type="button" value="Annotate" title="Annotate pin"/>';
   html += '<input onClick="nOL.zoomIn(nOL.toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin"/>'
   if (location.image_url)
-    html += '<h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '/>' + location.title + '</a></h1>';
+    html += '<h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '>' + location.title + '</a></h1>';
   else
     html += '<h1><a href="' + location.url + '" target="_blank">' + location.title + '</a></h1>';
   html += '<h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2>'
@@ -413,13 +415,14 @@ nOL.openBalloon = function(location) {
     html += '<p><em>No reviews found.</em></p>';
   if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p>';
   if (nOL.fb_session && location.user_id) {
-    html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || '(loading...)') + '</a> on ' + location.added_at + '<br/>';
+    html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || '(loading...)') + '</a> on ' + location.added_at;
   } else {
-    html += 'Added on ' + location.added_at + '<br/>';
+    html += 'Added on ' + location.added_at;
   }
+  html += '<br/><div class=search-links><a href="#' + escape(location.title_for_regex) + '" onClick="nOL.showPins(\'' + location.title_for_regex + '\', false)" title="Show all locations for this novel">All Locations for Novel</a><span class=bullet>|</span><a href="#' + escape(location.author) + '" onClick="nOL.showPins(\'' + location.author + '\', false)" title="Show all novels by this author">All Novels by Author</a>';
   if (location.user_id)
-    html += '<input onClick="nOL.showPins(\'' + location.user_id + '\')" type="button" value="Other Pins" title="Show other pins added by the same reader"/><span class="bullet">|</span>';
-  html += '<input onClick="nOL.showPins(\'' + location.author + '\')" type="button" value="Other Books" title="Show other books by the same author"/><span class="bullet">|</span><input onClick="nOL.showPins(\'' + location.title_for_regex + '\')" type="button" value="Other Locations" title="Show other locations for this book"/>';
+    html += '<span class=bullet>|</span><a href="#' + location.user_id + '" onClick="nOL.showPins(\'' + location.user_id + '\', false)" title="Show all pins added by this reader">All Pins by Reader</a>';
+  html += '</div>'
   if (location.tags) html += 'Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a>'
   html += '</p></div>';
   nOL.openWindow = new google.maps.InfoWindow( {content: html} );
@@ -551,7 +554,7 @@ applesearch.clearFld = function(fldID,btnID)
 	this.onChange(fldID,btnID);
 
 	if (fldID == 'book-input') {
-    nOL.showPins($('#book-input')[0].value);
+    nOL.showPins($('#book-input')[0].value, true);
 	}
 }
 
