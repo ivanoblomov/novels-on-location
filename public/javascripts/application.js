@@ -1,6 +1,7 @@
 var nOL = {};
 nOL.bookPrompt = 'Find a mapped book';
 nOL.bounds = new google.maps.LatLngBounds();
+nOL.boundsAllPins;
 nOL.clickingZooms = true;
 nOL.clickListener;
 nOL.defaultTitle;
@@ -32,7 +33,7 @@ nOL.init = function(settings) {
     nOL.listenForLogin();
   });
 
-  map = new google.maps.Map($('#map-canvas')[0], {
+  nOL.map = new google.maps.Map($('#map-canvas')[0], {
     backgroundColor: 'white',
     draggableCursor: 'default',
     mapTypeId: google.maps.MapTypeId.HYBRID,
@@ -60,7 +61,6 @@ nOL.init = function(settings) {
     nOL.dontListenForShortcuts();
   });
   $('#book-input').keyup( function() {
-    nOL.hidePins();
     nOL.showPins($('#book-input')[0].value);
   });
   $('#mode-button').click(nOL.toggleMapMode);
@@ -142,7 +142,7 @@ nOL.updateTweetButton = function(path) {
 
 nOL.listenFor = function(event, args) {
   if (nOL.clickListener != undefined) google.maps.event.removeListener(nOL.clickListener);
-  nOL.clickListener = google.maps.event.addListener(map, event, function(e) {eval(args)});
+  nOL.clickListener = google.maps.event.addListener(nOL.map, event, function(e) {eval(args)});
 }
 
 nOL.listenForLogin = function() {
@@ -221,7 +221,7 @@ nOL.toggleMapMode = function() {
     if (nOL.clickListener != undefined) google.maps.event.removeListener(nOL.clickListener);
     $('#mode-button')[0].title = 'Double-click map to zoom. Click to toggle';
     $('#mode-button')[0].value = 'Mode: Zoom';
-    map.setOptions({
+    nOL.map.setOptions({
       draggableCursor: 'default',
       disableDoubleClickZoom: false
     });
@@ -229,7 +229,7 @@ nOL.toggleMapMode = function() {
     nOL.listenFor('dblclick', 'nOL.promptForBook(e.latLng)');
     $('#mode-button')[0].title = 'Double-click map to add pins. Click to toggle';
     $('#mode-button')[0].value = 'Mode: Add Pins';
-    map.setOptions({
+    nOL.map.setOptions({
       draggableCursor: 'crosshair',
       disableDoubleClickZoom: true
     });
@@ -255,16 +255,18 @@ nOL.togglePinDisplay = function() {
 }
 
 nOL.addPin = function(location) {
+  var anchor = window.location.hash.substring(1);
   var latLng = nOL.toLatLng(location.lat_lng);
   var pin = new google.maps.Marker({
-    map: map,
     draggable: location.writable,
     animation: google.maps.Animation.DROP,
     position: latLng
   });
 
-  nOL.bounds.extend(latLng);
   nOL.pins[location._id] = pin;
+
+  if (location.terms.toLowerCase().indexOf(anchor.toLowerCase()) > -1)
+    nOL.showPin(pin);
 
   google.maps.event.addListener(pin, 'click', function() {
     var path = '/locations/' + location.slug;
@@ -299,7 +301,8 @@ nOL.addPins = function(selectedLocationSlug) {
       nOL.zoomIn(nOL.toLatLng(locations[i].lat_lng));
     }
   }
-  map.fitBounds(nOL.bounds);
+  nOL.map.fitBounds(nOL.bounds);
+  nOL.boundsAllPins = nOL.bounds;
 }
 
 nOL.shouldAddPin = function(googleResults) {
@@ -324,6 +327,7 @@ nOL.hidePins = function() {
 }
 
 nOL.hideStrangersPins = function() {
+  nOL.bounds = new google.maps.LatLngBounds();
   for (var i = 0; i < locations.length; i++) {
     var pinId = locations[i]._id;
     var pinUserId = locations[i].user_id;
@@ -331,25 +335,33 @@ nOL.hideStrangersPins = function() {
     if (! locations[i].writable && (! nOL.loggedIn() || (nOL.loggedIn() && $.inArray(pinUserId, nOL.friendIds) == -1)))
       nOL.hidePin(pinId);
     else
-      nOL.pins[pinId].setMap(map);
+      nOL.showPin(nOL.pins[pinId]);
   }
 }
 
 nOL.showAllPins = function() {
   for (var i = 0; i < locations.length; i++) {
-    nOL.pins[locations[i]._id].setMap(map);
+    nOL.pins[locations[i]._id].setMap(nOL.map);
   }
+  nOL.map.fitBounds(nOL.boundsAllPins);
+}
+
+nOL.showPin = function(pin) {
+  pin.setMap(nOL.map);
+  nOL.bounds.extend(pin.getPosition());
 }
 
 nOL.showPins = function(keyword) {
-  if (keyword == '')
+  if (keyword == '') {
     nOL.showAllPins();
-  else {
+  } else {
+    nOL.hidePins();
+    nOL.bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < locations.length; i++) {
-      if (locations[i].terms.toLowerCase().indexOf(keyword.toLowerCase()) > -1) {
-        nOL.pins[locations[i]._id].setMap(map);
-      }
+      if (locations[i].terms.toLowerCase().indexOf(keyword.toLowerCase()) > -1)
+        nOL.showPin(nOL.pins[locations[i]._id]);
     }
+    nOL.map.fitBounds(nOL.bounds);
   }
 }
 
@@ -367,19 +379,19 @@ nOL.codePlace = function(input) {
 
 nOL.zoomIn = function(gLatLng) {
   nOL.zoomer.getMaxZoomAtLatLng(gLatLng, function(response) {
-    map.setCenter(gLatLng);
+    nOL.map.setCenter(gLatLng);
 
     if (response.status != google.maps.MaxZoomStatus.OK) {
       alert("Couldn't zoom!");
-      map.setZoom(8);
+      nOL.map.setZoom(8);
       return;
     } else
-      map.setZoom(map.getZoom() == response.zoom - 5 ? response.zoom - 3: response.zoom - 5);
+      nOL.map.setZoom(nOL.map.getZoom() == response.zoom - 5 ? response.zoom - 3: response.zoom - 5);
   });
 }
 
 nOL.zoomOut = function() {
-  map.setZoom(nOL.checkOrientation() ? 3 : 2);
+  nOL.map.setZoom(nOL.checkOrientation() ? 3 : 2);
 }
 
 nOL.openBalloon = function(location) {
@@ -406,12 +418,12 @@ nOL.openBalloon = function(location) {
     html += 'Added on ' + location.added_at + '<br/>';
   }
   if (location.user_id)
-    html += '<input onClick="nOL.hidePins();nOL.showPins(\'' + location.user_id + '\');nOL.zoomOut()" type="button" value="Other Pins" title="Show other pins added by the same reader"/><span class="bullet">|</span>';
-  html += '<input onClick="nOL.hidePins();nOL.showPins(\'' + location.author + '\');nOL.zoomOut()" type="button" value="Other Books" title="Show other books by the same author"/><span class="bullet">|</span><input onClick="nOL.hidePins();nOL.showPins(\'' + location.title_for_regex + '\');nOL.zoomOut()" type="button" value="Other Locations" title="Show other locations for this book"/>';
+    html += '<input onClick="nOL.showPins(\'' + location.user_id + '\')" type="button" value="Other Pins" title="Show other pins added by the same reader"/><span class="bullet">|</span>';
+  html += '<input onClick="nOL.showPins(\'' + location.author + '\')" type="button" value="Other Books" title="Show other books by the same author"/><span class="bullet">|</span><input onClick="nOL.showPins(\'' + location.title_for_regex + '\')" type="button" value="Other Locations" title="Show other locations for this book"/>';
   if (location.tags) html += 'Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a>'
   html += '</p></div>';
   nOL.openWindow = new google.maps.InfoWindow( {content: html} );
-  nOL.openWindow.open(map, nOL.pins[location._id]);
+  nOL.openWindow.open(nOL.map, nOL.pins[location._id]);
   google.maps.event.addListener(nOL.openWindow, 'closeclick', function() {nOL.listenForDoubleClick()});
   nOL.listenFor('click', 'nOL.openWindow.close(); nOL.listenForDoubleClick()');
 }
@@ -539,7 +551,6 @@ applesearch.clearFld = function(fldID,btnID)
 	this.onChange(fldID,btnID);
 
 	if (fldID == 'book-input') {
-    nOL.hidePins();
     nOL.showPins($('#book-input')[0].value);
 	}
 }
