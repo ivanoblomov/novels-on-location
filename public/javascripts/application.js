@@ -408,9 +408,9 @@ nOL.openBalloon = function(location) {
   if (location.writable) html += '<input onClick="nOL.deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (location.notes || '') + '\')" type="button" value="Annotate" title="Annotate pin"/>';
   html += '<input onClick="nOL.zoomIn(nOL.toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin"/>'
   if (location.image_url)
-    html += '<h1><a href="' + location.url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '>' + location.title + '</a></h1>';
+    html += '<h1><a href="' + location.amazon_url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '>' + location.title + '</a></h1>';
   else
-    html += '<h1><a href="' + location.url + '" target="_blank">' + location.title + '</a></h1>';
+    html += '<h1><a href="' + location.amazon_url + '" target="_blank">' + location.title + '</a></h1>';
   html += '<h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2><h2>' + location.address + '</h2>'
   if (location.review)
     html += '<p class="clear">' + location.review + '</p>';

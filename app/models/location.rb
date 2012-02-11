@@ -3,7 +3,7 @@ class Location
   include Mongoid::Slug
   include Mongoid::Timestamps
 
-  VIRTUAL_ATTRIBUTES = [:added_at, :slug, :terms, :title_for_regex, :writable]
+  VIRTUAL_ATTRIBUTES = [:added_at, :amazon_url, :slug, :terms, :title_for_regex, :writable]
 
   field :address
   field :asin
@@ -60,6 +60,10 @@ class Location
   def added_at
     t = self.created_at || self.updated_at
     t && t.to_s(:date_time)
+  end
+
+  def amazon_url
+    "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
   end
 
   def book_keywords=(value)
