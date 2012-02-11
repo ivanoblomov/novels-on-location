@@ -9,6 +9,12 @@ gem 'rails'
 gem 'scaffold_logic'
 gem 'sucker'
 
+group :assets do
+  gem 'sass-rails', '~> 3.1.0'
+  gem 'coffee-rails', '~> 3.1.0'
+  gem 'uglifier'
+end
+
 group :test do
   gem 'cucumber-rails'
   gem 'database_cleaner'
