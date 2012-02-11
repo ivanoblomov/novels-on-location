@@ -246,10 +246,14 @@ nOL.togglePinDisplay = function() {
   if (nOL.showingAllPins) {
     nOL.showAllPins();
     nOL.setPinDisplayPrompt();
+    if (history.pushState)
+      history.pushState(null, nOL.defaultTitle, '/');
   } else {
     nOL.hideStrangersPins();
     $('#pin-display-button')[0].title = 'Click to show all pins';
     $('#pin-display-button')[0].value = 'Show All Pins';
+    if (nOL.loggedIn() && history.pushState)
+      history.pushState(null, null, '/#friends');
   }
 }
 
@@ -264,7 +268,7 @@ nOL.addPin = function(location) {
 
   nOL.pins[location._id] = pin;
 
-  if (location.terms.toLowerCase().indexOf(anchor.toLowerCase()) > -1)
+  if ((anchor == 'friends' && nOL.loggedIn() && $.inArray(location.user_id, nOL.friendIds) > -1) || location.terms.toLowerCase().indexOf(anchor.toLowerCase()) > -1)
     nOL.showPin(pin);
 
   google.maps.event.addListener(pin, 'click', function() {
