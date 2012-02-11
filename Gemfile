@@ -8,6 +8,7 @@ gem 'mongoid_slug'
 gem 'rails'
 gem 'scaffold_logic'
 gem 'sucker'
+gem 'thin'
 
 group :assets do
   gem 'sass-rails', '~> 3.1.0'
