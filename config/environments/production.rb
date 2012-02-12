@@ -7,9 +7,10 @@ NovelsOnLocation::Application.configure do
   config.serve_static_assets = false
   config.i18n.fallbacks = true
   config.active_support.deprecation = :notify
-  config.assets.compress = true
   config.assets.compile = false
+  config.assets.compress = true
   config.assets.digest = true
+  config.assets.precompile += %w(ie.css ios.css print.css safari.css)
   # custom
   config.main_host = 'cedar-novels.herokuapp.com'
 end

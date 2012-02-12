@@ -1,3 +1,4 @@
+/*= require_self */
 body,table.standard,table.standard th,table.standard td,table.standard th{text-align:left}
 body{font:.8em helvetica,sans-serif}
 table.standard td a:visited,table.standard td a:link{text-decoration:none}
