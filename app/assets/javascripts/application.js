@@ -1,3 +1,6 @@
+//= require jquery_ujs
+//= require shortcut
+//= require_tree .
 var nOL = {};
 nOL.bookPrompt = 'Find a mapped book';
 nOL.bounds = new google.maps.LatLngBounds();
