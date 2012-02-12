@@ -11,5 +11,5 @@ NovelsOnLocation::Application.configure do
   config.assets.compile = false
   config.assets.digest = true
   # custom
-  config.main_host = 'novelsonlocation.com'
+  config.main_host = 'cedar-novels.herokuapp.com'
 end
