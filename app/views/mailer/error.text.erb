@@ -1,3 +1,5 @@
 <%= @request.url if @request %>
 
+<%= @request.try :user_agent if @request %>
+
 <%= @exception.backtrace * "\n" %>
