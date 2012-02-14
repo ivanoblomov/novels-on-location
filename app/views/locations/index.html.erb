@@ -6,7 +6,7 @@
     @meta_keywords = @locations.map{ |l| l.tags } * ', '
     @og_tags = {
       'og:description' => description,
-      'og:image' => 'http://a5.sphotos.ak.fbcdn.net/hphotos-ak-ash4/382738_351550844858963_345696682111046_1581971_1450028275_n.jpg',
+      'og:image' => location_kind == 'novel' ? @locations.first.image_url : 'http://a5.sphotos.ak.fbcdn.net/hphotos-ak-ash4/382738_351550844858963_345696682111046_1581971_1450028275_n.jpg',
       'og:title' => 'Novels: On Location',
       'og:type' => 'website',
       'og:url' => request.url

@@ -75,6 +75,6 @@ class LocationsController < ApplicationController
   end
 
   def location_query
-    params[:_escaped_fragment_].split('-')[1] if params[:_escaped_fragment_]
+    CGI::unescape params[:_escaped_fragment_].split('-')[1] if params[:_escaped_fragment_]
   end
 end

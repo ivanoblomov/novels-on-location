@@ -10,7 +10,7 @@ module ApplicationHelper
     when 'author'
       "#{location.author} #{location_count == 1 ? 'is' : "has #{location_count} novel locations"} mapped on NovelsOnLocation.com."
     when 'novel'
-      "#{location.author}, a novel by #{location.author}, #{location_count == 1 ? 'is' : "has #{location_count} locations"} mapped on NovelsOnLocation.com."
+      "#{location.title}, a novel by #{location.author}, #{location_count == 1 ? 'is' : "has #{location_count} locations"} mapped on NovelsOnLocation.com."
     when 'reader'
       "A reader mapped #{location_count == 1 ? "the novel, #{location.title}," : "#{location_count} novel locations"} on NovelsOnLocation.com."
     end
