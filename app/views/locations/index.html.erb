@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<% if html_snapshot? %><!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" /><%
@@ -24,9 +24,12 @@
     </div>
 
     <ul>
-    <% @locations.each do |@location| %>
+    <%
+      @locations.each do |l|
+        @location = l
+    %>
       <li><%= render 'location' %></li>
     <% end %>
     </ul>
   </body>
-</html>
+</html><% end %>

@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   before_filter :find_location, :only => :show
   load_and_authorize_resource :only => [:destroy, :update]
-  helper_method :inject_writable_flag, :location_kind
+  helper_method :html_snapshot?, :inject_writable_flag, :location_kind
   respond_to :html, :json
 
   # CRUD ===========================================================================================
@@ -71,10 +71,10 @@ class LocationsController < ApplicationController
   end
 
   def location_kind
-    params[:_escaped_fragment_].split('-')[0]
+    params[:_escaped_fragment_].split('-')[0] if params[:_escaped_fragment_]
   end
 
   def location_query
-    params[:_escaped_fragment_].split('-')[1]
+    params[:_escaped_fragment_].split('-')[1] if params[:_escaped_fragment_]
   end
 end
