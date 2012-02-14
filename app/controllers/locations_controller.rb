@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   before_filter :find_location, :only => :show
   load_and_authorize_resource :only => [:destroy, :update]
-  helper_method :inject_writable_flag
+  helper_method :inject_writable_flag, :location_kind
   respond_to :html, :json
 
   # CRUD ===========================================================================================
@@ -15,10 +15,10 @@ class LocationsController < ApplicationController
   end
 
   def index
-    @locations = Location.all.to_a
+    @locations = html_snapshot? ? Location.scope_for_kind(location_kind, location_query) : Location.all.to_a
 
     respond_to do |format|
-      format.html
+      format.html { render :layout => ! html_snapshot? }
       format.json do
         cookies.permanent[:user_token] = params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
         render :json => inject_writable_flag(@locations).to_json(:methods => Location::VIRTUAL_ATTRIBUTES), :layout => false
@@ -50,6 +50,10 @@ class LocationsController < ApplicationController
     end
   end
 
+  def html_snapshot?
+    ! params[:_escaped_fragment_].blank?
+  end
+
   def inject_writable_flag(locations)
     if locations.is_a?(Array)
       locations = locations.map{ |l| l.writable = l.owned? && can?(:update, l); l }
@@ -64,5 +68,13 @@ class LocationsController < ApplicationController
     # discard null user ID if one exists
     params[:location].delete :user_id if params[:location] && params[:location][:user_id] == 'null'
     {:user_id => current_user.id, :user_token => current_user.token}.merge params[:location]
+  end
+
+  def location_kind
+    params[:_escaped_fragment_].split('-')[0]
+  end
+
+  def location_query
+    params[:_escaped_fragment_].split('-')[1]
   end
 end

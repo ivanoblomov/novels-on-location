@@ -3,7 +3,12 @@ class Location
   include Mongoid::Slug
   include Mongoid::Timestamps
 
-  VIRTUAL_ATTRIBUTES = [:added_at, :amazon_url, :slug, :terms, :title_for_regex, :writable]
+  SCOPES_BY_KIND = {
+    'author' => :author,
+    'novel' => :title,
+    'reader' => :user_id
+  }.freeze
+  VIRTUAL_ATTRIBUTES = [:added_at, :amazon_url, :slug, :terms, :title_for_regex, :writable].freeze
 
   field :address
   field :asin
@@ -19,6 +24,9 @@ class Location
   field :url
   field :user_id
   field :user_token
+  scope :author, lambda{ |v| {:where => {:author => v}} }
+  scope :title, lambda{ |v| {:where => {:title => v}} }
+  scope :user_id, lambda{ |v| {:where => {:user_id => v}} }
   scope :with_lat_lng, lambda{ |lat_lng| {:where => {:lat_lng => lat_lng}} }
 
   attr_accessor :writable
@@ -49,6 +57,10 @@ class Location
 
   def self.reload
     Location.all.map{ |l| l.book_keywords = l.title; l.save }
+  end
+
+  def self.scope_for_kind kind, query
+    send SCOPES_BY_KIND[kind], query
   end
 
   # Overrides ======================================================================================

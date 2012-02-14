@@ -16,7 +16,7 @@
 <meta name=apple-mobile-web-app-capable content="yes"/>
 <meta name=description content="<%= @meta_description %>"/>
 <meta name=keywords content="<%= @meta_keywords || 'google maps, amazon, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
-<meta property="<%= property %>" content="<%= content %>"/><% end if facebook?; if params[:canonical_url] %>
+<meta property="<%= property %>" content="<%= content %>"/><% end if facebook? || Rails.env.development?; if params[:canonical_url] %>
 <link rel=canonical href="<%= params[:canonical_url] %>"/><% end %>
 <%= auto_discovery_link_tag :rss, "https://www.facebook.com/feeds/page.php?id=345696682111046&format=atom10" %>
 <style>

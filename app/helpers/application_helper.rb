@@ -5,6 +5,17 @@ module ApplicationHelper
     "Novels: On Location - #{Location.book_count} Novels/#{Location.count} Locations"
   end
 
+  def description_for_location location, location_count, location_kind
+    case location_kind
+    when 'author'
+      "#{location.author} #{location_count == 1 ? 'is' : "has #{location_count} novel locations"} mapped on NovelsOnLocation.com."
+    when 'novel'
+      "#{location.author}, a novel by #{location.author}, #{location_count == 1 ? 'is' : "has #{location_count} locations"} mapped on NovelsOnLocation.com."
+    when 'reader'
+      "A reader mapped #{location_count == 1 ? "the novel, #{location.title}," : "#{location_count} novel locations"} on NovelsOnLocation.com."
+    end
+  end
+
   def filter_param(value)
     "'#{value.blank? ? nil : j(value)}'"
   end
