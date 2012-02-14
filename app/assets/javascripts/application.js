@@ -432,9 +432,9 @@ nOL.openBalloon = function(location) {
   } else {
     html += 'Added on ' + location.added_at;
   }
-  html += '<br/><div class=search-links><a href="#' + escape(location.title_for_regex) + '" onClick="nOL.showPins(\'' + location.title_for_regex + '\', false)" title="Show all locations for this novel">All Locations for Novel</a><span class=bullet>|</span><a href="#' + escape(location.author) + '" onClick="nOL.showPins(\'' + location.author + '\', false)" title="Show all novels by this author">All Novels by Author</a>';
+  html += '<br/><div class=search-links><a href="#novel-' + escape(location.title_for_regex) + '" onClick="nOL.showPins(\'' + location.title_for_regex + '\', false)" title="Show all locations for this novel">All Locations for Novel</a><span class=bullet>|</span><a href="#author-' + escape(location.author) + '" onClick="nOL.showPins(\'' + location.author + '\', false)" title="Show all novels by this author">All Novels by Author</a>';
   if (location.user_id)
-    html += '<span class=bullet>|</span><a href="#' + location.user_id + '" onClick="nOL.showPins(\'' + location.user_id + '\', false)" title="Show all pins added by this reader">All Pins by Reader</a>';
+    html += '<span class=bullet>|</span><a href="#reader-' + location.user_id + '" onClick="nOL.showPins(\'' + location.user_id + '\', false)" title="Show all pins added by this reader">All Pins by Reader</a>';
   html += '</div>'
   if (location.tags) html += 'Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a>'
   html += '</p></div>';
