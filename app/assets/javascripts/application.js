@@ -2,6 +2,8 @@
 //= require shortcut
 //= require_tree .
 var nOL = {};
+nOL.anchor = unescape(window.location.hash.substring(1));
+nOL.anchorKind = nOL.anchor.split('-')[0];
 nOL.bookPrompt = 'Find a mapped book';
 nOL.bounds = new google.maps.LatLngBounds();
 nOL.clickingZooms = true;
@@ -20,6 +22,8 @@ nOL.placePrompt = 'Find a place & map a book to it';
 nOL.r;
 nOL.showingAllPins = true;
 nOL.zoomer = new google.maps.MaxZoomService();
+
+nOL.anchorQuery = nOL.anchor.split('-')[1] || nOL.anchorKind;
 
 nOL.init = function(settings) {
   nOL.defaultTitle = settings['defaultTitle'];
@@ -261,7 +265,6 @@ nOL.togglePinDisplay = function() {
 }
 
 nOL.addPin = function(location) {
-  var anchor = unescape(window.location.hash.substring(1));
   var latLng = nOL.toLatLng(location.lat_lng);
   var pin = new google.maps.Marker({
     draggable: location.writable,
@@ -271,7 +274,7 @@ nOL.addPin = function(location) {
 
   nOL.pins[location._id] = pin;
 
-  if ((anchor == 'friends' && nOL.loggedIn() && $.inArray(location.user_id, nOL.friendIds) > -1) || location.terms.toLowerCase().indexOf(anchor.toLowerCase()) > -1)
+  if ((nOL.anchorQuery == 'friends' && nOL.loggedIn() && $.inArray(location.user_id, nOL.friendIds) > -1) || location.terms.toLowerCase().indexOf(nOL.anchorQuery.toLowerCase()) > -1)
     nOL.showPin(pin);
 
   google.maps.event.addListener(pin, 'click', function() {
