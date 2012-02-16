@@ -1,6 +1,11 @@
 module ApplicationHelper
   include ScaffoldLogic::Helper
 
+  def author_link_to location
+    return if location.author.blank?
+    link_to "All Novels by #{location.author}", "#!author-#{CGI.escape location.author}", :title => "Show all novels by #{location.author}"
+  end
+
   def default_title
     "Novels: On Location - #{Location.book_count} Novels/#{Location.count} Locations"
   end
@@ -14,6 +19,10 @@ module ApplicationHelper
     when 'reader'
       "#{params[:reader]} mapped #{locations.size == 1 ? "the novel, #{locations.first.title}," : "#{locations.size} settings for the novels #{location @locations, :title}"} on NovelsOnLocation.com, including #{location @locations, :address}."
     end
+  end
+
+  def facebook_link_to location
+    link_to params[:reader] || 'Reader', "http://www.facebook.com/profile.php?id=#{location.user_id}", :target => '_blank', :title => "Go to #{params[:reader] || 'Reader'}'s page on Facebook"
   end
 
   def filter_param(value)
@@ -36,6 +45,15 @@ module ApplicationHelper
     locations.map{ |l| %{"#{l.send attribute}"} }.uniq.sort.to_sentence
   end
 
+  def novel_link_to location
+    link_to "All Locations for #{location.title}", "#!novel-#{CGI.escape location.title_for_regex}", :title => "Show all locations for #{location.title}"
+  end
+
+  def reader_link_to location
+    return if location.user_id.blank?
+    link_to "All Pins by #{params[:reader] || 'Reader'}", "#!reader-#{location.user_id}", :title => "Show all pins added by #{params[:reader] || 'Reader'}"
+  end
+
   def safari_pc?
     !! (request.user_agent =~ /safari/i) && ! ios?
   end
@@ -53,6 +71,6 @@ module ApplicationHelper
 
   def wikipedia_link_to link_text, options={}
     return if link_text.blank?
-    link_to link_text, "http://en.wikipedia.org/wiki/#{link_text.gsub ' ', '_'}", {:target => '_blank', :title => "Read about #{link_text} on Wikipedia"}.merge(options)
+    link_to link_text, "http://en.wikipedia.org/wiki/#{CGI.escape link_text.gsub(' ', '_')}", {:target => '_blank', :title => "Read about #{link_text} on Wikipedia"}.merge(options)
   end
 end
