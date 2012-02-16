@@ -3,7 +3,7 @@ defaults: &defaults
 
 development:
   <<: *defaults
-  database: novels
+  database: cedar-novels
   host: localhost
 
 test:
