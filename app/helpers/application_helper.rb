@@ -5,14 +5,14 @@ module ApplicationHelper
     "Novels: On Location - #{Location.book_count} Novels/#{Location.count} Locations"
   end
 
-  def description_for_location location, location_count, location_kind
+  def description_for_location locations, location_kind
     case location_kind
     when 'author'
-      "#{location.author} #{location_count == 1 ? 'is' : "has #{location_count} novel locations"} mapped on NovelsOnLocation.com."
+      "#{locations.first.author} has #{locations.size == 1 ? 'a setting from the novel' : "#{locations.size} settings from the novels"} #{location @locations, :title} mapped on NovelsOnLocation.com, including #{location @locations, :address}."
     when 'novel'
-      "#{location.title}, a novel by #{location.author}, #{location_count == 1 ? 'is' : "has #{location_count} locations"} mapped on NovelsOnLocation.com."
+      "#{locations.first.title}, a novel by #{locations.first.author}, has #{locations.size == 1 ? "the setting #{location @locations, :address}" : "#{locations.size} settings"} mapped on NovelsOnLocation.com#{", including #{location @locations, :address}" if @locations.size > 1}."
     when 'reader'
-      "#{params[:reader]} mapped #{location_count == 1 ? "the novel, #{location.title}," : "#{location_count} novel locations"} on NovelsOnLocation.com."
+      "#{params[:reader]} mapped #{locations.size == 1 ? "the novel, #{locations.first.title}," : "#{locations.size} settings for the novels #{location @locations, :title}"} on NovelsOnLocation.com, including #{location @locations, :address}."
     end
   end
 
@@ -32,16 +32,20 @@ module ApplicationHelper
     !! (request.user_agent =~ /ipad|iphone/i)
   end
 
+  def location locations, attribute
+    locations.map{ |l| %{"#{l.send attribute}"} }.uniq.sort.to_sentence
+  end
+
   def safari_pc?
     !! (request.user_agent =~ /safari/i) && ! ios?
   end
 
-  def title_for_location location, location_count, location_kind
+  def title_for_location locations, location_kind
     case location_kind
     when 'author'
-      "#{location.author} - Novels: On Location"
+      "#{locations.first.author} - Novels: On Location"
     when 'novel'
-      "#{location.title} - Novels: On Location"
+      "#{location locations, :title} - Novels: On Location"
     when 'reader'
       "#{params[:reader]} - Novels: On Location"
     end
