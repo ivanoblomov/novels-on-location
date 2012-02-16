@@ -24,8 +24,8 @@ class Location
   field :url
   field :user_id
   field :user_token
-  scope :author, lambda{ |v| {:where => {:author => v}} }
-  scope :title, lambda{ |v| {:where => {:title => v}} }
+  scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
+  scope :title, lambda{ |v| {:where => {:title => /#{v}/i}} }
   scope :user_id, lambda{ |v| {:where => {:user_id => v}} }
   scope :with_lat_lng, lambda{ |lat_lng| {:where => {:lat_lng => lat_lng}} }
 
