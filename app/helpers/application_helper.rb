@@ -36,6 +36,17 @@ module ApplicationHelper
     !! (request.user_agent =~ /safari/i) && ! ios?
   end
 
+  def title_for_location location, location_count, location_kind
+    case location_kind
+    when 'author'
+      "#{location.author} - Novels: On Location"
+    when 'novel'
+      "#{location.title} - Novels: On Location"
+    when 'reader'
+      "#{} - Novels: On Location"
+    end
+  end
+
   def wikipedia_link_to link_text, options={}
     return if link_text.blank?
     link_to link_text, "http://en.wikipedia.org/wiki/#{link_text.gsub ' ', '_'}", {:target => '_blank', :title => "Read about #{link_text} on Wikipedia"}.merge(options)
