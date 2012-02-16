@@ -51,7 +51,7 @@ class LocationsController < ApplicationController
   end
 
   def html_snapshot?
-    ! params[:_escaped_fragment_].blank?
+    params[:_escaped_fragment_]
   end
 
   def inject_writable_flag(locations)
@@ -71,10 +71,10 @@ class LocationsController < ApplicationController
   end
 
   def location_kind
-    params[:_escaped_fragment_].split('-')[0] if params[:_escaped_fragment_]
+    params[:_escaped_fragment_].split('-')[0] if params[:_escaped_fragment_].present?
   end
 
   def location_query
-    CGI::unescape params[:_escaped_fragment_].split('-')[1] if params[:_escaped_fragment_]
+    CGI::unescape params[:_escaped_fragment_].split('-')[1] if params[:_escaped_fragment_].present?
   end
 end

@@ -60,6 +60,7 @@ class Location
   end
 
   def self.scope_for_kind kind, query
+    return send :all if kind.blank?
     send SCOPES_BY_KIND[kind], query
   end
 

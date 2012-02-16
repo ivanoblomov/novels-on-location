@@ -1,6 +1,7 @@
 <h1>
-  <%= link_to image_tag(@location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :width => @location.image_width), @location.url, :target => '_blank', :title => "Check out #{@location.title} on Amazon" if @location.image_url %>
-  <%= link_to @location.title, @location.url, :target => '_blank', :title => "Check out #{@location.title} on Amazon" %>
+  <a href="<%= @location.amazon_url %>" target="_blank" title="Check out <%= @location.title %> on Amazon">
+    <%= image_tag @location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :width => @location.image_width if @location.image_url %><%= @location.title %>
+  </a>
 </h1>
 
 <h2>by <%= wikipedia_link_to @location.author %></h2>
@@ -9,5 +10,22 @@
 
 <p><%= @location.review.try :html_safe %></p>
 
-<p>Added on <%= @location.added_at %><br/>
-<% unless @location.tags.blank? %>Tags: <%= google_link_to @location.tags %></p><% end %>
+<% if @location.notes.present? %>
+<h3>Reader Notes</h3>
+
+<p><%= @location.notes %></p>
+<% end %>
+
+<p>
+  Added
+<% if @location.user_id.present? %>
+  by <%= facebook_link_to @location %>
+<% end %>
+  on <%= @location.added_at %>.<br/>
+<% unless @location.tags.blank? %>Tags: <%= google_link_to @location.tags %><% end %>
+</p>
+
+
+<%= novel_link_to @location %> |
+<%= author_link_to @location %> |
+<%= reader_link_to @location if @location.user_id %>
