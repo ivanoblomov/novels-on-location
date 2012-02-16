@@ -548,13 +548,13 @@ applesearch.onChange = function(fldID, btnID)
 	var btn = document.getElementById( btnID );
 	if (fld.value.length > 0 && !this.clearBtn)
 	{
-		btn.style.background = "white url('/images/srch_r_f2.gif') no-repeat top left";
+		btn.style.background = "white url(<%= asset_path 'srch_r_f2.gif' %>) no-repeat top left";
 		btn.fldID = fldID; // btn remembers it's field
 		btn.onclick = this.clearBtnClick;
 		this.clearBtn = true;
 	} else if (fld.value.length == 0 && this.clearBtn)
 	{
-		btn.style.background = "white url('/images/srch_r.gif') no-repeat top left";
+		btn.style.background = "white url(<%= asset_path 'srch_r.gif' %>) no-repeat top left";
 		btn.onclick = null;
 		this.clearBtn = false;
 	}
