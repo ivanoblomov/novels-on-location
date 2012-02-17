@@ -3,7 +3,11 @@ module ApplicationHelper
 
   def author_link_to location
     return if location.author.blank?
-    link_to "All Novels by #{location.author}", "#!author-#{CGI.escape location.author}", :title => "Show all novels by #{location.author}"
+    link_to "All Novels by #{location.author}", author_url(location), :title => "Show all novels by #{location.author}"
+  end
+
+  def author_url location
+    "#!author-#{location.author}"
   end
 
   def default_title
@@ -46,12 +50,20 @@ module ApplicationHelper
   end
 
   def novel_link_to location
-    link_to "All Locations for #{location.title}", "#!novel-#{CGI.escape location.title_for_regex}", :title => "Show all locations for #{location.title}"
+    link_to "All Locations for #{location.title}", novel_url, :title => "Show all locations for #{location.title}"
+  end
+
+  def novel_url location
+    "#!novel-#{location.title}"
   end
 
   def reader_link_to location
     return if location.user_id.blank?
-    link_to "All Pins by #{params[:reader] || 'Reader'}", "#!reader-#{location.user_id}", :title => "Show all pins added by #{params[:reader] || 'Reader'}"
+    link_to "All Pins by #{params[:reader] || 'Reader'}", reader_url, :title => "Show all pins added by #{params[:reader] || 'Reader'}"
+  end
+
+  def reader_url location
+    "#!reader-#{location.user_id}"
   end
 
   def safari_pc?
@@ -71,6 +83,6 @@ module ApplicationHelper
 
   def wikipedia_link_to link_text, options={}
     return if link_text.blank?
-    link_to link_text, "http://en.wikipedia.org/wiki/#{CGI.escape link_text.gsub(' ', '_')}", {:target => '_blank', :title => "Read about #{link_text} on Wikipedia"}.merge(options)
+    link_to link_text, "http://en.wikipedia.org/wiki/#{link_text.gsub(' ', '_')}", {:target => '_blank', :title => "Read about #{link_text} on Wikipedia"}.merge(options)
   end
 end

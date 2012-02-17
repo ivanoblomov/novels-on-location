@@ -345,7 +345,6 @@ nOL.hideStrangersPins = function() {
       nOL.hidePin(pinId);
     else {
       nOL.showPin(nOL.pins[pinId]);
-      nOL.bounds.extend(nOL.pins[pinId].getPosition());
     }
   }
   nOL.map.fitBounds(nOL.bounds);
@@ -354,8 +353,7 @@ nOL.hideStrangersPins = function() {
 nOL.showAllPins = function() {
   nOL.bounds = new google.maps.LatLngBounds();
   for (var i = 0; i < locations.length; i++) {
-    nOL.pins[locations[i]._id].setMap(nOL.map);
-    nOL.bounds.extend(nOL.pins[locations[i]._id].getPosition());
+    nOL.showPin(nOL.pins[locations[i]._id]);
   }
   nOL.map.fitBounds(nOL.bounds);
 }

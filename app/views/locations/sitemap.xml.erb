@@ -13,5 +13,14 @@
     <lastmod><%= location.updated_at.to_s :w3c_datetime %></lastmod>
   <% end %>
   </url>
+  <url>
+    <loc>http://<%= Rails.application.config.main_host %>/<%= novel_url location %></loc>
+  </url>
+  <url>
+    <loc>http://<%= Rails.application.config.main_host %>/<%= author_url location %></loc>
+  </url><% if location.user_id %>
+  <url>
+    <loc>http://<%= Rails.application.config.main_host %>/<%= reader_url location %></loc>
+  </url><% end %>
 <% end %>
 </urlset>
