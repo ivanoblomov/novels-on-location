@@ -50,7 +50,7 @@ module ApplicationHelper
   end
 
   def novel_link_to location
-    link_to "All Locations for #{location.title}", novel_url, :title => "Show all locations for #{location.title}"
+    link_to "All Locations for #{location.title}", novel_url(location), :title => "Show all locations for #{location.title}"
   end
 
   def novel_url location
@@ -59,7 +59,7 @@ module ApplicationHelper
 
   def reader_link_to location
     return if location.user_id.blank?
-    link_to "All Pins by #{params[:reader] || 'Reader'}", reader_url, :title => "Show all pins added by #{params[:reader] || 'Reader'}"
+    link_to "All Pins by #{params[:reader] || 'Reader'}", reader_url(location), :title => "Show all pins added by #{params[:reader] || 'Reader'}"
   end
 
   def reader_url location
