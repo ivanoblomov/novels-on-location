@@ -15,7 +15,7 @@ class LocationsController < ApplicationController
   end
 
   def index
-    @locations = html_snapshot? ? Location.scope_for_kind(location_kind, location_query) : Location.all.to_a
+    @locations = html_snapshot? ? scope_for_snapshot : Location.all.to_a
 
     respond_to do |format|
       format.html { render :layout => ! html_snapshot? }
@@ -76,5 +76,13 @@ class LocationsController < ApplicationController
 
   def location_query
     CGI::unescape params[:_escaped_fragment_].split('-')[1] if params[:_escaped_fragment_].present?
+  end
+
+  def scope_for_snapshot
+    if params[:_escaped_fragment_].include? '-'
+      Location.scope_for_kind location_kind, location_query
+    else
+      Location.author params[:_escaped_fragment_]
+    end
   end
 end
