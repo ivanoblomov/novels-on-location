@@ -9,7 +9,7 @@
 <th><%= sort_link 'admin/locations', 'author', params %></th>
 <th><%= sort_link 'admin/locations', 'tags', params %></th>
 <th><%= sort_link 'admin/locations', 'notes', params %></th>
-<th><%= sort_link 'admin/locations', 'show_info?', params %></th>
+<th><%= sort_link 'admin/locations', 'duplicate?', params %></th>
 <th><%= sort_link 'admin/locations', 'created_at', params %></th>
 <th>Added by</th>
 </tr>
@@ -27,7 +27,7 @@
 <td class=nowrap><%= wikipedia_link_to location.author %></td>
 <td><%= google_link_to location.tags unless location.tags.blank? %></td>
 <td><%= location.notes %></td>
-<td><%= '√' if location.show_info? %></td>
+<td><%= '√' if location.duplicate? %></td>
 <td class=nowrap><%= location.created_at && location.created_at.to_s(:date_time) %></td>
 <td> </td>
 </tr>

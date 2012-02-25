@@ -25,9 +25,10 @@ class Location
   field :user_id
   field :user_token
   scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
+  scope :duplicate, lambda{ |criteria| {:where => criteria} }
   scope :title, lambda{ |v| {:where => {:title => /#{v}/i}} }
   scope :user_id, lambda{ |v| {:where => {:user_id => v}} }
-  scope :with_lat_lng, lambda{ |lat_lng| {:where => {:lat_lng => lat_lng}} }
+  scope :with_lat_lng, lambda{ |v| {:where => {:lat_lng => v}} }
 
   attr_accessor :writable
   attr_reader :book_keywords
@@ -88,16 +89,16 @@ class Location
     self.lat_lng = value.split ','
   end
 
+  def duplicate?
+    Location.duplicate({:address => address, :title => title}).count > 1
+  end
+
   def matching_coordinates
     Location.with_lat_lng(self.lat_lng) - [self]
   end
 
   def owned?
     self.user_id || self.user_token
-  end
-
-  def show_info?
-    self.id.to_s[-1].to_i.odd?
   end
 
   def terms
