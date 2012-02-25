@@ -24,6 +24,10 @@ class Location
   field :url
   field :user_id
   field :user_token
+  index :address
+  index :author
+  index :title
+  index :user_id
   scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
   scope :duplicate, lambda{ |criteria| {:where => criteria} }
   scope :title, lambda{ |v| {:where => {:title => /#{v}/i}} }
