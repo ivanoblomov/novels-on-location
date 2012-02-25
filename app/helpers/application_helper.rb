@@ -17,11 +17,11 @@ module ApplicationHelper
   def description_for_location locations, location_kind
     case location_kind
     when 'author'
-      "#{locations.first.author} has #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\"" : "#{locations.size} settings from the novels #{location @locations, :title}, including #{location @locations, :address},"} mapped on NovelsOnLocation.com."
+      "#{locations.first.author} has #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" mapped on NovelsOnLocation.com." : "#{locations.size} settings from the novels #{location @locations, :title} mapped on NovelsOnLocation.com. The locations include #{location @locations, :address}."}"
     when 'novel'
-      "\"#{locations.first.title}\", a novel by #{locations.first.author}, has #{locations.size == 1 ? "the setting #{location @locations, :address}" : "#{locations.size} settings"} mapped on NovelsOnLocation.com#{", including #{location @locations, :address}" if @locations.size > 1}."
+      "\"#{locations.first.title}\", a novel by #{locations.first.author}, has #{locations.size == 1 ? "the setting #{location @locations, :address} mapped on NovelsOnLocation.com." : "#{locations.size} settings mapped on NovelsOnLocation.com. The locations include #{location @locations, :address}."}"
     when 'reader'
-      "#{@user_name} mapped #{locations.size == 1 ? "the novel, \"#{locations.first.title}\"," : "#{locations.size} settings for the novels #{location @locations, :title}"} on NovelsOnLocation.com, including #{location @locations, :address}."
+      "#{@user_name} mapped #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" on NovelsOnLocation.com." : "#{locations.size} settings from the novels #{location @locations, :title} on NovelsOnLocation.com. The locations include #{location @locations, :address}."}"
     end
   end
 
