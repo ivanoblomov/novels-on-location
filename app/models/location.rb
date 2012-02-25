@@ -127,6 +127,6 @@ class Location
 
   def geocode
     self.send :displace unless self.matching_coordinates.blank?
-    self.address = GoogleMapsGeocoder.new(self.lat_lng * ', ').formatted_address if self.address.blank?
+    self.address = GoogleMapsGeocoder.new(self.lat_lng * ', ').formatted_address if changes.keys.include?('lat_lng')
   end
 end
