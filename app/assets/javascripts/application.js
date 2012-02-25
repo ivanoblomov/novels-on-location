@@ -213,6 +213,7 @@ nOL.promptForBook = function(gLatLng, place, address) {
 nOL.listenForDoubleClick = function() {
   nOL.clickingZooms = ! nOL.clickingZooms; // negate effect of toggle
   nOL.toggleMapMode();
+  nOL.setTitleAndPath(nOL.defaultTitle, '/');
 }
 
 nOL.toggleMapMode = function() {
@@ -340,8 +341,8 @@ nOL.hideStrangersPins = function() {
     }
   }
   nOL.map.fitBounds(nOL.bounds);
-  if (nOL.loggedIn() && history.pushState)
-    history.pushState(null, null, '/#!friends');
+  if (nOL.loggedIn())
+    nOL.setTitleAndPath('Friends - Novels: On Location', '/#!friends');
 }
 
 nOL.showAllPins = function() {
