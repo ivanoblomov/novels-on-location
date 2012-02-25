@@ -16,6 +16,7 @@ class LocationsController < ApplicationController
 
   def index
     @locations = html_snapshot? ? scope_for_snapshot : Location.all.to_a
+    set_user_name if friend_link?
 
     respond_to do |format|
       format.html { render :layout => ! html_snapshot? }
@@ -54,6 +55,10 @@ class LocationsController < ApplicationController
     params[:_escaped_fragment_]
   end
 
+  def friend_link?
+    location_kind == 'reader'
+  end
+
   def inject_writable_flag(locations)
     if locations.is_a?(Array)
       locations = locations.map{ |l| l.writable = l.owned? && can?(:update, l); l }
@@ -84,5 +89,9 @@ class LocationsController < ApplicationController
     else
       Location.author params[:_escaped_fragment_]
     end
+  end
+
+  def set_user_name
+    @user_name = User.name location_query
   end
 end

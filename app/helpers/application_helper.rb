@@ -21,12 +21,12 @@ module ApplicationHelper
     when 'novel'
       "\"#{locations.first.title}\", a novel by #{locations.first.author}, has #{locations.size == 1 ? "the setting #{location @locations, :address}" : "#{locations.size} settings"} mapped on NovelsOnLocation.com#{", including #{location @locations, :address}" if @locations.size > 1}."
     when 'reader'
-      "#{params[:reader]} mapped #{locations.size == 1 ? "the novel, \"#{locations.first.title}\"," : "#{locations.size} settings for the novels #{location @locations, :title}"} on NovelsOnLocation.com, including #{location @locations, :address}."
+      "#{@user_name} mapped #{locations.size == 1 ? "the novel, \"#{locations.first.title}\"," : "#{locations.size} settings for the novels #{location @locations, :title}"} on NovelsOnLocation.com, including #{location @locations, :address}."
     end
   end
 
   def facebook_link_to location
-    link_to params[:reader] || 'Reader', "http://www.facebook.com/profile.php?id=#{location.user_id}", :target => '_blank', :title => "Go to #{params[:reader] || 'Reader'}'s page on Facebook"
+    link_to @user_name || 'Reader', "http://www.facebook.com/profile.php?id=#{location.user_id}", :target => '_blank', :title => "Go to #{@user_name || 'Reader'}'s page on Facebook"
   end
 
   def filter_param(value)
@@ -59,7 +59,7 @@ module ApplicationHelper
 
   def reader_link_to location
     return if location.user_id.blank?
-    link_to "All Pins by #{params[:reader] || 'Reader'}", reader_url(location), :title => "Show all pins added by #{params[:reader] || 'Reader'}"
+    link_to "All Pins by #{@user_name || 'Reader'}", reader_url(location), :title => "Show all pins added by #{@user_name || 'Reader'}"
   end
 
   def reader_url location
@@ -77,7 +77,7 @@ module ApplicationHelper
     when 'novel'
       "#{location locations, :title} - Novels: On Location"
     when 'reader'
-      "#{params[:reader]} - Novels: On Location"
+      "#{@user_name} - Novels: On Location"
     end
   end
 

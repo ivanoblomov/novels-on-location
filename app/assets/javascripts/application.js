@@ -113,7 +113,6 @@ nOL.getFacebookName = function(location) {
   if (location.user_name == undefined) {
     FB.api('/' + location.user_id, function(response) {
       $('#' + location.user_id).text(response.name);
-      $('#reader-link').attr('href', '/?reader=' + response.name + $('#reader-link').attr('href'));
       location.user_name = response.name;
     });
   }
