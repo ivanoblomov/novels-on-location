@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   before_filter :find_location, :only => :show
   load_and_authorize_resource :only => [:destroy, :update]
-  helper_method :html_snapshot?, :inject_writable_flag, :location_kind
+  helper_method :html_snapshot?, :inject_writable_flag, :location_kind, :location_query
   respond_to :html, :json
 
   # CRUD ===========================================================================================

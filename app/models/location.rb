@@ -6,7 +6,8 @@ class Location
   SCOPES_BY_KIND = {
     'author' => :author,
     'novel' => :title,
-    'reader' => :user_id
+    'reader' => :user_id,
+    'search' => :search,
   }.freeze
   VIRTUAL_ATTRIBUTES = [:added_at, :amazon_url, :slug, :terms, :title_for_regex, :writable].freeze
 
@@ -26,10 +27,20 @@ class Location
   field :user_token
   index :address
   index :author
+  index :tags
   index :title
   index :user_id
   scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
   scope :duplicate, lambda{ |criteria| {:where => criteria} }
+  scope :search, lambda{ |v|
+    any_of(
+      {:address => /#{v}/i},
+      {:author => /#{v}/i},
+      {:tags => /#{v}/i},
+      {:title => /#{v}/i},
+      {:user_id => v}
+    )
+  }
   scope :title, lambda{ |v| {:where => {:title => /#{v}/i}} }
   scope :user_id, lambda{ |v| {:where => {:user_id => v}} }
   scope :with_lat_lng, lambda{ |v| {:where => {:lat_lng => v}} }
@@ -106,7 +117,7 @@ class Location
   end
 
   def terms
-    [self.address, self.author, self.title, self.tags, self.user_id].compact * ' '
+    [self.address, self.author, self.tags, self.title, self.user_id].compact * ' '
   end
 
   def title_for_regex

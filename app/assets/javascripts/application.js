@@ -370,7 +370,7 @@ nOL.showPins = function(keyword, path) {
         nOL.showPin(nOL.pins[locations[i]._id]);
     }
     nOL.map.fitBounds(nOL.bounds);
-    nOL.setTitleAndPath(keyword + ' - Novels: On Location', path || ('#!' + escape(keyword)));
+    nOL.setTitleAndPath(keyword + ' - Novels: On Location', path || ('#!search-' + escape(keyword)));
   }
 }
 
