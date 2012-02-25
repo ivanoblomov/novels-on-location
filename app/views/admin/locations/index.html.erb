@@ -11,7 +11,7 @@
 <th><%= sort_link 'admin/locations', 'notes', params %></th>
 <th><%= sort_link 'admin/locations', 'duplicate?', params %></th>
 <th><%= sort_link 'admin/locations', 'created_at', params %></th>
-<th>Added by</th>
+<th><%= sort_link 'admin/locations', 'user_id', params %></th>
 </tr>
 <%
       i = 1
@@ -29,7 +29,7 @@
 <td><%= location.notes %></td>
 <td><%= '√' if location.duplicate? %></td>
 <td class=nowrap><%= location.created_at && location.created_at.to_s(:date_time) %></td>
-<td> </td>
+<td><%= location.user_id %></td>
 </tr>
 <%
         i += 1
