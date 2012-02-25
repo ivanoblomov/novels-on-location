@@ -16,7 +16,7 @@ class LocationsController < ApplicationController
 
   def index
     @locations = html_snapshot? ? scope_for_snapshot : Location.all.to_a
-    set_user_name if friend_link?
+    set_user_name if reader_link?
 
     respond_to do |format|
       format.html { render :layout => ! html_snapshot? }
@@ -55,7 +55,7 @@ class LocationsController < ApplicationController
     params[:_escaped_fragment_]
   end
 
-  def friend_link?
+  def reader_link?
     location_kind == 'reader'
   end
 
