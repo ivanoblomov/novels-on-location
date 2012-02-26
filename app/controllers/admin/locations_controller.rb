@@ -5,7 +5,7 @@ class Admin::LocationsController < ApplicationController
   # CRUD ===========================================================================================
   def index
     params[:by] ||= 'created_at'
-    params[:dir] ||= 'asc'
+    params[:dir] ||= 'desc'
     if params[:by] == 'duplicate?'
       @locations = Location.all.sort_by{ |l| params[:dir] == 'asc' ? (l.send(params[:by]) ? 0 : 1) : (l.send(params[:by]) ? 1 : 0) }
     else
