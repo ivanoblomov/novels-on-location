@@ -47,7 +47,7 @@ class Location
 
   attr_accessor :writable
   attr_reader :book_keywords
-  before_save :geocode
+  before_save :set_address
   slug :title
   validates_presence_of :title
 
@@ -108,6 +108,11 @@ class Location
     Location.duplicate({:address => address, :title => title}).count > 1
   end
 
+  def geocode place
+    gmg = GoogleMapsGeocoder.new place
+    self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
+  end
+
   def matching_coordinates
     Location.with_lat_lng(self.lat_lng) - [self]
   end
@@ -140,7 +145,7 @@ class Location
     self.lat_lng = [(self.lat_lng[0].to_f + x).to_s, (self.lat_lng[1].to_f + y).to_s]
   end
 
-  def geocode
+  def set_address
     self.send :displace unless self.matching_coordinates.blank?
     self.address = GoogleMapsGeocoder.new(self.lat_lng * ', ').formatted_address if changes.keys.include?('lat_lng')
   end
