@@ -196,12 +196,12 @@ nOL.toggleLogin = function() {
 }
 
 nOL.promptForTag = function(id, tags) {
-  var value = prompt('Enter some descriptive words. These will be linked to a Google search.', tags);
+  var value = prompt('Enter some descriptive words. These will be linked to a Google search.', unescape(tags));
   if (value) nOL.tagPin(id, value);
 }
 
 nOL.promptForNotes = function(id, notes) {
-  var value = prompt('Add any comments you would like readers to know.', notes);
+  var value = prompt('Add any comments you would like readers to know.', unescape(notes));
   if (value) nOL.annotatePin(id, value);
 }
 
@@ -409,7 +409,7 @@ nOL.openBalloon = function(location) {
   if (nOL.openWindow != undefined) nOL.openWindow.close();
   html = '<div class="map-balloon">';
   if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim this pin"/>';
-  if (location.writable) html += '<input onClick="nOL.deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location._id + '\', \'' + location.tags + '\')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (location.notes || '') + '\')" type="button" value="Annotate" title="Annotate pin"/>';
+  if (location.writable) html += '<input onClick="nOL.deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location._id + '\', \'' + escape(location.tags) + '\')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (escape(location.notes) || '') + '\')" type="button" value="Annotate" title="Annotate pin"/>';
   html += '<input onClick="nOL.zoomIn(nOL.toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin"/>'
   if (location.image_url)
     html += '<h1><a href="' + location.amazon_url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '>' + location.title + '</a></h1>';
