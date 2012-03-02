@@ -45,6 +45,7 @@ class Location
   scope :user_id, lambda{ |v| {:where => {:user_id => v}} }
   scope :with_lat_lng, lambda{ |v| {:where => {:lat_lng => v}} }
 
+  after_create :tweet
   attr_accessor :writable
   attr_reader :book_keywords
   before_save :set_address
@@ -129,6 +130,10 @@ class Location
     i = self.title.index('(')
     return title if i.nil?
     self.title[0..(i-1)].strip
+  end
+
+  def tweet
+    Twitter.update "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
   end
 
   def unowned?

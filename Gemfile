@@ -10,6 +10,7 @@ gem 'rails'
 gem 'scaffold_logic'
 gem 'sucker'
 gem 'thin'
+gem 'twitter'
 
 group :assets do
   gem 'sass-rails', '~> 3.1.0'
