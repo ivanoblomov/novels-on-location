@@ -1,5 +1,6 @@
-<%= @request.url if @request %>
+<% if @request %><%= @request.url %>
 
-<%= @request.try :user_agent if @request %>
+<%= @request.try :user_agent %>
+<%= @request.try :remote_ip %><% end %>
 
 <%= @exception.backtrace * "\n" %>
