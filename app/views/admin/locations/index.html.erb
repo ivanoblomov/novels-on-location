@@ -19,7 +19,7 @@ Sort by:
 <%
       locations.each do |location|
 %>
-  <div class="booklet threecol<% ' last' if locations.index(location) == 2 %>">
+  <div class="booklet<%= '-duplicate' if location.duplicate? %> threecol<%= ' last' if locations.index(location) == 2 %>">
     <div class=booklet-header>
       <span class=booklet-index><%= i %></span>
       <%= link_to image_tag(location.image_url, :alt => "Cover of #{location.title}", :class => 'thumbnail', :height => location.image_height, :width => location.image_width), location.url, :target => '_blank', :title => "Check out #{location.title} on Amazon" if location.image_url %>
