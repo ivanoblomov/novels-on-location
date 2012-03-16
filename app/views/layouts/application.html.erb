@@ -60,6 +60,16 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 .no-print{display:none}
 #headers{z-index:1}}</style>
 <%= stylesheet_link_tag 'safari' if safari_pc? %><%= stylesheet_link_tag 'ie' if ie? %><%= stylesheet_link_tag 'ios' if ios? %><%= stylesheet_link_tag 'print', :media => 'print' if nibbler? %>
+<script>
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-25642977-1']);
+  _gaq.push(['_trackPageview']);
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
 </head>
 <body>
 <%= yield %>
@@ -84,16 +94,6 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 <script src="http://platform.twitter.com/widgets.js"></script>
 <%= javascript_include_tag 'application' %>
 <script>
-  var _gaq=_gaq||[];
-  _gaq.push(['_setAccount','UA-25642977-1']);
-  _gaq.push(['_trackPageview']);
-  (function(){
-    var ga=document.createElement('script');
-    ga.async=true;
-    ga.src=('https:'==document.location.protocol?'https://ssl':'http://www')+'.google-analytics.com/ga.js';
-    var s=document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(ga,s);
-  })();
   window.fbAsyncInit=function(){
     nOL.init({
       defaultTitle: "<%= default_title %>",
