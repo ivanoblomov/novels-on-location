@@ -56,7 +56,7 @@ module ApplicationHelper
   end
 
   def novel_url location
-    "#!novel-#{location.title}"
+    "#!novel-#{location.title_for_regex}"
   end
 
   def reader_link_to location
