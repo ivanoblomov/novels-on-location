@@ -80,7 +80,7 @@ class LocationsController < ApplicationController
   end
 
   def location_query
-    CGI::unescape params[:_escaped_fragment_].split('-')[1] if params[:_escaped_fragment_].present?
+    strip_parens CGI::unescape(params[:_escaped_fragment_].split('-')[1]) if params[:_escaped_fragment_].present?
   end
 
   def scope_for_snapshot
@@ -93,5 +93,9 @@ class LocationsController < ApplicationController
 
   def set_user_name
     @user_name = User.name location_query
+  end
+
+  def strip_parens keywords
+    keywords.try(:include?, '(') ? keywords[0..keywords.index('(') - 1] : keywords
   end
 end
