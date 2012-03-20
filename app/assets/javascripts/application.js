@@ -295,7 +295,7 @@ nOL.addPins = function(selectedLocationSlug) {
     nOL.addPin(locations[i]);
 
     // is the pin writable but missing an fb id?
-    if (nOL.fb_session && locations[i].writable && locations[i].user_id == undefined) {
+    if (nOL.fb_session && locations[i].writable && locations[i].user_id == undefined && locations[i].user_token == $.cookie('user_token')) {
       nOL.claimPin(locations[i]._id);
     }
 
