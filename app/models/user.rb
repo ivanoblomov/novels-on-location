@@ -19,6 +19,10 @@ class User
     self.id
   end
 
+  def me?
+    self.id == ADMINS.first
+  end
+
   def owns_location?(location)
     location.owned? && (self.token == location.user_token || (! self.id.nil? && self.id == location.user_id))
   end

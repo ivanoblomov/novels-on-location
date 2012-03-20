@@ -7,7 +7,7 @@ class Ability
     end
 
     can :update, Location do |location|
-      location.unowned? || user.owns_location?(location)
+      location.unowned? || user.owns_location?(location) || user.try(:me?)
     end
   end
 end
