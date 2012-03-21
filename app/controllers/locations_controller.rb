@@ -61,9 +61,9 @@ class LocationsController < ApplicationController
 
   def inject_writable_flag(locations)
     if locations.is_a?(Array)
-      locations = locations.map{ |l| l.writable = l.owned? && can?(:update, l); l }
+      locations = locations.map{ |l| l.writable = can?(:update, l); l }
     else
-      locations.writable = locations.owned? && can?(:update, locations)
+      locations.writable = can? :update, locations
     end
 
     locations

@@ -136,6 +136,10 @@ class Location
     Twitter.update "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
   end
 
+  def unclaim
+    self.user_id, self.user_token = nil, nil
+  end
+
   def unowned?
     ! self.owned?
   end
