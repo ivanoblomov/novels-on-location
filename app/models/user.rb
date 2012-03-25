@@ -5,6 +5,7 @@ class User
 
   def self.name id
     ActiveSupport::JSON.decode(HTTParty.get("https://graph.facebook.com/#{id}").body)['name']
+  rescue
   end
 
   def initialize(id, token)
