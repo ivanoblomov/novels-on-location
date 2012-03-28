@@ -334,7 +334,7 @@ nOL.hideStrangersPins = function() {
     var pinId = locations[i]._id;
     var pinUserId = locations[i].user_id;
 
-    if (! locations[i].writable && (! nOL.loggedIn() || (nOL.loggedIn() && $.inArray(pinUserId, nOL.friendIds) == -1)))
+    if (! nOL.loggedIn() || (nOL.loggedIn() && $.inArray(pinUserId, nOL.friendIds) == -1))
       nOL.hidePin(pinId);
     else {
       nOL.showPin(nOL.pins[pinId]);
