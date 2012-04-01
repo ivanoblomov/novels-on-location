@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user, :facebook?, :nibbler?
+  helper_method :current_user, :facebook?, :nibbler?, :w3c_validator?
   protect_from_forgery
 
   unless Rails.application.config.consider_all_requests_local
@@ -44,5 +44,9 @@ class ApplicationController < ActionController::Base
         @locations = Location.all
       end
     end
+  end
+
+  def w3c_validator?
+    !! (request.user_agent =~ /W3C_Validator/i)
   end
 end

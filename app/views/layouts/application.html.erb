@@ -14,8 +14,8 @@
 %>
 <title><%= @title %></title>
 <meta name=apple-mobile-web-app-capable content="yes"/>
-<meta name=description content="<%= @meta_description %>"/>
-<meta name="fragment" content="!"/>
+<meta name=description content="<%= @meta_description %>"/><% unless w3c_validator? %>
+<meta name="fragment" content="!"/><% end %>
 <meta name=keywords content="<%= @meta_keywords || 'google maps, amazon, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
 <meta property="<%= property %>" content="<%= content %>"/><% end if facebook? || Rails.env.development?; if params[:canonical_url] %>
 <link rel=canonical href="<%= params[:canonical_url] %>"/><% end %>
