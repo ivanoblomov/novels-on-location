@@ -275,7 +275,7 @@ nOL.addPin = function(location) {
   nOL.pins[location._id] = pin;
 
   if ((nOL.anchorQuery == 'friends' && nOL.loggedIn() && $.inArray(location.user_id, nOL.friendIds) > -1) || location.terms.toLowerCase().indexOf(nOL.anchorQuery.toLowerCase()) > -1)
-    nOL.showPin(pin);
+    nOL.showPin(location._id);
 
   google.maps.event.addListener(pin, 'click', function() {
     nOL.setTitleAndPath(location.title + ' - Novels: On Location', '/locations/' + location.slug);
@@ -291,17 +291,18 @@ nOL.addPin = function(location) {
 }
 
 nOL.addPins = function(selectedLocationSlug) {
-  for (var i = 0; i < locations.length; i++) {
-    nOL.addPin(locations[i]);
+  for (var i = 0; i < nOL.locations.length; i++) {
+    var location = nOL.locations[i];
+    nOL.addPin(location);
 
     // is the pin writable but missing an fb id?
-    if (nOL.fb_session && locations[i].writable && locations[i].user_id == undefined && locations[i].user_token == $.cookie('user_token')) {
-      nOL.claimPin(locations[i]._id);
+    if (nOL.fb_session && location.writable && location.user_id == undefined && nOL.myLocation(location)) {
+      nOL.claimPin(location._id);
     }
 
-    if (selectedLocationSlug && locations[i].slug == selectedLocationSlug) {
-      nOL.openBalloon(locations[i]);
-      nOL.zoomIn(nOL.toLatLng(locations[i].lat_lng));
+    if (selectedLocationSlug && location.slug == selectedLocationSlug) {
+      nOL.openBalloon(location);
+      nOL.zoomIn(nOL.toLatLng(location.lat_lng));
     }
   }
   nOL.map.fitBounds(nOL.bounds);
@@ -323,21 +324,20 @@ nOL.hidePin = function(id) {
 }
 
 nOL.hidePins = function() {
-  for (var i = 0; i < locations.length; i++) {
-    nOL.hidePin(locations[i]._id);
+  for (var i = 0; i < nOL.locations.length; i++) {
+    nOL.hidePin(nOL.locations[i]._id);
   }
 }
 
 nOL.hideStrangersPins = function() {
   nOL.bounds = new google.maps.LatLngBounds();
-  for (var i = 0; i < locations.length; i++) {
-    var pinId = locations[i]._id;
-    var pinUserId = locations[i].user_id;
+  for (var i = 0; i < nOL.locations.length; i++) {
+    var location = nOL.locations[i];
 
-    if (! nOL.loggedIn() || (nOL.loggedIn() && $.inArray(pinUserId, nOL.friendIds) == -1))
-      nOL.hidePin(pinId);
+    if (! nOL.myLocation(location) && ! nOL.myFriendsLocation(location))
+      nOL.hidePin(location._id);
     else {
-      nOL.showPin(nOL.pins[pinId]);
+      nOL.showPin(location._id);
     }
   }
   nOL.map.fitBounds(nOL.bounds);
@@ -345,18 +345,26 @@ nOL.hideStrangersPins = function() {
     nOL.setTitleAndPath('Friends - Novels: On Location', '/#!friends');
 }
 
+nOL.myFriendsLocation = function(location) {
+  return $.inArray(location.user_id, nOL.friendIds) != -1
+}
+
+nOL.myLocation = function(location) {
+  return $.cookie('user_token') == location.user_token
+}
+
 nOL.showAllPins = function() {
   nOL.bounds = new google.maps.LatLngBounds();
-  for (var i = 0; i < locations.length; i++) {
-    nOL.showPin(nOL.pins[locations[i]._id]);
+  for (var i = 0; i < nOL.locations.length; i++) {
+    nOL.showPin(nOL.locations[i]._id);
   }
   nOL.map.fitBounds(nOL.bounds);
   nOL.setTitleAndPath(nOL.defaultTitle, '/');
 }
 
-nOL.showPin = function(pin) {
-  pin.setMap(nOL.map);
-  nOL.bounds.extend(pin.getPosition());
+nOL.showPin = function(id) {
+  nOL.pins[id].setMap(nOL.map);
+  nOL.bounds.extend(nOL.pins[id].getPosition());
 }
 
 nOL.showPins = function(keyword, path) {
@@ -365,9 +373,9 @@ nOL.showPins = function(keyword, path) {
   } else {
     nOL.hidePins();
     nOL.bounds = new google.maps.LatLngBounds();
-    for (var i = 0; i < locations.length; i++) {
-      if (locations[i].terms.toLowerCase().indexOf(unescape(keyword).toLowerCase()) > -1)
-        nOL.showPin(nOL.pins[locations[i]._id]);
+    for (var i = 0; i < nOL.locations.length; i++) {
+      if (nOL.locations[i].terms.toLowerCase().indexOf(unescape(keyword).toLowerCase()) > -1)
+        nOL.showPin(nOL.locations[i]._id);
     }
     nOL.map.fitBounds(nOL.bounds);
     nOL.setTitleAndPath(keyword + ' - Novels: On Location', path || ('#!search-' + escape(keyword)));
@@ -495,7 +503,7 @@ nOL.findBook = function(gLatLng, place, address, keywords) {
 
 nOL.getLocations = function(selectedLocationSlug) {
   $.get('/locations.json', {'t': new Date().getTime(), 'user_token': $.cookie('user_token')}, function(data) {
-    locations = data;
+    nOL.locations = data;
     nOL.addPins(selectedLocationSlug);
   });
 }
