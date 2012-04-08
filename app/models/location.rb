@@ -88,7 +88,7 @@ class Location
 
   # Instance methods ===============================================================================
   def added_at
-    t = self.created_at || self.updated_at
+    t = created_at || updated_at
     t && t.to_s(:date_time)
   end
 
@@ -115,25 +115,29 @@ class Location
   end
 
   def matching_coordinates
-    Location.with_lat_lng(self.lat_lng) - [self]
+    Location.with_lat_lng(lat_lng) - [self]
   end
 
   def owned?
-    self.user_id || self.user_token
+    user_id || user_token
   end
 
   def terms
-    [self.address, self.author, self.tags, self.title, self.user_id].compact * ' '
+    [address, author, tags, title, user_id].compact * ' '
+  end
+
+  def test_book?
+    title == '2: How Will You Create Something Beautiful Together?'
   end
 
   def title_for_regex
-    i = self.title.index('(')
+    i = title.index('(')
     return title if i.nil?
-    self.title[0..(i-1)].strip
+    title[0..(i-1)].strip
   end
 
   def tweet
-    Twitter.update "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}" if Rails.env.production?
+    Twitter.update "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}" if Rails.env.production? && ! test_book?
   end
 
   def unclaim
@@ -141,7 +145,7 @@ class Location
   end
 
   def unowned?
-    ! self.owned?
+    ! owned?
   end
 
   private
@@ -151,11 +155,11 @@ class Location
     y = rand / 10000.0
     x = -x if rand(1) == 0
     y = -y if rand(1) == 0
-    self.lat_lng = [(self.lat_lng[0].to_f + x).to_s, (self.lat_lng[1].to_f + y).to_s]
+    self.lat_lng = [(lat_lng[0].to_f + x).to_s, (lat_lng[1].to_f + y).to_s]
   end
 
   def set_address
-    self.send :displace unless self.matching_coordinates.blank?
-    self.address = GoogleMapsGeocoder.new(self.lat_lng * ', ').formatted_address if changes.keys.include?('lat_lng')
+    send :displace unless matching_coordinates.blank?
+    self.address = GoogleMapsGeocoder.new(lat_lng * ', ').formatted_address if changes.keys.include?('lat_lng')
   end
 end
