@@ -1,16 +1,20 @@
-<h1><%= default_title %></h1>
+<div class=row>
+  <h1><%= default_title %></h1>
 
-Sort by:
-<ul>
-  <li><%= sort_link 'admin/locations', 'address', params %></li>
-  <li><%= sort_link 'admin/locations', 'author', params %></li>
-  <li><%= sort_link 'admin/locations', 'created_at', params %></li>
-  <li><%= sort_link 'admin/locations', 'duplicate?', params %></li>
-  <li><%= sort_link 'admin/locations', 'notes', params %></li>
-  <li><%= sort_link 'admin/locations', 'tags', params %></li>
-  <li><%= sort_link 'admin/locations', 'title', params %></li>
-  <li><%= sort_link 'admin/locations', 'user_id', params %></li>
-</ul>
+  <div id=sorter>
+    Sort by:
+    <ul>
+      <li><%= sort_link 'admin/locations', 'address', params %></li>
+      <li><%= sort_link 'admin/locations', 'author', params %></li>
+      <li><%= sort_link 'admin/locations', 'created_at', params %></li>
+      <li><%= sort_link 'admin/locations', 'duplicate?', params %></li>
+      <li><%= sort_link 'admin/locations', 'notes', params %></li>
+      <li><%= sort_link 'admin/locations', 'tags', params %></li>
+      <li><%= sort_link 'admin/locations', 'title', params %></li>
+      <li><%= sort_link 'admin/locations', 'user_id', params %></li>
+    </ul>
+  </div>
+</div>
 <%
     i = 1
     @locations.to_a.in_groups_of(3, false) do |locations|
@@ -26,7 +30,13 @@ Sort by:
       <h2><%= link_to location.title, location.url, :target => '_blank' %></h2>
       <h3>by <%= wikipedia_link_to location.author %></h3>
     </div>
-    <h3 class=setting>Set in <%= link_to location.address, location %></h3>
+<%
+        if location.address.present?
+%>
+    <h3>Set in <%= link_to location.address, location %></h3>
+<%
+        end
+%>
         <% if location.review.present? %>
     <p><%= strip_tags location.review %></p>
         <% end
@@ -34,12 +44,12 @@ Sort by:
     <h3>Reader Notes</h3>
     <%= location.notes %>
         <% end %>
-    <p>
+    <p class=metadata>
       Added
     <% if location.user_id.present? %>
       by <%= facebook_link_to location %>,
     <% end %>
-      <%= location.added_at %>.<br/>
+      <%= location.added_at %><br/>
     <% unless location.tags.blank? %>Tags: <%= google_link_to location.tags %><% end %>
     </p>
   </div>
