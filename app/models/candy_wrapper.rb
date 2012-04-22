@@ -1,6 +1,6 @@
 class CandyWrapper
   def self.book keyword
-    r = self.open(
+    r = open(
       :operation => 'ItemSearch',
       :search_index => 'Books',
       :keywords => keyword
@@ -14,11 +14,11 @@ class CandyWrapper
     }
 
     return if book.blank? || book[:asin].blank?
-    book.merge(self.thumbnail(book[:asin])).merge(self.review book[:asin])
+    book.merge(thumbnail(book[:asin])).merge(review book[:asin])
   end
 
   def self.review asin
-    r = self.open(
+    r = open(
       :operation      => 'ItemLookup',
       :id_type        => 'ASIN',
       :item_id        => asin,
@@ -31,7 +31,7 @@ class CandyWrapper
   end
 
   def self.thumbnail asin
-    r = self.open(
+    r = open(
       :operation      => 'ItemLookup',
       :id_type        => 'ASIN',
       :item_id        => asin,

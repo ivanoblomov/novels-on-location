@@ -13,15 +13,11 @@ class User
   end
 
   def admin?
-    ADMINS.include? self.id
-  end
-
-  def facebook?
-    self.id
+    ADMINS.include? id
   end
 
   def me?
-    self.id == ADMINS.first
+    id == ADMINS.first
   end
 
   def owns_location?(location)
