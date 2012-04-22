@@ -72,7 +72,7 @@ class LocationsController < ApplicationController
   def location_attr
     # discard null user ID if one exists
     params[:location].delete :user_id if params[:location] && params[:location][:user_id] == 'null'
-    {:user_id => current_user.id, :user_token => current_user.token}.merge params[:location]
+    params[:location]
   end
 
   def location_kind

@@ -119,7 +119,7 @@ class Location
   end
 
   def owned?
-    user_id || user_token
+    !! (user_id || user_token)
   end
 
   def terms
