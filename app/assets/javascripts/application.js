@@ -436,7 +436,7 @@ nOL.openBalloon = function(location) {
   }
   var authorPath = '#!author-' + escape(location.author);
   var novelPath = '#!novel-' + escape(location.title_for_regex);
-  html += '<br/><div class=search-links><a href="' + novelPath + '" onClick="nOL.showPins(\'' + location.title_for_regex + '\', \'' + novelPath + '\')" title="Show all locations for this novel">All Locations for Novel</a><span class=bullet>|</span><a href="' + authorPath + '" onClick="nOL.showPins(\'' + location.author + '\', \'' + authorPath + '\')" title="Show all novels by this author">All Novels by Author</a>';
+  html += '<br/><div class=search-links><a href="' + novelPath + '" onClick="nOL.showPins(\'' + location.title_for_regex + '\', \'' + novelPath + '\')" title="Show all locations for the novel ' + location.title + '">All Locations for Novel</a><span class=bullet>|</span><a href="' + authorPath + '" onClick="nOL.showPins(\'' + location.author + '\', \'' + authorPath + '\')" title="Show all novels by the author ' + location.author + '">All Novels by Author</a>';
   if (location.user_id) {
     var readerPath = '#!reader-' + location.user_id;
     html += '<span class=bullet>|</span><a href="' + readerPath + '" id=reader-link onClick="nOL.showPins(\'' + location.user_id + '\', \'' + readerPath + '\')" title="Show all pins added by this reader">All Pins by Reader</a>';
