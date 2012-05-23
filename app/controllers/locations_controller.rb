@@ -16,6 +16,7 @@ class LocationsController < ApplicationController
 
   def index
     @locations = html_snapshot? ? scope_for_snapshot : Location.all.to_a
+    return error_404 if @locations.blank?
     set_user_name if reader_link?
 
     respond_to do |format|
