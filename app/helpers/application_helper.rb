@@ -17,13 +17,13 @@ module ApplicationHelper
   def description_for_location locations, location_kind
     case location_kind
     when 'author'
-      "#{locations.first.author} has #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" mapped on NovelsOnLocation.com." : "#{locations.size} settings from the novels #{location @locations, :title} mapped on NovelsOnLocation.com. The locations include #{location @locations, :address}."}"
+      "#{locations.first.author} has #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" mapped on #{Rails.application.config.main_host}." : "#{locations.size} settings from the novels #{location @locations, :title} mapped on #{Rails.application.config.main_host}. The locations include #{location @locations, :address}."}"
     when 'novel'
-      "\"#{locations.first.title}\", a novel by #{locations.first.author}, has #{locations.size == 1 ? "the setting #{location @locations, :address} mapped on NovelsOnLocation.com." : "#{locations.size} settings mapped on NovelsOnLocation.com. The locations include #{location @locations, :address}."}"
+      "\"#{locations.first.title}\", a novel by #{locations.first.author}, has #{locations.size == 1 ? "the setting #{location @locations, :address} mapped on #{Rails.application.config.main_host}." : "#{locations.size} settings mapped on #{Rails.application.config.main_host}. The locations include #{location @locations, :address}."}"
     when 'reader'
-      "#{@user_name} mapped #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" on NovelsOnLocation.com." : "#{locations.size} settings from the novels #{location @locations, :title} on NovelsOnLocation.com. The locations include #{location @locations, :address}."}"
+      "#{@user_name} mapped #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" on #{Rails.application.config.main_host}." : "#{locations.size} settings from the novels #{location @locations, :title} on #{Rails.application.config.main_host}. The locations include #{location @locations, :address}."}"
     when 'search'
-      "A search for \"#{location_query}\" returns #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" on NovelsOnLocation.com." : "#{locations.size} settings from the novels #{location @locations, :title} on NovelsOnLocation.com. The locations include #{location @locations, :address}."}"
+      "A search for \"#{location_query}\" returns #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" on #{Rails.application.config.main_host}." : "#{locations.size} settings from the novels #{location @locations, :title} on #{Rails.application.config.main_host}. The locations include #{location @locations, :address}."}"
     end
   end
 

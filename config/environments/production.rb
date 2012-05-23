@@ -13,5 +13,5 @@ NovelsOnLocation::Application.configure do
   config.serve_static_assets = true
   config.static_cache_control = 'public, max-age=31556926'
   # custom
-  config.main_host = 'novelsonlocation.com'
+  config.main_host = 'NovelsOnLocation.com'
 end

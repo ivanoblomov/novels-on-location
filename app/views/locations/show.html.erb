@@ -1,5 +1,5 @@
 <%
-  description = "#{@location.title}, a novel by #{@location.author} set in #{@location.address}, is mapped on NovelsOnLocation.com."
+  description = "#{@location.title}, a novel by #{@location.author} set in #{@location.address}, is mapped on #{Rails.application.config.main_host}."
   @meta_description = description
   @meta_keywords = @location.tags
   @title = "#{@location.title} - Novels: On Location"
