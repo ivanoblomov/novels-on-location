@@ -2,7 +2,7 @@ NovelsOnLocation::Application.routes.draw do
   class WrongHost
     def initialize; end
     def matches?(request)
-      request.host != Rails.application.config.main_host
+      request.host != Rails.application.config.main_host.downcase
     end
   end
 
