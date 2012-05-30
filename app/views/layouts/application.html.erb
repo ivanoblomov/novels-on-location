@@ -100,7 +100,7 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
       <%= "error: \"#{flash[:error]}\",".html_safe if flash[:error] %>
       fbAppId: <%= Rails.application.config.facebook_app_id %>,
       host: '<%= Rails.application.config.main_host %>',
-      selectedLocationSlug: <%= params[:id] ? "'#{params[:id]}'" : 'null' %>,
+      selectedLocationSlug: <%= @location ? "'#{@location.slug}'" : 'null' %>,
     });
   };
   (function(d){

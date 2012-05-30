@@ -49,7 +49,7 @@ class Location
   attr_accessor :writable
   attr_reader :book_keywords
   before_save :set_address
-  slug :title
+  slug :title, :history => true
   validates_presence_of :title
 
   def self.book_count
