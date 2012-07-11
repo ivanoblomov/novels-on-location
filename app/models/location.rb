@@ -137,7 +137,7 @@ class Location
   end
 
   def tweet
-    Twitter.update "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}" if Rails.env.production? && ! test_book?
+    Twitter.update "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)} #lp" if Rails.env.production? && ! test_book?
   end
 
   def unclaim
