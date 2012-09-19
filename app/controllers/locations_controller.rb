@@ -81,7 +81,8 @@ class LocationsController < ApplicationController
   end
 
   def location_query
-    strip_parens CGI::unescape(params[:_escaped_fragment_].split('-')[1]) if params[:_escaped_fragment_].present?
+    value = params[:_escaped_fragment_].split('-')[1]
+    strip_parens CGI::unescape(params[:_escaped_fragment_].split('-')[1]) unless value.blank?
   end
 
   def scope_for_snapshot
