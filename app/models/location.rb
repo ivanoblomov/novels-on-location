@@ -137,7 +137,7 @@ class Location
   end
 
   def tweet
-    Twitter.update "A fan just pinned #{self.title_for_regex}. Check it out at http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)} #lp" if Rails.env.production? && ! test_book?
+    Twitter.update "A fan just pinned \"#{self.title_for_regex.truncate 70}\". Check it out at http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)} #lp" if Rails.env.production? && ! test_book?
   rescue
   end
 
