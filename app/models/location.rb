@@ -127,7 +127,7 @@ class Location
   end
 
   def test_book?
-    title == '2: How Will You Create Something Beautiful Together?'
+    title == 'The 2,548 Wittiest Things Anybody Ever Said'
   end
 
   def title_for_regex
@@ -137,7 +137,8 @@ class Location
   end
 
   def tweet
-    Twitter.update "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)} #lp" if Rails.env.production? && ! test_book?
+    Twitter.update "A fan just pinned #{self.title_for_regex}. Check it out at http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)} #lp" if Rails.env.production? && ! test_book?
+  rescue
   end
 
   def unclaim
