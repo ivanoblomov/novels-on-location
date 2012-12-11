@@ -1,0 +1,3 @@
+/*= require_self */
+@media only screen and (max-width:1280px){body{font-size:12pt}}
+@media only screen and (max-width:480px){body{font-size:14pt}}

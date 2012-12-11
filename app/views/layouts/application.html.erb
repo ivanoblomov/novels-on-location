@@ -59,7 +59,7 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 @media print{@page{size:landscape}
 .no-print{display:none}
 #headers{z-index:1}}</style>
-<%= stylesheet_link_tag 'safari' if safari_pc? %><%= stylesheet_link_tag 'ie' if ie? %><%= stylesheet_link_tag 'ios' if ios? %><%= stylesheet_link_tag 'print', :media => 'print' if nibbler? %>
+<%= stylesheet_link_tag 'safari' if safari_pc? %><%= stylesheet_link_tag 'ie' if ie? %><%= stylesheet_link_tag 'ios' if ios? %><% if nibbler? %><%= stylesheet_link_tag 'mobile' %><%= stylesheet_link_tag 'print', :media => 'print' %><% end %>
 <script>
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-25642977-1']);
