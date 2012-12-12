@@ -1,7 +1,7 @@
 <% if html_snapshot? %><!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" /><%
+    <meta charset=utf-8 /><%
     description = description_for_location @locations, location_kind
     title = title_for_location @locations, location_kind
     @meta_keywords = @locations.map{ |l| l.tags } * ', '
