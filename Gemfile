@@ -1,4 +1,5 @@
 source 'http://rubygems.org'
+ruby '1.9.3'
 
 gem 'bson_ext', '~>1.8'
 gem 'cancan', '~>1.6'
