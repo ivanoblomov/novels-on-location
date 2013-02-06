@@ -43,8 +43,9 @@ class LocationsController < ApplicationController
   private
 
   def find_location
-    if @location = Location.find_by_slug(params[:id])
-    elsif Location.exists? :conditions => {:id => params[:id]}
+    @location = Location.find(params[:id])
+  rescue
+    if Location.where(:id => params[:id]).exists?
       @location = Location.find params[:id]
       redirect_to location_url(@location, :canonical_url => location_url(@location)), :status => :moved_permanently
     else

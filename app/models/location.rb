@@ -1,6 +1,6 @@
 class Location
   include Mongoid::Document
-  include Mongoid::Slug
+#   include Mongoid::Slug
   include Mongoid::Timestamps
 
   SCOPES_BY_KIND = {
@@ -11,6 +11,7 @@ class Location
   }.freeze
   VIRTUAL_ATTRIBUTES = [:added_at, :amazon_url, :slug, :terms, :title_for_regex, :writable].freeze
 
+  field :_slugs, type: Array, default: []
   field :address
   field :asin
   field :author
@@ -25,11 +26,11 @@ class Location
   field :url
   field :user_id
   field :user_token
-  index :address
-  index :author
-  index :tags
-  index :title
-  index :user_id
+  index( {address: 1} )
+  index( {author: 1} )
+  index( {tags: 1} )
+  index( {title: 1} )
+  index( {user_id: 1} )
   scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
   scope :duplicate, lambda{ |criteria| {:where => criteria} }
   scope :search, lambda{ |v|
@@ -49,11 +50,26 @@ class Location
   attr_accessor :writable
   attr_reader :book_keywords
   before_save :set_address
-  slug :title, :history => true
+#  slug :title, :history => true
   validates_presence_of :title
 
   def self.book_count
     Location.all.map{ |l| l.asin }.uniq.size
+  end
+
+  def self.copy_slug
+    Location.all.each do |e|
+      slugs = []
+      if e[:slug_history] != nil
+        e[:slug_history].each do |h|
+          slugs << h unless (h == nil || h == "")
+        end
+      end
+      slugs << e[:slug]
+      e[:_slugs] = slugs
+      e.save
+      p " - #{e[:_slugs]}"
+    end
   end
 
   def self.displace_duplicate_coordinates locations = Location.duplicate_coordinates

@@ -32,7 +32,7 @@ module ApplicationHelper
   end
 
   def filter_param(value)
-    "'#{value.blank? ? nil : j(value)}'"
+    "'#{value.blank? ? nil : j(value)}'".html_safe
   end
 
   def google_link_to link_text, options={}

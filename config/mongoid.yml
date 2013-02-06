@@ -1,16 +1,28 @@
-defaults: &defaults
-  allow_dynamic_fields: false
-
 development:
-  <<: *defaults
-  database: cedar-novels
-  host: localhost
+  sessions:
+    default:
+      database: novels
+      hosts:
+        - localhost:27017
+  options:
+    allow_dynamic_fields: false
 
 test:
-  <<: *defaults
-  database: novels_test
-  host: localhost
+  sessions:
+    default:
+      database: novels_on_location_test
+      hosts:
+        - localhost:27017
+      options:
+        consistency: :strong
+        # In the test environment we lower the retries and retry interval to
+        # low amounts for fast failures.
+        max_retries: 1
+        retry_interval: 0
 
 production:
-  <<: *defaults
-  uri: <%= ENV['MONGOHQ_URL'] %>
+  sessions:
+    default:
+      uri: <%= ENV['MONGOHQ_URL'] %>
+  options:
+    allow_dynamic_fields: false
