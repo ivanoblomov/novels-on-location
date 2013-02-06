@@ -143,7 +143,7 @@ class Location
   end
 
   def test_book?
-    title == 'The 2,548 Wittiest Things Anybody Ever Said'
+    title == '3'
   end
 
   def title_for_regex
