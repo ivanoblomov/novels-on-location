@@ -2,12 +2,22 @@ source 'http://rubygems.org'
 
 gem 'bson_ext'
 gem 'cancan'
-gem 'google_maps_geocoder', :path => '~/Documents/projects/google_maps_geocoder'
+gem 'google_maps_geocoder', :path => '~/Documents/code/google_maps_geocoder'
+gem 'httparty'
 gem 'jquery-rails'
-gem 'mongoid'
+gem 'mongoid_slug'
+gem 'rack-rewrite'
 gem 'rails'
 gem 'scaffold_logic', :path => '~/Documents/projects/scaffold_logic'
 gem 'sucker'
+gem 'thin'
+gem 'twitter'
+
+group :assets do
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
+end
 
 group :test do
   gem 'cucumber-rails'
