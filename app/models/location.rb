@@ -1,6 +1,6 @@
 class Location
   include Mongoid::Document
-#   include Mongoid::Slug
+  include Mongoid::Slug
   include Mongoid::Timestamps
 
   SCOPES_BY_KIND = {
@@ -50,7 +50,7 @@ class Location
   attr_accessor :writable
   attr_reader :book_keywords
   before_save :set_address
-#  slug :title, :history => true
+  slug :title, :history => true
   validates_presence_of :title
 
   def self.book_count
