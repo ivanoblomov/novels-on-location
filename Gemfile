@@ -21,7 +21,7 @@ group :assets do
 end
 
 group :test do
-  gem 'cucumber-rails', '~>1.3'
+  gem 'cucumber-rails', '~>1.3', :require => false
   gem 'database_cleaner', '~>0.9'
   gem 'mocha', '~>0.13'
   gem 'rspec-rails', '~>2.12'
