@@ -71,7 +71,7 @@ GEM
     ffi (1.4.0)
     gherkin (2.11.6)
       json (>= 1.7.6)
-    google_maps_geocoder (0.2.0)
+    google_maps_geocoder (0.3.0)
       activesupport
       rack
     hike (1.2.1)
