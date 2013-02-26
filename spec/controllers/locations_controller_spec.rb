@@ -14,9 +14,8 @@ describe LocationsController do
 
   it 'gets new action' do
     controller.stubs(:render)
-    Location.expects(:new)
-    get :new, @location.attributes
-    asserts assigns(:location).instance_of(Location)
+    Location.expects(:new).returns(Location.new).at_least_once
+    get :new, :location => @location.attributes
   end
 
   it 'posts create action' do
