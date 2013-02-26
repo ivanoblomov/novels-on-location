@@ -1,5 +1,6 @@
 .bundle
 .DS_Store
+coverage
 db/backups
 git.rake
 log/*.log

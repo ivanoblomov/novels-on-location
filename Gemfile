@@ -3,7 +3,7 @@ ruby '1.9.3'
 
 gem 'bson_ext', '~>1.8'
 gem 'cancan', '~>1.6'
-gem 'google_maps_geocoder'#, '~>0.1.1'
+gem 'google_maps_geocoder', '~>0.2'
 gem 'httparty', '~>0.10'
 gem 'jquery-rails', '~>2.2'
 gem 'mongoid_slug', '~>2.0'
@@ -25,4 +25,5 @@ group :test do
   gem 'database_cleaner', '~>0.9'
   gem 'mocha', '~>0.13'
   gem 'rspec-rails', '~>2.12'
+  gem 'simplecov', '~>0.7'
 end
