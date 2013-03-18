@@ -143,7 +143,7 @@ class Location
   end
 
   def test_book?
-    title == '3'
+    title == '1-2-3 Magic: Effective Discipline for Children 2-12'
   end
 
   def title_for_regex
