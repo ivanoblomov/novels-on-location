@@ -7,11 +7,12 @@ class LocationsController < ApplicationController
   # CRUD ===========================================================================================
   def create
     @location = Location.create location_attr
-    render :layout => false
+    format_response
   end
 
   def destroy
     @location.destroy
+    format_response
   end
 
   def index
@@ -30,7 +31,7 @@ class LocationsController < ApplicationController
 
   def new
     @location = Location.new params[:location]
-    render :layout => false
+    format_response
   end
 
   def show
@@ -38,6 +39,7 @@ class LocationsController < ApplicationController
 
   def update
     @location.update_attributes location_attr
+    format_response
   end
 
   private
@@ -50,6 +52,13 @@ class LocationsController < ApplicationController
       redirect_to location_url(@location, :canonical_url => location_url(@location)), :status => :moved_permanently
     else
       error_404
+    end
+  end
+
+  def format_response
+    respond_to do |format|
+      format.js { render :layout => false }
+      format.json { render :json => @location.to_json, :layout => false }
     end
   end
 
