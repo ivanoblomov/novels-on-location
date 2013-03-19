@@ -18,27 +18,13 @@ class CandyWrapper
   end
 
   def self.review asin
-    r = open(
-      :operation      => 'ItemLookup',
-      :id_type        => 'ASIN',
-      :item_id        => asin,
-      :response_group => 'EditorialReview'
-    )
-
-    e = r.find('EditorialReview')
+    e = response_group(asin, 'EditorialReview').find('EditorialReview')
     return {} if e.blank?
     {:review => e[0]['Content']}
   end
 
   def self.thumbnail asin
-    r = open(
-      :operation      => 'ItemLookup',
-      :id_type        => 'ASIN',
-      :item_id        => asin,
-      :response_group => 'Images'
-    )
-
-    i = r.find('ThumbnailImage')[0]
+    i = response_group(asin, 'Images').find('ThumbnailImage')[0]
     return {} if i.blank?
 
     {
@@ -54,5 +40,14 @@ class CandyWrapper
     s = Sucker.new
     s << request
     s.get
+  end
+
+  def self.response_group(asin, response_group)
+    open(
+      :operation      => 'ItemLookup',
+      :id_type        => 'ASIN',
+      :item_id        => asin,
+      :response_group => response_group
+    )
   end
 end
