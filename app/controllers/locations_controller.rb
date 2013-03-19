@@ -66,10 +66,6 @@ class LocationsController < ApplicationController
     params[:_escaped_fragment_]
   end
 
-  def reader_link?
-    location_kind == 'reader'
-  end
-
   def inject_writable_flag(locations)
     if locations.is_a?(Array)
       locations = locations.map{ |l| l.writable = can?(:update, l); l }
@@ -81,8 +77,9 @@ class LocationsController < ApplicationController
   end
 
   def location_attr
-    # discard null user ID if one exists
-    params[:location].delete :user_id if params[:location] && params[:location][:user_id] == 'null'
+    remove_null_user_id
+    rename_objective_c_keys
+    remove_virtual_attributes
     params[:location]
   end
 
@@ -93,6 +90,22 @@ class LocationsController < ApplicationController
   def location_query
     value = params[:_escaped_fragment_].split('-')[1]
     strip_parens CGI::unescape(params[:_escaped_fragment_].split('-')[1]) unless value.blank?
+  end
+
+  def reader_link?
+    location_kind == 'reader'
+  end
+
+  def remove_null_user_id
+    params[:location].delete :user_id if params[:location] && params[:location][:user_id] == 'null'
+  end
+
+  def remove_virtual_attributes
+    Location::VIRTUAL_ATTRIBUTES.each{ |va| params[:location].delete va }
+  end
+
+  def rename_objective_c_keys
+    params[:location] = Hash[params[:location].map{ |k, v| [k == 'latLng' ? k : k.underscore, v] }]
   end
 
   def scope_for_snapshot

@@ -130,6 +130,22 @@ class Location
     self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
   end
 
+  def latitude
+    self.lat_lng.blank? ? nil : self.lat_lng[0]
+  end
+
+  def latitude= lat
+    self.lat_lng = [lat.to_s, self.longitude]
+  end
+
+  def longitude
+    self.lat_lng.blank? ? nil : self.lat_lng[1]
+  end
+
+  def longitude= long
+    self.lat_lng = [self.latitude, long.to_s]
+  end
+
   def matching_coordinates
     Location.with_lat_lng(lat_lng) - [self]
   end
