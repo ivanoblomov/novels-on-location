@@ -6,6 +6,7 @@ development:
         - localhost:27017
   options:
     allow_dynamic_fields: false
+    use_activesupport_time_zone: true
 
 test:
   sessions:
@@ -26,3 +27,4 @@ production:
       uri: <%= ENV['MONGOHQ_URL'] %>
   options:
     allow_dynamic_fields: false
+    use_activesupport_time_zone: true
