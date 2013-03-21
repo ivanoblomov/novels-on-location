@@ -9,7 +9,7 @@ class Admin::LocationsController < ApplicationController
     if params[:by] == 'duplicate?'
       @locations = Location.all.sort_by{ |l| params[:dir] == 'asc' ? (l.send(params[:by]) ? 0 : 1) : (l.send(params[:by]) ? 1 : 0) }
     else
-      @locations = Location.order_by params[:by], params[:dir]
+      @locations = Location.order_by "#{params[:by]} #{params[:dir]}"
     end
   end
 end
