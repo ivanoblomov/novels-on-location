@@ -194,5 +194,6 @@ class Location
   def set_address
     send :displace unless matching_coordinates.blank?
     self.address = GoogleMapsGeocoder.new(lat_lng * ', ').formatted_address if changes.keys.include?('lat_lng')
+  rescue
   end
 end
