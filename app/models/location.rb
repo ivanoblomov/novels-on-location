@@ -131,7 +131,9 @@ class Location
   end
 
   def ios_push
-    Parse::Push.new({'alert' => "A fan just pinned \"#{self.title_for_regex.truncate 70}\"", 'badge' => 'Increment', 'sound' => '', 'url' => nol_url}).save if (Rails.env.production? && ! test_book?) || (Rails.env.development? && test_book?)
+    p = Parse::Push.new({'alert' => "A fan just pinned \"#{self.title_for_regex.truncate 70}\"", 'badge' => 'Increment', 'sound' => '', 'url' => nol_url})
+    p.channel = Rails.env.production? ? '' : 'test'
+    p.save
   end
 
   def latitude
