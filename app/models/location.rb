@@ -46,7 +46,7 @@ class Location
   scope :user_id, lambda{ |v| {:where => {:user_id => v}} }
   scope :with_lat_lng, lambda{ |v| {:where => {:lat_lng => v}} }
 
-  after_create :tweet
+  after_create :notify
   attr_accessor :writable
   attr_reader :book_keywords
   before_save :set_address
@@ -130,6 +130,10 @@ class Location
     self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
   end
 
+  def ios_push
+    Parse::Push.new({'alert' => "A fan just pinned \"#{self.title_for_regex.truncate 70}\"", 'badge' => 'Increment', 'sound' => '', 'url' => nol_url}).save if (Rails.env.production? && ! test_book?) || (Rails.env.development? && test_book?)
+  end
+
   def latitude
     self.lat_lng.blank? ? nil : self.lat_lng[0]
   end
@@ -148,6 +152,15 @@ class Location
 
   def matching_coordinates
     Location.with_lat_lng(lat_lng) - [self]
+  end
+
+  def nol_url
+    "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
+  end
+
+  def notify
+    tweet
+    ios_push
   end
 
   def owned?
@@ -169,7 +182,7 @@ class Location
   end
 
   def tweet
-    Twitter.update "A fan just pinned \"#{self.title_for_regex.truncate 70}\". Check it out at http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)} #lp" if Rails.env.production? && ! test_book?
+    Twitter.update "A fan just pinned \"#{self.title_for_regex.truncate 70}\". Check it out at #{nol_url} #lp" if Rails.env.production? && ! test_book?
   rescue
   end
 

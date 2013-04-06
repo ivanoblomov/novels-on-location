@@ -1,0 +1,1 @@
+Parse.init :application_id => 'zAkrGzZQr62RMd1suDiAGiMJaIg5lfdgAil9M1FJ', :api_key => 'IwxXDf3EVcOwvmLIrUIi159XRqvLjPquX8nAX5PD'
