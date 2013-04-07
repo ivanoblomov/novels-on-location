@@ -91,6 +91,10 @@ class Location
     Location.order_by([:updated_at, :desc]).limit(1).first
   end
 
+  def self.random
+    Location.all[Location.count * rand]
+  end
+
   def self.reload
     Location.all.map{ |l| l.book_keywords = l.title; l.save }
   end
@@ -135,7 +139,7 @@ class Location
 
   def ios_push
     p = Parse::Push.new({'alert' => new_pin_message, 'badge' => 'Increment', 'sound' => '', 'url' => nol_url})
-    p.channel = Rails.env.production? ? '' : 'test'
+    p.channel = 'test'
     p.save
   end
 

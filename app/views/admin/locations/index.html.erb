@@ -14,6 +14,8 @@
       <li><%= sort_link 'admin/locations', 'user_id', params %></li>
     </ul>
   </div>
+
+  <%= button_to 'Push to Random Location', push_random_admin_locations_url, :method => :put %>
 </div>
 <%
     i = 1
@@ -52,6 +54,7 @@
       <%= location.added_at %><br/>
     <% unless location.tags.blank? %>Tags: <%= google_link_to location.tags %><% end %>
     </p>
+    <%= button_to 'Push', push_admin_location_url(location), :method => :put %>
   </div>
 <%
       i += 1
