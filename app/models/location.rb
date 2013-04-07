@@ -15,12 +15,15 @@ class Location
   field :address
   field :asin
   field :author
+  field :city
+  field :country
   field :image_height
   field :image_url
   field :image_width
   field :lat_lng, :type => Array
   field :notes
   field :review
+  field :state
   field :title
   field :tags
   field :url
@@ -131,7 +134,7 @@ class Location
   end
 
   def ios_push
-    p = Parse::Push.new({'alert' => "A fan just pinned \"#{self.title_for_regex.truncate 70}\"", 'badge' => 'Increment', 'sound' => '', 'url' => nol_url})
+    p = Parse::Push.new({'alert' => new_pin_message, 'badge' => 'Increment', 'sound' => '', 'url' => nol_url})
     p.channel = Rails.env.production? ? '' : 'test'
     p.save
   end
@@ -157,7 +160,7 @@ class Location
   end
 
   def nol_url
-    "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
+    "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}" if title.present?
   end
 
   def notify
@@ -169,6 +172,10 @@ class Location
     !! (user_id || user_token)
   end
 
+  def place
+    (usa? ? [city, state] : [city, country]).compact * ', '
+  end
+
   def terms
     [address, author, tags, title, user_id].compact * ' '
   end
@@ -178,18 +185,26 @@ class Location
   end
 
   def title_for_regex
-    i = title.index('(')
-    return title if i.nil?
+    i = title.try(:index, '(')
+    return title.to_s if i.nil?
     title[0..(i-1)].strip
   end
 
   def tweet
-    Twitter.update "A fan just pinned \"#{self.title_for_regex.truncate 70}\". Check it out at #{nol_url} #lp" if Rails.env.production? && ! test_book?
+    Twitter.update tweet_message if Rails.env.production? && ! test_book?
   rescue
+  end
+
+  def tweet_too_long?
+    tweet_message.gsub(nol_url, '').size > (140 - 19)
   end
 
   def unclaim
     self.user_id, self.user_token = nil, nil
+  end
+
+  def usa?
+    country == 'United States'
   end
 
   def unowned?
@@ -206,9 +221,23 @@ class Location
     self.lat_lng = [(lat_lng[0].to_f + x).to_s, (lat_lng[1].to_f + y).to_s]
   end
 
+  def new_pin_message
+    "A fan just pinned \"#{self.title_for_regex.truncate 50}\"#{place.blank? ? '' : " to #{place}"}."
+  end
+
   def set_address
     send :displace unless matching_coordinates.blank?
-    self.address = GoogleMapsGeocoder.new(lat_lng * ', ').formatted_address if changes.keys.include?('lat_lng')
+    if changes.keys.include?('lat_lng') || place.blank?
+      g = GoogleMapsGeocoder.new(lat_lng * ', ')
+      self.address = g.formatted_address
+      self.city = g.city
+      self.country = g.country_long_name
+      self.state = g.state_short_name if usa?
+    end
   rescue
+  end
+
+  def tweet_message
+    "#{new_pin_message} Learn more at #{nol_url} #lp"
   end
 end
