@@ -9,7 +9,7 @@ class Location
     'reader' => :user_id,
     'search' => :search,
   }.freeze
-  VIRTUAL_ATTRIBUTES = [:added_at, :amazon_url, :slug, :terms, :title_for_regex, :writable].freeze
+  VIRTUAL_ATTRIBUTES = [:added_at, :amazon_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
 
   field :_slugs, type: Array, default: []
   field :address
