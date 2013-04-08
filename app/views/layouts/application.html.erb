@@ -34,29 +34,29 @@ input[type="button"]{border:0;cursor:pointer;font-weight:bold;padding:0 0 0 5px;
 input.map[type="button"]{background:#3B5998;color:white;float:left}
 .bullet{margin:2px .5em 0 .5em}
 .clear{clear:both}
+.links{float:right;margin:0;width:18px;height:18px}
 .map-balloon{margin-right:15px}
 .map-balloon input[type="button"]{background:white;color:blue;float:right;font-size:10pt;padding:0}
 .search{color:#777;margin:0}
 .search-links{float:right;font-size:10pt;font-weight:bold;padding:0}
 .thumbnail{border:black 1px solid;float:left;margin-bottom:5px;margin-right:5px}
+#appstore-link{margin:2px 0 0 3px}
 #applesearch{float:left;top:6px}
 #applesearch .sbox_l{background:url(<%= asset_path 'srch_l.gif' %>) no-repeat top left;float:left;width:19px;height:19px}
 #applesearch .sbox_r{background:url(<%= asset_path 'srch_r.gif' %>) no-repeat top left;float:left;width:19px;height:19px}
 #applesearch .sbox input{background:url(<%= asset_path 'srch_bg.gif' %>) repeat-x top left;border:0;float:left;font:11px/13px arial;padding:3px}
 #book-input{width:101px}
 #fb-like{border:0;float:left;width:100px;height:20px}
-#fb-page{float:right;margin:0;width:18px;height:18px}
 #fb-root{display:none}
-#g-page{float:right;margin:0;width:18px;height:18px}
 #headers{bottom:10px;color:#fff;margin:10px;position:absolute;z-index:-1}
 #login-button{background:#3B5998 url(http://static.ak.fbcdn.net/rsrc.php/v1/zL/r/FGFbc80dUKj.png) no-repeat;background-position:0% -188px;padding:0;text-align:right;width:77px;height:22px}
-#mail-button{float:right;margin:3px 2px 0 1px}
+#mail-button{margin:3px 2px 0 1px}
 #mode-button{width:98px;height:18px}
 #pin-display-button{width:90px;height:18px}
 #place-input{width:153px}
 #map-canvas{position:absolute;bottom:0;left:0;right:0;top:0}
 #social-toolbar{bottom:0;margin-left:40%;position:absolute}
-#toolbar{position:absolute;right:111px;top:4px}
+#toolbar{position:absolute;right:156px;top:4px}
 #tweet{border:0;float:right;width:130px;height:20px}
 @media print{@page{size:landscape}
 .no-print{display:none}
@@ -101,9 +101,10 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 </div>
 <input type=button class=map id=mode-button title="Double-click map to zoom. Click to toggle" value="Mode: Zoom"/>
 <input type=button class=map id=pin-display-button title="Click to show only my pins" value="Show My Pins"/>
-<%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon', :width => 20, :height => 12), :encode => 'hex', :id => 'mail-button', :title => 'Send feedback' %>
-<%= link_to image_tag('gplus.png', :alt => 'Google+ Icon', :width => 18, :height => 18), 'https://plus.google.com/109501593522859919303', :id => 'g-page', :title => 'Visit our Google+ page' %>
-<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon', :width => 18, :height => 18), 'http://www.facebook.com/NovelsOnLocation', :id => 'fb-page', :title => 'Visit our Facebook page' %>
+<%= link_to image_tag('http://r.mzstatic.com/images/web/linkmaker/badge_appstore-sm.gif', :alt => 'App Store'), 'https://itunes.apple.com/us/app/novels-on-location/id625973663?mt=8&uo=4', :class => 'links', :id => 'appstore-link', :target => 'itunes_store' %>
+<%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon', :width => 20, :height => 12), :encode => 'hex', :class => 'links', :id => 'mail-button', :title => 'Send feedback' %>
+<%= link_to image_tag('gplus.png', :alt => 'Google+ Icon', :width => 18, :height => 18), 'https://plus.google.com/109501593522859919303', :class => 'links', :id => 'g-page', :title => 'Visit our Google+ page' %>
+<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon', :width => 18, :height => 18), 'http://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
 </div>
 <div class=no-print id=social-toolbar>
 <div id=fb-root></div><input type=button class=map id=login-button title="Log into Facebook" value="Log In &nbsp; "/>
