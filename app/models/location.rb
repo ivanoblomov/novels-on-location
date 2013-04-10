@@ -177,7 +177,8 @@ class Location
   end
 
   def place
-    (usa? ? [city, state] : [city, country]).compact * ', '
+    place = (usa? ? [city, state] : [city, country]).compact * ', '
+    place.blank? ? address : place
   end
 
   def terms
