@@ -20,7 +20,9 @@ nOL.openWindow;
 nOL.pins = {};
 nOL.placePrompt = 'Find a place & map a book to it';
 nOL.r;
+nOL.sharingMessage = 'I%20found%20a%20book%20you%20might%20like%20with%20Novels%3A%20On%20Location,%20now%20available%20at%20the%20App%20Store%20http://AppStore.com/NovelsOnLocation';
 nOL.showingAllPins = true;
+nOL.twitterAccount = 'NovelsOnLoc%3ANovels%3A%20On%20Location';
 nOL.zoomer = new google.maps.MaxZoomService();
 
 nOL.anchorQuery = nOL.anchor.split('-')[1] || nOL.anchorKind;
@@ -136,14 +138,14 @@ nOL.labelFacebookButton = function(value, title) {
   $('#login-button')[0].title = title;
 }
 
-nOL.updateFacebookLikeButton = function(path) {
+nOL.updateFacebookLikeButton = function() {
   var iframe = $('#fb-like')[0];
-  iframe.src = iframe.src.replace(/href=.+/, 'href=' + nOL.host + path);
+  iframe.src = iframe.src.replace(/href=.+/, 'href=' + document.URL);
 }
 
-nOL.updateTweetButton = function(path) {
+nOL.updateTweetButton = function() {
   var iframe = $('#tweet')[0];
-  iframe.src = iframe.src.replace(/url=.+/, 'url=http://' + nOL.host + path);
+  iframe.src = iframe.src.replace(/\?.+/, '?related=' + nOL.twitterAccount + '&text=' + nOL.sharingMessage + '&url=' + document.URL);
 }
 
 nOL.listenFor = function(event, args) {
@@ -245,10 +247,10 @@ nOL.setPinDisplayPrompt = function() {
 
 nOL.setTitleAndPath = function(title, path) {
   document.title = title;
-  nOL.updateFacebookLikeButton(path);
-  nOL.updateTweetButton(path);
   if (history.pushState)
     history.pushState(null, title, path);
+  nOL.updateFacebookLikeButton();
+  nOL.updateTweetButton();
 }
 
 nOL.togglePinDisplay = function() {
