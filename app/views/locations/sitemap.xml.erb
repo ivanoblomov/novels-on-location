@@ -17,6 +17,9 @@
     <loc>http://<%= Rails.application.config.main_host %>/<%= novel_url location %></loc>
   </url>
   <url>
+    <loc>http://<%= Rails.application.config.main_host %>/<%= place_url location %></loc>
+  </url>
+  <url>
     <loc>http://<%= Rails.application.config.main_host %>/<%= author_url location %></loc>
   </url><% if location.user_id %>
   <url>

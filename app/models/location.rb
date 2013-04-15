@@ -6,6 +6,7 @@ class Location
   SCOPES_BY_KIND = {
     'author' => :author,
     'novel' => :title,
+    'place' => :place,
     'reader' => :user_id,
     'search' => :search,
   }.freeze
@@ -36,6 +37,7 @@ class Location
   index( {user_id: 1} )
   scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
   scope :duplicate, lambda{ |criteria| {:where => criteria} }
+  scope :place, lambda{ |v| {:where => {:address => /#{v}/i}} }
   scope :search, lambda{ |v|
     any_of(
       {:address => /#{v}/i},

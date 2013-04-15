@@ -88,7 +88,7 @@ class LocationsController < ApplicationController
   end
 
   def location_query
-    value = params[:_escaped_fragment_].split('-')[1]
+    value = params[:_escaped_fragment_].split('-')[1..-1]
     strip_parens CGI::unescape(params[:_escaped_fragment_].split('-')[1]) unless value.blank?
   end
 

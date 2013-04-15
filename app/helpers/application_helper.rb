@@ -59,6 +59,10 @@ module ApplicationHelper
     "#!novel-#{location.title_for_regex}"
   end
 
+  def place_url location
+    "#!place-#{u location.place}"
+  end
+
   def reader_link_to location
     return if location.user_id.blank?
     link_to "All Pins by #{@user_name || 'Reader'}", reader_url(location), :title => "Show all pins added by #{@user_name || 'Reader'}"
