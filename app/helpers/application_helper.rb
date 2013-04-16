@@ -7,7 +7,7 @@ module ApplicationHelper
   end
 
   def author_url location
-    "#!author-#{location.author}"
+    "#!author-#{u location.author}"
   end
 
   def default_title
@@ -56,7 +56,7 @@ module ApplicationHelper
   end
 
   def novel_url location
-    "#!novel-#{location.title_for_regex}"
+    "#!novel-#{u location.title_for_regex}"
   end
 
   def place_url location
