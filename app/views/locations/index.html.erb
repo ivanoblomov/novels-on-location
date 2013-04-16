@@ -16,6 +16,7 @@
   <meta name=description content="<%= description %>"/>
   <meta name=keywords content="<%= @meta_keywords || 'google maps, amazon, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
   <meta property="<%= property %>" content="<%= content %>"/><% end if facebook? || Rails.env.development? %>
+  <%= stylesheet_link_tag 'ajax_crawling' %>
   <title><%= title %></title>
   </head>
   <body>

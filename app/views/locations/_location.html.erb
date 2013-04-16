@@ -1,31 +1,42 @@
-<h1>
-  <a href="<%= @location.amazon_url %>" target="_blank" title="Check out <%= @location.title %> on Amazon">
-    <%= image_tag @location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :width => @location.image_width if @location.image_url %><%= @location.title %>
-  </a>
-</h1>
+<div itemscope itemtype="http://data-vocabulary.org/Product">
+  <h1>
+    <a href="<%= @location.amazon_url %>" target="_blank" title="Check out <%= @location.title %> on Amazon">
+      <%= image_tag @location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :itemprop => 'image', :width => @location.image_width if @location.image_url %><span itemprop=name><%= @location.title %></span>
+    </a>
+  </h1>
 
-<h2>by <%= wikipedia_link_to @location.author %></h2>
+  <h2 itemscope itemtype="http://data-vocabulary.org/Person">by <%= wikipedia_link_to @location.author, :itemprop => 'name' %><span class=microdata itemprop=role>Author</span></h2>
 
-<h2><%= @location.address %></h2>
+  <h2 itemprop=category>Books</h2>
 
-<p><%= @location.review.try :html_safe %></p>
+  <h2 itemprop=address itemscope itemtype="http://data-vocabulary.org/Address">
+    <% if @location.city.present? %><span itemprop=locality><%= @location.city %></span>,<% end %><% if @location.state.present? %>
+    <span itemprop=region><%= @location.state %></span><% end %>
+    <% if @location.country.present? %><span itemprop=country-name><%= @location.country %></span><% end %>
+  </h2>
 
-<% if @location.notes.present? %>
-<h3>Reader Notes</h3>
+  <div itemprop=description><%= @location.review.try :html_safe %></div>
 
-<p><%= @location.notes %></p>
+  <% if @location.notes.present? %>
+  <h3>Reader Notes</h3>
+
+  <p><%= @location.notes %></p>
+  <% end %>
+
+  <p>
+    Added
+  <% if @location.user_id.present? %>
+    by <%= facebook_link_to @location %>
+  <% end %>
+    on <%= @location.added_at %>.<br/>
+  <% unless @location.tags.blank? %>Tags: <%= google_link_to @location.tags %><% end %>
+  </p>
+<% if @location.asin.present? %>
+  <p>
+    ID: <span itemprop=identifier><%= @location.asin %></span>
+  </p>
 <% end %>
-
-<p>
-  Added
-<% if @location.user_id.present? %>
-  by <%= facebook_link_to @location %>
-<% end %>
-  on <%= @location.added_at %>.<br/>
-<% unless @location.tags.blank? %>Tags: <%= google_link_to @location.tags %><% end %>
-</p>
-
-
-<%= novel_link_to @location %> |
-<%= author_link_to @location %> |
-<%= reader_link_to @location if @location.user_id %>
+  <%= novel_link_to @location %> |
+  <%= author_link_to @location %> |
+  <%= reader_link_to @location if @location.user_id %>
+</div>
