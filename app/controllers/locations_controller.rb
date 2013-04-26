@@ -1,4 +1,5 @@
 class LocationsController < ApplicationController
+  authorize_resource :only => [:create, :index, :new, :show]
   before_filter :find_location, :only => :show
   load_and_authorize_resource :only => [:destroy, :update]
   helper_method :html_snapshot?, :inject_writable_flag, :location_kind, :location_query
@@ -6,6 +7,8 @@ class LocationsController < ApplicationController
 
   # CRUD ===========================================================================================
   def create
+    params[:location][:user_id] = current_user.id
+    params[:location][:user_token] = current_user.token
     @location = Location.create location_attr
     format_response
   end
