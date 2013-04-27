@@ -352,7 +352,7 @@ nOL.myFriendsLocation = function(location) {
 }
 
 nOL.myLocation = function(location) {
-  return $.cookie('user_token') == location.user_token
+  return $.cookie('user_token') == location.user_token || (nOL.loggedIn() && location.user_id == nOL.fb_session.userID);
 }
 
 nOL.showAllPins = function() {
