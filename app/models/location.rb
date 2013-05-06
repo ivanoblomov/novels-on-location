@@ -134,6 +134,10 @@ class Location
     Location.duplicate({:address => address, :title => title}).count > 1
   end
 
+  def from_ios?
+    !! (self.user_token =~ /[0-9A-F]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}/)
+  end
+
   def geocode place
     gmg = GoogleMapsGeocoder.new place
     self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
