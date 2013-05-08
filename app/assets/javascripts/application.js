@@ -431,7 +431,7 @@ nOL.openBalloon = function(location) {
   else
     html += '<p><em>No reviews found.</em></p>';
   if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p>';
-  if (nOL.fb_session && location.user_id) {
+  if (location.user_id) {
     html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || '(loading...)') + '</a> on ' + location.added_at;
   } else {
     html += 'Added on ' + location.added_at;
