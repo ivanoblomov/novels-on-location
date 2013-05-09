@@ -33,6 +33,10 @@ class ApplicationController < ActionController::Base
     request.user_agent.try(:include?, 'facebookexternalhit')
   end
 
+  def integration
+    render :layout => false
+  end
+
   def nibbler?
     request.user_agent == 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3'
   end

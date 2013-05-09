@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8 />
+	<title>Integration Notes - Novels: On Location</title>
+</head>
+<body>
+<h1>
+	<em>Novels: On Location</em> Integration Notes
+</h1>
+<h2>
+	How to Integrate <em>Novels: On Location</em> with Your Web Site
+</h2>
+<ol>
+	<li> To integrate <a href="http://novelsonlocation.com/">Novels: On Location</a> with your blog or web site, just use the following HTML: <pre><code>&lt;div&gt;
+    &lt;iframe src="http://novelsonlocation.com/" style="width:90%;height:500px"&gt;&lt;/iframe&gt;&lt;br/&gt;
+    Visit &lt;a href="http://novelsonlocation.com"&gt;Novels: On Location&lt;/a&gt; and make your next destination come alive!
+&lt;/div&gt;
+</code></pre></li>
+	<li> Tweak the width or height as needed. </li>
+</ol>
+<p>
+	Because Novels is <a href="http://en.wikipedia.org/wiki/Restful" title="Look up RESTful on Wikipedia">RESTful</a>, filtering by <a href="http://novelsonlocation.com/#!novel-The%20Sun%20Also%20Rises" title="Search Novels: On Location for all locations of the novel The Sun Also Rises">novel</a>, <a href="http://novelsonlocation.com/#!author-Ernest%20Hemingway" title="Search Novels: On Location for all novels by Ernest Hemingway">author</a>, or <a href="http://novelsonlocation.com/#!reader-1069276787" title="Search Novels: On Location for all pins added by Greg">reader</a>&mdash;as well as <a href="http://novelsonlocation.com/#!search-love" title="Search Novels: On Location for love">arbitrary searches</a>&mdash;all generate valid URLs. This means you can send that URL to a friend and they'll see the same results. It also means you can integrate a custom view of Novels with your web site!
+</p>
+<h2>
+	How to Integrate a Custom <em>Novels: On Location</em> View
+</h2>
+<ol>
+	<li>To integrate a custom view, go to Novels and have it display one or more pins by doing <em>one of the following</em>:
+	<ul>
+		<li><em>click the desired pin</em></li>
+		<li>search for specific pins by <em>typing keywords into the search box</em>
+		<li>display pins for a specific novel, author, or reader by <em>selecting one of their pins and clicking <strong>All Locations for Novel</strong>, <strong>All Novels by Author</strong>, or <strong>All Pins by Reader</strong></em></li>
+	</ul>
+	<li>Paste the resulting URL from your browser into the same HTML snippet above. It should look something like this: <pre><code>&lt;div&gt;
+    &lt;iframe src="http://novelsonlocation.com/#!search-hemingway" style="width:90%;height:500px"&gt;&lt;/iframe&gt;&lt;br/&gt;
+    Visit &lt;a href="http://novelsonlocation.com"&gt;Novels: On Location&lt;/a&gt; and make your next destination come alive!
+&lt;/div&gt;
+</code></pre></li>
+</ol>
+<p>
+	If everything went well, your site should now have an embedded view of Novels: On Location like so...
+</p>
+<div style="text-align:center">
+	<iframe src="http://novelsonlocation.com/#!search-hemingway" style="width:90%;height:500px"></iframe><br />
+	Visit <a href="http://novelsonlocation.com">Novels: On Location</a> and make your next destination come alive!
+</div>
+<p>
+	Questions or comments? Post to our <a href="https://www.facebook.com/NovelsOnLocation" title="Novels: On Location's Facebook Page">Facebook page</a>.
+</p>
+</body>
+</html>
