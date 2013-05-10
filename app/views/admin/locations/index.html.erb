@@ -51,7 +51,7 @@
     <% if location.user_id.present? %>
       by <%= facebook_link_to location %>,
     <% end %>
-      <%= location.added_at %><br/>
+      <%= location.added_at_s %><br/>
     <% unless location.tags.blank? %>Tags: <%= google_link_to location.tags %><% end %>
     </p>
     <%= button_to 'Push', push_admin_location_url(location), :method => :put %>

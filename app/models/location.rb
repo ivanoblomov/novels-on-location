@@ -10,7 +10,7 @@ class Location
     'reader' => :user_id,
     'search' => :search,
   }.freeze
-  VIRTUAL_ATTRIBUTES = [:added_at, :amazon_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
+  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
 
   field :_slugs, type: Array, default: []
   field :address
@@ -113,8 +113,11 @@ class Location
 
   # Instance methods ===============================================================================
   def added_at
-    t = created_at || updated_at
-    t && t.to_s(:date_time)
+    created_at || updated_at
+  end
+
+  def added_at_s
+    added_at && added_at.localtime.to_s(:date_time)
   end
 
   def amazon_url

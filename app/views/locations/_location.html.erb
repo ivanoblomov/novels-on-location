@@ -28,7 +28,7 @@
   <% if @location.user_id.present? %>
     by <%= facebook_link_to @location %>
   <% end %>
-    on <%= @location.added_at %>.<br/>
+    on <%= @location.added_at_s %>.<br/>
   <% unless @location.tags.blank? %>Tags: <%= google_link_to @location.tags %><% end %>
   </p>
 <% if @location.asin.present? %>
