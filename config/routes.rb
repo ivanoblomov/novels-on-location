@@ -24,7 +24,7 @@ NovelsOnLocation::Application.routes.draw do
 
   get 'admin' => 'admin/locations#index'
   get 'integration' => 'application#integration'
-  get 'sitemap' => 'locations#sitemap'
+  get 'sitemap' => 'application#sitemap'
   resources :locations
   root :to => 'locations#index', :via => :get
 

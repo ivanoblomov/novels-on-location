@@ -6,6 +6,10 @@
     <lastmod><%= l.updated_at.to_s :w3c_datetime %></lastmod>
 <% end %>
   </url>
+  <url>
+    <loc><%= integration_url %></loc>
+    <lastmod><%= File.mtime('app/views/application/integration.html.erb').to_s :w3c_datetime %></lastmod>
+  </url>
 <% @locations.each do |location| %>
   <url>
     <loc><%= location_url location %></loc>
