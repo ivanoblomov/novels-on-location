@@ -162,13 +162,13 @@ nOL.listenForLogin = function() {
 nOL.dontListenForShortcuts = function() {
   shortcut.remove('l');
   shortcut.remove('m');
-  shortcut.remove('s');
+  shortcut.remove('p');
 }
 
 nOL.listenForShortcuts = function() {
   shortcut.add('l', nOL.toggleLogin);
   shortcut.add('m', nOL.toggleMapMode);
-  shortcut.add('s', nOL.togglePinDisplay);
+  shortcut.add('p', nOL.togglePinDisplay);
 }
 
 nOL.loggedIn = function() {
@@ -270,13 +270,13 @@ nOL.setPinDisplayPrompt = function() {
   $('#pin-display-button')[0].title = 'Click to change pins displayed';
 
   if (nOL.pinType == 0)
-    $('#pin-display-button')[0].value = 'All Pins';
+    $('#pin-display-button')[0].value = 'Pins: All';
   else if (nOL.pinType == 1)
-    $('#pin-display-button')[0].value = 'My Pins';
+    $('#pin-display-button')[0].value = 'Pins: My Pins';
   else if (nOL.pinType == 2)
-    $('#pin-display-button')[0].value = 'Bookmarks';
+    $('#pin-display-button')[0].value = 'Pins: Bookmarks';
   else if (nOL.pinType == 3)
-    $('#pin-display-button')[0].value = 'Friends';
+    $('#pin-display-button')[0].value = 'Pins: Friends';
 }
 
 nOL.setTitleAndPath = function(title, path) {
@@ -415,7 +415,7 @@ nOL.showBookmarks = function() {
       nOL.hidePin(location._id);
   }
   nOL.map.fitBounds(nOL.bounds);
-  nOL.setTitleAndPath('Friends - Novels: On Location', '/#!bookmarks');
+  nOL.setTitleAndPath('Bookmarks - Novels: On Location', '/#!bookmarks');
 }
 
 nOL.showFriendsPins = function() {
@@ -444,7 +444,7 @@ nOL.showMyPins = function() {
       nOL.hidePin(location._id);
   }
   nOL.map.fitBounds(nOL.bounds);
-  nOL.setTitleAndPath('Friends - Novels: On Location', '/#!my');
+  nOL.setTitleAndPath('My Pins - Novels: On Location', '/#!my');
 }
 
 nOL.showPin = function(id) {
@@ -505,7 +505,7 @@ nOL.openBalloon = function(location) {
   if (location.writable)
     html += '<input onClick="nOL.deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location._id + '\', \'' + escape(location.tags) + '\')" type="button" value="Tag" title="Tag pin"/>';
   if (nOL.fb_session) {
-    if (location.bookmark_user_ids.indexOf(nOL.fb_session.userID) > -1)
+    if (nOL.myBookmark(location))
       html += '<input onClick="nOL.unBookmarkPin(\'' + location._id + '\')" type="button" value="Un-Bookmark" title="Un-bookmark this pin"/>';
     else
       html += '<input onClick="nOL.bookmarkPin(\'' + location._id + '\')" type="button" value="Bookmark" title="Bookmark this pin"/>';
