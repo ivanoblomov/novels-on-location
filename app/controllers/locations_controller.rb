@@ -2,7 +2,7 @@ class LocationsController < ApplicationController
   authorize_resource :only => [:create, :index, :new, :show]
   before_filter :find_location, :only => :show
   load_and_authorize_resource :only => [:destroy, :update]
-  helper_method :html_snapshot?, :inject_writable_flag, :location_kind, :location_query
+  helper_method :html_snapshot?, :location_kind, :location_query
   respond_to :html, :json
 
   # CRUD ===========================================================================================
@@ -67,16 +67,6 @@ class LocationsController < ApplicationController
 
   def html_snapshot?
     params[:_escaped_fragment_]
-  end
-
-  def inject_writable_flag(locations)
-    if locations.is_a?(Array)
-      locations = locations.map{ |l| l.writable = can?(:update, l); l }
-    else
-      locations.writable = can? :update, locations
-    end
-
-    locations
   end
 
   def location_attr

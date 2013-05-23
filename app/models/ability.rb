@@ -2,6 +2,7 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
+    can :manage, Bookmark if user
     can :create, Location if user
     can :destroy, Location do |location|
       user.owns?(location) || user.try(:me?)

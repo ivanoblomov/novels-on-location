@@ -419,7 +419,16 @@ nOL.openBalloon = function(location) {
   if (nOL.openWindow != undefined) nOL.openWindow.close();
   html = '<div class="map-balloon">';
   if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim this pin"/>';
-  if (location.writable) html += '<input onClick="nOL.deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location._id + '\', \'' + escape(location.tags) + '\')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (escape(location.notes) || '') + '\')" type="button" value="Annotate" title="Annotate pin"/>';
+  if (location.writable)
+    html += '<input onClick="nOL.deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location._id + '\', \'' + escape(location.tags) + '\')" type="button" value="Tag" title="Tag pin"/>';
+  if (nOL.fb_session) {
+    if (location.bookmark_user_ids.indexOf(nOL.fb_session.userID) > -1)
+      html += '<input onClick="nOL.unBookmarkPin(\'' + location._id + '\')" type="button" value="Un-Bookmark" title="Un-bookmark this pin"/>';
+    else
+      html += '<input onClick="nOL.bookmarkPin(\'' + location._id + '\')" type="button" value="Bookmark" title="Bookmark this pin"/>';
+  }
+  if (location.writable)
+    html += '<input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (escape(location.notes) || '') + '\')" type="button" value="Annotate" title="Annotate pin"/>';
   html += '<input onClick="nOL.zoomIn(nOL.toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin"/>'
   if (location.image_url)
     html += '<h1><a href="' + location.amazon_url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '>' + location.title + '</a></h1>';
@@ -458,6 +467,16 @@ nOL.annotatePin = function(id, notes) {
     url: '/locations/' + id,
     data: {
       'location[notes]': notes
+    }
+  });
+}
+
+nOL.bookmarkPin = function(id) {
+  $.ajax({
+    type: 'PUT',
+    url: '/bookmarks/' + nOL.fb_session.userID,
+    data: {
+      'location_id': id
     }
   });
 }
@@ -532,6 +551,16 @@ nOL.tagPin = function(id, tags) {
 
 nOL.toLatLng = function( latLng ) {
 	return new google.maps.LatLng(latLng[0], latLng[1]);
+}
+
+nOL.unBookmarkPin = function(id) {
+  $.ajax({
+    type: 'DELETE',
+    url: '/bookmarks/' + nOL.fb_session.userID,
+    data: {
+      'location_id': id
+    }
+  });
 }
 
 // Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html

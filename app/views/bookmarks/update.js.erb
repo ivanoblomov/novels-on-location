@@ -1,0 +1,2 @@
+nOL.hidePin('<%= params[:location_id] %>');
+nOL.addPin(<%= inject_writable_flag(@location).to_json.html_safe %>);

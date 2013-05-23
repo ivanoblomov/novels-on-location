@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user, :facebook?, :nibbler?, :w3c_validator?
+  helper_method :current_user, :facebook?, :inject_writable_flag, :nibbler?, :w3c_validator?
   protect_from_forgery
 
   unless Rails.application.config.consider_all_requests_local
@@ -31,6 +31,16 @@ class ApplicationController < ActionController::Base
 
   def facebook?
     request.user_agent.try(:include?, 'facebookexternalhit')
+  end
+
+  def inject_writable_flag(locations)
+    if locations.is_a?(Array)
+      locations = locations.map{ |l| l.writable = can?(:update, l); l }
+    else
+      locations.writable = can? :update, locations
+    end
+
+    locations
   end
 
   def integration

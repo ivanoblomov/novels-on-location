@@ -10,7 +10,7 @@ class Location
     'reader' => :user_id,
     'search' => :search,
   }.freeze
-  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
+  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :bookmark_user_ids, :place, :slug, :terms, :title_for_regex, :writable].freeze
 
   field :_slugs, type: Array, default: []
   field :address
@@ -30,6 +30,7 @@ class Location
   field :url
   field :user_id
   field :user_token
+  has_and_belongs_to_many :bookmarks
   index( {address: 1} )
   index( {author: 1} )
   index( {tags: 1} )
@@ -127,6 +128,10 @@ class Location
   def book_keywords=(value)
     self[:book_keywords] = value
     self.attributes = CandyWrapper.book(value)
+  end
+
+  def bookmark_user_ids
+    self.bookmarks.map{ |b| b.user_id }.uniq
   end
 
   def latLng=(value)
