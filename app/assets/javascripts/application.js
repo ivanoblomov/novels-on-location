@@ -197,6 +197,32 @@ nOL.toggleLogin = function() {
   nOL.loggedIn() ? nOL.logOut() : nOL.logIn();
 }
 
+nOL.processAnchorQuery = function() {
+  switch (nOL.anchorKind) {
+    case 'my':
+      nOL.pinType = 1;
+      nOL.showMyPins();
+      break;
+    case 'bookmarks':
+      nOL.pinType = 2;
+      nOL.showBookmarks();
+      break;
+    case 'friends':
+      nOL.pinType = 3;
+      nOL.showFriendsPins();
+      break;
+    case 'search':
+      nOL.pinType = 0;
+      nOL.showPins(nOL.anchorQuery, null);
+      break;
+    default:
+      nOL.pinType = 0;
+      nOL.showAllPins();
+  }
+
+  nOL.setPinDisplayPrompt();
+}
+
 nOL.promptForTag = function(id, tags) {
   var value = prompt('Enter some descriptive words. These will be linked to a Google search.', unescape(tags));
   if (value) nOL.tagPin(id, value);
@@ -289,9 +315,6 @@ nOL.addPin = function(location) {
 
   nOL.pins[location._id] = pin;
 
-  if ((nOL.anchorQuery == 'friends' && nOL.loggedIn() && $.inArray(location.user_id, nOL.friendIds) > -1) || location.terms.toLowerCase().indexOf(nOL.anchorQuery.toLowerCase()) > -1)
-    nOL.showPin(location._id);
-
   google.maps.event.addListener(pin, 'click', function() {
     nOL.setTitleAndPath(location.title + ' - Novels: On Location', '/locations/' + location.slug);
     nOL.openBalloon(location);
@@ -320,7 +343,10 @@ nOL.addPins = function(selectedLocationSlug) {
       nOL.zoomIn(nOL.toLatLng(location.lat_lng));
     }
   }
-  nOL.map.fitBounds(nOL.bounds);
+  if (nOL.anchorQuery)
+    nOL.processAnchorQuery();
+  else
+    nOL.showAllPins();
 }
 
 nOL.shouldAddPin = function(googleResults) {
