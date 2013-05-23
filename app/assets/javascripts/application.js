@@ -18,10 +18,10 @@ nOL.locations;
 nOL.map;
 nOL.openWindow;
 nOL.pins = {};
+nOL.pinType = 0;
 nOL.placePrompt = 'Find a place & map a book to it';
 nOL.r;
 nOL.sharingMessage = 'I%20found%20a%20book%20you%20might%20like%20with%20Novels%3A%20On%20Location,%20now%20available%20at%20the%20App%20Store%20http://AppStore.com/NovelsOnLocation';
-nOL.showingAllPins = true;
 nOL.twitterAccount = 'NovelsOnLoc%3ANovels%3A%20On%20Location';
 nOL.zoomer = new google.maps.MaxZoomService();
 
@@ -241,8 +241,14 @@ nOL.toggleMapMode = function() {
 }
 
 nOL.setPinDisplayPrompt = function() {
-  $('#pin-display-button')[0].title = nOL.loggedIn() ? "Click to show only friends' pins" : 'Click to show only my pins';
-  $('#pin-display-button')[0].value = nOL.loggedIn() ? "Show Friends'" : 'Show My Pins';
+  $('#pin-display-button')[0].title = 'Click to change pins displayed';
+
+  if (nOL.pinType == 0)
+    $('#pin-display-button')[0].value = 'All Pins';
+  else if (nOL.pinType == 1)
+    $('#pin-display-button')[0].value = nOL.loggedIn() ? "Friends'" : 'My Pins';
+  else if (nOL.pinType == 2)
+    $('#pin-display-button')[0].value = 'Bookmarks';
 }
 
 nOL.setTitleAndPath = function(title, path) {
@@ -254,16 +260,19 @@ nOL.setTitleAndPath = function(title, path) {
 }
 
 nOL.togglePinDisplay = function() {
-  nOL.showingAllPins = ! nOL.showingAllPins;
+  nOL.pinType += 1;
 
-  if (nOL.showingAllPins) {
+  if ((nOL.loggedIn() && nOL.pinType > 2) || (! nOL.loggedIn() && nOL.pinType > 1))
+    nOL.pinType = 0;
+
+  if (nOL.pinType == 0)
     nOL.showAllPins();
-    nOL.setPinDisplayPrompt();
-  } else {
+  else if (nOL.pinType == 1)
     nOL.hideStrangersPins();
-    $('#pin-display-button')[0].title = 'Click to show all pins';
-    $('#pin-display-button')[0].value = 'Show All Pins';
-  }
+  else if (nOL.pinType == 2)
+    nOL.showBookmarks();
+
+  nOL.setPinDisplayPrompt();
 }
 
 nOL.addPin = function(location) {
@@ -347,6 +356,10 @@ nOL.hideStrangersPins = function() {
     nOL.setTitleAndPath('Friends - Novels: On Location', '/#!friends');
 }
 
+nOL.myBookmark = function(location) {
+  return location.bookmark_user_ids.indexOf(nOL.fb_session.userID) != -1
+}
+
 nOL.myFriendsLocation = function(location) {
   return $.inArray(location.user_id, nOL.friendIds) != -1
 }
@@ -362,6 +375,20 @@ nOL.showAllPins = function() {
   }
   nOL.map.fitBounds(nOL.bounds);
   nOL.setTitleAndPath(nOL.defaultTitle, '/');
+}
+
+nOL.showBookmarks = function() {
+  nOL.bounds = new google.maps.LatLngBounds();
+  for (var i = 0; i < nOL.locations.length; i++) {
+    var location = nOL.locations[i];
+
+    if (! nOL.myBookmark(location))
+      nOL.hidePin(location._id);
+    else
+      nOL.showPin(location._id);
+  }
+  nOL.map.fitBounds(nOL.bounds);
+  nOL.setTitleAndPath('Friends - Novels: On Location', '/#!bookmarks');
 }
 
 nOL.showPin = function(id) {

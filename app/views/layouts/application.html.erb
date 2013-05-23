@@ -100,7 +100,7 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 <span class=sbox_l></span><span class=sbox><input type=search class=search id=book-input placeholder="Enter a book keyword"<% if safari_pc? %> autosave=applestyle_srch results=5<% end %> onkeyup="applesearch.onChange('book-input','clear_book')"/></span><span class=sbox_r id=clear_book></span>
 </div>
 <input type=button class=map id=mode-button title="Double-click map to zoom. Click to toggle" value="Mode: Zoom"/>
-<input type=button class=map id=pin-display-button title="Click to show only my pins" value="Show My Pins"/>
+<input type=button class=map id=pin-display-button title="Click to show only my pins" value="All Pins"/>
 <%= link_to image_tag('http://r.mzstatic.com/images/web/linkmaker/badge_appstore-sm.gif', :alt => 'App Store', :width => 61, :height => 15), 'https://itunes.apple.com/us/app/novels-on-location/id625973663?mt=8&uo=4', :class => 'links', :id => 'appstore-link', :target => 'itunes_store' %>
 <%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon', :width => 20, :height => 12), :encode => 'hex', :class => 'links', :id => 'mail-button', :title => 'Send feedback' %>
 <%= link_to image_tag('gplus.png', :alt => 'Google+ Icon', :width => 18, :height => 18), 'https://plus.google.com/109501593522859919303', :class => 'links', :id => 'g-page', :title => 'Visit our Google+ page' %>
