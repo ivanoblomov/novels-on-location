@@ -25,8 +25,12 @@ NovelsOnLocation::Application.routes.draw do
   get 'admin' => 'admin/locations#index'
   get 'integration' => 'application#integration'
   get 'sitemap' => 'application#sitemap'
-  resources :bookmarks, :only => [:destroy, :update]
-  resources :locations
+  resources :locations do
+    member do
+      delete 'unbookmark'
+      put 'bookmark'
+    end
+  end
   root :to => 'locations#index', :via => :get
 
   get '*a', :to => 'application#error_404'

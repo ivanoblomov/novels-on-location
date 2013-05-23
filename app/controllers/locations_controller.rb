@@ -1,9 +1,20 @@
 class LocationsController < ApplicationController
   authorize_resource :only => [:create, :index, :new, :show]
   before_filter :find_location, :only => :show
-  load_and_authorize_resource :only => [:destroy, :update]
+  load_and_authorize_resource :only => [:bookmark, :destroy, :unbookmark, :update]
   helper_method :html_snapshot?, :location_kind, :location_query
   respond_to :html, :json
+
+  # Custom =========================================================================================
+  def bookmark
+    @location.add_bookmark current_user.id
+    format_response
+  end
+
+  def unbookmark
+    @location.remove_bookmark current_user.id
+    format_response
+  end
 
   # CRUD ===========================================================================================
   def create

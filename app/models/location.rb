@@ -10,12 +10,13 @@ class Location
     'reader' => :user_id,
     'search' => :search,
   }.freeze
-  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :bookmark_user_ids, :place, :slug, :terms, :title_for_regex, :writable].freeze
+  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
 
   field :_slugs, type: Array, default: []
   field :address
   field :asin
   field :author
+  field :bookmark_user_ids, type: Array, default: []
   field :city
   field :country
   field :image_height
@@ -30,7 +31,6 @@ class Location
   field :url
   field :user_id
   field :user_token
-  has_and_belongs_to_many :bookmarks
   index( {address: 1} )
   index( {author: 1} )
   index( {tags: 1} )
@@ -125,13 +125,19 @@ class Location
     "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
   end
 
+  def add_bookmark user_id
+    self.bookmark_user_ids << user_id
+    self.save
+  end
+
+  def remove_bookmark user_id
+    self.bookmark_user_ids.delete user_id
+    self.save
+  end
+
   def book_keywords=(value)
     self[:book_keywords] = value
     self.attributes = CandyWrapper.book(value)
-  end
-
-  def bookmark_user_ids
-    self.bookmarks.map{ |b| b.user_id }.uniq
   end
 
   def latLng=(value)

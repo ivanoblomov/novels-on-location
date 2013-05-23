@@ -474,10 +474,7 @@ nOL.annotatePin = function(id, notes) {
 nOL.bookmarkPin = function(id) {
   $.ajax({
     type: 'PUT',
-    url: '/bookmarks/' + nOL.fb_session.userID,
-    data: {
-      'location_id': id
-    }
+    url: '/locations/' + id + '/bookmark'
   });
 }
 
@@ -556,10 +553,7 @@ nOL.toLatLng = function( latLng ) {
 nOL.unBookmarkPin = function(id) {
   $.ajax({
     type: 'DELETE',
-    url: '/bookmarks/' + nOL.fb_session.userID,
-    data: {
-      'location_id': id
-    }
+    url: '/locations/' + id + '/unbookmark'
   });
 }
 
