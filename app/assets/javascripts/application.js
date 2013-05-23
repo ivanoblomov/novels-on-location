@@ -382,6 +382,19 @@ nOL.myLocation = function(location) {
   return $.cookie('user_token') == location.user_token || (nOL.loggedIn() && location.user_id == nOL.fb_session.userID);
 }
 
+nOL.removePin = function(id) {
+  nOL.hidePin(id)
+  delete nOL.pins[id];
+}
+
+nOL.replacePin = function(location) {
+  nOL.removePin(location._id);
+  nOL.locations.splice( nOL.locations.indexOf(location), 1);
+  nOL.locations.push(location);
+  nOL.addPin(location);
+  nOL.showPin(location._id);
+}
+
 nOL.showAllPins = function() {
   nOL.bounds = new google.maps.LatLngBounds();
   for (var i = 0; i < nOL.locations.length; i++) {
