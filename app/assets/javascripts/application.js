@@ -246,9 +246,11 @@ nOL.setPinDisplayPrompt = function() {
   if (nOL.pinType == 0)
     $('#pin-display-button')[0].value = 'All Pins';
   else if (nOL.pinType == 1)
-    $('#pin-display-button')[0].value = nOL.loggedIn() ? "Friends'" : 'My Pins';
+    $('#pin-display-button')[0].value = 'My Pins';
   else if (nOL.pinType == 2)
     $('#pin-display-button')[0].value = 'Bookmarks';
+  else if (nOL.pinType == 3)
+    $('#pin-display-button')[0].value = 'Friends';
 }
 
 nOL.setTitleAndPath = function(title, path) {
@@ -262,15 +264,17 @@ nOL.setTitleAndPath = function(title, path) {
 nOL.togglePinDisplay = function() {
   nOL.pinType += 1;
 
-  if ((nOL.loggedIn() && nOL.pinType > 2) || (! nOL.loggedIn() && nOL.pinType > 1))
+  if ((nOL.loggedIn() && nOL.pinType > 3) || (! nOL.loggedIn() && nOL.pinType > 1))
     nOL.pinType = 0;
 
   if (nOL.pinType == 0)
     nOL.showAllPins();
   else if (nOL.pinType == 1)
-    nOL.hideStrangersPins();
+    nOL.showMyPins();
   else if (nOL.pinType == 2)
     nOL.showBookmarks();
+  else if (nOL.pinType == 3)
+    nOL.showFriendsPins();
 
   nOL.setPinDisplayPrompt();
 }
@@ -340,22 +344,6 @@ nOL.hidePins = function() {
   }
 }
 
-nOL.hideStrangersPins = function() {
-  nOL.bounds = new google.maps.LatLngBounds();
-  for (var i = 0; i < nOL.locations.length; i++) {
-    var location = nOL.locations[i];
-
-    if (! nOL.myLocation(location) && ! nOL.myFriendsLocation(location))
-      nOL.hidePin(location._id);
-    else {
-      nOL.showPin(location._id);
-    }
-  }
-  nOL.map.fitBounds(nOL.bounds);
-  if (nOL.loggedIn())
-    nOL.setTitleAndPath('Friends - Novels: On Location', '/#!friends');
-}
-
 nOL.myBookmark = function(location) {
   return location.bookmark_user_ids.indexOf(nOL.fb_session.userID) != -1
 }
@@ -382,13 +370,42 @@ nOL.showBookmarks = function() {
   for (var i = 0; i < nOL.locations.length; i++) {
     var location = nOL.locations[i];
 
-    if (! nOL.myBookmark(location))
-      nOL.hidePin(location._id);
-    else
+    if (nOL.myBookmark(location))
       nOL.showPin(location._id);
+    else
+      nOL.hidePin(location._id);
   }
   nOL.map.fitBounds(nOL.bounds);
   nOL.setTitleAndPath('Friends - Novels: On Location', '/#!bookmarks');
+}
+
+nOL.showFriendsPins = function() {
+  nOL.bounds = new google.maps.LatLngBounds();
+  for (var i = 0; i < nOL.locations.length; i++) {
+    var location = nOL.locations[i];
+
+    if (nOL.myFriendsLocation(location))
+      nOL.showPin(location._id);
+    else
+      nOL.hidePin(location._id);
+  }
+  nOL.map.fitBounds(nOL.bounds);
+  if (nOL.loggedIn())
+    nOL.setTitleAndPath('Friends - Novels: On Location', '/#!friends');
+}
+
+nOL.showMyPins = function() {
+  nOL.bounds = new google.maps.LatLngBounds();
+  for (var i = 0; i < nOL.locations.length; i++) {
+    var location = nOL.locations[i];
+
+    if (nOL.myLocation(location))
+      nOL.showPin(location._id);
+    else
+      nOL.hidePin(location._id);
+  }
+  nOL.map.fitBounds(nOL.bounds);
+  nOL.setTitleAndPath('Friends - Novels: On Location', '/#!my');
 }
 
 nOL.showPin = function(id) {
