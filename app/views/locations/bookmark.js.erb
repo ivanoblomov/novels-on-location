@@ -1,2 +1,3 @@
 nOL.hidePin('<%= @location.id %>');
 nOL.addPin(<%= inject_writable_flag(@location).to_json.html_safe %>);
+nOL.showPin('<%= @location.id %>');
