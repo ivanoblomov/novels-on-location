@@ -49,6 +49,8 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 #fb-like{border:0;float:left;width:100px;height:20px}
 #fb-root{display:none}
 #headers{bottom:10px;color:#fff;margin:10px;position:absolute;z-index:-1}
+#integration-link{bottom:2px;font-weight:bold;margin-left:15%;position:absolute}
+#integration-link a,a:link,a:visited{color:#666} a:active{color:#f00}
 #login-button{background:#3B5998 url(http://static.ak.fbcdn.net/rsrc.php/v1/zL/r/FGFbc80dUKj.png) no-repeat;background-position:0% -188px;padding:0;text-align:right;width:77px;height:22px}
 #mail-button{margin:3px 2px 0 1px}
 #mode-button{width:98px;height:18px}
@@ -106,6 +108,7 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 <%= link_to image_tag('gplus.png', :alt => 'Google+ Icon', :width => 18, :height => 18), 'https://plus.google.com/109501593522859919303', :class => 'links', :id => 'g-page', :title => 'Visit our Google+ page' %>
 <%= link_to image_tag('facebook.png', :alt => 'Facebook Icon', :width => 18, :height => 18), 'http://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
 </div>
+<a href=integration id=integration-link title="Learn how to integrate Novels: On Location with your site">Integration Notes</a>
 <div class=no-print id=social-toolbar>
 <div id=fb-root></div><input type=button class=map id=login-button title="Log into Facebook" value="Log In &nbsp; "/>
 <iframe<% if ie? %> allowTransparency=true frameBorder=0<% end %> id=fb-like src="https://www.facebook.com/plugins/like.php?layout=button_count&amp;href=<%= @location ? location_url(@location) : Rails.application.config.main_host.downcase %>"></iframe><% unless nibbler? %>
