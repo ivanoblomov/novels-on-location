@@ -1,4 +1,9 @@
 NovelsOnLocation::Application.routes.draw do
+  scope :constraints => lambda{ |request| !! request.query_parameters['_escaped_fragment_'] } do
+    get '/' => 'locations#snapshot'
+    get 'locations' => 'locations#snapshot'
+  end
+
   class WrongHost
     def initialize; end
     def matches?(request)

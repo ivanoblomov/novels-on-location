@@ -2,13 +2,20 @@ class LocationsController < ApplicationController
   authorize_resource :only => [:create, :index, :new, :show]
   before_filter :find_location, :only => :show
   load_and_authorize_resource :only => [:bookmark, :destroy, :unbookmark, :update]
-  helper_method :html_snapshot?, :location_kind, :location_query
+  helper_method :location_kind, :location_query
   respond_to :html, :json
 
   # Custom =========================================================================================
   def bookmark
     @location.add_bookmark current_user.id
     format_response
+  end
+
+  def snapshot
+    @locations = scope_for_snapshot
+    return error_404 if @locations.blank?
+    set_user_name if reader_link?
+    render :layout => false
   end
 
   def unbookmark
@@ -30,12 +37,12 @@ class LocationsController < ApplicationController
   end
 
   def index
-    @locations = html_snapshot? ? scope_for_snapshot : Location.all.to_a
+    @locations = Location.all.to_a
     return error_404 if @locations.blank?
     set_user_name if reader_link?
 
     respond_to do |format|
-      format.html { render :layout => ! html_snapshot? }
+      format.html {}
       format.json do
         cookies.permanent[:user_token] = params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
         render :json => inject_writable_flag(@locations).to_json(:methods => Location::VIRTUAL_ATTRIBUTES), :layout => false
@@ -74,10 +81,6 @@ class LocationsController < ApplicationController
       format.js { render :layout => false }
       format.json { render :json => @location.to_json, :layout => false }
     end
-  end
-
-  def html_snapshot?
-    params[:_escaped_fragment_]
   end
 
   def location_attr
