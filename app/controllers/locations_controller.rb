@@ -11,7 +11,7 @@ class LocationsController < ApplicationController
     format_response
   end
 
-  def snapshot
+  def snapshots
     @locations = scope_for_snapshot
     return error_404 if @locations.blank?
     set_user_name if reader_link?
