@@ -6,7 +6,7 @@ NovelsOnLocation::Application.configure do
   config.assets.compile = false
   config.assets.compress = true
   config.assets.digest = true
-  config.assets.precompile += %w(1140.css admin.css ajax_crawling.css ie.css ios.css mobile.css print.css safari.css)
+  config.assets.precompile += %w(*.css *.js)
   config.cache_classes = true
   config.consider_all_requests_local = false
   config.i18n.fallbacks = true
