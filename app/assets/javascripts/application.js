@@ -57,7 +57,7 @@ nOL.init = function(settings) {
   $('#book-input').blur( function() {
     if ($(this).attr('value') == '') {
       $(this).attr('value', nOL.bookPrompt);
-      nOL.showAllPins();
+      nOL.showAllPinsAndUpdatePath();
     }
     $(this).css('color', '#777');
     nOL.listenForShortcuts();
@@ -217,7 +217,7 @@ nOL.processAnchorQuery = function() {
       break;
     default:
       nOL.pinType = 0;
-      nOL.showAllPins();
+      nOL.showAllPinsAndUpdatePath();
   }
 
   nOL.setPinDisplayPrompt();
@@ -294,7 +294,7 @@ nOL.togglePinDisplay = function() {
     nOL.pinType = 0;
 
   if (nOL.pinType == 0)
-    nOL.showAllPins();
+    nOL.showAllPinsAndUpdatePath();
   else if (nOL.pinType == 1)
     nOL.showMyPins();
   else if (nOL.pinType == 2)
@@ -401,6 +401,10 @@ nOL.showAllPins = function() {
     nOL.showPin(nOL.locations[i]._id);
   }
   nOL.map.fitBounds(nOL.bounds);
+}
+
+nOL.showAllPinsAndUpdatePath = function() {
+  nOL.showAllPins();
   nOL.setTitleAndPath(nOL.defaultTitle, '/');
 }
 
@@ -453,9 +457,9 @@ nOL.showPin = function(id) {
 }
 
 nOL.showPins = function(keyword, path) {
-  if (keyword == '') {
-    nOL.showAllPins();
-  } else {
+  if (keyword == '')
+    nOL.showAllPinsAndUpdatePath();
+  else {
     nOL.hidePins();
     nOL.bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < nOL.locations.length; i++) {
