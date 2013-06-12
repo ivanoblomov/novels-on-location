@@ -9,7 +9,7 @@
         body{border-left:200px #3B5998 solid;font-family:"Helvetica Neue",helvetica,arial,"Lucida Grande",sans-serif;font-size:10pt;height:100%;margin:0;padding:25px;width:65%}
 	</style>
 	<% if nibbler? %><%= stylesheet_link_tag 'mobile' %><%= stylesheet_link_tag 'print', :media => 'print' %><% end %>
-  <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+	<%= javascript_include_tag 'google_analytics', 'https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js' %>
 </head>
 <body>
 <h1>
