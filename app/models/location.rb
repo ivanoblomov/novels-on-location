@@ -159,7 +159,7 @@ class Location
 
   def ios_push
     p = Parse::Push.new({'alert' => new_pin_message, 'badge' => 'Increment', 'sound' => '', 'url' => nol_url})
-    p.channel = 'test'
+    p.channel = 'test' if Rails.env.development?
     p.save
   end
 
