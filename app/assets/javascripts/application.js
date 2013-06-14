@@ -540,7 +540,8 @@ nOL.openBalloon = function(location) {
     html += '<span class=bullet>|</span><a href="' + readerPath + '" id=reader-link onClick="nOL.showPins(\'' + location.user_id + '\', \'' + readerPath + '\')" title="Show all pins added by this reader">All Pins by Reader</a>';
   }
   html += '</div>'
-  if (location.tags) html += 'Tags: <a href="http://www.google.com/search?q=' + encodeURI(location.tags) + '" target="_blank">' + location.tags + '</a>'
+  if (location.tags)
+    html += 'Tags: ' + nOL.tagLinks(location);
   html += '</p></div>';
   nOL.openWindow = new google.maps.InfoWindow( {content: html} );
   nOL.openWindow.open(nOL.map, nOL.pins[location._id]);
@@ -621,6 +622,17 @@ nOL.movePin = function(id, gLatLng) {
       'location[latLng]': gLatLng.toUrlValue()
     }
   });
+}
+
+nOL.tagLinks = function(location) {
+  var tags = $.map(
+    location.tags.split(','), function(tag, i) {
+      var tag = $.trim(tag);
+      var link = '<a href="/#!search-' + escape(tag) + '">' + tag + '</a>';
+      return link;
+    }
+  );
+  return tags.join(', ');
 }
 
 nOL.tagPin = function(id, tags) {
