@@ -53,6 +53,8 @@ nOL.init = function(settings) {
   $('#book-input')[0].value = nOL.bookPrompt;
   $('#place-input')[0].value = nOL.placePrompt;
 
+  nOL.updateShareButtons();
+
   // Register event listeners
   $('#book-input').blur( function() {
     if ($(this).attr('value') == '') {
@@ -141,6 +143,11 @@ nOL.labelFacebookButton = function(value, title) {
 nOL.updateFacebookLikeButton = function() {
   var iframe = $('#fb-like')[0];
   iframe.src = iframe.src.replace(/href=.+/, 'href=' + document.URL);
+}
+
+nOL.updateShareButtons = function() {
+  nOL.updateFacebookLikeButton();
+  nOL.updateTweetButton();
 }
 
 nOL.updateTweetButton = function() {
@@ -283,8 +290,7 @@ nOL.setTitleAndPath = function(title, path) {
   document.title = title;
   if (history.pushState)
     history.pushState(null, title, path);
-  nOL.updateFacebookLikeButton();
-  nOL.updateTweetButton();
+  nOL.updateShareButtons();
 }
 
 nOL.togglePinDisplay = function() {
