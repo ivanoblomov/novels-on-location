@@ -316,6 +316,10 @@ nOL.addPin = function(location) {
   var pin = new google.maps.Marker({
     draggable: location.writable,
     animation: google.maps.Animation.DROP,
+    icon: {
+      anchor: new google.maps.Point(2, 35),
+      url: '<%= asset_path 'pin.png' %>'
+    },
     position: latLng
   });
 
