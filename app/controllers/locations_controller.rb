@@ -27,8 +27,12 @@ class LocationsController < ApplicationController
   def create
     params[:location][:user_id] = current_user.id
     params[:location][:user_token] = current_user.token
-    @location = Location.create location_attr
-    format_response
+    @location = Location.new location_attr
+    if @location.save
+      format_response
+    else
+      raise "Can't save location: #{@location.errors}!"
+    end
   end
 
   def destroy
