@@ -381,7 +381,7 @@ nOL.hidePins = function() {
 }
 
 nOL.myBookmark = function(location) {
-  return location.bookmark_user_ids.indexOf(nOL.fb_session.userID) != -1
+  return location.bookmark_user_ids && location.bookmark_user_ids.indexOf(nOL.fb_session.userID) != -1
 }
 
 nOL.myFriendsLocation = function(location) {
