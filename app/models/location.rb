@@ -188,8 +188,10 @@ class Location
   end
 
   def notify
-    tweet
-    ios_push
+    if Rails.env.production? && ! test_book?
+      tweet
+      ios_push
+    end
   end
 
   def owned?
@@ -216,7 +218,7 @@ class Location
   end
 
   def tweet
-    Twitter.update tweet_message if Rails.env.production? && ! test_book?
+    Twitter.update tweet_message
   rescue
   end
 
