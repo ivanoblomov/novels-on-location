@@ -99,7 +99,7 @@ class Location
   end
 
   def self.reload
-    Location.all.map{ |l| l.book_keywords = l.title; l.save }
+    Location.all.map{ |l| l.look_up; l.save }
   end
 
   def self.scope_for_kind kind, query
@@ -177,6 +177,10 @@ class Location
 
   def longitude= long
     self.lat_lng = [self.latitude, long.to_s]
+  end
+
+  def look_up
+    self.book_keywords = title
   end
 
   def matching_coordinates
