@@ -188,6 +188,7 @@ class Location
 
   def look_up
     self.attributes = CandyWrapper.book(book_keywords) if new_record?
+    self.asin = CandyWrapper.book(title_for_regex)[:asin] if asin.blank?
     self.itunes_id = @@itunes_client.ebook(title_for_regex).results.first.track_id if itunes_id.blank?
   rescue
   end
