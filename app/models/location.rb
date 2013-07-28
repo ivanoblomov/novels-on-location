@@ -40,6 +40,7 @@ class Location
   index( {user_id: 1} )
   scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
   scope :duplicate, lambda{ |criteria| {:where => criteria} }
+  scope :missing_amazon, where(asin: nil)
   scope :place, lambda{ |v| {:where => {:address => /#{v}/i}} }
   scope :search, lambda{ |v|
     any_of(
@@ -98,7 +99,7 @@ class Location
   end
 
   def self.look_up
-    Location.all.map{ |l| l.look_up; l.save }
+    Location.missing_amazon.map{ |l| l.look_up; l.save }
   end
 
   def self.random
