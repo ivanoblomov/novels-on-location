@@ -41,6 +41,7 @@ class Location
   scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
   scope :duplicate, lambda{ |criteria| {:where => criteria} }
   scope :missing_amazon, where(asin: nil)
+  scope :missing_itunes, where(itunes_id: nil)
   scope :place, lambda{ |v| {:where => {:address => /#{v}/i}} }
   scope :search, lambda{ |v|
     any_of(
@@ -98,8 +99,14 @@ class Location
     Location.order_by([:updated_at, :desc]).limit(1).first
   end
 
-  def self.look_up
+  def self.look_up_amazon
     Location.missing_amazon.map{ |l| l.look_up; l.save }
+    Location.missing_amazon.count
+  end
+
+  def self.look_up_itunes
+    Location.missing_itunes.map{ |l| l.look_up; l.save }
+    Location.missing_itunes.count
   end
 
   def self.random
