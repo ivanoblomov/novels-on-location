@@ -10,18 +10,20 @@ class Location
     'reader' => :user_id,
     'search' => :search,
   }.freeze
-  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
+  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :itunes_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
 
   field :_slugs, type: Array, default: []
   field :address
   field :asin
   field :author
+  field :book_keywords
   field :bookmark_user_ids, type: Array, default: []
   field :city
   field :country
   field :image_height
   field :image_url
   field :image_width
+  field :itunes_id
   field :lat_lng, :type => Array
   field :notes
   field :review
@@ -54,10 +56,11 @@ class Location
 
   after_create :notify
   attr_accessor :writable
-  attr_reader :book_keywords
   before_save :set_address
   slug :title, :history => true
   validates_presence_of :title
+
+  @@itunes_client = ITunes::Client.new
 
   def self.book_count
     Location.all.map{ |l| l.asin }.uniq.size
@@ -94,12 +97,12 @@ class Location
     Location.order_by([:updated_at, :desc]).limit(1).first
   end
 
-  def self.random
-    Location.all[Location.count * rand]
+  def self.look_up
+    Location.all.map{ |l| l.look_up; l.save }
   end
 
-  def self.reload
-    Location.all.map{ |l| l.look_up; l.save }
+  def self.random
+    Location.all[Location.count * rand]
   end
 
   def self.scope_for_kind kind, query
@@ -137,7 +140,7 @@ class Location
 
   def book_keywords=(value)
     self[:book_keywords] = value
-    self.attributes = CandyWrapper.book(value)
+    look_up
   end
 
   def latLng=(value)
@@ -163,6 +166,10 @@ class Location
     p.save
   end
 
+  def itunes_url
+    "https://itunes.apple.com/us/book/#{slug}/id#{itunes_id}"
+  end
+
   def latitude
     self.lat_lng.blank? ? nil : self.lat_lng[0]
   end
@@ -180,7 +187,9 @@ class Location
   end
 
   def look_up
-    self.book_keywords = title
+    self.attributes = CandyWrapper.book(book_keywords) if new_record?
+    self.itunes_id = @@itunes_client.ebook(title_for_regex).results.first.track_id if itunes_id.blank?
+  rescue
   end
 
   def matching_coordinates

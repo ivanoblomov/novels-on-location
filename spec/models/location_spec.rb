@@ -3,6 +3,8 @@ require 'spec_helper'
 describe Location do
   it 'finds a book by keyword' do
     @location = Location.new :book_keywords => 'sun also rises'
+    @location.asin.should_not be_blank
+    @location.itunes_id.should_not be_blank
     @location.title.should == 'The Sun Also Rises'
   end
 
