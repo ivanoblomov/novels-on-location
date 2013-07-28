@@ -1,6 +1,11 @@
 require 'spec_helper'
 
 describe Location do
+  it 'finds a book by keyword' do
+    @location = Location.new :book_keywords => 'sun also rises'
+    @location.title.should == 'The Sun Also Rises'
+  end
+
   it 'sets its latitude and longitude' do
     @location = Location.new
     @location.latLng = '1,2'
