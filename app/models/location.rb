@@ -10,7 +10,7 @@ class Location
     'reader' => :user_id,
     'search' => :search,
   }.freeze
-  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :itunes_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
+  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :itunes_affiliate_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
 
   field :_slugs, type: Array, default: []
   field :address
@@ -174,8 +174,12 @@ class Location
     p.save
   end
 
+  def itunes_affiliate_url
+    "http://click.linksynergy.com/fs-bin/stat?id=XiJfsq87D2w&offerid=146261&type=3&subid=0&tmpid=1826&RD_PARM1=#{itunes_url}"
+  end
+
   def itunes_url
-    "https://itunes.apple.com/us/book/#{slug}/id#{itunes_id}"
+    "https://itunes.apple.com/us/book/#{slug}/id#{itunes_id}?mt=11&uo=4&partnerId=30"
   end
 
   def latitude
