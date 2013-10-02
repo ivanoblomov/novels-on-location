@@ -3,6 +3,7 @@ class Location
   include Mongoid::Slug
   include Mongoid::Timestamps
 
+  REG_EX_USER_TOKEN = /[0-9A-F]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}/.freeze
   SCOPES_BY_KIND = {
     'author' => :author,
     'novel' => :title,
@@ -160,7 +161,7 @@ class Location
   end
 
   def from_ios?
-    !! (self.user_token =~ /[0-9A-F]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}/)
+    !! (self.user_token =~ REG_EX_USER_TOKEN)
   end
 
   def geocode place
