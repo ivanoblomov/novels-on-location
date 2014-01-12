@@ -525,7 +525,7 @@ nOL.openBalloon = function(location) {
       html += '<input onClick="nOL.bookmarkPin(\'' + location._id + '\')" type="button" value="Bookmark" title="Bookmark this pin"/>';
   }
   if (location.writable)
-    html += '<input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (escape(location.notes) || '') + '\')" type="button" value="Annotate" title="Annotate pin"/>';
+    html += '<input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (escape(location.notes || '')) + '\')" type="button" value="Annotate" title="Annotate pin"/>';
   html += '<input onClick="nOL.zoomIn(nOL.toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin"/>'
   if (location.image_url)
     html += '<h1><a href="' + location.amazon_url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '>' + location.title + '</a></h1>';
