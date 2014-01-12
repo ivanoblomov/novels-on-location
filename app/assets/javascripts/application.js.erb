@@ -236,7 +236,7 @@ nOL.promptForTag = function(id, tags) {
 }
 
 nOL.promptForNotes = function(id, notes) {
-  var value = prompt('Add any comments you would like readers to know.', unescape(notes));
+  var value = prompt('Add anything noteworthy. Write about the climactic scene that took place here, for example, or the real-life landmark a setting from the story was modeled on.', unescape(notes || ''));
   if (value) nOL.annotatePin(id, value);
 }
 
