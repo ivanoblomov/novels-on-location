@@ -661,7 +661,8 @@ nOL.tagLinks = function(location) {
   var tags = $.map(
     location.tags.split(','), function(tag, i) {
       var tag = $.trim(tag);
-      var link = '<a href="/#!search-' + escape(tag) + '">' + tag + '</a>';
+      var tagPath = '/#!search-' + escape(tag);
+      var link = '<a href="' + tagPath + '" onClick="nOL.showPins(\'' + escape(tag) + '\', \'' + tagPath + '\')" title="Show all locations with the tag ' + escape(tag) + '">' + tag + '</a>';
       return link;
     }
   );
