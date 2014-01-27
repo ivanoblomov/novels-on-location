@@ -510,10 +510,15 @@ nOL.zoomOut = function() {
   nOL.map.setZoom(nOL.checkOrientation() ? 3 : 2);
 }
 
+nOL.closeBalloon = function() {
+  if (nOL.openWindow != undefined)
+    nOL.openWindow.close();
+}
+
 nOL.openBalloon = function(location) {
   if (location.user_name == null)
     nOL.getFacebookName(location);
-  if (nOL.openWindow != undefined) nOL.openWindow.close();
+  nOL.closeBalloon();
   html = '<div class="map-balloon">';
   if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim this pin"/>';
   if (location.writable)
@@ -560,7 +565,7 @@ nOL.openBalloon = function(location) {
   nOL.openWindow = new google.maps.InfoWindow( {content: html} );
   nOL.openWindow.open(nOL.map, nOL.pins[location._id]);
   google.maps.event.addListener(nOL.openWindow, 'closeclick', function() {nOL.listenForDoubleClick()});
-  nOL.listenFor('click', 'nOL.openWindow.close(); nOL.listenForDoubleClick()');
+  nOL.listenFor('click', 'nOL.closeBalloon(); nOL.listenForDoubleClick()');
 }
 
 nOL.annotatePin = function(id, notes) {
