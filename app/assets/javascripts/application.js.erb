@@ -71,7 +71,8 @@ nOL.init = function(settings) {
     nOL.dontListenForShortcuts();
   });
   $('#book-input').keyup( function() {
-    nOL.showPins($('#book-input')[0].value, null);
+    var keyword = $('#book-input')[0].value;
+    nOL.showPins(keyword, '#!search-' + escape(keyword));
   });
   $('#mode-button').click(nOL.toggleMapMode);
   $('#pin-display-button').click(nOL.togglePinDisplay);
@@ -206,9 +207,9 @@ nOL.toggleLogin = function() {
 
 nOL.processAnchorQuery = function() {
   switch (nOL.anchorKind) {
-    case 'my':
-      nOL.pinType = 1;
-      nOL.showMyPins();
+    case 'author':
+      nOL.pinType = 0;
+      nOL.showPins(nOL.anchorQuery, window.location.hash);
       break;
     case 'bookmarks':
       nOL.pinType = 2;
@@ -218,9 +219,21 @@ nOL.processAnchorQuery = function() {
       nOL.pinType = 3;
       nOL.showFriendsPins();
       break;
+    case 'my':
+      nOL.pinType = 1;
+      nOL.showMyPins();
+      break;
+    case 'novel':
+      nOL.pinType = 0;
+      nOL.showPins(nOL.anchorQuery, window.location.hash);
+      break;
+    case 'reader':
+      nOL.pinType = 0;
+      nOL.showPins(nOL.anchorQuery, window.location.hash);
+      break;
     case 'search':
       nOL.pinType = 0;
-      nOL.showPins(nOL.anchorQuery, null);
+      nOL.showPins(nOL.anchorQuery, window.location.hash);
       break;
     default:
       nOL.pinType = 0;
@@ -467,6 +480,7 @@ nOL.showPin = function(id) {
 }
 
 nOL.showPins = function(keyword, path) {
+  nOL.closeBalloon();
   if (keyword == '')
     nOL.showAllPinsAndUpdatePath();
   else {
@@ -551,11 +565,11 @@ nOL.openBalloon = function(location) {
   } else {
     html += 'Added on ' + location.added_at_s;
   }
-  var authorPath = '#!author-' + escape(location.author);
-  var novelPath = '#!novel-' + escape(location.title_for_regex);
+  var authorPath = '/#!author-' + escape(location.author);
+  var novelPath = '/#!novel-' + escape(location.title_for_regex);
   html += '<br/><div class=search-links><a href="' + novelPath + '" onClick="nOL.showPins(\'' + location.title_for_regex + '\', \'' + novelPath + '\')" title="Show all locations for the novel ' + location.title + '">All Locations for Novel</a><span class=bullet>|</span><a href="' + authorPath + '" onClick="nOL.showPins(\'' + location.author + '\', \'' + authorPath + '\')" title="Show all novels by the author ' + location.author + '">All Novels by Author</a>';
   if (location.user_id) {
-    var readerPath = '#!reader-' + location.user_id;
+    var readerPath = '/#!reader-' + location.user_id;
     html += '<span class=bullet>|</span><a href="' + readerPath + '" id=reader-link onClick="nOL.showPins(\'' + location.user_id + '\', \'' + readerPath + '\')" title="Show all pins added by this reader">All Pins by Reader</a>';
   }
   html += '</div>'
