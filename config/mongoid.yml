@@ -6,6 +6,7 @@ development:
         - localhost:27017
   options:
     allow_dynamic_fields: false
+    raise_not_found_error: false
     use_activesupport_time_zone: true
 
 test:
@@ -19,6 +20,7 @@ test:
         # In the test environment we lower the retries and retry interval to
         # low amounts for fast failures.
         max_retries: 1
+        raise_not_found_error: false
         retry_interval: 0
 
 production:
@@ -27,4 +29,5 @@ production:
       uri: <%= ENV['MONGOHQ_URL'] %>
   options:
     allow_dynamic_fields: false
+    raise_not_found_error: false
     use_activesupport_time_zone: true

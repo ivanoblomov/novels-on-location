@@ -1,7 +1,7 @@
 class LocationsController < ApplicationController
   authorize_resource :only => [:create, :index, :new, :show]
-  before_filter :find_location, :only => :show
-  load_and_authorize_resource :only => [:bookmark, :destroy, :unbookmark, :update]
+  before_filter :find_location, only: [:bookmark, :destroy, :show, :unbookmark, :update]
+  authorize_resource :only => [:bookmark, :destroy, :unbookmark, :update]
   helper_method :location_kind, :location_query
   respond_to :html, :json
 
@@ -70,7 +70,7 @@ class LocationsController < ApplicationController
   private
 
   def find_location
-    @location = Location.find(params[:id])
+    @location = Location.find(params[:id]) || Location.find(Moped::BSON::ObjectId params[:id])
   rescue
     if Location.where(:id => params[:id]).exists?
       @location = Location.find params[:id]
