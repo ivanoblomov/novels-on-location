@@ -178,11 +178,11 @@ class Location
   end
 
   def itunes_affiliate_url
-    "http://click.linksynergy.com/fs-bin/stat?id=XiJfsq87D2w&offerid=146261&type=3&subid=0&tmpid=1826&RD_PARM1=#{itunes_url}"
+    "#{itunes_url}&at=11lKmH"
   end
 
   def itunes_url
-    "https://itunes.apple.com/us/book/#{slug}/id#{itunes_id}?mt=11&uo=4&partnerId=30"
+    "https://itunes.apple.com/us/book/#{slug}/id#{itunes_id}?mt=11"
   end
 
   def latitude
