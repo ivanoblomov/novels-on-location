@@ -178,7 +178,7 @@ class Location
   end
 
   def itunes_affiliate_url
-    "#{itunes_url}&at=11lKmH"
+    itunes_id ? "#{itunes_url}&at=11lKmH" : nil
   end
 
   def itunes_url
