@@ -9,6 +9,7 @@ NovelsOnLocation::Application.configure do
   config.assets.precompile += %w(*.css *.js *.js.erb)
   config.cache_classes = true
   config.consider_all_requests_local = false
+  config.eager_load = true
   config.i18n.fallbacks = true
   config.serve_static_assets = true
   config.static_cache_control = 'public, max-age=31556926'

@@ -40,11 +40,11 @@ class Location
   index( {title: 1} )
   index( {user_id: 1} )
   scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
-  scope :browser, where(:user_token.ne => nil).not.where(user_token: REG_EX_USER_TOKEN)
+  scope :browser, -> { where(:user_token.ne => nil).not.where(user_token: REG_EX_USER_TOKEN) }
   scope :duplicate, lambda{ |criteria| {:where => criteria} }
-  scope :ios, where(user_token: REG_EX_USER_TOKEN)
-  scope :missing_amazon, where(asin: nil)
-  scope :missing_itunes, where(itunes_id: nil)
+  scope :ios, -> { where(user_token: REG_EX_USER_TOKEN) }
+  scope :missing_amazon, -> { where(asin: nil) }
+  scope :missing_itunes, -> { where(itunes_id: nil) }
   scope :place, lambda{ |v| {:where => {:address => /#{v}/i}} }
   scope :search, lambda{ |v|
     any_of(

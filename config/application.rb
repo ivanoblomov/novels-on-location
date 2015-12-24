@@ -1,7 +1,6 @@
 require File.expand_path '../boot', __FILE__
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
-require 'active_resource/railtie'
 require "sprockets/railtie"
 Bundler.require *Rails.groups(:assets => %w(development test)) if defined? Bundler
 module NovelsOnLocation
@@ -10,7 +9,7 @@ module NovelsOnLocation
     config.assets.initialize_on_precompile = false
     config.encoding = "utf-8"
     config.filter_parameters += [:password]
-    config.middleware.insert_before(Rack::Lock, Rack::Rewrite) do
+    config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
       r301 '/locations/fiesta-arrow-classic-2','/locations/fiesta-arrow-classic-1'
       r301 '/locations/ice-drift-1','/locations/ice-drift'
       r301 '/locations/la-famiglia-moskat-1','/locations/la-famiglia-moskat'

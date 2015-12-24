@@ -8,6 +8,7 @@ NovelsOnLocation::Application.configure do
   config.action_dispatch.best_standards_support = :builtin
   config.assets.compress = false
   config.assets.debug = true
+  config.eager_load = false
   config.time_zone = 'America/Chicago'
   # custom
   config.main_host = 'localhost'

@@ -1,11 +1,10 @@
 development:
-  sessions:
+  clients:
     default:
       database: novels
       hosts:
         - localhost:27017
   options:
-    allow_dynamic_fields: false
     raise_not_found_error: false
     use_activesupport_time_zone: true
 
@@ -24,10 +23,9 @@ test:
         retry_interval: 0
 
 production:
-  sessions:
+  clients:
     default:
-      uri: <%= ENV['MONGOHQ_URL'] %>
+      uri: <%= ENV['MONGOLAB_URI'] %>
   options:
-    allow_dynamic_fields: false
     raise_not_found_error: false
     use_activesupport_time_zone: true
