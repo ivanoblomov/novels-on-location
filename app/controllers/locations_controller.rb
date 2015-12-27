@@ -1,4 +1,8 @@
 class LocationsController < ApplicationController
+  PERMITTED_PARAMS = %i(
+    address tags book_keywords latLng user_id user_token title
+  )
+
   authorize_resource :only => [:create, :index, :new, :show]
   before_filter :find_location, only: [:bookmark, :destroy, :show, :unbookmark, :update]
   authorize_resource :only => [:bookmark, :destroy, :unbookmark, :update]
@@ -25,13 +29,13 @@ class LocationsController < ApplicationController
 
   # CRUD ===========================================================================================
   def create
-    params[:location][:user_id] = current_user.id
-    params[:location][:user_token] = current_user.token
-    @location = Location.new location_attr
+    location_params[:user_id] = current_user.id
+    location_params[:user_token] = current_user.token
+    @location = Location.new location_params
     if @location.save
       format_response
     else
-      raise "Can't save location: #{@location.errors}!"
+      raise "Can't save location: #{@location.errors.full_messages}!"
     end
   end
 
@@ -55,7 +59,7 @@ class LocationsController < ApplicationController
   end
 
   def new
-    @location = Location.new params[:location]
+    @location = Location.new location_params
     format_response
   end
 
@@ -63,7 +67,7 @@ class LocationsController < ApplicationController
   end
 
   def update
-    @location.update_attributes location_attr
+    @location.update_attributes location_params
     format_response
   end
 
@@ -87,15 +91,16 @@ class LocationsController < ApplicationController
     end
   end
 
-  def location_attr
-    remove_null_user_id
-    rename_objective_c_keys
-    remove_virtual_attributes
-    params[:location]
-  end
-
   def location_kind
     params[:_escaped_fragment_].split('-')[0] if params[:_escaped_fragment_].present?
+  end
+
+  def location_params
+    location_params = params.require(:location).permit PERMITTED_PARAMS
+    remove_null_user_id location_params
+    rename_objective_c_keys location_params
+    remove_virtual_attributes location_params
+    location_params
   end
 
   def location_query
@@ -107,16 +112,16 @@ class LocationsController < ApplicationController
     location_kind == 'reader'
   end
 
-  def remove_null_user_id
-    params[:location].delete :user_id if params[:location] && params[:location][:user_id] == 'null'
+  def remove_null_user_id(location_params)
+    location_params.delete :user_id if location_params && location_params[:user_id] == 'null'
   end
 
-  def remove_virtual_attributes
-    Location::VIRTUAL_ATTRIBUTES.each{ |va| params[:location].delete va }
+  def remove_virtual_attributes(location_params)
+    Location::VIRTUAL_ATTRIBUTES.each{ |va| location_params.delete va }
   end
 
-  def rename_objective_c_keys
-    params[:location] = Hash[params[:location].map{ |k, v| [k == 'latLng' ? k : k.underscore, v] }]
+  def rename_objective_c_keys(location_params)
+    location_params = Hash[location_params.map{ |k, v| [k == 'latLng' ? k : k.underscore, v] }]
   end
 
   def scope_for_snapshot
