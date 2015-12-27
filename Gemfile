@@ -1,34 +1,34 @@
 source 'https://rubygems.org'
 ruby '2.1.2'
 
-gem 'cancan', '~>1.6'
-gem 'google_maps_geocoder', '~>0.2'
-gem 'httparty', '~>0.10'
-gem 'itunes', '~>0.6'
+gem 'cancan'
+gem 'google_maps_geocoder'
+gem 'httparty'
+gem 'itunes'
 gem 'jquery-rails'
 gem 'mongoid', '~>5'
 gem 'mongoid-slug'
 gem 'newrelic_rpm'
-gem 'parse-ruby-client', '~>0.1'
-gem 'rack-rewrite', '~>1.3'
+gem 'parse-ruby-client'
+gem 'rack-rewrite'
 gem 'rails', '~>4'
 gem 'rails_12factor', group: :production
-gem 'responders', '~> 2.0'
-gem 'scaffold_logic', '~>2.0'
-gem 'sucker', '~>2.1'
-gem 'thin', '~>1.5'
-gem 'twitter', '~>4.5'
+gem 'responders'
+gem 'scaffold_logic'
+gem 'sucker'
+gem 'thin'
+gem 'twitter'
 
 group :assets do
   gem 'sass-rails'
   gem 'coffee-rails'
-  gem 'uglifier', '~>1.3'
+  gem 'uglifier'
 end
 
 group :test do
-  gem 'cucumber-rails', '~>1.3', :require => false
-  gem 'database_cleaner', '~>0.9'
-  gem 'mocha', '~>0.13', require: 'mocha/api'
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
+  gem 'mocha', require: 'mocha/api'
   gem 'rspec-rails'
-  gem 'simplecov', '~>0.7'
+  gem 'simplecov'
 end

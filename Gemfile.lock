@@ -36,8 +36,10 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
+    addressable (2.4.0)
     arel (6.0.3)
     bson (4.0.0)
+    buftok (0.2.0)
     builder (3.2.2)
     cancan (1.6.10)
     capybara (2.5.0)
@@ -67,9 +69,12 @@ GEM
       nokogiri (~> 1.5)
       rails (>= 3, < 5)
     daemons (1.2.3)
-    database_cleaner (0.9.1)
+    database_cleaner (1.5.1)
     diff-lcs (1.2.5)
     docile (1.1.5)
+    domain_name (0.5.25)
+      unf (>= 0.0.5, < 1.0.0)
+    equalizer (0.0.10)
     erubis (2.7.0)
     eventmachine (1.0.8)
     execjs (2.6.0)
@@ -85,6 +90,15 @@ GEM
       activesupport
       rack
     hashie (2.0.5)
+    http (0.9.8)
+      addressable (~> 2.3)
+      http-cookie (~> 1.0)
+      http-form_data (~> 1.0.1)
+      http_parser.rb (~> 0.6.0)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
+    http-form_data (1.0.1)
+    http_parser.rb (0.6.0)
     httparty (0.13.7)
       json (~> 1.8)
       multi_xml (>= 0.5.2)
@@ -103,11 +117,13 @@ GEM
       nokogiri (>= 1.5.9)
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
+    memoizable (0.4.2)
+      thread_safe (~> 0.3, >= 0.3.1)
     metaclass (0.0.4)
     mime-types (2.99)
     mini_portile2 (2.0.0)
     minitest (5.8.3)
-    mocha (0.14.0)
+    mocha (1.1.0)
       metaclass (~> 0.0.1)
     mongo (2.2.1)
       bson (~> 4.0)
@@ -127,6 +143,7 @@ GEM
     multi_test (0.1.2)
     multi_xml (0.5.5)
     multipart-post (2.0.0)
+    naught (1.1.0)
     newrelic_rpm (3.14.1.311)
     nokogiri (1.6.7.1)
       mini_portile2 (~> 2.0.0.rc2)
@@ -221,15 +238,25 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.1)
-    twitter (4.8.1)
-      faraday (~> 0.8, < 0.10)
-      multi_json (~> 1.0)
-      simple_oauth (~> 0.2)
+    twitter (5.15.0)
+      addressable (~> 2.3)
+      buftok (~> 0.2.0)
+      equalizer (= 0.0.10)
+      faraday (~> 0.9.0)
+      http (>= 0.4, < 0.10)
+      http_parser.rb (~> 0.6.0)
+      json (~> 1.8)
+      memoizable (~> 0.4.0)
+      naught (~> 1.0)
+      simple_oauth (~> 0.3.0)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
-    uglifier (1.3.0)
+    uglifier (2.7.2)
       execjs (>= 0.3.0)
-      multi_json (~> 1.0, >= 1.0.2)
+      json (>= 1.8.0)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.1)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -237,31 +264,31 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  cancan (~> 1.6)
+  cancan
   coffee-rails
-  cucumber-rails (~> 1.3)
-  database_cleaner (~> 0.9)
-  google_maps_geocoder (~> 0.2)
-  httparty (~> 0.10)
-  itunes (~> 0.6)
+  cucumber-rails
+  database_cleaner
+  google_maps_geocoder
+  httparty
+  itunes
   jquery-rails
-  mocha (~> 0.13)
+  mocha
   mongoid (~> 5)
   mongoid-slug
   newrelic_rpm
-  parse-ruby-client (~> 0.1)
-  rack-rewrite (~> 1.3)
+  parse-ruby-client
+  rack-rewrite
   rails (~> 4)
   rails_12factor
-  responders (~> 2.0)
+  responders
   rspec-rails
   sass-rails
-  scaffold_logic (~> 2.0)
-  simplecov (~> 0.7)
-  sucker (~> 2.1)
-  thin (~> 1.5)
-  twitter (~> 4.5)
-  uglifier (~> 1.3)
+  scaffold_logic
+  simplecov
+  sucker
+  thin
+  twitter
+  uglifier
 
 BUNDLED WITH
    1.11.2
