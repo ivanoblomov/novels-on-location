@@ -9,7 +9,7 @@ development:
     use_activesupport_time_zone: true
 
 test:
-  sessions:
+  clients:
     default:
       database: novels_on_location_test
       hosts:
