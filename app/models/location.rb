@@ -39,25 +39,25 @@ class Location
   index( {tags: 1} )
   index( {title: 1} )
   index( {user_id: 1} )
-  scope :author, lambda{ |v| {:where => {:author => /#{v}/i}} }
-  scope :browser, -> { where(:user_token.ne => nil).not.where(user_token: REG_EX_USER_TOKEN) }
-  scope :duplicate, lambda{ |criteria| {:where => criteria} }
+  scope :author, ->(v) { where author: /#{v}/i }
+  scope :browser, -> { where(user_token: nil).not.where(user_token: REG_EX_USER_TOKEN) }
+  scope :duplicate, ->(criteria) { where criteria }
   scope :ios, -> { where(user_token: REG_EX_USER_TOKEN) }
   scope :missing_amazon, -> { where(asin: nil) }
   scope :missing_itunes, -> { where(itunes_id: nil) }
-  scope :place, lambda{ |v| {:where => {:address => /#{v}/i}} }
+  scope :place, ->(v) { where address: /#{v}/i }
   scope :search, lambda{ |v|
     any_of(
-      {:address => /#{v}/i},
-      {:author => /#{v}/i},
-      {:tags => /#{v}/i},
-      {:title => /#{v}/i},
-      {:user_id => v}
+      { address: /#{v}/i },
+      { author: /#{v}/i },
+      { tags: /#{v}/i },
+      { title: /#{v}/i },
+      { user_id: v }
     )
   }
-  scope :title, lambda{ |v| {:where => {:title => /#{v}/i}} }
-  scope :user_id, lambda{ |v| {:where => {:user_id => v}} }
-  scope :with_lat_lng, lambda{ |v| {:where => {:lat_lng => v}} }
+  scope :title, ->(v) { where title: /#{v}/i }
+  scope :user_id, ->(v) { where user_id: v }
+  scope :with_lat_lng, ->(v) { where lat_lng: v }
 
   after_create :notify
   attr_accessor :writable
