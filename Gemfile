@@ -28,7 +28,7 @@ end
 group :test do
   gem 'cucumber-rails', '~>1.3', :require => false
   gem 'database_cleaner', '~>0.9'
-  gem 'mocha', '~>0.13'
+  gem 'mocha', '~>0.13', require: 'mocha/api'
   gem 'rspec-rails'
   gem 'simplecov', '~>0.7'
 end

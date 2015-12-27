@@ -15,11 +15,11 @@ describe Location do
   end
 
   it "indicates if it's owned" do
-    Location.new(:user_id => 1).owned?.should be_true
-    Location.new(:user_token => 1).owned?.should be_true
+    Location.new(:user_id => 1).owned?.should be true
+    Location.new(:user_token => 1).owned?.should be true
   end
 
   it "indicates if it's unowned" do
-    Location.new.unowned?.should be_true
+    Location.new.unowned?.should be true
   end
 end
