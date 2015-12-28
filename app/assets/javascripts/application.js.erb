@@ -43,6 +43,7 @@ nOL.init = function(settings) {
 
   nOL.map = new google.maps.Map($('#map-canvas')[0], {
     backgroundColor: 'white',
+    center: new google.maps.LatLng(0, 0),
     draggableCursor: 'default',
     mapTypeId: google.maps.MapTypeId.HYBRID,
     minZoom: 2
