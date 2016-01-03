@@ -55,6 +55,7 @@ class Location
       { user_id: v }
     )
   }
+  scope :sorted, ->{ order created_at: :asc }
   scope :title, ->(v) { where title: /#{v}/i }
   scope :user_id, ->(v) { where user_id: v }
   scope :with_lat_lng, ->(v) { where lat_lng: v }
