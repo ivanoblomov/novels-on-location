@@ -11,7 +11,7 @@ class Location
     'reader' => :user_id,
     'search' => :search,
   }.freeze
-  VIRTUAL_ATTRIBUTES = [:added_at, :added_at_s, :amazon_url, :itunes_affiliate_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
+  VIRTUAL_ATTRIBUTES = [:_id, :added_at, :added_at_s, :amazon_url, :itunes_affiliate_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
 
   field :_slugs, type: Array, default: []
   field :address
@@ -129,6 +129,10 @@ class Location
   end
 
   # Overrides ======================================================================================
+  def _id
+    self[:_id].to_s
+  end
+
   def to_json
     super :methods => Location::VIRTUAL_ATTRIBUTES
   end
