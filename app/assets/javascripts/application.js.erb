@@ -58,16 +58,16 @@ nOL.init = function(settings) {
 
   // Register event listeners
   $('#book-input').blur( function() {
-    if ($(this).attr('value') == '') {
-      $(this).attr('value', nOL.bookPrompt);
+    if ($(this).val() == '') {
+      $(this).val(nOL.bookPrompt);
       nOL.showAllPinsAndUpdatePath();
     }
     $(this).css('color', '#777');
     nOL.listenForShortcuts();
   });
   $('#book-input').focus( function() {
-    if ($(this).attr('value') == nOL.bookPrompt)
-      $(this).attr('value', '');
+    if ($(this).val() == nOL.bookPrompt)
+      $(this).val('');
     $(this).css('color', 'black');
     nOL.dontListenForShortcuts();
   });
@@ -78,12 +78,12 @@ nOL.init = function(settings) {
   $('#mode-button').click(nOL.toggleMapMode);
   $('#pin-display-button').click(nOL.togglePinDisplay);
   $('#place-input').blur( function() {
-    $(this).attr('value', nOL.placePrompt);
+    $(this).val(nOL.placePrompt);
     $(this).css('color', '#777');
     nOL.listenForShortcuts();
   });
   $('#place-input').focus( function() {
-    $(this).attr('value', '');
+    $(this).val('');
     $(this).css('color', 'black');
     nOL.dontListenForShortcuts();
   });
