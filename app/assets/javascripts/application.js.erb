@@ -38,7 +38,6 @@ nOL.init = function(settings) {
     }else{
       $.cookie('fb_id', null)
     };
-    nOL.listenForLogin();
   });
 
   nOL.map = new google.maps.Map($('#map-canvas')[0], {
@@ -91,6 +90,7 @@ nOL.init = function(settings) {
     if ((e.keyCode || e.which) == 13) nOL.codePlace($(this).val());
   });
 
+  nOL.listenForLogin();
   nOL.listenForShortcuts();
   applesearch.init();
 
@@ -188,7 +188,6 @@ nOL.logIn = function() {
   FB.login(function(response) {
     if (response.authResponse) {
       nOL.initFacebookSession(response.authResponse);
-      window.location.reload();
     }
   });
 }
@@ -197,7 +196,6 @@ nOL.logOut = function() {
   FB.logout(function(response) {
     nOL.labelFacebookButton('Log In \u00a0 ', 'Log into Facebook');
     $.cookie('fb_id', null)
-    window.location.reload();
     nOL.listenForLogin();
   });
 }
