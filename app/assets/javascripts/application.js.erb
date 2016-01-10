@@ -330,30 +330,32 @@ nOL.togglePinDisplay = function() {
 }
 
 nOL.addPin = function(location) {
-  var latLng = nOL.toLatLng(location.lat_lng);
-  var pin = new google.maps.Marker({
-    draggable: location.writable,
-    animation: google.maps.Animation.DROP,
-    icon: {
-      anchor: new google.maps.Point(2, 35),
-      url: '<%= asset_path 'pin.png' %>'
-    },
-    position: latLng
-  });
+  if (location && location.lat_lng) {
+    var latLng = nOL.toLatLng(location.lat_lng);
+    var pin = new google.maps.Marker({
+      draggable: location.writable,
+      animation: google.maps.Animation.DROP,
+      icon: {
+        anchor: new google.maps.Point(2, 35),
+        url: '<%= asset_path 'pin.png' %>'
+      },
+      position: latLng
+    });
 
-  nOL.pins[location._id] = pin;
+    nOL.pins[location._id] = pin;
 
-  google.maps.event.addListener(pin, 'click', function() {
-    nOL.setTitleAndPath(location.title + ' - Novels: On Location', '/locations/' + location.slug);
-    nOL.openBalloon(location);
-  });
+    google.maps.event.addListener(pin, 'click', function() {
+      nOL.setTitleAndPath(location.title + ' - Novels: On Location', '/locations/' + location.slug);
+      nOL.openBalloon(location);
+    });
 
-  google.maps.event.addListener(pin, 'dragend', function() {
-    if (confirm('Move this pin?'))
-      nOL.movePin(location._id, pin.getPosition());
-    else
-      pin.setPosition(latLng);
-  });
+    google.maps.event.addListener(pin, 'dragend', function() {
+      if (confirm('Move this pin?'))
+        nOL.movePin(location._id, pin.getPosition());
+      else
+        pin.setPosition(latLng);
+    });
+  }
 }
 
 nOL.addPins = function(selectedLocationSlug) {
@@ -389,7 +391,8 @@ nOL.shouldAddPin = function(googleResults) {
 }
 
 nOL.hidePin = function(id) {
-  nOL.pins[id].setMap(null);
+  if (nOL.pins[id])
+    nOL.pins[id].setMap(null);
 }
 
 nOL.hidePins = function() {
@@ -480,8 +483,10 @@ nOL.showMyPins = function() {
 }
 
 nOL.showPin = function(id) {
-  nOL.pins[id].setMap(nOL.map);
-  nOL.bounds.extend(nOL.pins[id].getPosition());
+  if (nOL.pins[id]) {
+    nOL.pins[id].setMap(nOL.map);
+    nOL.bounds.extend(nOL.pins[id].getPosition());
+  }
 }
 
 nOL.showPins = function(keyword, path) {
@@ -685,7 +690,7 @@ nOL.tagPin = function(id, tags) {
 }
 
 nOL.toLatLng = function( latLng ) {
-	return new google.maps.LatLng(latLng[0], latLng[1]);
+  return new google.maps.LatLng(latLng[0], latLng[1]);
 }
 
 nOL.unBookmarkPin = function(id) {
