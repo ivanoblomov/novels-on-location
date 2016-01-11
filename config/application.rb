@@ -5,6 +5,9 @@ require "sprockets/railtie"
 Bundler.require *Rails.groups(:assets => %w(development test)) if defined? Bundler
 module NovelsOnLocation
   class Application < Rails::Application
+    config.action_dispatch.default_headers = {
+      'X-Frame-Options' => 'ALLOWALL'
+    }
     config.assets.enabled = true
     config.assets.initialize_on_precompile = false
     config.encoding = "utf-8"
