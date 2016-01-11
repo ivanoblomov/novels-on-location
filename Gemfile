@@ -30,5 +30,6 @@ group :test do
   gem 'database_cleaner'
   gem 'mocha', require: 'mocha/api'
   gem 'rspec-rails'
+  gem 'rubocop', '0.35.1'
   gem 'simplecov'
 end
