@@ -1,15 +1,18 @@
+# rubocop:disable Metrics/ClassLength
 class LocationsController < ApplicationController
   PERMITTED_PARAMS = %i(
     address tags book_keywords latLng user_id user_token title
   )
 
-  authorize_resource only: [:create, :index, :new, :show]
-  before_filter :find_location, only: [:bookmark, :destroy, :show, :unbookmark, :update]
-  authorize_resource only: [:bookmark, :destroy, :unbookmark, :update]
+  authorize_resource only: %i(
+    bookmark create destroy index new show unbookmark update
+  )
+  before_filter :find_location,
+                only: %i(bookmark destroy show unbookmark update)
   helper_method :location_kind, :location_query
   respond_to :html, :json
 
-  # Custom =========================================================================================
+  # Custom =====================================================================
   def bookmark
     @location.add_bookmark current_user.id
     format_response
@@ -27,7 +30,7 @@ class LocationsController < ApplicationController
     format_response
   end
 
-  # CRUD ===========================================================================================
+  # CRUD =======================================================================
   def create
     location_params[:user_id] = current_user.id
     location_params[:user_token] = current_user.token
@@ -52,8 +55,8 @@ class LocationsController < ApplicationController
     respond_to do |format|
       format.html {}
       format.json do
-        cookies.permanent[:user_token] = params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
-        render json: inject_writable_flag(@locations).to_json(methods: Location::VIRTUAL_ATTRIBUTES), layout: false
+        cookies.permanent[:user_token] = user_token
+        render json: locations_json, layout: false
       end
     end
   end
@@ -73,15 +76,24 @@ class LocationsController < ApplicationController
 
   private
 
+  def canonical_location_url
+    location_url @location, canonical_url: location_url(@location)
+  end
+
   def find_location
-    @location = Location.find(params[:id]) || Location.find(Moped::BSON::ObjectId params[:id])
+    @location = find_location_by_id ||
+                Location.find(Moped::BSON::ObjectId params[:id])
   rescue
     if Location.where(id: params[:id]).exists?
-      @location = Location.find params[:id]
-      redirect_to location_url(@location, canonical_url: location_url(@location)), status: :moved_permanently
+      @location = find_location_by_id
+      redirect_to canonical_location_url, status: :moved_permanently
     else
       error_404
     end
+  end
+
+  def find_location_by_id
+    Location.find params[:id]
   end
 
   def format_response
@@ -92,20 +104,28 @@ class LocationsController < ApplicationController
   end
 
   def location_kind
-    params[:_escaped_fragment_].split('-')[0] if params[:_escaped_fragment_].present?
+    params[:_escaped_fragment_].split('-')[0] if params[:_escaped_fragment_]
+                                                 .present?
   end
 
   def location_params
     location_params = params.require(:location).permit PERMITTED_PARAMS
     remove_null_user_id location_params
-    rename_objective_c_keys location_params
+    location_params = rename_objective_c_keys location_params
     remove_virtual_attributes location_params
     location_params
   end
 
   def location_query
     value = params[:_escaped_fragment_].split('-')[1..-1]
-    strip_parens CGI.unescape(params[:_escaped_fragment_].split('-')[1]) unless value.blank?
+    strip_parens CGI.unescape(params[:_escaped_fragment_].split('-')[1]) unless
+      value.blank?
+  end
+
+  def locations_json
+    inject_writable_flag(@locations).to_json(
+      methods: Location::VIRTUAL_ATTRIBUTES
+    )
   end
 
   def reader_link?
@@ -113,7 +133,8 @@ class LocationsController < ApplicationController
   end
 
   def remove_null_user_id(location_params)
-    location_params.delete :user_id if location_params && location_params[:user_id] == 'null'
+    location_params.delete :user_id if location_params &&
+                                       location_params[:user_id] == 'null'
   end
 
   def remove_virtual_attributes(location_params)
@@ -121,7 +142,9 @@ class LocationsController < ApplicationController
   end
 
   def rename_objective_c_keys(location_params)
-    location_params = Hash[location_params.map { |k, v| [k == 'latLng' ? k : k.underscore, v] }]
+    Hash[
+      location_params.map { |k, v| [k == 'latLng' ? k : k.underscore, v] }
+    ]
   end
 
   def scope_for_snapshot
@@ -137,6 +160,14 @@ class LocationsController < ApplicationController
   end
 
   def strip_parens(keywords)
-    keywords.try(:include?, '(') ? keywords[0..keywords.index('(') - 1] : keywords
+    if keywords.try(:include?, '(')
+      keywords[0..keywords.index('(') - 1]
+    else
+      keywords
+    end
+  end
+
+  def user_token
+    params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
   end
 end

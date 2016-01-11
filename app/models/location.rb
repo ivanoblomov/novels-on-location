@@ -1,9 +1,11 @@
+# rubocop:disable Metrics/ClassLength
 class Location
   include Mongoid::Document
   include Mongoid::Slug
   include Mongoid::Timestamps
 
-  REG_EX_USER_TOKEN = /[0-9A-F]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}/.freeze
+  REG_EX_USER_TOKEN =
+    /[0-9A-F]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}/.freeze
   SCOPES_BY_KIND = {
     'author' => :author,
     'novel' => :title,
@@ -11,7 +13,9 @@ class Location
     'reader' => :user_id,
     'search' => :search
   }.freeze
-  VIRTUAL_ATTRIBUTES = [:_id, :added_at, :added_at_s, :amazon_url, :itunes_affiliate_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
+  VIRTUAL_ATTRIBUTES = %i(
+    _id added_at added_at_s amazon_url itunes_affiliate_url place slug terms
+    title_for_regex writable).freeze
 
   field :_slugs, type: Array, default: []
   field :address
@@ -36,11 +40,15 @@ class Location
   field :user_token
   index(address: 1)
   index(author: 1)
-  index({ tags: 1 })
+  index(tags: 1)
   index(title: 1)
   index(user_id: 1)
   scope :author, ->(v) { where author: /#{v}/i }
-  scope :browser, -> { where(user_token: nil).not.where(user_token: REG_EX_USER_TOKEN) }
+  scope :browser, (
+    lambda do
+      where(user_token: nil).not.where(user_token: REG_EX_USER_TOKEN)
+    end
+  )
   scope :duplicate, ->(criteria) { where criteria }
   scope :ios, -> { where(user_token: REG_EX_USER_TOKEN) }
   scope :missing_amazon, -> { where(asin: nil) }
@@ -66,8 +74,8 @@ class Location
   slug :title, history: true
   validates_presence_of :title
 
-  @@itunes_client = ITunes::Client.new
-  @@twitter_client = Twitter::Streaming::Client.new do |config|
+  @itunes_client = ITunes::Client.new
+  @twitter_client = Twitter::Streaming::Client.new do |config|
     config.consumer_key = 'Ms7Cl2g9eM0sZKRl8YA34Q'
     config.consumer_secret = 'gQlXn8I9TtLcNSepF5D59DBkSI0Wv9pYl1465iAc4'
     config.oauth_token = '490732052-SDJHy8huJ9J4Ic7aNIiR4T4XZiBxbMQ2eW2Qi2oz'
@@ -78,22 +86,9 @@ class Location
     Location.all.map(&:asin).uniq.size
   end
 
-  def self.copy_slug
-    Location.all.each do |e|
-      slugs = []
-      unless e[:slug_history].nil?
-        e[:slug_history].each do |h|
-          slugs << h unless h.nil? || h == ''
-        end
-      end
-      slugs << e[:slug]
-      e[:_slugs] = slugs
-      e.save
-      p " - #{e[:_slugs]}"
-    end
-  end
-
-  def self.displace_duplicate_coordinates(locations = Location.duplicate_coordinates)
+  def self.displace_duplicate_coordinates(
+    locations = Location.duplicate_coordinates
+  )
     return if locations.blank?
     l = locations.last
     l.send :displace
@@ -110,12 +105,18 @@ class Location
   end
 
   def self.look_up_amazon
-    Location.missing_amazon.map { |l| l.look_up; l.save }
+    Location.missing_amazon.map do |l|
+      l.look_up
+      l.save
+    end
     Location.missing_amazon.count
   end
 
   def self.look_up_itunes
-    Location.missing_itunes.map { |l| l.look_up; l.save }
+    Location.missing_itunes.map do |l|
+      l.look_up
+      l.save
+    end
     Location.missing_itunes.count
   end
 
@@ -128,7 +129,7 @@ class Location
     send SCOPES_BY_KIND[kind], query
   end
 
-  # Overrides ======================================================================================
+  # Overrides ==================================================================
   def _id
     self[:_id].to_s
   end
@@ -137,7 +138,7 @@ class Location
     super methods: Location::VIRTUAL_ATTRIBUTES
   end
 
-  # Instance methods ===============================================================================
+  # Instance methods ===========================================================
   def added_at
     created_at || updated_at
   end
@@ -147,7 +148,8 @@ class Location
   end
 
   def amazon_url
-    "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
+    "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag"\
+    "=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
   end
 
   def add_bookmark(user_id)
@@ -165,7 +167,9 @@ class Location
     look_up
   end
 
+  # rubocop:disable Style/MethodName
   def latLng=(value)
+    # rubocop:enable Style/MethodName
     self.lat_lng = value.split ','
   end
 
@@ -174,7 +178,7 @@ class Location
   end
 
   def from_ios?
-    !! (user_token =~ REG_EX_USER_TOKEN)
+    !(user_token !~ REG_EX_USER_TOKEN)
   end
 
   def geocode(place)
@@ -183,7 +187,12 @@ class Location
   end
 
   def ios_push
-    p = Parse::Push.new('alert' => new_pin_message, 'badge' => 'Increment', 'sound' => '', 'url' => nol_url)
+    p = Parse::Push.new(
+      'alert' => new_pin_message,
+      'badge' => 'Increment',
+      'sound' => '',
+      'url' => nol_url
+    )
     p.channel = 'test' if Rails.env.development?
     p.save
   end
@@ -213,10 +222,9 @@ class Location
   end
 
   def look_up
-    self.attributes = CandyWrapper.book(book_keywords) if new_record?
-    self.asin = CandyWrapper.book(title_for_regex)[:asin] if asin.blank?
-    self.itunes_id = @@itunes_client.ebook(title_for_regex).results.first.track_id if itunes_id.blank?
+    set_attributes_asin_itunes_id
   rescue
+    Rails.logger.warn "Can't look-up #{book_keywords || asin || title}"
   end
 
   def matching_coordinates
@@ -224,18 +232,19 @@ class Location
   end
 
   def nol_url
-    "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}" if title.present?
+    return unless title.present?
+    "http://#{Rails.application.config.main_host}"\
+    "#{Rails.application.routes.url_helpers.location_path(self)}"
   end
 
   def notify
-    if Rails.env.production? && !test_book?
-      tweet
-      ios_push
-    end
+    return unless Rails.env.production? && !test_book?
+    tweet
+    ios_push
   end
 
   def owned?
-    !! (user_id || user_token)
+    (user_id || user_token).present?
   end
 
   def place
@@ -260,6 +269,7 @@ class Location
   def tweet
     Twitter.update tweet_message
   rescue
+    Rails.logger.warn "Can't tweet #{tweet_message}"
   end
 
   def tweet_too_long?
@@ -282,27 +292,49 @@ class Location
   private
 
   def displace
-    x = rand / 10_000.0
-    y = rand / 10_000.0
-    x = -x if rand(1) == 0
-    y = -y if rand(1) == 0
-    self.lat_lng = [(lat_lng[0].to_f + x).to_s, (lat_lng[1].to_f + y).to_s]
+    self.lat_lng = [
+      (lat_lng[0].to_f + random_delta).to_s,
+      (lat_lng[1].to_f + random_delta).to_s
+    ]
+  end
+
+  def negate?
+    rand(1) == 0
   end
 
   def new_pin_message
-    "A fan just pinned \"#{title_for_regex.truncate 50}\"#{place.blank? ? '' : " to #{place}"}."
+    "A fan just pinned \"#{title_for_regex.truncate 50}\""\
+    "#{place.blank? ? '' : " to #{place}"}."
+  end
+
+  def random_delta
+    delta = rand / 10_000.0
+    negate? ? delta : -delta
   end
 
   def set_address
     send :displace unless matching_coordinates.blank?
-    if changes.keys.include?('lat_lng') || place.blank?
-      g = GoogleMapsGeocoder.new(lat_lng * ', ')
-      self.address = g.formatted_address
-      self.city = g.city
-      self.country = g.country_long_name
-      self.state = g.state_short_name if usa?
-    end
+    set_address_info if changes.keys.include?('lat_lng') || place.blank?
   rescue
+    Rails.logger.warn "Can't set address for #{slug}"
+  end
+
+  def set_address_info
+    g = GoogleMapsGeocoder.new(lat_lng * ', ')
+    self.address = g.formatted_address
+    self.city = g.city
+    self.country = g.country_long_name
+    self.state = g.state_short_name if usa?
+  end
+
+  def set_attributes_asin_itunes_id
+    self.attributes = CandyWrapper.book(book_keywords) if new_record?
+    self.asin = CandyWrapper.book(title_for_regex)[:asin] if asin.blank?
+    set_itunes_id if itunes_id.blank?
+  end
+
+  def set_itunes_id
+    self.itunes_id = @itunes_client.ebook(title_for_regex).results[0].track_id
   end
 
   def tweet_message

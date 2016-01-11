@@ -1,16 +1,22 @@
+# Centralize authorization logic
 class Ability
   include CanCan::Ability
 
   def initialize(user)
-    can :bookmark, Location if user.id
-    can :create, Location if user
+    @user = user
+    can %i(bookmark unbookmark), Location if user.id
+    can %i(create read), Location if user
     can :destroy, Location do |location|
-      user.owns?(location) || user.try(:me?)
+      owner_or_admin? location
     end
-    can :read, Location if user
-    can :unbookmark, Location if user.id
     can :update, Location do |location|
-      location.unowned? || user.owns?(location) || user.try(:me?)
+      location.unowned? || owner_or_admin?(location)
     end
+  end
+
+  private
+
+  def owner_or_admin?(location)
+    @user.owns?(location) || @user.try(:me?)
   end
 end

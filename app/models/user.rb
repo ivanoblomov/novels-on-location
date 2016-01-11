@@ -1,12 +1,15 @@
+# User
 class User
-  ADMINS = ['666325406', '1492670787', '35141126-8F9B-4CF6-95BE-43BDFA1BBF0A'].freeze
-  ROOT_USER = ['666325406', '35141126-8F9B-4CF6-95BE-43BDFA1BBF0A'].freeze
+  ADMINS = %w(666325406 1492670787 35141126-8F9B-4CF6-95BE-43BDFA1BBF0A).freeze
+  ROOT_USER = %w(666325406 35141126-8F9B-4CF6-95BE-43BDFA1BBF0A).freeze
   attr_accessor :id
   attr_accessor :token
 
   def self.name(id)
-    ActiveSupport::JSON.decode(HTTParty.get("https://graph.facebook.com/#{id}").body)['name']
-  rescue
+    ActiveSupport::JSON.decode(HTTParty.get("https://graph.facebook.com/#{id}")
+      .body)['name']
+  rescue e
+    Rails.logger.warn e
   end
 
   def initialize(id, token)
@@ -23,6 +26,7 @@ class User
   end
 
   def owns?(location)
-    location.owned? && (token == location.user_token || (id.present? && id == location.user_id))
+    location.owned? &&
+      (token == location.user_token || (id.present? && id == location.user_id))
   end
 end

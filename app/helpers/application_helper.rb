@@ -1,9 +1,12 @@
+# rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
   include ScaffoldLogic::Helper
 
   def author_link_to(location)
     return if location.author.blank?
-    link_to "All Novels by #{location.author}", author_url(location), title: "Show all novels by #{location.author}"
+    link_to "All Novels by #{location.author}",
+            author_url(location),
+            title: "Show all novels by #{location.author}"
   end
 
   def author_url(location)
@@ -11,24 +14,62 @@ module ApplicationHelper
   end
 
   def default_title
-    "Novels: On Location - #{Location.book_count} Novels/#{Location.count} Locations"
+    "Novels: On Location - #{Location.book_count} Novels/#{Location.count} "\
+    'Locations'
+  end
+
+  def description_for_mapped_setting(locations)
+    if locations.size == 1
+      %(the setting #{location @locations, :address} from the novel "\
+      "#{locations.first.title}" mapped on #{Rails.application.config
+      .main_host}.)
+    else
+      "#{locations.size} settings from the novels "\
+      "#{location @locations, :title} mapped on "\
+      "#{Rails.application.config.main_host}. The locations "\
+      "include #{location @locations, :address}."
+    end
   end
 
   def description_for_location(locations, location_kind)
     case location_kind
     when 'author'
-      "#{locations.first.author} has #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" mapped on #{Rails.application.config.main_host}." : "#{locations.size} settings from the novels #{location @locations, :title} mapped on #{Rails.application.config.main_host}. The locations include #{location @locations, :address}."}"
+      "#{locations[0].author} has #{description_for_mapped_setting locations}"
     when 'novel'
-      "\"#{locations.first.title}\", a novel by #{locations.first.author}, has #{locations.size == 1 ? "the setting #{location @locations, :address} mapped on #{Rails.application.config.main_host}." : "#{locations.size} settings mapped on #{Rails.application.config.main_host}. The locations include #{location @locations, :address}."}"
+      description_for_novel locations
     when 'reader'
-      "#{@user_name} mapped #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" on #{Rails.application.config.main_host}." : "#{locations.size} settings from the novels #{location @locations, :title} on #{Rails.application.config.main_host}. The locations include #{location @locations, :address}."}"
+      "#{@user_name} mapped #{description_for_setting locations}"
     when 'search'
-      "A search for \"#{location_query}\" returns #{locations.size == 1 ? "the setting #{location @locations, :address} from the novel \"#{locations.first.title}\" on #{Rails.application.config.main_host}." : "#{locations.size} settings from the novels #{location @locations, :title} on #{Rails.application.config.main_host}. The locations include #{location @locations, :address}."}"
+      description_for_search locations
     end
   end
 
+  def description_for_search(locations)
+    "A search for \"#{location_query}\" returns "\
+    "#{description_for_setting locations}"
+  end
+
+  def description_for_setting(locations)
+    if locations.size == 1
+      "the setting #{location @locations, :address} from the novel \"#{locations
+      .first.title}\" on #{Rails.application.config.main_host}."
+    else
+      "#{locations.size} settings from the novels "\
+      "#{location @locations, :title} on #{Rails.application.config.main_host}"\
+      ". The locations include #{location @locations, :address}."
+    end
+  end
+
+  def description_for_novel(locations)
+    "#{phrase_for_novel locations} has "\
+    "#{description_for_mapped_setting locations}"
+  end
+
   def facebook_link_to(location)
-    link_to @user_name || 'Reader', "http://www.facebook.com/profile.php?id=#{location.user_id}", target: '_blank', title: "Go to #{@user_name || 'Reader'}'s page on Facebook"
+    link_to @user_name || 'Reader',
+            "http://www.facebook.com/profile.php?id=#{location.user_id}",
+            target: '_blank',
+            title: "Go to #{@user_name || 'Reader'}'s page on Facebook"
   end
 
   def filter_param(value)
@@ -36,15 +77,17 @@ module ApplicationHelper
   end
 
   def google_link_to(link_text, options = {})
-    link_to link_text, "http://www.google.com/search?q=#{u link_text}", { target: '_blank', title: "Google #{link_text}" }.merge(options)
+    link_to link_text,
+            "http://www.google.com/search?q=#{u link_text}",
+            { target: '_blank', title: "Google #{link_text}" }.merge(options)
   end
 
   def ie?
-    !! (request.user_agent =~ /msie/i)
+    !(request.user_agent !~ /msie/i)
   end
 
   def ios?
-    !! (request.user_agent =~ /ipad|iphone/i)
+    !(request.user_agent !~ /ipad|iphone/i)
   end
 
   def location(locations, attribute)
@@ -52,11 +95,17 @@ module ApplicationHelper
   end
 
   def novel_link_to(location)
-    link_to "All Locations for #{location.title}", novel_url(location), title: "Show all locations for #{location.title}"
+    link_to "All Locations for #{location.title}",
+            novel_url(location),
+            title: "Show all locations for #{location.title}"
   end
 
   def novel_url(location)
     "#!novel-#{u location.title_for_regex}"
+  end
+
+  def phrase_for_novel(locations)
+    %("#{locations.first.title}", a novel by #{locations.first.author},)
   end
 
   def place_url(location)
@@ -65,7 +114,9 @@ module ApplicationHelper
 
   def reader_link_to(location)
     return if location.user_id.blank?
-    link_to "All Pins by #{@user_name || 'Reader'}", reader_url(location), title: "Show all pins added by #{@user_name || 'Reader'}"
+    link_to "All Pins by #{@user_name || 'Reader'}",
+            reader_url(location),
+            title: "Show all pins added by #{@user_name || 'Reader'}"
   end
 
   def reader_url(location)
@@ -73,7 +124,7 @@ module ApplicationHelper
   end
 
   def safari_pc?
-    !! (request.user_agent =~ /safari/i) && !ios?
+    !(request.user_agent !~ /safari/i) && !ios?
   end
 
   def title_for_location(locations, location_kind)
@@ -91,6 +142,10 @@ module ApplicationHelper
 
   def wikipedia_link_to(link_text, options = {})
     return if link_text.blank?
-    link_to link_text, "http://en.wikipedia.org/wiki/#{u link_text.tr(' ', '_')}", { target: '_blank', title: "Read about #{link_text} on Wikipedia" }.merge(options)
+    link_to link_text,
+            "http://en.wikipedia.org/wiki/#{u link_text.tr(' ', '_')}",
+            {
+              target: '_blank', title: "Read about #{link_text} on Wikipedia"
+            }.merge(options)
   end
 end

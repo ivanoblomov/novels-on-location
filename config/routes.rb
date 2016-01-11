@@ -1,9 +1,10 @@
 NovelsOnLocation::Application.routes.draw do
-  scope constraints: ->(request) { !!request.query_parameters['_escaped_fragment_'] } do
+  scope constraints: ->(r) { r.query_parameters['_escaped_fragment_'] } do
     get '/' => 'locations#snapshots'
     get 'locations' => 'locations#snapshots'
   end
 
+  # Detect incorrect host
   class WrongHost
     def initialize; end
 
@@ -14,7 +15,12 @@ NovelsOnLocation::Application.routes.draw do
 
   constraints(WrongHost.new) do
     get '/', to: redirect("http://#{Rails.application.config.main_host}")
-    get '*path', to: redirect { |params, _r| "http://#{Rails.application.config.main_host}/#{params[:path]}" }
+    get(
+      '*path',
+      to: redirect do |params, _r|
+        "http://#{Rails.application.config.main_host}/#{params[:path]}"
+      end
+    )
   end
 
   namespace :admin do

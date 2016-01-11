@@ -1,4 +1,5 @@
 module Heroku
+  # Configure asset caching
   class StaticAssetsMiddleware
     def cache_static_asset(reply)
       return reply unless can_cache?(reply)

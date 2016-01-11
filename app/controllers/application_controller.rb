@@ -1,12 +1,24 @@
+# Controller superclass
 class ApplicationController < ActionController::Base
-  helper_method :current_user, :facebook?, :inject_writable_flag, :nibbler?, :w3c_validator?
+  MAPS_ERROR = "Sorry, can't geocode your location. Google Maps only allows "\
+               'us to query their server so many times a day. Please try '\
+               'again tomorrow!'
+  NIBBLER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; '\
+                  'rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3'
+  NOT_FOUND = /Document not found|Missing template|No route|No action/
+
+  helper_method %i(
+    current_user facebook? inject_writable_flag nibbler? w3c_validator?
+  )
   protect_from_forgery
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from ActionController::UnknownController, Mongoid::Errors::DocumentNotFound, with: :error_404
+    rescue_from ActionController::UnknownController,
+                Mongoid::Errors::DocumentNotFound,
+                with: :error_404
     rescue_from Exception do |exception|
       @exception = exception
-      @exception.message =~ /Document not found for class|Missing template|No route matches|No action responded/ ? error_404 : error_500
+      @exception.message =~ NOT_FOUND ? error_404 : error_500
     end
   end
 
@@ -25,7 +37,11 @@ class ApplicationController < ActionController::Base
 
   def error_500
     Mailer.error(request, @exception).deliver
-    flash[:error] = @exception.message.include?('query limit') ? "Sorry, can't geocode your location. Google Maps only allows us to query their server so many times a day. Please try again tomorrow!" : @exception.message
+    flash[:error] = if @exception.message.include?('query limit')
+                      MAPS_ERROR
+                    else
+                      @exception.message
+                    end
     render template: 'error', status: :internal_server_error
   end
 
@@ -35,7 +51,10 @@ class ApplicationController < ActionController::Base
 
   def inject_writable_flag(locations)
     if locations.is_a?(Array)
-      locations = locations.map { |l| l.writable = can?(:update, l); l }
+      locations = locations.map do |l|
+        l.writable = can? :update, l
+        l
+      end
     else
       locations.writable = can? :update, locations
     end
@@ -48,7 +67,7 @@ class ApplicationController < ActionController::Base
   end
 
   def nibbler?
-    request.user_agent == 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3'
+    request.user_agent == NIBBLER_AGENT
   end
 
   def sitemap
@@ -61,6 +80,6 @@ class ApplicationController < ActionController::Base
   end
 
   def w3c_validator?
-    !! (request.user_agent =~ /W3C_Validator/i)
+    request.user_agent !~ /W3C_Validator/i
   end
 end
