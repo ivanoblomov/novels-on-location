@@ -1,23 +1,24 @@
 NovelsOnLocation::Application.routes.draw do
-  scope :constraints => lambda{ |request| !! request.query_parameters['_escaped_fragment_'] } do
+  scope constraints: ->(request) { !!request.query_parameters['_escaped_fragment_'] } do
     get '/' => 'locations#snapshots'
     get 'locations' => 'locations#snapshots'
   end
 
   class WrongHost
     def initialize; end
+
     def matches?(request)
       request.host != Rails.application.config.main_host.downcase
     end
   end
 
   constraints(WrongHost.new) do
-    get '/', :to => redirect("http://#{Rails.application.config.main_host}")
-    get '*path', :to => redirect{ |params, r| "http://#{Rails.application.config.main_host}/#{params[:path]}" }
+    get '/', to: redirect("http://#{Rails.application.config.main_host}")
+    get '*path', to: redirect { |params, _r| "http://#{Rails.application.config.main_host}/#{params[:path]}" }
   end
 
   namespace :admin do
-    resources :locations, :only => :index do
+    resources :locations, only: :index do
       collection do
         put 'push_random'
       end
@@ -36,7 +37,7 @@ NovelsOnLocation::Application.routes.draw do
       put 'bookmark'
     end
   end
-  root :to => 'locations#index', :via => :get
+  root to: 'locations#index', via: :get
 
-  get '*a', :to => 'application#error_404'
+  get '*a', to: 'application#error_404'
 end

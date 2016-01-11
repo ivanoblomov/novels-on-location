@@ -3,9 +3,9 @@ class LocationsController < ApplicationController
     address tags book_keywords latLng user_id user_token title
   )
 
-  authorize_resource :only => [:create, :index, :new, :show]
+  authorize_resource only: [:create, :index, :new, :show]
   before_filter :find_location, only: [:bookmark, :destroy, :show, :unbookmark, :update]
-  authorize_resource :only => [:bookmark, :destroy, :unbookmark, :update]
+  authorize_resource only: [:bookmark, :destroy, :unbookmark, :update]
   helper_method :location_kind, :location_query
   respond_to :html, :json
 
@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
     @locations = scope_for_snapshot
     return error_404 if @locations.blank?
     set_user_name if reader_link?
-    render :layout => false
+    render layout: false
   end
 
   def unbookmark
@@ -35,7 +35,7 @@ class LocationsController < ApplicationController
     if @location.save
       format_response
     else
-      raise "Can't save location: #{@location.errors.full_messages}!"
+      fail "Can't save location: #{@location.errors.full_messages}!"
     end
   end
 
@@ -53,7 +53,7 @@ class LocationsController < ApplicationController
       format.html {}
       format.json do
         cookies.permanent[:user_token] = params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
-        render :json => inject_writable_flag(@locations).to_json(:methods => Location::VIRTUAL_ATTRIBUTES), :layout => false
+        render json: inject_writable_flag(@locations).to_json(methods: Location::VIRTUAL_ATTRIBUTES), layout: false
       end
     end
   end
@@ -76,9 +76,9 @@ class LocationsController < ApplicationController
   def find_location
     @location = Location.find(params[:id]) || Location.find(Moped::BSON::ObjectId params[:id])
   rescue
-    if Location.where(:id => params[:id]).exists?
+    if Location.where(id: params[:id]).exists?
       @location = Location.find params[:id]
-      redirect_to location_url(@location, :canonical_url => location_url(@location)), :status => :moved_permanently
+      redirect_to location_url(@location, canonical_url: location_url(@location)), status: :moved_permanently
     else
       error_404
     end
@@ -86,8 +86,8 @@ class LocationsController < ApplicationController
 
   def format_response
     respond_to do |format|
-      format.js { render :layout => false }
-      format.json { render :json => @location.to_json, :layout => false }
+      format.js { render layout: false }
+      format.json { render json: @location.to_json, layout: false }
     end
   end
 
@@ -105,7 +105,7 @@ class LocationsController < ApplicationController
 
   def location_query
     value = params[:_escaped_fragment_].split('-')[1..-1]
-    strip_parens CGI::unescape(params[:_escaped_fragment_].split('-')[1]) unless value.blank?
+    strip_parens CGI.unescape(params[:_escaped_fragment_].split('-')[1]) unless value.blank?
   end
 
   def reader_link?
@@ -117,11 +117,11 @@ class LocationsController < ApplicationController
   end
 
   def remove_virtual_attributes(location_params)
-    Location::VIRTUAL_ATTRIBUTES.each{ |va| location_params.delete va }
+    Location::VIRTUAL_ATTRIBUTES.each { |va| location_params.delete va }
   end
 
   def rename_objective_c_keys(location_params)
-    location_params = Hash[location_params.map{ |k, v| [k == 'latLng' ? k : k.underscore, v] }]
+    location_params = Hash[location_params.map { |k, v| [k == 'latLng' ? k : k.underscore, v] }]
   end
 
   def scope_for_snapshot
@@ -136,7 +136,7 @@ class LocationsController < ApplicationController
     @user_name = User.name location_query
   end
 
-  def strip_parens keywords
+  def strip_parens(keywords)
     keywords.try(:include?, '(') ? keywords[0..keywords.index('(') - 1] : keywords
   end
 end

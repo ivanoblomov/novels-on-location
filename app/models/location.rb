@@ -9,7 +9,7 @@ class Location
     'novel' => :title,
     'place' => :place,
     'reader' => :user_id,
-    'search' => :search,
+    'search' => :search
   }.freeze
   VIRTUAL_ATTRIBUTES = [:_id, :added_at, :added_at_s, :amazon_url, :itunes_affiliate_url, :place, :slug, :terms, :title_for_regex, :writable].freeze
 
@@ -25,7 +25,7 @@ class Location
   field :image_url
   field :image_width
   field :itunes_id
-  field :lat_lng, :type => Array
+  field :lat_lng, type: Array
   field :notes
   field :review
   field :state
@@ -34,11 +34,11 @@ class Location
   field :url
   field :user_id
   field :user_token
-  index( {address: 1} )
-  index( {author: 1} )
-  index( {tags: 1} )
-  index( {title: 1} )
-  index( {user_id: 1} )
+  index(address: 1)
+  index(author: 1)
+  index({ tags: 1 })
+  index(title: 1)
+  index(user_id: 1)
   scope :author, ->(v) { where author: /#{v}/i }
   scope :browser, -> { where(user_token: nil).not.where(user_token: REG_EX_USER_TOKEN) }
   scope :duplicate, ->(criteria) { where criteria }
@@ -52,10 +52,10 @@ class Location
       { author: /#{v}/i },
       { tags: /#{v}/i },
       { title: /#{v}/i },
-      { user_id: v }
+      user_id: v
     )
   }
-  scope :sorted, ->{ order created_at: :asc }
+  scope :sorted, -> { order created_at: :asc }
   scope :title, ->(v) { where title: /#{v}/i }
   scope :user_id, ->(v) { where user_id: v }
   scope :with_lat_lng, ->(v) { where lat_lng: v }
@@ -63,7 +63,7 @@ class Location
   after_create :notify
   attr_accessor :writable
   before_save :set_address
-  slug :title, :history => true
+  slug :title, history: true
   validates_presence_of :title
 
   @@itunes_client = ITunes::Client.new
@@ -75,15 +75,15 @@ class Location
   end
 
   def self.book_count
-    Location.all.map{ |l| l.asin }.uniq.size
+    Location.all.map(&:asin).uniq.size
   end
 
   def self.copy_slug
     Location.all.each do |e|
       slugs = []
-      if e[:slug_history] != nil
+      unless e[:slug_history].nil?
         e[:slug_history].each do |h|
-          slugs << h unless (h == nil || h == "")
+          slugs << h unless h.nil? || h == ''
         end
       end
       slugs << e[:slug]
@@ -93,7 +93,7 @@ class Location
     end
   end
 
-  def self.displace_duplicate_coordinates locations = Location.duplicate_coordinates
+  def self.displace_duplicate_coordinates(locations = Location.duplicate_coordinates)
     return if locations.blank?
     l = locations.last
     l.send :displace
@@ -102,7 +102,7 @@ class Location
   end
 
   def self.duplicate_coordinates
-    Location.all.select{ |l| ! l.matching_coordinates.blank? }
+    Location.all.select { |l| !l.matching_coordinates.blank? }
   end
 
   def self.last_updated
@@ -110,12 +110,12 @@ class Location
   end
 
   def self.look_up_amazon
-    Location.missing_amazon.map{ |l| l.look_up; l.save }
+    Location.missing_amazon.map { |l| l.look_up; l.save }
     Location.missing_amazon.count
   end
 
   def self.look_up_itunes
-    Location.missing_itunes.map{ |l| l.look_up; l.save }
+    Location.missing_itunes.map { |l| l.look_up; l.save }
     Location.missing_itunes.count
   end
 
@@ -123,8 +123,8 @@ class Location
     Location.all[Location.count * rand]
   end
 
-  def self.scope_for_kind kind, query
-    return send :all if kind.blank? || ! SCOPES_BY_KIND.keys.include?(kind)
+  def self.scope_for_kind(kind, query)
+    return send :all if kind.blank? || !SCOPES_BY_KIND.keys.include?(kind)
     send SCOPES_BY_KIND[kind], query
   end
 
@@ -134,7 +134,7 @@ class Location
   end
 
   def to_json
-    super :methods => Location::VIRTUAL_ATTRIBUTES
+    super methods: Location::VIRTUAL_ATTRIBUTES
   end
 
   # Instance methods ===============================================================================
@@ -150,14 +150,14 @@ class Location
     "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
   end
 
-  def add_bookmark user_id
-    self.bookmark_user_ids << user_id
-    self.save
+  def add_bookmark(user_id)
+    bookmark_user_ids << user_id
+    save
   end
 
-  def remove_bookmark user_id
-    self.bookmark_user_ids.delete user_id
-    self.save
+  def remove_bookmark(user_id)
+    bookmark_user_ids.delete user_id
+    save
   end
 
   def book_keywords=(value)
@@ -170,20 +170,20 @@ class Location
   end
 
   def duplicate?
-    Location.duplicate({:address => address, :title => title}).count > 1
+    Location.duplicate(address: address, title: title).count > 1
   end
 
   def from_ios?
-    !! (self.user_token =~ REG_EX_USER_TOKEN)
+    !! (user_token =~ REG_EX_USER_TOKEN)
   end
 
-  def geocode place
+  def geocode(place)
     gmg = GoogleMapsGeocoder.new place
     self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
   end
 
   def ios_push
-    p = Parse::Push.new({'alert' => new_pin_message, 'badge' => 'Increment', 'sound' => '', 'url' => nol_url})
+    p = Parse::Push.new('alert' => new_pin_message, 'badge' => 'Increment', 'sound' => '', 'url' => nol_url)
     p.channel = 'test' if Rails.env.development?
     p.save
   end
@@ -197,19 +197,19 @@ class Location
   end
 
   def latitude
-    self.lat_lng.blank? ? nil : self.lat_lng[0]
+    lat_lng.blank? ? nil : lat_lng[0]
   end
 
-  def latitude= lat
-    self.lat_lng = [lat.to_s, self.longitude]
+  def latitude=(lat)
+    self.lat_lng = [lat.to_s, longitude]
   end
 
   def longitude
-    self.lat_lng.blank? ? nil : self.lat_lng[1]
+    lat_lng.blank? ? nil : lat_lng[1]
   end
 
-  def longitude= long
-    self.lat_lng = [self.latitude, long.to_s]
+  def longitude=(long)
+    self.lat_lng = [latitude, long.to_s]
   end
 
   def look_up
@@ -228,7 +228,7 @@ class Location
   end
 
   def notify
-    if Rails.env.production? && ! test_book?
+    if Rails.env.production? && !test_book?
       tweet
       ios_push
     end
@@ -254,7 +254,7 @@ class Location
   def title_for_regex
     i = title.try(:index, '(')
     return title.to_s if i.nil?
-    title[0..(i-1)].strip
+    title[0..(i - 1)].strip
   end
 
   def tweet
@@ -267,7 +267,8 @@ class Location
   end
 
   def unclaim
-    self.user_id, self.user_token = nil, nil
+    self.user_id = nil
+    self.user_token = nil
   end
 
   def usa?
@@ -275,21 +276,21 @@ class Location
   end
 
   def unowned?
-    ! owned?
+    !owned?
   end
 
   private
 
   def displace
-    x = rand / 10000.0
-    y = rand / 10000.0
+    x = rand / 10_000.0
+    y = rand / 10_000.0
     x = -x if rand(1) == 0
     y = -y if rand(1) == 0
     self.lat_lng = [(lat_lng[0].to_f + x).to_s, (lat_lng[1].to_f + y).to_s]
   end
 
   def new_pin_message
-    "A fan just pinned \"#{self.title_for_regex.truncate 50}\"#{place.blank? ? '' : " to #{place}"}."
+    "A fan just pinned \"#{title_for_regex.truncate 50}\"#{place.blank? ? '' : " to #{place}"}."
   end
 
   def set_address

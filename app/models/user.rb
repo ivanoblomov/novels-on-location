@@ -4,13 +4,14 @@ class User
   attr_accessor :id
   attr_accessor :token
 
-  def self.name id
+  def self.name(id)
     ActiveSupport::JSON.decode(HTTParty.get("https://graph.facebook.com/#{id}").body)['name']
   rescue
   end
 
   def initialize(id, token)
-    self.id, self.token = id, token
+    self.id = id
+    self.token = token
   end
 
   def admin?

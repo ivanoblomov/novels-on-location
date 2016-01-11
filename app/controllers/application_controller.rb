@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from ActionController::UnknownController, Mongoid::Errors::DocumentNotFound, :with => :error_404
+    rescue_from ActionController::UnknownController, Mongoid::Errors::DocumentNotFound, with: :error_404
     rescue_from Exception do |exception|
       @exception = exception
       @exception.message =~ /Document not found for class|Missing template|No route matches|No action responded/ ? error_404 : error_500
@@ -19,14 +19,14 @@ class ApplicationController < ActionController::Base
   end
 
   def error_404
-    flash[:error] = "Sorry, that novel location doesn't exist. Why not add it?";
-    render :template => 'error', :status => :not_found
+    flash[:error] = "Sorry, that novel location doesn't exist. Why not add it?"
+    render template: 'error', status: :not_found
   end
 
   def error_500
     Mailer.error(request, @exception).deliver
     flash[:error] = @exception.message.include?('query limit') ? "Sorry, can't geocode your location. Google Maps only allows us to query their server so many times a day. Please try again tomorrow!" : @exception.message
-    render :template => 'error', :status => :internal_server_error
+    render template: 'error', status: :internal_server_error
   end
 
   def facebook?
@@ -35,7 +35,7 @@ class ApplicationController < ActionController::Base
 
   def inject_writable_flag(locations)
     if locations.is_a?(Array)
-      locations = locations.map{ |l| l.writable = can?(:update, l); l }
+      locations = locations.map { |l| l.writable = can?(:update, l); l }
     else
       locations.writable = can? :update, locations
     end
@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
   end
 
   def integration
-    render :layout => false
+    render layout: false
   end
 
   def nibbler?
