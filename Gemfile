@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 ruby '2.2.3'
 
 gem 'cancan'
+gem 'embiggen', '1.1.0'
 gem 'google_maps_geocoder'
 gem 'httparty'
 gem 'itunes'
