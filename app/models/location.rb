@@ -138,6 +138,10 @@ class Location
     super methods: Location::VIRTUAL_ATTRIBUTES
   end
 
+  def to_s
+    %("#{title}" by "#{author}" set in #{address})
+  end
+
   # Instance methods ===========================================================
   def added_at
     created_at || updated_at
