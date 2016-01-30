@@ -20,17 +20,21 @@ namespace :novels do
       matches = TWEET_REGEX.match tweet.text
 
       if matches
-        novel = matches[1]
+        title = matches[1]
         place = matches[2]
         short_url = matches[3]
-        url = Embiggen::URI(short_url).expand
-        p url.to_s.split('/').try :last
-        location = Location.new book_keywords: novel,
+        url = Embiggen::URI(short_url).expand timeout: 10
+        slug = url.to_s.split('/').try :last
+        location = Location.new book_keywords: title,
                                 tags: place
         location.valid?
 
         if location.errors.present?
-          invalid << tweet
+          invalid << {
+            location: location,
+            slug: slug,
+            tweet: tweet
+          }
         else
           locations << location
         end
@@ -42,7 +46,14 @@ namespace :novels do
     puts "Found #{locations.size} locations:\n"
     puts locations.map(&:to_s)
     puts "\nCan't save #{invalid.size} locations:"
-    puts invalid.map(&:text)
+    puts "#{(
+      invalid.map do |h|
+        [
+          h[:location].errors.full_messages * ', ',
+          TWEET_REGEX.match(h[:tweet].text).to_a[1..-1]
+        ] * ' => '
+      end
+    ) * "\n"}"
     puts "\nSkipped #{skipped.size} tweets"
     puts skipped.map(&:text)
   end
