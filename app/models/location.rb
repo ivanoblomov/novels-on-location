@@ -134,6 +134,13 @@ class Location
     self[:_id].to_s
   end
 
+  def tags=(value)
+    self[:tags] = value
+    return unless lat_lng.blank?
+    geocode tags
+    set_address_info
+  end
+
   def to_json
     super methods: Location::VIRTUAL_ATTRIBUTES
   end
