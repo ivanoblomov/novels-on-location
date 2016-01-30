@@ -1,6 +1,6 @@
 namespace :novels do
   SLUG_REGEX = %r{http://novelsonlocation.com/locations/(.+)}
-  TWEET_REGEX = %r{A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp}
+  TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
 
   desc 'Restore Locations from Twitter feed'
   task restore: :environment do
@@ -24,12 +24,12 @@ namespace :novels do
         place = matches[2]
         short_url = matches[3]
         url = Embiggen::URI(short_url).expand
+        p url.to_s.split('/').try :last
         location = Location.new book_keywords: novel,
                                 tags: place
         location.valid?
 
         if location.errors.present?
-          p [novel, place]
           invalid << tweet
         else
           locations << location
@@ -39,8 +39,11 @@ namespace :novels do
       end
     end
 
-    p "Can restore #{locations.size} locations"
-    p "Can't save #{invalid.size} locations"
-    p "Skipped #{skipped.size} tweets"
+    puts "Found #{locations.size} locations:\n"
+    puts locations.map(&:to_s)
+    puts "\nCan't save #{invalid.size} locations:"
+    puts invalid.map(&:text)
+    puts "\nSkipped #{skipped.size} tweets"
+    puts skipped.map(&:text)
   end
 end
