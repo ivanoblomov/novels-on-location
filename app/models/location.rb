@@ -74,14 +74,6 @@ class Location
   slug :title, history: true
   validates_presence_of :title
 
-  @itunes_client = ITunes::Client.new
-  @twitter_client = Twitter::Streaming::Client.new do |config|
-    config.consumer_key = 'Ms7Cl2g9eM0sZKRl8YA34Q'
-    config.consumer_secret = 'gQlXn8I9TtLcNSepF5D59DBkSI0Wv9pYl1465iAc4'
-    config.access_token = '490732052-SDJHy8huJ9J4Ic7aNIiR4T4XZiBxbMQ2eW2Qi2oz'
-    config.access_token_secret = 'N8B6ZPg0gxtqLOeEI7LVKbHCdXvZpHJqpRmmPNSWk'
-  end
-
   def self.book_count
     Location.all.map(&:asin).uniq.size
   end
@@ -98,6 +90,13 @@ class Location
 
   def self.duplicate_coordinates
     Location.all.select { |l| !l.matching_coordinates.blank? }
+  end
+
+  def self.search_itunes(title)
+    hit = ITunesSearchAPI.search(media: 'ebook', term: title).try :first
+    return hit['trackId'] if hit
+    Rails.logger.warn "iTunes can't find: #{title}"
+    nil
   end
 
   def self.last_updated
@@ -345,7 +344,8 @@ class Location
   end
 
   def set_itunes_id
-    self.itunes_id = @itunes_client.ebook(title_for_regex).results[0].track_id
+    return if title_for_regex.blank?
+    self.itunes_id = Location.search_itunes title_for_regex
   end
 
   def tweet_message
