@@ -339,7 +339,8 @@ class Location
 
   def set_attributes_asin_itunes_id
     self.attributes = CandyWrapper.book(book_keywords) if new_record?
-    self.asin = CandyWrapper.book(title_for_regex)[:asin] if asin.blank?
+    book = CandyWrapper.book(title_for_regex)
+    self.asin = CandyWrapper.book(title_for_regex)[:asin] if book && asin.blank?
     set_itunes_id if itunes_id.blank?
   end
 
