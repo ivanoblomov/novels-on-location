@@ -11,13 +11,14 @@ namespace :novels do
       config.access_token_secret = 'N8B6ZPg0gxtqLOeEI7LVKbHCdXvZpHJqpRmmPNSWk'
     end
 
+    coder = HTMLEntities.new
     invalid = []
     locations = []
     skipped = []
     tweets = @twitter_client.user_timeline 'NovelsOnLoc'
 
     tweets.each do |tweet|
-      matches = TWEET_REGEX.match tweet.text
+      matches = TWEET_REGEX.match coder.decode tweet.text
 
       if matches
         title = matches[1]
