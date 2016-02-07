@@ -33,7 +33,9 @@ namespace :novels do
         if location.errors.present?
           invalid << {
             location: location,
+            place: place,
             slug: slug,
+            title: title,
             tweet: tweet
           }
         else
@@ -52,8 +54,10 @@ namespace :novels do
       invalid.map do |h|
         [
           h[:location].errors.full_messages * ', ',
-          TWEET_REGEX.match(h[:tweet].text).to_a[1..-1]
-        ] * ' => '
+          h[:slug],
+          h[:title],
+          h[:place]
+        ] * ' | '
       end
     ) * "\n"}"
     puts "\nSkipped #{skipped.size} tweets"
