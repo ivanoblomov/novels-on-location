@@ -184,7 +184,11 @@ class Location
   end
 
   def duplicate?
-    Location.duplicate(address: address, title: title).count > 1
+    duplicates.count > 1
+  end
+
+  def duplicates
+    @duplicates ||= Location.duplicate(address: address, title: title).sorted
   end
 
   def from_ios?
