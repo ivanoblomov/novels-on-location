@@ -42,7 +42,7 @@ namespace :novels do
       else
         skipped << tweet
       end
-      sleep 1.5
+      sleep 1.0
     end
 
     puts "Found #{locations.size} locations:\n"
