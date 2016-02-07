@@ -71,6 +71,7 @@ class Location
   after_create :notify
   attr_accessor :writable
   before_save :set_address
+  has_one :tweeted_location
   slug :title, history: true
   validates_presence_of :title
 

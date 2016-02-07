@@ -12,8 +12,7 @@ namespace :novels do
     end
 
     coder = HTMLEntities.new
-    invalid = []
-    locations = []
+    tweeted_locations = []
     skipped = []
     tweets = @twitter_client.user_timeline 'NovelsOnLoc'
 
@@ -26,40 +25,20 @@ namespace :novels do
         short_url = matches[3]
         url = Embiggen::URI(short_url).expand timeout: 10
         slug = url.to_s.split('/').try :last
-        location = Location.new book_keywords: title,
-                                tags: place
-        location.valid?
 
-        if location.errors.present?
-          invalid << {
-            location: location,
-            place: place,
-            slug: slug,
-            title: title,
-            tweet: tweet
-          }
-        else
-          locations << location
-        end
+        tweeted_location = TweetedLocation.create place: place,
+                                                  slug: slug,
+                                                  text: tweet.text,
+                                                  title: title
+        tweeted_locations << tweeted_location if tweeted_location.persisted?
       else
         skipped << tweet
       end
       sleep 1.0
     end
 
-    puts "Found #{locations.size} locations:\n"
-    puts locations.map(&:to_s)
-    puts "\nCan't save #{invalid.size} locations:"
-    puts "#{(
-      invalid.map do |h|
-        [
-          h[:location].errors.full_messages * ', ',
-          h[:slug],
-          h[:title],
-          h[:place]
-        ] * ' | '
-      end
-    ) * "\n"}"
+    puts "Found #{tweeted_locations.count} TweetedLocations:\n"
+    puts tweeted_locations.map(&:to_s)
     puts "\nSkipped #{skipped.size} tweets"
     puts skipped.map(&:text)
   end
