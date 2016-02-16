@@ -301,6 +301,15 @@ class Location
     ]
   end
 
+  def geocode(coordinates_or_keyword)
+    g = GoogleMapsGeocoder.new coordinates_or_keyword
+    self.address = g.formatted_address
+    self.city = g.city
+    self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
+    self.country = g.country_long_name
+    self.state = g.state_short_name if usa?
+  end
+
   def negate?
     rand(1) == 0
   end
@@ -317,20 +326,15 @@ class Location
 
   def set_address
     send :displace unless matching_coordinates.blank?
-    set_address_info if changes.keys.include?('lat_lng') || place.blank?
+    set_address_info
   rescue => e
     Rails.logger.warn "Can't set address for #{slug || to_s}"
     Rails.logger.warn e.backtrace * "\n"
   end
 
   def set_address_info
-    return unless address.blank?
-    g = GoogleMapsGeocoder.new (lat_lng * ', ') || tags
-    self.address = g.formatted_address
-    self.city = g.city
-    self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
-    self.country = g.country_long_name
-    self.state = g.state_short_name if usa?
+    return unless place.blank?
+    geocode lat_lng ? lat_lng * ', ' : tags
   end
 
   def set_attributes_asin_itunes_id

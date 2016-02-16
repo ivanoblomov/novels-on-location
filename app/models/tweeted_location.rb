@@ -1,3 +1,4 @@
+# Restores a lost Location from its tweet.
 class TweetedLocation
   include Mongoid::Document
   include Mongoid::Timestamps
