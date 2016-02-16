@@ -318,8 +318,9 @@ class Location
   def set_address
     send :displace unless matching_coordinates.blank?
     set_address_info if changes.keys.include?('lat_lng') || place.blank?
-  rescue
-    Rails.logger.warn "Can't set address for #{slug}"
+  rescue => e
+    Rails.logger.warn "Can't set address for #{slug || to_s}"
+    Rails.logger.warn e.backtrace * "\n"
   end
 
   def set_address_info
