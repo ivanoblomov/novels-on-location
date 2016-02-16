@@ -17,7 +17,7 @@ class TweetedLocation
       { place: /#{v}/i },
       { slug: /#{v}/i },
       { text: /#{v}/i },
-      { title: /#{v}/i }
+      title: /#{v}/i
     )
   }
   scope :sorted, -> { order created_at: :asc }
