@@ -10,7 +10,8 @@ class ApplicationController < ActionController::Base
   helper_method %i(
     current_user facebook? inject_writable_flag nibbler? w3c_validator?
   )
-  protect_from_forgery
+  protect_from_forgery if: proc { |c| c.request.format.json? },
+                       with: :null_session
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActionController::UnknownController,
