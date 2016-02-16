@@ -134,13 +134,6 @@ class Location
     self[:_id].to_s
   end
 
-  def tags=(value)
-    self[:tags] = value
-    return unless lat_lng.blank?
-    geocode tags
-    set_address_info
-  end
-
   def to_json
     super methods: Location::VIRTUAL_ATTRIBUTES
   end
@@ -194,11 +187,6 @@ class Location
 
   def from_ios?
     !(user_token !~ REG_EX_USER_TOKEN)
-  end
-
-  def geocode(place)
-    gmg = GoogleMapsGeocoder.new place
-    self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
   end
 
   def ios_push
@@ -335,9 +323,11 @@ class Location
   end
 
   def set_address_info
-    g = GoogleMapsGeocoder.new(lat_lng * ', ')
+    return unless address.blank?
+    g = GoogleMapsGeocoder.new (lat_lng * ', ') || tags
     self.address = g.formatted_address
     self.city = g.city
+    self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
     self.country = g.country_long_name
     self.state = g.state_short_name if usa?
   end
