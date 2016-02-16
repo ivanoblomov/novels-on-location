@@ -340,7 +340,7 @@ nOL.addPin = function(location) {
       position: latLng
     });
 
-    nOL.pins[location._id] = pin;
+    nOL.pins[location.id] = pin;
 
     google.maps.event.addListener(pin, 'click', function() {
       nOL.setTitleAndPath(location.title + ' - Novels: On Location', '/locations/' + location.slug);
@@ -349,7 +349,7 @@ nOL.addPin = function(location) {
 
     google.maps.event.addListener(pin, 'dragend', function() {
       if (confirm('Move this pin?'))
-        nOL.movePin(location._id, pin.getPosition());
+        nOL.movePin(location.id, pin.getPosition());
       else
         pin.setPosition(latLng);
     });
@@ -363,7 +363,7 @@ nOL.addPins = function(selectedLocationSlug) {
 
     // is the pin writable but missing an fb id?
     if (nOL.fb_session && location.writable && location.user_id == undefined && nOL.myLocation(location)) {
-      nOL.claimPin(location._id);
+      nOL.claimPin(location.id);
     }
 
     if (selectedLocationSlug && location.slug == selectedLocationSlug) {
@@ -395,7 +395,7 @@ nOL.hidePin = function(id) {
 
 nOL.hidePins = function() {
   for (var i = 0; i < nOL.locations.length; i++) {
-    nOL.hidePin(nOL.locations[i]._id);
+    nOL.hidePin(nOL.locations[i].id);
   }
 }
 
@@ -417,17 +417,17 @@ nOL.removePin = function(id) {
 }
 
 nOL.replacePin = function(location) {
-  nOL.removePin(location._id);
+  nOL.removePin(location.id);
   nOL.locations.splice( nOL.locations.indexOf(location), 1);
   nOL.locations.push(location);
   nOL.addPin(location);
-  nOL.showPin(location._id);
+  nOL.showPin(location.id);
 }
 
 nOL.showAllPins = function() {
   nOL.bounds = new google.maps.LatLngBounds();
   for (var i = 0; i < nOL.locations.length; i++) {
-    nOL.showPin(nOL.locations[i]._id);
+    nOL.showPin(nOL.locations[i].id);
   }
   nOL.map.fitBounds(nOL.bounds);
 }
@@ -443,9 +443,9 @@ nOL.showBookmarks = function() {
     var location = nOL.locations[i];
 
     if (nOL.myBookmark(location))
-      nOL.showPin(location._id);
+      nOL.showPin(location.id);
     else
-      nOL.hidePin(location._id);
+      nOL.hidePin(location.id);
   }
   nOL.map.fitBounds(nOL.bounds);
   nOL.setTitleAndPath('Bookmarks - Novels: On Location', '/#!bookmarks');
@@ -457,9 +457,9 @@ nOL.showFriendsPins = function() {
     var location = nOL.locations[i];
 
     if (nOL.myFriendsLocation(location))
-      nOL.showPin(location._id);
+      nOL.showPin(location.id);
     else
-      nOL.hidePin(location._id);
+      nOL.hidePin(location.id);
   }
   nOL.map.fitBounds(nOL.bounds);
   if (nOL.loggedIn())
@@ -472,9 +472,9 @@ nOL.showMyPins = function() {
     var location = nOL.locations[i];
 
     if (nOL.myLocation(location))
-      nOL.showPin(location._id);
+      nOL.showPin(location.id);
     else
-      nOL.hidePin(location._id);
+      nOL.hidePin(location.id);
   }
   nOL.map.fitBounds(nOL.bounds);
   nOL.setTitleAndPath('My Pins - Novels: On Location', '/#!my');
@@ -496,7 +496,7 @@ nOL.showPins = function(keyword, path) {
     nOL.bounds = new google.maps.LatLngBounds();
     for (var i = 0; i < nOL.locations.length; i++) {
       if (nOL.locations[i].terms.toLowerCase().indexOf(unescape(keyword).toLowerCase()) > -1)
-        nOL.showPin(nOL.locations[i]._id);
+        nOL.showPin(nOL.locations[i].id);
     }
     nOL.map.fitBounds(nOL.bounds);
     nOL.setTitleAndPath(keyword + ' - Novels: On Location', path || ('#!search-' + escape(keyword)));
@@ -542,17 +542,17 @@ nOL.openBalloon = function(location) {
     nOL.getFacebookName(location);
   nOL.closeBalloon();
   html = '<div class="map-balloon">';
-  if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location._id + '\')" type="button" value="Claim" title="Claim this pin"/>';
+  if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location.id + '\')" type="button" value="Claim" title="Claim this pin"/>';
   if (location.writable)
-    html += '<input onClick="nOL.deletePin(\'' + location._id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location._id + '\', \'' + escape(location.tags) + '\')" type="button" value="Tag" title="Tag pin"/>';
+    html += '<input onClick="nOL.deletePin(\'' + location.id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location.id + '\', \'' + escape(location.tags) + '\')" type="button" value="Tag" title="Tag pin"/>';
   if (nOL.fb_session) {
     if (nOL.myBookmark(location))
-      html += '<input onClick="nOL.unBookmarkPin(\'' + location._id + '\')" type="button" value="Un-Bookmark" title="Un-bookmark this pin"/>';
+      html += '<input onClick="nOL.unBookmarkPin(\'' + location.id + '\')" type="button" value="Un-Bookmark" title="Un-bookmark this pin"/>';
     else
-      html += '<input onClick="nOL.bookmarkPin(\'' + location._id + '\')" type="button" value="Bookmark" title="Bookmark this pin"/>';
+      html += '<input onClick="nOL.bookmarkPin(\'' + location.id + '\')" type="button" value="Bookmark" title="Bookmark this pin"/>';
   }
   if (location.writable)
-    html += '<input onClick="nOL.promptForNotes(\'' + location._id + '\', \'' + (escape(location.notes || '')) + '\')" type="button" value="Annotate" title="Annotate pin"/>';
+    html += '<input onClick="nOL.promptForNotes(\'' + location.id + '\', \'' + (escape(location.notes || '')) + '\')" type="button" value="Annotate" title="Annotate pin"/>';
   html += '<input onClick="nOL.zoomIn(nOL.toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin"/>'
   if (location.image_url)
     html += '<h1><a href="' + location.amazon_url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '>' + location.title + '</a></h1>';
@@ -585,7 +585,7 @@ nOL.openBalloon = function(location) {
     html += 'Tags: ' + nOL.tagLinks(location);
   html += '</p></div>';
   nOL.openWindow = new google.maps.InfoWindow( {content: html} );
-  nOL.openWindow.open(nOL.map, nOL.pins[location._id]);
+  nOL.openWindow.open(nOL.map, nOL.pins[location.id]);
   google.maps.event.addListener(nOL.openWindow, 'closeclick', function() {nOL.listenForDoubleClick()});
   nOL.listenFor('click', 'nOL.closeBalloon(); nOL.listenForDoubleClick()');
 }

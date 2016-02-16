@@ -14,7 +14,7 @@ class Location
     'search' => :search
   }.freeze
   VIRTUAL_ATTRIBUTES = %i(
-    _id added_at added_at_s amazon_url itunes_affiliate_url place slug terms
+    added_at added_at_s amazon_url id itunes_affiliate_url place slug terms
     title_for_regex writable).freeze
 
   field :_slugs, type: Array, default: []
@@ -130,7 +130,7 @@ class Location
   end
 
   # Overrides ==================================================================
-  def _id
+  def id
     self[:_id].to_s
   end
 
