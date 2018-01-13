@@ -259,10 +259,6 @@ class Location
     [address, author, tags, title, user_id].compact * ' '
   end
 
-  def test_book?
-    title == '1-2-3 Magic: Effective Discipline for Children 2-12'
-  end
-
   def title_for_regex
     i = title.try(:index, '(')
     return title.to_s if i.nil?
@@ -347,6 +343,10 @@ class Location
   def set_itunes_id
     return if title_for_regex.blank?
     self.itunes_id = Location.search_itunes title_for_regex
+  end
+
+  def test_book?
+    title.include? '1-2-3 Magic:'
   end
 
   def tweet_message
