@@ -2,5 +2,6 @@
 .DS_Store
 coverage
 git.rake
+config/application.yml
 log/*.log
 tmp/

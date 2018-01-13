@@ -68,7 +68,7 @@ class Location
   scope :user_id, ->(v) { where user_id: v }
   scope :with_lat_lng, ->(v) { where lat_lng: v }
 
-  after_create :notify unless true
+  after_create :notify
   attr_accessor :writable
   before_save :set_address
   has_one :tweeted_location
@@ -243,7 +243,7 @@ class Location
   def notify
     return unless Rails.env.production? && !test_book?
     tweet
-    ios_push
+#     ios_push
   end
 
   def owned?
@@ -266,7 +266,7 @@ class Location
   end
 
   def tweet
-    Twitter.update tweet_message
+    TWITTER_CLIENT.update tweet_message
   rescue
     Rails.logger.warn "Can't tweet #{tweet_message}"
   end

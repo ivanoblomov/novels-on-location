@@ -3,6 +3,7 @@ ruby '2.4.1'
 
 gem 'cancan'
 gem 'embiggen', '1.1.0'
+gem 'figaro', '~> 1.1.0'
 gem 'google_maps_geocoder'
 gem 'htmlentities', '4.3.4'
 gem 'httparty'
