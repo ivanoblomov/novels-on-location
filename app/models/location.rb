@@ -68,7 +68,7 @@ class Location
   scope :user_id, ->(v) { where user_id: v }
   scope :with_lat_lng, ->(v) { where lat_lng: v }
 
-  after_create :notify
+  after_create :notify unless true
   attr_accessor :writable
   before_save :set_address
   has_one :tweeted_location
