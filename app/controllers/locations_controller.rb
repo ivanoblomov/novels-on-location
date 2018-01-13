@@ -1,7 +1,7 @@
 # rubocop:disable Metrics/ClassLength
 class LocationsController < ApplicationController
   PERMITTED_PARAMS = %i(
-    address tags book_keywords latLng user_id user_token title
+    address book_keywords latLng notes tags title user_id user_token
   )
 
   authorize_resource only: %i(
