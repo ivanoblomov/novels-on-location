@@ -1,25 +1,49 @@
 require 'spec_helper'
 
 describe Location do
-  it 'finds a book by keyword' do
-    @location = Location.new book_keywords: 'sun also rises'
-    expect(@location.asin).to be_present
-    expect(@location.itunes_id).to be_present
-    expect(@location.title).to eq 'The Sun Also Rises'
-  end
+  subject(:location) { Location.new }
 
-  it 'sets its latitude and longitude' do
-    @location = Location.new
-    @location.latLng = '1,2'
-    expect(@location.lat_lng).to eq %w(1 2)
-  end
+  describe '#new' do
+    context 'with no args' do
+      describe '#latLng=' do
+        context "with '1,2'" do
+          before { location.latLng = '1,2' }
 
-  it "indicates if it's owned" do
-    expect(Location.new(user_id: 1).owned?).to be true
-    expect(Location.new(user_token: 1).owned?).to be true
-  end
+          describe '#lat_lng' do
+            it { expect(location.lat_lng).to eq %w(1 2) }
+          end
+        end
+      end
+      describe '#unowned?' do
+        it { expect(location.unowned?).to be true }
+      end
+    end
+    context "with book_keywords: 'sun also rises'" do
+      subject(:location) { Location.new(book_keywords: 'sun also rises') }
 
-  it "indicates if it's unowned" do
-    expect(Location.new.unowned?).to be true
+      describe '#asin' do
+        it { expect(location.asin).to be_present }
+      end
+      describe '#itunes_id' do
+        it { expect(location.itunes_id).to be_present }
+      end
+      describe '#title' do
+        it { expect(location.title).to eq 'The Sun Also Rises' }
+      end
+    end
+    context "with user_id: 1" do
+      subject(:location) { Location.new(user_id: 1) }
+
+      describe '#owned?' do
+        it { expect(location.owned?).to be true }
+      end
+    end
+    context "with user_token: 1" do
+      subject(:location) { Location.new(user_token: 1) }
+
+      describe '#owned?' do
+        it { expect(location.owned?).to be true }
+      end
+    end
   end
 end
