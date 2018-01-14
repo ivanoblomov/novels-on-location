@@ -81,6 +81,6 @@ class ApplicationController < ActionController::Base
   end
 
   def w3c_validator?
-    request.user_agent !~ /W3C_Validator/i
+    request.user_agent =~ /W3C_Validator/i
   end
 end

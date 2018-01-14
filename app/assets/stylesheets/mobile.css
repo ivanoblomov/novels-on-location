@@ -1,61 +1,10 @@
 /*= require_self */
-@media screen and (-webkit-min-device-pixel-ratio:1.5),screen and (-o-min-device-pixel-ratio:3/2),screen and (-moz-device-pixel-ratio:1.5),screen and (min-device-pixel-ratio:1.5){
-	html{background-size:64px 64px;}
+body#blog{font-family:"Helvetica Neue",helvetica,arial,"Lucida Grande",sans-serif; font-size:14pt}
+iframe#sample-novels{width:100%; height:500px}
+@media only screen and (min-device-width: 320px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
+	html{background-size:64px 64px}
+  body#blog{font-size:24pt; margin:80pt}
 }
-@media screen and (min-width:900px){
-	#header{width:171px;}
-	#fullbleed{visibility:hidden;}
-	#content{
-		position:absolute;
-		top:-4px;
-		left:195px;
-		right:0px;
-		max-width:800px;
-	}
-	#logo{
-		float:none;
-		margin-bottom:35px;
-	}
-	#nav{
-		position:relative;
-		left:37px;
-	}
-	#nav a{
-		display:block;
-		float:right;
-		clear:both;
-		margin-bottom:7px;
-	}
-}
-@media screen and (max-width:500px){
-	#page{margin-top:5%;}
-	#header{
-		margin-left:5%;
-		margin-right:5%;
-		margin-bottom:20px;
-		position:relative;
-		left:2px;
-		}
-	#content{
-		margin-left:5%;
-		margin-right:5%;
-	}
-	#logo{
-		position:relative;
-		margin-bottom:15px;
-		left:-2px;
-		bottom:-2px;
-		font-size:18pt;
-		margin-bottom:5px;
-	}
-	#nav{
-		clear:both;
-		left:-10px;
-	}
-	#nav a{
-		font-size:11pt;
-	padding:2px;
-	padding-left:8px;
-	padding-right:8px;
-	}
+@media only screen and (min-device-width: 768px) and (max-device-width: 1600px) and (-webkit-min-device-pixel-ratio: 1) {
+  body#blog{border-left:200px #3B5998 solid; margin:0; padding:25px}
 }

@@ -1,3 +1,3 @@
 Rails.application.config.assets.precompile += %w(
-  safari.css google_analytics.js 1140.css admin.css
+  1140 admin ajax_crawling google_analytics ios mobile print safari
 )

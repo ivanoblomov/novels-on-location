@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset=utf-8 />
+  <meta charset=utf-8 />
 	<title>Integration Notes - Novels: On Location</title>
   <meta name=description content="Novels: On Location is the Web's best way to find novels by setting. Whether you're an author or just a fan, learn how to integrate Novels with your site to promote your favorite books."/>
   <link rel=canonical href="/integration"/>
-  <style>
-        body{border-left:200px #3B5998 solid;font-family:"Helvetica Neue",helvetica,arial,"Lucida Grande",sans-serif;font-size:10pt;height:100%;margin:0;padding:25px;width:65%}
-	</style>
-	<% if nibbler? %><%= stylesheet_link_tag 'mobile' %><%= stylesheet_link_tag 'print', :media => 'print' %><% end %>
+	<%= stylesheet_link_tag 'mobile' %>
+	<%= stylesheet_link_tag 'print', :media => 'print' %>
 	<%= javascript_include_tag 'google_analytics', 'https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js' %>
 </head>
-<body>
+<body id="blog">
 <h1>
 	<em>Novels: On Location</em> Integration Notes
 </h1>
@@ -25,12 +23,16 @@
 	Integrate <em>Novels: On Location</em> with Your Blog
 </h2>
 <ol>
-	<li> To integrate Novels: On Location with your blog or web site, just use the following HTML: <pre class=prettyprint><code>&lt;div&gt;
-    &lt;iframe src="http://novelsonlocation.com/" style="width:90%;height:500px"&gt;&lt;/iframe&gt;&lt;br/&gt;
-    Visit &lt;a href="http://novelsonlocation.com"&gt;Novels: On Location&lt;/a&gt; and make your next
-    destination come alive!
-&lt;/div&gt;
-</code></pre></li>
+	<li> To integrate Novels: On Location with your blog or web site, just use the following HTML:
+    <p>
+      <code>&lt;div&gt;<br />
+        &nbsp; &lt;iframe src="http://novelsonlocation.com/" style="width:90%;height:500px"&gt;&lt;/iframe&gt;&lt;br/&gt;<br />
+        &nbsp; Visit &lt;a href="http://novelsonlocation.com"&gt;Novels: On Location&lt;/a&gt; and make your next
+        destination come alive!<br />
+    &lt;/div&gt;<br />
+      </code>
+    </p>
+  </li>
 	<li> Tweak the width or height as needed. </li>
 </ol>
 <p>
@@ -46,19 +48,21 @@
 		<li>search for specific pins by <em>typing keywords into the search box</em>
 		<li>display pins for a specific novel, author, or reader by <em>selecting one of their pins and clicking <strong>All Locations for Novel</strong>, <strong>All Novels by Author</strong>, or <strong>All Pins by Reader</strong></em></li>
 	</ul>
-	<li>Paste the resulting URL from your browser into the same HTML snippet above. It should look something like this: <pre class=prettyprint><code>&lt;div&gt;
-    &lt;iframe src="http://novelsonlocation.com/#!search-hemingway" style="width:90%;height:500px"&gt;
-    &lt;/iframe&gt;&lt;br/&gt;
-    Visit &lt;a href="http://novelsonlocation.com"&gt;Novels: On Location&lt;/a&gt; and make your next
-    destination come alive!
-&lt;/div&gt;
-</code></pre></li>
+	<li>Paste the resulting URL from your browser into the same HTML snippet above. It should look something like this:
+    <p>
+      <code>&lt;div&gt;<br />
+        &nbsp; &lt;iframe src="http://novelsonlocation.com/#!search-hemingway" style="width:90%;height:500px"&gt;&lt;/iframe&gt;&lt;br/&gt;<br />
+        &nbsp; Visit &lt;a href="http://novelsonlocation.com"&gt;Novels: On Location&lt;/a&gt; and make your next destination come alive!<br />
+      &lt;/div&gt;
+      </code>
+    <p>
+  </li>
 </ol>
 <p>
 	If everything went well, your site should now have an embedded view of Novels: On Location like so...
 </p>
-<div style="text-align:center">
-	<iframe src="http://novelsonlocation.com/#!search-hemingway" style="width:90%;height:500px"></iframe><br />
+<div>
+	<iframe id="sample-novels" src="http://novelsonlocation.com/#!search-hemingway"></iframe><br />
 	Visit <a href="http://novelsonlocation.com">Novels: On Location</a> and make your next destination come alive!
 </div>
 <p>

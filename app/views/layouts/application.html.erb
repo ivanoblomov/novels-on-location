@@ -13,9 +13,9 @@
   @title ||= default_title
 %>
 <title><%= @title %></title>
-<% unless w3c_validator? %><meta name=apple-itunes-app content="app-id=625973663<%= ",app-argument=http://#{Rails.application.config.main_host}/locations/#{@location.slug}" if @location %>"/><% end %>
+<meta name=apple-itunes-app content="app-id=625973663<%= ",app-argument=http://#{Rails.application.config.main_host}/locations/#{@location.slug}" if @location %>"/>
 <meta name=apple-mobile-web-app-capable content="yes"/>
-<meta name=description content="<%= @meta_description %>"/><% unless w3c_validator? %>
+<meta name=description content="<%= @meta_description %>"/><% if w3c_validator? %>
 <meta name="fragment" content="!"/><% end %>
 <meta name=keywords content="<%= @meta_keywords || 'google maps, amazon, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
 <meta property="<%= property %>" content="<%= content %>"/><% end if facebook? || Rails.env.development?; if params[:canonical_url] %>
@@ -48,8 +48,8 @@ a.store{background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/bad
 #applesearch .sbox input{background:url(<%= asset_path 'srch_bg.gif' %>) repeat-x top left;border:0;float:left;font:11px/13px arial;padding:3px}
 #book-input{width:101px}
 #headers{bottom:10px;color:#fff;margin:10px;position:absolute;z-index:-1}
-#integration-link{bottom:2px;font-weight:bold;margin-left:15%;position:absolute}
-#integration-link a,a:link,a:visited{color:#666} a:active{color:#f00}
+#integration-link{bottom:2px;font-weight:bold;margin-left:9%;position:absolute}
+#integration-link a,a:link,a:visited{color:#fff} a:active{color:#f00}
 #mail-button{margin:3px 2px 0 1px}
 #mode-button{width:98px;height:18px}
 #pin-display-button{width:100px;height:18px}
@@ -58,11 +58,13 @@ a.store{background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/bad
 #social-toolbar{bottom:0;margin-left:40%;position:absolute}
 #toolbar{position:absolute;right:156px;top:4px}
 #tweet{border:0;width:61px;height:20px}
-@media print{@page{size:landscape}
-.no-print{display:none}
-#headers{z-index:1}}</style>
+</style>
 <link rel="shortcut icon" href="favicon.ico?v=2"/>
-<%= stylesheet_link_tag 'safari' if safari_pc? %><%= stylesheet_link_tag 'ie' if ie? %><%= stylesheet_link_tag 'ios' if ios? %><% if nibbler? %><%= stylesheet_link_tag 'mobile' %><%= stylesheet_link_tag 'print', :media => 'print' %><% end %>
+<%= stylesheet_link_tag 'safari' if safari_pc? %>
+<%= stylesheet_link_tag 'ie' if ie? %>
+<%= stylesheet_link_tag 'ios' if ios? %>
+<%= stylesheet_link_tag 'mobile' %>
+<%= stylesheet_link_tag 'print', :media => 'print' %>
 <%= javascript_include_tag 'google_analytics' %>
 </head>
 <body>
@@ -75,16 +77,16 @@ a.store{background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/bad
 </div>
 <input type=button class=map id=mode-button title="Double-click map to zoom. Click to toggle" value="Mode: Zoom"/>
 <input type=button class=map id=pin-display-button title="Click to show only my pins" value="Pins: All"/>
-<%= link_to image_tag('http://r.mzstatic.com/images/web/linkmaker/badge_appstore-sm.gif', :alt => 'App Store', :width => 61, :height => 15), 'https://itunes.apple.com/us/app/novels-on-location/id625973663?mt=8&uo=4', :class => 'links', :id => 'appstore-link', :target => 'itunes_store' %>
-<%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon', :width => 20, :height => 12), :encode => 'hex', :class => 'links', :id => 'mail-button', :title => 'Send feedback' %>
-<%= link_to image_tag('gplus.png', :alt => 'Google+ Icon', :width => 18, :height => 18), 'https://plus.google.com/109501593522859919303', :class => 'links', :id => 'g-page', :title => 'Visit our Google+ page' %>
-<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon', :width => 18, :height => 18), 'http://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
+<%= link_to image_tag('http://r.mzstatic.com/images/web/linkmaker/badge_appstore-sm.gif', :alt => 'App Store'), 'https://itunes.apple.com/us/app/novels-on-location/id625973663?mt=8&uo=4', :class => 'links', :id => 'appstore-link', :target => 'itunes_store' %>
+<%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon'), :encode => 'hex', :class => 'links', :id => 'mail-button', :title => 'Send feedback' %>
+<%= link_to image_tag('gplus.png', :alt => 'Google+ Icon'), 'https://plus.google.com/109501593522859919303', :class => 'links', :id => 'g-page', :title => 'Visit our Google+ page' %>
+<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon'), 'http://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
 </div>
-<a href=integration id=integration-link title="Learn how to integrate Novels: On Location with your site">Integration Notes</a>
+<a href=integration id=integration-link title="Learn how to integrate Novels: On Location with your site">N:OL Integration Notes</a>
 <div class=no-print id=social-toolbar>
-<fb:login-button id="login-button" scope="public_profile,email"></fb:login-button>
+<% unless w3c_validator? %><fb:login-button id="login-button" scope="public_profile,email"></fb:login-button><% end %>
 <div class="fb-like" id="fb-like" data-href="<%= @location ? location_url(@location) : Rails.application.config.main_host.downcase %>" data-layout="button_count" data-action="like" data-show-faces="false"></div>
-<% unless nibbler? %><iframe<% if ie? %> allowTransparency=true frameBorder=0<% end %> id=tweet src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>"></iframe><% end %>
+<iframe<% if ie? %> allowTransparency=true frameBorder=0<% end %> id=tweet src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>"></iframe>
 <a href="https://twitter.com/novelsonloc" class="twitter-follow-button" data-show-count="false">Follow @novelsonloc</a>
 </div>
 <script src="http://maps.google.com/maps/api/js<%= "?key=#{ENV['MAPS_KEY']}" if ENV['MAPS_KEY'].present? %>"></script>

@@ -1,6 +1,7 @@
 source 'https://rubygems.org'
 ruby '2.4.1'
 
+gem 'actionview-encoded_mail_to', '~> 1.0'
 gem 'cancan', '~> 1.6'
 gem 'embiggen', '~> 1.1'
 gem 'figaro', '~> 1.1'
