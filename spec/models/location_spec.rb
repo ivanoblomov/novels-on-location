@@ -3,23 +3,23 @@ require 'spec_helper'
 describe Location do
   it 'finds a book by keyword' do
     @location = Location.new book_keywords: 'sun also rises'
-    @location.asin.should_not be_blank
-    @location.itunes_id.should_not be_blank
-    @location.title.should == 'The Sun Also Rises'
+    expect(@location.asin).to be_present
+    expect(@location.itunes_id).to be_present
+    expect(@location.title).to eq 'The Sun Also Rises'
   end
 
   it 'sets its latitude and longitude' do
     @location = Location.new
     @location.latLng = '1,2'
-    @location.lat_lng.should == %w(1 2)
+    expect(@location.lat_lng).to eq %w(1 2)
   end
 
   it "indicates if it's owned" do
-    Location.new(user_id: 1).owned?.should be true
-    Location.new(user_token: 1).owned?.should be true
+    expect(Location.new(user_id: 1).owned?).to be true
+    expect(Location.new(user_token: 1).owned?).to be true
   end
 
   it "indicates if it's unowned" do
-    Location.new.unowned?.should be true
+    expect(Location.new.unowned?).to be true
   end
 end

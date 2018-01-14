@@ -21,20 +21,20 @@ describe CandyWrapper do
 
   context 'book' do
     subject { @book }
-    specify { subject[:asin].should =~ /[0-9]{10}/ }
-    specify { subject[:author].should == 'Ernest Hemingway' }
-    specify { subject[:title].should == 'The Sun Also Rises' }
+    specify { expect(subject[:asin]).to match /[0-9]{10}/ }
+    specify { expect(subject[:author]).to eq 'Ernest Hemingway' }
+    specify { expect(subject[:title]).to eq 'The Sun Also Rises' }
   end
 
   context 'review' do
     subject { @review }
-    specify { subject[:review].should_not be_blank }
+    specify { expect(subject[:review]).to be_present }
   end
 
   context 'thumbnail' do
     subject { @thumbnail }
-    specify { subject[:image_url].should_not be_blank }
-    specify { subject[:image_width].to_i.should_not be_zero }
-    specify { subject[:image_height].to_i.should_not be_zero }
+    specify { expect(subject[:image_url]).to be_present }
+    specify { expect(subject[:image_width].to_i).to be_positive }
+    specify { expect(subject[:image_height].to_i).to be_positive }
   end
 end
