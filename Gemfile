@@ -12,7 +12,6 @@ gem 'jquery-rails'
 gem 'mongoid', '~>5'
 gem 'mongoid-slug'
 gem 'newrelic_rpm'
-gem 'parse-ruby-client'
 gem 'rack-rewrite'
 gem 'rails', '~>4'
 gem 'rails_12factor', group: :production
