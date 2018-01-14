@@ -31,7 +31,7 @@ nOL.init = function(settings) {
   nOL.defaultTitle = settings['defaultTitle'];
   nOL.host = settings['host'];
 
-  FB.init({appId:settings['fbAppId'],cookie:true,status:true});
+  FB.init({appId:settings['fbAppId'],cookie:true,status:true,version:'v2.11',xfbml:true});
   FB.getLoginStatus(function(response){
     if(response.authResponse){
       nOL.initFacebookSession(response.authResponse)
@@ -143,8 +143,8 @@ nOL.labelFacebookButton = function(value, title) {
 }
 
 nOL.updateFacebookLikeButton = function() {
-  var iframe = $('#fb-like')[0];
-  iframe.src = iframe.src.replace(/href=.+/, 'href=' + document.URL);
+  var likeButton = $('#fb-like')[0];
+  likeButton.dataset['href'] = document.URL;
 }
 
 nOL.updateShareButtons = function() {
