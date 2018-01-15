@@ -1,4 +1,3 @@
-/*= require_self */
 body#blog{font-family:"Helvetica Neue",helvetica,arial,"Lucida Grande",sans-serif; font-size:14pt}
 iframe#sample-novels{width:100%; height:500px}
 @media only screen and (min-device-width: 320px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {

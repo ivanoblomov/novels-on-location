@@ -60,10 +60,10 @@ a.store{background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/bad
 #tweet{border:0;width:61px;height:20px}
 </style>
 <link rel="shortcut icon" href="favicon.ico?v=2"/>
+<%= stylesheet_link_tag 'default' %>
 <%= stylesheet_link_tag 'safari' if safari_pc? %>
 <%= stylesheet_link_tag 'ie' if ie? %>
 <%= stylesheet_link_tag 'ios' if ios? %>
-<%= stylesheet_link_tag 'mobile' %>
 <%= stylesheet_link_tag 'print', :media => 'print' %>
 <%= javascript_include_tag 'google_analytics' %>
 </head>
