@@ -82,7 +82,7 @@ a.store{background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/bad
 <%= link_to image_tag('gplus.png', :alt => 'Google+ Icon'), 'https://plus.google.com/109501593522859919303', :class => 'links', :id => 'g-page', :title => 'Visit our Google+ page' %>
 <%= link_to image_tag('facebook.png', :alt => 'Facebook Icon'), 'http://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
 </div>
-<a href="/integration" id=integration-link title="Learn how to integrate Novels: On Location with your site">N:OL Integration Notes</a>
+<a class=no-print href="/integration" id=integration-link title="Learn how to integrate Novels: On Location with your site">N:OL Integration Notes</a>
 <div class=no-print id=social-toolbar>
 <% unless w3c_validator? %><fb:login-button id="login-button" scope="public_profile,email"></fb:login-button><% end %>
 <div class="fb-like" id="fb-like" data-href="<%= @location ? location_url(@location) : Rails.application.config.main_host.downcase %>" data-layout="button_count" data-action="like" data-show-faces="false"></div>
