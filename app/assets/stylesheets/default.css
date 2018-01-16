@@ -1,4 +1,12 @@
-body#blog{font-family:"Helvetica Neue",helvetica,arial,"Lucida Grande",sans-serif; font-size:14pt}
+body{font-family:"Helvetica Neue",helvetica,arial,"Lucida Grande",sans-serif;font-size:10pt;margin:0;padding:0}
+a{text-decoration:none}
+a:hover{text-decoration:underline}
+a img{border:0}
+h1{font-size:12pt}
+h1.large{font-size:24pt}
+h2{font-size:10pt;margin:-10px 0 10px 0}
+h3{font-size:10pt;margin-bottom:-10px}
+body#blog{font-size:14pt}
 iframe#sample-novels{width:100%; height:500px}
 @media only screen and (min-device-width: 320px) and (max-device-width: 667px) and (-webkit-min-device-pixel-ratio: 2) {
 	html{background-size:64px 64px}
