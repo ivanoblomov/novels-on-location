@@ -3,8 +3,8 @@ class ApplicationController < ActionController::Base
   MAPS_ERROR = "Sorry, can't geocode your location. Google Maps only allows "\
                'us to query their server so many times a day. Please try '\
                'again tomorrow!'
-  NIBBLER_AGENT = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; '\
-                  'rv:1.9.1.3) Gecko/20090824 Firefox/3.5.3'
+  NIBBLER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 '\
+                  '(KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36'
   NOT_FOUND = /Document not found|Missing template|No route|No action/
 
   helper_method %i(
