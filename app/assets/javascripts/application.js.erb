@@ -33,11 +33,7 @@ nOL.init = function(settings) {
 
   FB.init({appId:settings['fbAppId'],cookie:true,status:true,version:'v2.11',xfbml:true});
   FB.getLoginStatus(function(response){
-    if(response.authResponse){
-      nOL.initFacebookSession(response.authResponse)
-    }else{
-      $.cookie('fb_id', null)
-    };
+    nOL.statusChangeCallback(response);
   });
 
   nOL.map = new google.maps.Map($('#map-canvas')[0], {
@@ -98,7 +94,15 @@ nOL.init = function(settings) {
     alert(settings['error']);
 }
 
-nOL.initFacebookSession = function(session) {
+nOL.statusChangeCallback = function(response) {
+  if (response.status === 'connected') {
+    nOL.initSession(response.authResponse)
+  } else {
+    $.cookie('fb_id', null)
+  };
+}
+
+nOL.initSession = function(session) {
   nOL.fb_session = session;
   $.cookie('fb_id', nOL.fb_session.userID);
   nOL.labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
@@ -138,8 +142,9 @@ nOL.getFriends = function() {
 }
 
 nOL.labelFacebookButton = function(value, title) {
-  $('#login-button')[0].value = value;
-  $('#login-button')[0].title = title;
+  console.log('labelFacebookButton');
+  console.log(value);
+  console.log(title);
 }
 
 nOL.updateFacebookLikeButton = function() {
@@ -186,8 +191,12 @@ nOL.loggedIn = function() {
 
 nOL.logIn = function() {
   FB.login(function(response) {
+    console.log(response);
     if (response.authResponse) {
-      nOL.initFacebookSession(response.authResponse);
+      nOL.initSession(response.authResponse);
+      document.location.reload();
+    } else {
+      console.log('193');
     }
   });
 }
