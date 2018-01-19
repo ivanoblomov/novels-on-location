@@ -105,7 +105,6 @@ nOL.statusChangeCallback = function(response) {
 nOL.initSession = function(session) {
   nOL.fb_session = session;
   $.cookie('fb_id', nOL.fb_session.userID);
-  nOL.labelFacebookButton('Log Out\u00a0', 'Log out of Facebook');
   nOL.setPinDisplayPrompt();
   nOL.getFriends();
 }
@@ -139,12 +138,6 @@ nOL.getFriends = function() {
     nOL.friends = response.data;
     nOL.getFriendIds();
   });
-}
-
-nOL.labelFacebookButton = function(value, title) {
-  console.log('labelFacebookButton');
-  console.log(value);
-  console.log(title);
 }
 
 nOL.updateFacebookLikeButton = function() {
@@ -202,11 +195,13 @@ nOL.logIn = function() {
 }
 
 nOL.logOut = function() {
+  console.log('logOut');
   FB.logout(function(response) {
-    nOL.labelFacebookButton('Log In \u00a0 ', 'Log into Facebook');
     $.cookie('fb_id', null)
     nOL.listenForLogin();
   });
+  console.log($.cookie('fb_id'));
+  console.log('end');
 }
 
 nOL.toggleLogin = function() {

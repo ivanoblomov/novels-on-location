@@ -77,7 +77,7 @@ a.store{background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/bad
 </div>
 <a class=no-print href="/integration" id=integration-link title="Learn how to integrate Novels: On Location with your site">N:OL Integration Notes</a>
 <div class=no-print id=social-toolbar>
-<% unless w3c_validator? %><fb:login-button id="login-button" scope="public_profile,email"></fb:login-button><% end %>
+<% unless w3c_validator? %><div class="fb-login-button" id="login-button" data-max-rows="1" data-size="small" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div><% end %>
 <div class="fb-like" id="fb-like" data-href="<%= @location ? location_url(@location) : Rails.application.config.main_host.downcase %>" data-layout="button_count" data-action="like" data-show-faces="false"></div>
 <iframe<% if ie? %> allowTransparency=true frameBorder=0<% end %> id=tweet src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>"></iframe>
 <a href="https://twitter.com/novelsonloc" class="twitter-follow-button" data-show-count="false">Follow @novelsonloc</a>
