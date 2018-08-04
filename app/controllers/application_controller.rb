@@ -71,6 +71,10 @@ class ApplicationController < ActionController::Base
     request.user_agent == NIBBLER_AGENT
   end
 
+  def privacy
+    render layout: false
+  end
+
   def sitemap
     respond_to do |format|
       format.html { error_404 }
