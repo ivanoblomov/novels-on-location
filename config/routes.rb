@@ -36,6 +36,7 @@ NovelsOnLocation::Application.routes.draw do
 
   get 'admin' => 'admin/locations#index'
   get 'integration' => 'application#integration'
+  get 'privacy' => 'application#privacy'
   get 'sitemap' => 'application#sitemap'
   resources :locations do
     member do
