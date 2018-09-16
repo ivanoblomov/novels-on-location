@@ -9,7 +9,7 @@ NovelsOnLocation::Application.routes.draw do
     def initialize; end
 
     def matches?(request)
-      request.host != Rails.application.config.main_host.downcase
+      request.host != Rails.application.config.main_host.downcase && !request.host.include?('herokuapp.com')
     end
   end
 
