@@ -250,6 +250,11 @@ nOL.processAnchorQuery = function() {
   nOL.setPinDisplayPrompt();
 }
 
+nOL.promptForRemap = function(id, address) {
+  var value = prompt('Update address to remap this pin.', unescape(address));
+  if (value) nOL.remapPin(id, value);
+}
+
 nOL.promptForTag = function(id, tags) {
   var value = prompt('Enter some descriptive words. These will be linked to a Google search.', unescape(tags));
   if (value) nOL.tagPin(id, value);
@@ -415,6 +420,28 @@ nOL.myLocation = function(location) {
   return $.cookie('user_token') == location.user_token || (nOL.loggedIn() && location.user_id == nOL.fb_session.userID);
 }
 
+nOL.remapPin = function(id, place) {
+  nOL.geocoder.geocode( { 'address': place}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      r = results[0];
+      nOL.zoomIn(r.geometry.location);
+
+      if (nOL.shouldAddPin(r)) {
+        $.ajax({
+          type: 'PUT',
+          url: '/locations/' + id,
+          data: {
+            'location[address]': r.formatted_address,
+            'location[latLng]': r.geometry.location.toUrlValue(),
+            'location[tags]': place
+          }
+        });
+      }
+    } else
+      alert("Couldn't geocode! The error was " + status);
+  });
+}
+
 nOL.removePin = function(id) {
   nOL.hidePin(id)
   delete nOL.pins[id];
@@ -548,7 +575,7 @@ nOL.openBalloon = function(location) {
   html = '<div class="map-balloon">';
   if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location.id + '\')" type="button" value="Claim" title="Claim this pin"/>';
   if (location.writable)
-    html += '<input onClick="nOL.deletePin(\'' + location.id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location.id + '\', \'' + escape(location.tags) + '\')" type="button" value="Tag" title="Tag pin"/>';
+    html += '<input onClick="nOL.deletePin(\'' + location.id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location.id + '\', \'' + escape(location.tags) + '\')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForRemap(\'' + location.id + '\', \'' + escape(location.address) + '\')" type="button" value="Remap" title="Remap pin"/>';
   if (nOL.fb_session) {
     if (nOL.myBookmark(location))
       html += '<input onClick="nOL.unBookmarkPin(\'' + location.id + '\')" type="button" value="Un-Bookmark" title="Un-bookmark this pin"/>';
