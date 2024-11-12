@@ -32,6 +32,7 @@ group :test do
   gem 'cucumber-rails', require: false
   gem 'database_cleaner'
   gem 'mocha', require: 'mocha/api'
+  gem 'pry'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'simplecov'
