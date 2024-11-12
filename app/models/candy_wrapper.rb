@@ -1,7 +1,7 @@
-# Wrapper for Sucker https://github.com/ryanmarshall/sucker
+# Wrapper for Vacuum https://github.com/hakanensari/vacuum
 class CandyWrapper
   def self.book(keyword)
-    book = first_book open search_args keyword
+    book = first_book open(keyword)
     return if book.blank? || book[:asin].blank?
     book.merge(thumbnail(book[:asin])).merge(review book[:asin])
   end
@@ -13,7 +13,9 @@ class CandyWrapper
   end
 
   def self.thumbnail(asin)
-    i = response_group(asin, 'Images').find('ThumbnailImage')[0]
+    i = response_group(asin, 'Images')
+    p i
+    i.find('ThumbnailImage')[0]
     return {} if i.blank?
 
     {
@@ -33,10 +35,15 @@ class CandyWrapper
   end
   private_class_method :first_book
 
-  def self.open(request)
-    s = Sucker.new
-    s << request
-    s.get
+  def self.open(keyword)
+    v = Vacuum.new(marketplace: 'US',
+                   access_key: 'AKIAJ2VOBQECW7H7GQOQ',
+                   secret_key: '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',
+                   partner_tag: 'novonloc-20')
+    v.persistent
+    r = v.search_items(keywords: keyword.to_s)
+    h = r.to_h
+    raise RuntimeError, r.to_h['Errors'][0]['Message'] unless r.status.ok?
   end
   private_class_method :open
 
@@ -49,13 +56,4 @@ class CandyWrapper
     )
   end
   private_class_method :response_group
-
-  def self.search_args(keyword)
-    {
-      operation: 'ItemSearch',
-      search_index: 'Books',
-      keywords: keyword
-    }
-  end
-  private_class_method :search_args
 end

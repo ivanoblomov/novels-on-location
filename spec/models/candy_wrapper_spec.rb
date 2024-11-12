@@ -9,8 +9,6 @@ describe CandyWrapper do
       @thumbnail = CandyWrapper.thumbnail @book[:asin]
     rescue SocketError
       @no_network = true
-    rescue RuntimeError
-      @query_limit = true
     end
   end
 

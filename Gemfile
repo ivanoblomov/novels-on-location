@@ -18,9 +18,9 @@ gem 'rails'
 gem 'rails_12factor', group: :production
 gem 'responders'
 gem 'scaffold_logic'
-gem 'sucker'
 gem 'thin'
 gem 'twitter'
+gem 'vacuum'
 
 group :assets do
   gem 'sass-rails'
