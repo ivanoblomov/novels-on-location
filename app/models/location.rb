@@ -77,7 +77,7 @@ class Location
   before_save :set_address
   has_one :tweeted_location
   slug :title, history: true
-  validates_presence_of :title
+  validates :title, presence: true
 
   def self.book_count
     Location.all.map(&:asin).uniq.size
@@ -131,7 +131,7 @@ class Location
   end
 
   def self.scope_for_kind(kind, query)
-    return send :all if kind.blank? || !SCOPES_BY_KIND.keys.include?(kind)
+    return send :all if kind.blank? || !SCOPES_BY_KIND.key?(kind)
 
     send SCOPES_BY_KIND[kind], query
   end
@@ -242,7 +242,7 @@ class Location
   end
 
   def nol_url
-    return unless title.present?
+    return if title.blank?
 
     "http://#{Rails.application.config.main_host}"\
     "#{Rails.application.routes.url_helpers.location_path(self)}"
@@ -261,7 +261,7 @@ class Location
 
   def place
     place = (usa? ? [city, state] : [city, country]).compact * ', '
-    place.blank? ? address : place
+    place.presence || address
   end
 
   def terms
@@ -331,7 +331,7 @@ class Location
   end
 
   def set_address
-    send :displace unless matching_coordinates.blank?
+    send :displace if matching_coordinates.present?
     set_address_info
   rescue StandardError => e
     Rails.logger.warn "Can't set address for #{slug || to_s}"
@@ -339,7 +339,7 @@ class Location
   end
 
   def set_address_info
-    return unless place.blank?
+    return if place.present?
 
     geocode lat_lng ? lat_lng * ', ' : tags
   end

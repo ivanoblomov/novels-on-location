@@ -28,7 +28,7 @@ class TweetedLocation
   after_create :create_location
   before_create :unique?
   belongs_to :location
-  validates_presence_of :text
+  validates :text, presence: true
 
   def to_s
     location ? location.to_s : text

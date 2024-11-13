@@ -72,7 +72,7 @@ module ApplicationHelper
     link_to @user_name || 'Reader',
             "http://www.facebook.com/profile.php?id=#{location.user_id}",
             target: '_blank',
-            title: "Go to #{@user_name || 'Reader'}'s page on Facebook"
+            title: "Go to #{@user_name || 'Reader'}'s page on Facebook", rel: 'noopener'
   end
 
   def filter_param(value)

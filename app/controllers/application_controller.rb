@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
                 with: :error_404
     rescue_from Exception do |exception|
       @exception = exception
-      @exception.message =~ NOT_FOUND ? error_404 : error_500
+      NOT_FOUND.match?(@exception.message) ? error_404 : error_500
     end
   end
 

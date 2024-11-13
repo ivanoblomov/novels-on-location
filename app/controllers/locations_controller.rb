@@ -71,7 +71,7 @@ class LocationsController < ApplicationController
   def show; end
 
   def update
-    @location.update_attributes location_params
+    @location.update location_params
     format_response
   end
 
@@ -119,8 +119,8 @@ class LocationsController < ApplicationController
 
   def location_query
     value = params[:_escaped_fragment_].split('-')[1..]
-    strip_parens CGI.unescape(params[:_escaped_fragment_].split('-')[1]) unless
-      value.blank?
+    strip_parens CGI.unescape(params[:_escaped_fragment_].split('-')[1]) if
+      value.present?
   end
 
   def locations_json
