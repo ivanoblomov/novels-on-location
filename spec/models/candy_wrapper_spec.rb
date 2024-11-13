@@ -1,28 +1,20 @@
 require 'spec_helper'
 
 describe CandyWrapper do
-  before :all do
-    begin
-      @book = CandyWrapper.book 'sun also rises'
-      @null_result = CandyWrapper.book 'muchachitas'
-      @review = CandyWrapper.review @book[:asin]
-      @thumbnail = CandyWrapper.thumbnail @book[:asin]
-    rescue SocketError
-      @no_network = true
-    end
-  end
-
-  before :each do
-    pending 'waiting for a network connection' if @no_network
-    pending 'waiting for query limit to pass' if @query_limit
-  end
-
   describe '.book' do
     context "with 'sun also rises'" do
-      subject { @book }
+      subject do
+        CandyWrapper.book 'sun also rises'
+      rescue HTTP::ConnectionError
+        pending 'waiting for a network connection'
+        raise
+      rescue RuntimeError => e
+        pending e.message
+        raise
+      end
 
       describe ':asin' do
-        it { expect(subject[:asin]).to match /[0-9]{10}/ }
+        it { expect(subject[:asin]).to match(/[0-9]{10}/) }
       end
       describe ':author' do
         it { expect(subject[:author]).to eq 'Ernest Hemingway' }
@@ -34,7 +26,17 @@ describe CandyWrapper do
   end
   describe '.review' do
     context 'with a valid ASIN' do
-      subject { @review }
+      let(:book) { CandyWrapper.book('sun also rises') }
+
+      subject do
+        CandyWrapper.review book[:asin]
+      rescue HTTP::ConnectionError
+        pending 'waiting for a network connection'
+        raise
+      rescue RuntimeError => e
+        pending e.message
+        raise
+      end
 
       describe ':review' do
         it { expect(subject[:review]).to be_present }
@@ -43,7 +45,17 @@ describe CandyWrapper do
   end
   describe '.thumbnail' do
     context 'with a valid ASIN' do
-      subject { @thumbnail }
+      let(:book) { CandyWrapper.book('sun also rises') }
+
+      subject do
+        CandyWrapper.thumbnail book[:asin]
+      rescue HTTP::ConnectionError
+        pending 'waiting for a network connection'
+        raise
+      rescue RuntimeError => e
+        pending e.message
+        raise
+      end
 
       describe ':image_url' do
         it { expect(subject[:image_url]).to be_present }
