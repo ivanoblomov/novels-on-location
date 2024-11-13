@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '3.3'
+ruby '3.3.6'
 
 gem 'actionview-encoded_mail_to'
 gem 'cancan'
