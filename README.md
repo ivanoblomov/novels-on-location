@@ -1,6 +1,8 @@
 # Novels: On Location
 
-This README would normally document whatever steps are necessary to get your application up and running.
+[![test](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml/badge.svg)](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml)
+[![Maintainability](https://api.codeclimate.com/v1/badges/9818a986253d2a477bb8/maintainability)](https://codeclimate.com/github/ivanoblomov/novels-on-location/maintainability)
+[![Coverage Status](https://coveralls.io/repos/github/ivanoblomov/novels-on-location/badge.svg?branch=main&kill_cache=1)](https://coveralls.io/github/ivanoblomov/novels-on-location?branch=main)
 
 ## Back-up DB
 
@@ -8,10 +10,3 @@ This README would normally document whatever steps are necessary to get your app
 mongo ds035735.mlab.com:35735/heroku_1gh6pvr9 -u heroku_1gh6pvr9 -p heroku_1gh6pvr9
 mongodump -h ds035735.mlab.com:35735 -d heroku_1gh6pvr9 -u heroku_1gh6pvr9 -p heroku_1gh6pvr9 -o ./db/backups/novels
 ```
-
-
-### What is this repository for? ###
-
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
