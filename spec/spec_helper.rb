@@ -7,7 +7,3 @@ Object.send(:remove_const, :ActiveRecord) # hack to avoid mysterious ActiveRecor
 require 'rspec/rails'
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
-
-RSpec.configure do |config|
-  config.mock_with :mocha
-end

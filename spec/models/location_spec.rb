@@ -19,7 +19,20 @@ describe Location do
       end
     end
     context "with book_keywords: 'sun also rises'" do
-      subject(:location) { Location.new(book_keywords: 'sun also rises') }
+      before { allow(CandyWrapper).to receive(:book).with(keywords).and_return(metadata) }
+
+      let(:metadata) do
+        {
+          asin: 'asin-value',
+          itunes_id: 'itunes-id',
+          title: 'title'
+        }
+      end
+      let(:keywords) { { book_keywords: 'sun also rises' } }
+
+      subject(:location) do
+        Location.new(keywords)
+      end
 
       describe '#asin' do
         it { expect(location.asin).to be_present }
