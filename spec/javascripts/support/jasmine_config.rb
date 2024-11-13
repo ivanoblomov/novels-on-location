@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
 module Jasmine
+  # rubocop:disable Lint/EmptyClass
   class Config
     # Add your overrides or custom config code here
   end
+  # rubocop:enable Lint/EmptyClass
 end
 
 # Note - this is necessary for rspec2, which has removed the backtrace

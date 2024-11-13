@@ -17,6 +17,7 @@ unless ARGV.any? { |a| a =~ /^gems/ }
   begin
     require 'cucumber/rake/task'
 
+    # rubocop:disable Metrics/BlockLength
     namespace :cucumber do
       Cucumber::Rake::Task.new({ ok: 'test:prepare' },
                                'Run features that should pass') do |t|
@@ -51,6 +52,8 @@ unless ARGV.any? { |a| a =~ /^gems/ }
           File.exist?('features')
       end
     end
+    # rubocop:enable Metrics/BlockLength
+
     desc 'Alias for cucumber:ok'
     task cucumber: 'cucumber:ok'
 
@@ -63,8 +66,7 @@ unless ARGV.any? { |a| a =~ /^gems/ }
 
     # In case we don't have the generic Rails test:prepare hook,
     # append a no-op task that we can depend upon.
-    task 'test:prepare' => :environment do
-    end
+    task 'test:prepare' => :environment
 
     task stats: 'cucumber:statsetup'
   rescue LoadError

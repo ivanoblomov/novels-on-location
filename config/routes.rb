@@ -1,16 +1,17 @@
 # frozen_string_literal: true
 
+# Detect incorrect host
+class WrongHost
+  def matches?(request)
+    request.host != Rails.application.config.main_host.downcase && request.host.exclude?('herokuapp.com')
+  end
+end
+
+# rubocop:disable Metrics/BlockLength
 NovelsOnLocation::Application.routes.draw do
   scope constraints: ->(r) { r.query_parameters['_escaped_fragment_'] } do
     get '/' => 'locations#snapshots'
     get 'locations' => 'locations#snapshots'
-  end
-
-  # Detect incorrect host
-  class WrongHost
-    def matches?(request)
-      request.host != Rails.application.config.main_host.downcase && request.host.exclude?('herokuapp.com')
-    end
   end
 
   constraints(WrongHost.new) do
@@ -48,3 +49,4 @@ NovelsOnLocation::Application.routes.draw do
 
   get '*a', to: 'application#error_404'
 end
+# rubocop:enable Metrics/BlockLength

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/MethodLength
+# Navigation helpers
 module NavigationHelpers
   # Maps a name to a path. Used by the
   #
@@ -32,5 +33,6 @@ module NavigationHelpers
     end
   end
 end
+# rubocop:enable Metrics/MethodLength
 
 World(NavigationHelpers)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/ClassLength
+# Represents a novel's Location in the world.
 class Location
   include Mongoid::Document
   include Mongoid::Slug
@@ -75,7 +76,7 @@ class Location
   after_create :notify
   attr_accessor :writable
 
-  has_one :tweeted_location
+  has_one :tweeted_location, dependent: :destroy
   slug :title, history: true
   validates :title, presence: true
 
@@ -307,6 +308,7 @@ class Location
     ]
   end
 
+  # rubocop:disable Metrics/AbcSize
   def geocode(coordinates_or_keyword)
     g = GoogleMapsGeocoder.new coordinates_or_keyword
     self.address = g.formatted_address
@@ -315,9 +317,10 @@ class Location
     self.country = g.country_long_name
     self.state = g.state_short_name if usa?
   end
+  # rubocop:enable Metrics/AbcSize
 
   def negate?
-    rand(1).zero?
+    rand(2).zero?
   end
 
   def new_pin_message

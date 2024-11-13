@@ -248,4 +248,5 @@ end
 Then(/^show me the page$/) do
   # rubocop:disable Lint/Debugger
   save_and_open_page
+  # rubocop:enable Lint/Debugger
 end
