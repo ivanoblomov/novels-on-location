@@ -10,7 +10,7 @@ class LocationsController < ApplicationController
   authorize_resource only: %i[
     bookmark create destroy index new show unbookmark update
   ]
-  before_filter :find_location,
+  before_action :find_location,
                 only: %i[bookmark destroy show unbookmark update]
   helper_method :location_kind, :location_query
   respond_to :html, :json
