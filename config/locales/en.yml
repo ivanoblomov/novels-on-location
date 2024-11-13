@@ -1,4 +1,4 @@
 en:
-  application:
-    error404:
-      message: "Sorry, that novel location doesn't exist. Why not add it?"
+  locations:
+    index:
+      location_not_found: "Sorry, that novel location doesn't exist. Why not add it?"
