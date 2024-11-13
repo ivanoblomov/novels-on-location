@@ -35,5 +35,9 @@ group :test do
   gem 'pry'
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
+  gem 'rubocop-rspec_rails'
   gem 'simplecov'
 end
