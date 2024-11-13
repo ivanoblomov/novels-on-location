@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 # rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
   include ScaffoldLogic::Helper
 
   def author_link_to(location)
     return if location.author.blank?
+
     link_to "All Novels by #{location.author}",
             author_url(location),
             title: "Show all novels by #{location.author}"
@@ -83,11 +86,11 @@ module ApplicationHelper
   end
 
   def ie?
-    !(request.user_agent !~ /msie/i)
+    request.user_agent =~ /msie/i
   end
 
   def ios?
-    !(request.user_agent !~ /ipad|iphone/i)
+    request.user_agent =~ /ipad|iphone/i
   end
 
   def location(locations, attribute)
@@ -114,6 +117,7 @@ module ApplicationHelper
 
   def reader_link_to(location)
     return if location.user_id.blank?
+
     link_to "All Pins by #{@user_name || 'Reader'}",
             reader_url(location),
             title: "Show all pins added by #{@user_name || 'Reader'}"
@@ -124,7 +128,7 @@ module ApplicationHelper
   end
 
   def safari_pc?
-    !(request.user_agent !~ /safari/i) && !ios?
+    request.user_agent =~ /safari/i && !ios?
   end
 
   def title_for_location(locations, location_kind)
@@ -142,6 +146,7 @@ module ApplicationHelper
 
   def wikipedia_link_to(link_text, options = {})
     return if link_text.blank?
+
     link_to link_text,
             "http://en.wikipedia.org/wiki/#{u link_text.tr(' ', '_')}",
             {

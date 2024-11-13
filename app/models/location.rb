@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # rubocop:disable Metrics/ClassLength
 class Location
   include Mongoid::Document
@@ -5,7 +7,7 @@ class Location
   include Mongoid::Timestamps
 
   REG_EX_USER_TOKEN =
-    /[0-9A-F]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}/.freeze
+    /[0-9A-F]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}/
   SCOPES_BY_KIND = {
     'author' => :author,
     'novel' => :title,
@@ -13,9 +15,10 @@ class Location
     'reader' => :user_id,
     'search' => :search
   }.freeze
-  VIRTUAL_ATTRIBUTES = %i(
+  VIRTUAL_ATTRIBUTES = %i[
     added_at added_at_s amazon_url id itunes_affiliate_url place slug terms
-    title_for_regex writable).freeze
+    title_for_regex writable
+  ].freeze
 
   field :_slugs, type: Array, default: []
   field :address
@@ -54,7 +57,7 @@ class Location
   scope :missing_amazon, -> { where(asin: nil) }
   scope :missing_itunes, -> { where(itunes_id: nil) }
   scope :place, ->(v) { where address: /#{v}/i }
-  scope :search, lambda{ |v|
+  scope :search, lambda { |v|
     any_of(
       { address: /#{v}/i },
       { author: /#{v}/i },
@@ -70,6 +73,7 @@ class Location
 
   after_create :notify
   attr_accessor :writable
+
   before_save :set_address
   has_one :tweeted_location
   slug :title, history: true
@@ -83,6 +87,7 @@ class Location
     locations = Location.duplicate_coordinates
   )
     return if locations.blank?
+
     l = locations.last
     l.send :displace
     l.save
@@ -90,18 +95,19 @@ class Location
   end
 
   def self.duplicate_coordinates
-    Location.all.select { |l| !l.matching_coordinates.blank? }
+    Location.all.reject { |l| l.matching_coordinates.blank? }
   end
 
   def self.search_itunes(title)
     hit = ITunesSearchAPI.search(media: 'ebook', term: title).try :first
     return hit['trackId'] if hit
+
     Rails.logger.warn "iTunes can't find: #{title}"
     nil
   end
 
   def self.last_updated
-    Location.order_by([:updated_at, :desc]).limit(1).first
+    Location.order_by(%i[updated_at desc]).limit(1).first
   end
 
   def self.look_up_amazon
@@ -126,6 +132,7 @@ class Location
 
   def self.scope_for_kind(kind, query)
     return send :all if kind.blank? || !SCOPES_BY_KIND.keys.include?(kind)
+
     send SCOPES_BY_KIND[kind], query
   end
 
@@ -134,7 +141,7 @@ class Location
     self[:_id].to_s
   end
 
-  def to_json
+  def to_json(*_args)
     super methods: Location::VIRTUAL_ATTRIBUTES
   end
 
@@ -186,7 +193,7 @@ class Location
   end
 
   def from_ios?
-    !(user_token !~ REG_EX_USER_TOKEN)
+    user_token =~ REG_EX_USER_TOKEN
   end
 
   def ios_push
@@ -226,7 +233,7 @@ class Location
 
   def look_up
     set_attributes_asin_itunes_id
-  rescue
+  rescue StandardError
     Rails.logger.warn "Can't look-up #{book_keywords || asin || title}"
   end
 
@@ -236,14 +243,16 @@ class Location
 
   def nol_url
     return unless title.present?
+
     "http://#{Rails.application.config.main_host}"\
     "#{Rails.application.routes.url_helpers.location_path(self)}"
   end
 
   def notify
     return unless Rails.env.production? && !test_book?
+
     tweet
-#     ios_push
+    #     ios_push
   end
 
   def owned?
@@ -262,12 +271,13 @@ class Location
   def title_for_regex
     i = title.try(:index, '(')
     return title.to_s if i.nil?
+
     title[0..(i - 1)].strip
   end
 
   def tweet
     TWITTER_CLIENT.update tweet_message
-  rescue
+  rescue StandardError
     Rails.logger.warn "Can't tweet #{tweet_message}"
   end
 
@@ -307,7 +317,7 @@ class Location
   end
 
   def negate?
-    rand(1) == 0
+    rand(1).zero?
   end
 
   def new_pin_message
@@ -323,13 +333,14 @@ class Location
   def set_address
     send :displace unless matching_coordinates.blank?
     set_address_info
-  rescue => e
+  rescue StandardError => e
     Rails.logger.warn "Can't set address for #{slug || to_s}"
     Rails.logger.warn e.backtrace * "\n"
   end
 
   def set_address_info
     return unless place.blank?
+
     geocode lat_lng ? lat_lng * ', ' : tags
   end
 
@@ -342,6 +353,7 @@ class Location
 
   def set_itunes_id
     return if title_for_regex.blank?
+
     self.itunes_id = Location.search_itunes title_for_regex
   end
 

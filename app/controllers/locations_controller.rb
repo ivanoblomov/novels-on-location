@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 # rubocop:disable Metrics/ClassLength
 class LocationsController < ApplicationController
-  PERMITTED_PARAMS = %i(
+  PERMITTED_PARAMS = %i[
     address book_keywords latLng notes tags title user_id user_token
-  )
+  ].freeze
 
-  authorize_resource only: %i(
+  authorize_resource only: %i[
     bookmark create destroy index new show unbookmark update
-  )
+  ]
   before_filter :find_location,
-                only: %i(bookmark destroy show unbookmark update)
+                only: %i[bookmark destroy show unbookmark update]
   helper_method :location_kind, :location_query
   respond_to :html, :json
 
@@ -21,6 +23,7 @@ class LocationsController < ApplicationController
   def snapshots
     @locations = scope_for_snapshot
     return error_404 if @locations.blank?
+
     set_user_name if reader_link?
     render layout: false
   end
@@ -35,11 +38,9 @@ class LocationsController < ApplicationController
     location_params[:user_id] = current_user.id
     location_params[:user_token] = current_user.token
     @location = Location.new location_params
-    if @location.save
-      format_response
-    else
-      fail "Can't save location: #{@location.errors.full_messages}!"
-    end
+    raise "Can't save location: #{@location.errors.full_messages}!" unless @location.save
+
+    format_response
   end
 
   def destroy
@@ -50,6 +51,7 @@ class LocationsController < ApplicationController
   def index
     @locations = Location.all.to_a
     return error_404 if @locations.blank?
+
     set_user_name if reader_link?
 
     respond_to do |format|
@@ -66,8 +68,7 @@ class LocationsController < ApplicationController
     format_response
   end
 
-  def show
-  end
+  def show; end
 
   def update
     @location.update_attributes location_params
@@ -82,8 +83,8 @@ class LocationsController < ApplicationController
 
   def find_location
     @location = find_location_by_id ||
-                Location.find(Moped::BSON::ObjectId params[:id])
-  rescue
+                Location.find(Moped::BSON::ObjectId(params[:id]))
+  rescue StandardError
     if Location.where(id: params[:id]).exists?
       @location = find_location_by_id
       redirect_to canonical_location_url, status: :moved_permanently
@@ -117,7 +118,7 @@ class LocationsController < ApplicationController
   end
 
   def location_query
-    value = params[:_escaped_fragment_].split('-')[1..-1]
+    value = params[:_escaped_fragment_].split('-')[1..]
     strip_parens CGI.unescape(params[:_escaped_fragment_].split('-')[1]) unless
       value.blank?
   end
@@ -142,9 +143,7 @@ class LocationsController < ApplicationController
   end
 
   def rename_objective_c_keys(location_params)
-    Hash[
-      location_params.map { |k, v| [k == 'latLng' ? k : k.underscore, v] }
-    ]
+    location_params.transform_keys { |k| k == 'latLng' ? k : k.underscore }
   end
 
   def scope_for_snapshot

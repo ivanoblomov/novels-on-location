@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 NovelsOnLocation::Application.configure do
   config.cache_classes = true
   config.whiny_nils = true

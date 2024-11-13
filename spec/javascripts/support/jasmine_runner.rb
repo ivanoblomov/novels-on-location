@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # for gem testing purposes
 $LOAD_PATH.unshift(ENV['JASMINE_GEM_PATH']) if ENV['JASMINE_GEM_PATH']
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Outgoing mail
 class Mailer < ActionMailer::Base
   def error(request, exception)

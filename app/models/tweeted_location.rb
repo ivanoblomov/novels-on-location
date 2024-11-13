@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Restores a lost Location from its tweet.
 class TweetedLocation
   include Mongoid::Document
@@ -13,7 +15,7 @@ class TweetedLocation
   index(title: 1)
   scope :duplicates, ->(h) { where h }
   scope :invalid, -> { where location: nil }
-  scope :search, lambda{ |v|
+  scope :search, lambda { |v|
     any_of(
       { place: /#{v}/i },
       { slug: /#{v}/i },
@@ -41,6 +43,6 @@ class TweetedLocation
   end
 
   def unique?
-    TweetedLocation.duplicates(place: place, title: title).count == 0
+    TweetedLocation.duplicates(place: place, title: title).count.zero?
   end
 end

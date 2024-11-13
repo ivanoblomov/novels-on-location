@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 custom_date_formats = {
   date_time: '%b %e, %Y %I:%M %p',
   w3c_datetime: '%Y-%m-%d'

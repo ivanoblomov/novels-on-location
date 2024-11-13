@@ -1,3 +1,5 @@
-require File.expand_path('../config/application', __FILE__)
+# frozen_string_literal: true
+
+require File.expand_path('config/application', __dir__)
 require 'rake'
 NovelsOnLocation::Application.load_tasks

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe Location do
@@ -10,7 +12,7 @@ describe Location do
           before { location.latLng = '1,2' }
 
           describe '#lat_lng' do
-            it { expect(location.lat_lng).to eq %w(1 2) }
+            it { expect(location.lat_lng).to eq %w[1 2] }
           end
         end
       end
@@ -37,14 +39,14 @@ describe Location do
         it { expect(location.title).to eq 'The Sun Also Rises' }
       end
     end
-    context "with user_id: 1" do
+    context 'with user_id: 1' do
       subject(:location) { Location.new(user_id: 1) }
 
       describe '#owned?' do
         it { expect(location.owned?).to be true }
       end
     end
-    context "with user_token: 1" do
+    context 'with user_token: 1' do
       subject(:location) { Location.new(user_token: 1) }
 
       describe '#owned?' do

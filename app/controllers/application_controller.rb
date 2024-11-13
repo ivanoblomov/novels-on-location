@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Controller superclass
 class ApplicationController < ActionController::Base
   MAPS_ERROR = "Sorry, can't geocode your location. Google Maps only allows "\
@@ -7,9 +9,9 @@ class ApplicationController < ActionController::Base
                   '(KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36'
   NOT_FOUND = /Document not found|Missing template|No route|No action/
 
-  helper_method %i(
+  helper_method %i[
     current_user facebook? inject_writable_flag nibbler? w3c_validator?
-  )
+  ]
   protect_from_forgery if: proc { |c| c.request.format.json? },
                        with: :null_session
 

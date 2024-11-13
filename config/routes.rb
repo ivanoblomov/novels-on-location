@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 NovelsOnLocation::Application.routes.draw do
   scope constraints: ->(r) { r.query_parameters['_escaped_fragment_'] } do
     get '/' => 'locations#snapshots'
