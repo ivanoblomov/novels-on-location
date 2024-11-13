@@ -9,7 +9,7 @@
 # Don't load anything when running the gems:* tasks
 unless ARGV.any? { |a| a =~ /^gems/ }
 
-  vendored_cucumber_bin = Dir["#{Rails.root.join('vendor/{gems,plugins}/')}"\
+  vendored_cucumber_bin = Dir["#{Rails.root.join('vendor/{gems,plugins}/')}" \
                               'cucumber*/bin/cucumber'].first
   $LOAD_PATH.unshift("#{File.dirname(vendored_cucumber_bin)}/../lib") unless
     vendored_cucumber_bin.nil?
@@ -33,7 +33,7 @@ unless ARGV.any? { |a| a =~ /^gems/ }
       end
 
       Cucumber::Rake::Task.new({ rerun: 'test:prepare' },
-                               'Record failing features and run only them'\
+                               'Record failing features and run only them' \
                                'if any exist') do |t|
         t.binary = vendored_cucumber_bin
         t.fork = true # You may get faster startup if you set this to false
@@ -45,9 +45,9 @@ unless ARGV.any? { |a| a =~ /^gems/ }
 
       task statsetup: :environment do
         require 'rails/code_statistics'
-        ::STATS_DIRECTORIES << ['Cucumber features', 'features'] if
+        STATS_DIRECTORIES << ['Cucumber features', 'features'] if
           File.exist?('features')
-        ::CodeStatistics::TEST_TYPES << 'Cucumber features' if
+        CodeStatistics::TEST_TYPES << 'Cucumber features' if
           File.exist?('features')
       end
     end
@@ -57,8 +57,8 @@ unless ARGV.any? { |a| a =~ /^gems/ }
     task default: :cucumber
 
     task features: :cucumber do
-      warn "*** The 'features' task is deprecated. See"\
-                  'rake -T cucumber ***'
+      warn "*** The 'features' task is deprecated. See" \
+           'rake -T cucumber ***'
     end
 
     # In case we don't have the generic Rails test:prepare hook,

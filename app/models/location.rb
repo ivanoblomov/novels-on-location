@@ -71,10 +71,10 @@ class Location
   scope :user_id, ->(v) { where user_id: v }
   scope :with_lat_lng, ->(v) { where lat_lng: v }
 
+  before_save :set_address
   after_create :notify
   attr_accessor :writable
 
-  before_save :set_address
   has_one :tweeted_location
   slug :title, history: true
   validates :title, presence: true
@@ -142,7 +142,7 @@ class Location
   end
 
   def to_json(*_args)
-    super methods: Location::VIRTUAL_ATTRIBUTES
+    super(methods: Location::VIRTUAL_ATTRIBUTES)
   end
 
   def to_s
@@ -159,8 +159,8 @@ class Location
   end
 
   def amazon_url
-    "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag"\
-    "=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
+    "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag" \
+      "=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
   end
 
   def add_bookmark(user_id)
@@ -244,8 +244,8 @@ class Location
   def nol_url
     return if title.blank?
 
-    "http://#{Rails.application.config.main_host}"\
-    "#{Rails.application.routes.url_helpers.location_path(self)}"
+    "http://#{Rails.application.config.main_host}" \
+      "#{Rails.application.routes.url_helpers.location_path(self)}"
   end
 
   def notify
@@ -321,8 +321,8 @@ class Location
   end
 
   def new_pin_message
-    "A fan just pinned \"#{title_for_regex.truncate 50}\""\
-    "#{place.blank? ? '' : " to #{place}"}."
+    "A fan just pinned \"#{title_for_regex.truncate 50}\"" \
+      "#{place.blank? ? '' : " to #{place}"}."
   end
 
   def random_delta

@@ -33,21 +33,6 @@ class LocationsController < ApplicationController
     format_response
   end
 
-  # CRUD =======================================================================
-  def create
-    location_params[:user_id] = current_user.id
-    location_params[:user_token] = current_user.token
-    @location = Location.new location_params
-    raise "Can't save location: #{@location.errors.full_messages}!" unless @location.save
-
-    format_response
-  end
-
-  def destroy
-    @location.destroy
-    format_response
-  end
-
   def index
     @locations = Location.all.to_a
     return error_404 if @locations.blank?
@@ -63,15 +48,30 @@ class LocationsController < ApplicationController
     end
   end
 
+  def show; end
+
   def new
     @location = Location.new location_params
     format_response
   end
 
-  def show; end
+  # CRUD =======================================================================
+  def create
+    location_params[:user_id] = current_user.id
+    location_params[:user_token] = current_user.token
+    @location = Location.new location_params
+    raise "Can't save location: #{@location.errors.full_messages}!" unless @location.save
+
+    format_response
+  end
 
   def update
     @location.update location_params
+    format_response
+  end
+
+  def destroy
+    @location.destroy
     format_response
   end
 
@@ -85,7 +85,7 @@ class LocationsController < ApplicationController
     @location = find_location_by_id ||
                 Location.find(Moped::BSON::ObjectId(params[:id]))
   rescue StandardError
-    if Location.where(id: params[:id]).exists?
+    if Location.exists?(id: params[:id])
       @location = find_location_by_id
       redirect_to canonical_location_url, status: :moved_permanently
     else

@@ -17,8 +17,8 @@ module ApplicationHelper
   end
 
   def default_title
-    "Novels: On Location - #{Location.book_count} Novels/#{Location.count} "\
-    'Locations'
+    "Novels: On Location - #{Location.book_count} Novels/#{Location.count} " \
+      'Locations'
   end
 
   def description_for_mapped_setting(locations)
@@ -27,10 +27,10 @@ module ApplicationHelper
       "#{locations.first.title}" mapped on #{Rails.application.config
       .main_host}.)
     else
-      "#{locations.size} settings from the novels "\
-      "#{location @locations, :title} mapped on "\
-      "#{Rails.application.config.main_host}. The locations "\
-      "include #{location @locations, :address}."
+      "#{locations.size} settings from the novels " \
+        "#{location @locations, :title} mapped on " \
+        "#{Rails.application.config.main_host}. The locations " \
+        "include #{location @locations, :address}."
     end
   end
 
@@ -48,8 +48,8 @@ module ApplicationHelper
   end
 
   def description_for_search(locations)
-    "A search for \"#{location_query}\" returns "\
-    "#{description_for_setting locations}"
+    "A search for \"#{location_query}\" returns " \
+      "#{description_for_setting locations}"
   end
 
   def description_for_setting(locations)
@@ -57,15 +57,15 @@ module ApplicationHelper
       "the setting #{location @locations, :address} from the novel \"#{locations
       .first.title}\" on #{Rails.application.config.main_host}."
     else
-      "#{locations.size} settings from the novels "\
-      "#{location @locations, :title} on #{Rails.application.config.main_host}"\
-      ". The locations include #{location @locations, :address}."
+      "#{locations.size} settings from the novels " \
+        "#{location @locations, :title} on #{Rails.application.config.main_host}" \
+        ". The locations include #{location @locations, :address}."
     end
   end
 
   def description_for_novel(locations)
-    "#{phrase_for_novel locations} has "\
-    "#{description_for_mapped_setting locations}"
+    "#{phrase_for_novel locations} has " \
+      "#{description_for_mapped_setting locations}"
   end
 
   def facebook_link_to(location)

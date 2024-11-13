@@ -25,8 +25,8 @@ class TweetedLocation
   }
   scope :sorted, -> { order created_at: :asc }
 
-  after_create :create_location
   before_create :unique?
+  after_create :create_location
   belongs_to :location
   validates :text, presence: true
 

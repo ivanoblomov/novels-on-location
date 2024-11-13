@@ -2,10 +2,10 @@
 
 # Controller superclass
 class ApplicationController < ActionController::Base
-  MAPS_ERROR = "Sorry, can't geocode your location. Google Maps only allows "\
-               'us to query their server so many times a day. Please try '\
+  MAPS_ERROR = "Sorry, can't geocode your location. Google Maps only allows " \
+               'us to query their server so many times a day. Please try ' \
                'again tomorrow!'
-  NIBBLER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 '\
+  NIBBLER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 ' \
                   '(KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36'
   NOT_FOUND = /Document not found|Missing template|No route|No action/
 
@@ -34,17 +34,17 @@ class ApplicationController < ActionController::Base
   end
 
   def error_404
-    flash[:error] = "Sorry, that novel location doesn't exist. Why not add it?"
+    flash.now[:error] = "Sorry, that novel location doesn't exist. Why not add it?"
     render template: 'error', status: :not_found
   end
 
   def error_500
     Mailer.error(request, @exception).deliver
-    flash[:error] = if @exception.message.include?('query limit')
-                      MAPS_ERROR
-                    else
-                      @exception.message
-                    end
+    flash.now[:error] = if @exception.message.include?('query limit')
+                          MAPS_ERROR
+                        else
+                          @exception.message
+                        end
     render template: 'error', status: :internal_server_error
   end
 
