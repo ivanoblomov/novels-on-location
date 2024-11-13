@@ -365,3 +365,4 @@ class Location
     "#{new_pin_message} Learn more at #{nol_url} #lp"
   end
 end
+# rubocop:enable Metrics/ClassLength

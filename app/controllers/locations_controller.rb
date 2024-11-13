@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # rubocop:disable Metrics/ClassLength
+# Manages Locations.
 class LocationsController < ApplicationController
   PERMITTED_PARAMS = %i[
     address book_keywords latLng notes tags title user_id user_token
@@ -40,7 +41,9 @@ class LocationsController < ApplicationController
     set_user_name if reader_link?
 
     respond_to do |format|
+      # rubocop:disable Lint/EmptyBlock
       format.html {}
+      # rubocop:enable Lint/EmptyBlock
       format.json do
         cookies.permanent[:user_token] = user_token
         render json: locations_json, layout: false
@@ -170,3 +173,4 @@ class LocationsController < ApplicationController
     params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
   end
 end
+# rubocop:enable Metrics/ClassLength

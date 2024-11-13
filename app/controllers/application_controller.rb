@@ -18,10 +18,10 @@ class ApplicationController < ActionController::Base
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActionController::UnknownController,
                 Mongoid::Errors::DocumentNotFound,
-                with: :error_404
+                with: :error404
     rescue_from Exception do |exception|
       @exception = exception
-      NOT_FOUND.match?(@exception.message) ? error_404 : error_500
+      NOT_FOUND.match?(@exception.message) ? error404 : error500
     end
   end
 
@@ -33,12 +33,12 @@ class ApplicationController < ActionController::Base
     User.new request.cookies['fb_id'], request.cookies['user_token']
   end
 
-  def error_404
-    flash.now[:error] = "Sorry, that novel location doesn't exist. Why not add it?"
+  def error404
+    flash.now[:error] = t('.message')
     render template: 'error', status: :not_found
   end
 
-  def error_500
+  def error500
     Mailer.error(request, @exception).deliver
     flash.now[:error] = if @exception.message.include?('query limit')
                           MAPS_ERROR
@@ -79,7 +79,7 @@ class ApplicationController < ActionController::Base
 
   def sitemap
     respond_to do |format|
-      format.html { error_404 }
+      format.html { error404 }
       format.xml do
         @locations = Location.all
       end

@@ -3,7 +3,7 @@
 # Wrapper for Vacuum https://github.com/hakanensari/vacuum
 class CandyWrapper
   def self.book(keyword)
-    book = first_book open(keyword)
+    book = first_book CandyWrapper.send(:open, keyword)
     return if book.blank? || book[:asin].blank?
 
     book.merge(thumbnail(book[:asin])).merge(review(book[:asin]))
@@ -49,7 +49,7 @@ class CandyWrapper
   private_class_method :open
 
   def self.response_group(asin, response_group)
-    open(
+    CandyWrapper.open(
       operation: 'ItemLookup',
       id_type: 'ASIN',
       item_id: asin,
