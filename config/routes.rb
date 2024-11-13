@@ -47,6 +47,6 @@ NovelsOnLocation::Application.routes.draw do
   end
   root to: 'locations#index', via: :get
 
-  get '*a', to: 'application#error_404'
+  get '*a', to: 'application#error404'
 end
 # rubocop:enable Metrics/BlockLength
