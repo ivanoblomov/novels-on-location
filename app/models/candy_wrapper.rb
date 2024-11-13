@@ -13,9 +13,7 @@ class CandyWrapper
   end
 
   def self.thumbnail(asin)
-    i = response_group(asin, 'Images')
-    p i
-    i.find('ThumbnailImage')[0]
+    i = response_group(asin, 'Images').find('ThumbnailImage')[0]
     return {} if i.blank?
 
     {
