@@ -35,15 +35,15 @@ class CandyWrapper
   end
   private_class_method :first_book
 
-  def self.open(keyword)
+  def self.open(search_terms)
     v = Vacuum.new(marketplace: 'US',
                    access_key: 'AKIAJ2VOBQECW7H7GQOQ',
                    secret_key: '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',
                    partner_tag: 'novonloc-20')
     v.persistent
-    r = v.search_items(keywords: keyword.to_s)
+    r = v.search_items(search_terms)
     h = r.to_h
-    raise RuntimeError, r.to_h['Errors'][0]['Message'] unless r.status.ok?
+    raise RuntimeError, h['Errors'][0]['Message'] unless r.status.ok?
   end
   private_class_method :open
 
