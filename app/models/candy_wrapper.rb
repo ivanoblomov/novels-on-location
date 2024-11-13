@@ -1,14 +1,18 @@
+# frozen_string_literal: true
+
 # Wrapper for Vacuum https://github.com/hakanensari/vacuum
 class CandyWrapper
   def self.book(keyword)
-    book = first_book open(keyword)
+    book = first_book CandyWrapper.send(:open, keyword)
     return if book.blank? || book[:asin].blank?
-    book.merge(thumbnail(book[:asin])).merge(review book[:asin])
+
+    book.merge(thumbnail(book[:asin])).merge(review(book[:asin]))
   end
 
   def self.review(asin)
     e = response_group(asin, 'EditorialReview').find('EditorialReview')
     return {} if e.blank?
+
     { review: e[0]['Content'] }
   end
 
@@ -40,12 +44,12 @@ class CandyWrapper
                    partner_tag: 'novonloc-20')
     r = v.search_items(keywords: keywords)
     h = r.to_h
-    raise RuntimeError, h['Errors'][0]['Message'] unless r.status.ok?
+    raise h['Errors'][0]['Message'].to_s unless r.status.ok?
   end
   private_class_method :open
 
   def self.response_group(asin, response_group)
-    open(
+    CandyWrapper.open(
       operation: 'ItemLookup',
       id_type: 'ASIN',
       item_id: asin,

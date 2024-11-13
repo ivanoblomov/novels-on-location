@@ -1,25 +1,27 @@
+# frozen_string_literal: true
+
 # Controller superclass
 class ApplicationController < ActionController::Base
-  MAPS_ERROR = "Sorry, can't geocode your location. Google Maps only allows "\
-               'us to query their server so many times a day. Please try '\
+  MAPS_ERROR = "Sorry, can't geocode your location. Google Maps only allows " \
+               'us to query their server so many times a day. Please try ' \
                'again tomorrow!'
-  NIBBLER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 '\
+  NIBBLER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 ' \
                   '(KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36'
   NOT_FOUND = /Document not found|Missing template|No route|No action/
 
-  helper_method %i(
+  helper_method %i[
     current_user facebook? inject_writable_flag nibbler? w3c_validator?
-  )
+  ]
   protect_from_forgery if: proc { |c| c.request.format.json? },
                        with: :null_session
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from ActionController::UnknownController,
                 Mongoid::Errors::DocumentNotFound,
-                with: :error_404
+                with: :error404
     rescue_from Exception do |exception|
       @exception = exception
-      @exception.message =~ NOT_FOUND ? error_404 : error_500
+      NOT_FOUND.match?(@exception.message) ? error404 : error500
     end
   end
 
@@ -31,18 +33,18 @@ class ApplicationController < ActionController::Base
     User.new request.cookies['fb_id'], request.cookies['user_token']
   end
 
-  def error_404
-    flash[:error] = "Sorry, that novel location doesn't exist. Why not add it?"
+  def error404
+    flash.now[:error] = t('.message')
     render template: 'error', status: :not_found
   end
 
-  def error_500
+  def error500
     Mailer.error(request, @exception).deliver
-    flash[:error] = if @exception.message.include?('query limit')
-                      MAPS_ERROR
-                    else
-                      @exception.message
-                    end
+    flash.now[:error] = if @exception.message.include?('query limit')
+                          MAPS_ERROR
+                        else
+                          @exception.message
+                        end
     render template: 'error', status: :internal_server_error
   end
 
@@ -77,7 +79,7 @@ class ApplicationController < ActionController::Base
 
   def sitemap
     respond_to do |format|
-      format.html { error_404 }
+      format.html { error404 }
       format.xml do
         @locations = Location.all
       end

@@ -1,7 +1,10 @@
-namespace :novels do
-  SLUG_REGEX = %r{http://novelsonlocation.com/locations/(.+)}
-  TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
+# frozen_string_literal: true
 
+SLUG_REGEX = %r{http://novelsonlocation.com/locations/(.+)}
+TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
+
+# rubocop:disable Metrics/BlockLength
+namespace :novels do
   desc 'Restore Locations from Twitter feed'
   task restore: :environment do
     @twitter_client = Twitter::REST::Client.new do |config|
@@ -43,3 +46,4 @@ namespace :novels do
     puts skipped.map(&:text)
   end
 end
+# rubocop:enable Metrics/BlockLength

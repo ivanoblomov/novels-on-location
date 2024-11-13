@@ -1,14 +1,17 @@
-# rubocop:disable Metrics/ClassLength
-class LocationsController < ApplicationController
-  PERMITTED_PARAMS = %i(
-    address book_keywords latLng notes tags title user_id user_token
-  )
+# frozen_string_literal: true
 
-  authorize_resource only: %i(
+# rubocop:disable Metrics/ClassLength
+# Manages Locations.
+class LocationsController < ApplicationController
+  PERMITTED_PARAMS = %i[
+    address book_keywords latLng notes tags title user_id user_token
+  ].freeze
+
+  authorize_resource only: %i[
     bookmark create destroy index new show unbookmark update
-  )
+  ]
   before_filter :find_location,
-                only: %i(bookmark destroy show unbookmark update)
+                only: %i[bookmark destroy show unbookmark update]
   helper_method :location_kind, :location_query
   respond_to :html, :json
 
@@ -21,6 +24,7 @@ class LocationsController < ApplicationController
   def snapshots
     @locations = scope_for_snapshot
     return error_404 if @locations.blank?
+
     set_user_name if reader_link?
     render layout: false
   end
@@ -30,30 +34,16 @@ class LocationsController < ApplicationController
     format_response
   end
 
-  # CRUD =======================================================================
-  def create
-    location_params[:user_id] = current_user.id
-    location_params[:user_token] = current_user.token
-    @location = Location.new location_params
-    if @location.save
-      format_response
-    else
-      fail "Can't save location: #{@location.errors.full_messages}!"
-    end
-  end
-
-  def destroy
-    @location.destroy
-    format_response
-  end
-
   def index
     @locations = Location.all.to_a
     return error_404 if @locations.blank?
+
     set_user_name if reader_link?
 
     respond_to do |format|
+      # rubocop:disable Lint/EmptyBlock
       format.html {}
+      # rubocop:enable Lint/EmptyBlock
       format.json do
         cookies.permanent[:user_token] = user_token
         render json: locations_json, layout: false
@@ -61,16 +51,30 @@ class LocationsController < ApplicationController
     end
   end
 
+  def show; end
+
   def new
     @location = Location.new location_params
     format_response
   end
 
-  def show
+  # CRUD =======================================================================
+  def create
+    location_params[:user_id] = current_user.id
+    location_params[:user_token] = current_user.token
+    @location = Location.new location_params
+    raise "Can't save location: #{@location.errors.full_messages}!" unless @location.save
+
+    format_response
   end
 
   def update
-    @location.update_attributes location_params
+    @location.update location_params
+    format_response
+  end
+
+  def destroy
+    @location.destroy
     format_response
   end
 
@@ -82,9 +86,9 @@ class LocationsController < ApplicationController
 
   def find_location
     @location = find_location_by_id ||
-                Location.find(Moped::BSON::ObjectId params[:id])
-  rescue
-    if Location.where(id: params[:id]).exists?
+                Location.find(Moped::BSON::ObjectId(params[:id]))
+  rescue StandardError
+    if Location.exists?(id: params[:id])
       @location = find_location_by_id
       redirect_to canonical_location_url, status: :moved_permanently
     else
@@ -117,9 +121,9 @@ class LocationsController < ApplicationController
   end
 
   def location_query
-    value = params[:_escaped_fragment_].split('-')[1..-1]
-    strip_parens CGI.unescape(params[:_escaped_fragment_].split('-')[1]) unless
-      value.blank?
+    value = params[:_escaped_fragment_].split('-')[1..]
+    strip_parens CGI.unescape(params[:_escaped_fragment_].split('-')[1]) if
+      value.present?
   end
 
   def locations_json
@@ -142,9 +146,7 @@ class LocationsController < ApplicationController
   end
 
   def rename_objective_c_keys(location_params)
-    Hash[
-      location_params.map { |k, v| [k == 'latLng' ? k : k.underscore, v] }
-    ]
+    location_params.transform_keys { |k| k == 'latLng' ? k : k.underscore }
   end
 
   def scope_for_snapshot
@@ -171,3 +173,4 @@ class LocationsController < ApplicationController
     params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
   end
 end
+# rubocop:enable Metrics/ClassLength

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 ruby '3.3.6'
 
@@ -23,15 +25,20 @@ gem 'twitter'
 gem 'vacuum'
 
 group :assets do
-  gem 'sass-rails'
   gem 'coffee-rails'
+  gem 'sass-rails'
   gem 'uglifier'
 end
 
 group :test do
   gem 'cucumber-rails', require: false
+  gem 'inch'
   gem 'pry'
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'rubocop-performance'
+  gem 'rubocop-rails'
+  gem 'rubocop-rspec'
+  gem 'rubocop-rspec_rails'
   gem 'simplecov'
 end
