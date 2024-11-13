@@ -1,7 +1,7 @@
 # Wrapper for Vacuum https://github.com/hakanensari/vacuum
 class CandyWrapper
   def self.book(keyword)
-    book = first_book open(search_args(keyword))
+    book = first_book open search_args keyword
     return if book.blank? || book[:asin].blank?
     book.merge(thumbnail(book[:asin])).merge(review book[:asin])
   end
