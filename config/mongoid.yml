@@ -6,7 +6,6 @@ development:
         - localhost:27017
   options:
     raise_not_found_error: false
-    use_activesupport_time_zone: true
 
 test:
   clients:
@@ -28,4 +27,3 @@ production:
       uri: <%= ENV['MONGODB_URI'] %>
   options:
     raise_not_found_error: false
-    use_activesupport_time_zone: true
