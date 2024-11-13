@@ -32,6 +32,7 @@ end
 
 group :test do
   gem 'cucumber-rails', require: false
+  gem 'inch'
   gem 'pry'
   gem 'rspec-rails'
   gem 'rubocop'
