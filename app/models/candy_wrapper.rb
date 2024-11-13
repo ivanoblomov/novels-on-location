@@ -1,7 +1,7 @@
 # Wrapper for Vacuum https://github.com/hakanensari/vacuum
 class CandyWrapper
-  def self.book(keyword)
-    book = first_book open search_args keyword
+  def self.book(keywords)
+    book = first_book open(keywords)
     return if book.blank? || book[:asin].blank?
     book.merge(thumbnail(book[:asin])).merge(review book[:asin])
   end
@@ -33,13 +33,12 @@ class CandyWrapper
   end
   private_class_method :first_book
 
-  def self.open(search_terms)
+  def self.open(keywords)
     v = Vacuum.new(marketplace: 'US',
                    access_key: 'AKIAJ2VOBQECW7H7GQOQ',
                    secret_key: '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',
                    partner_tag: 'novonloc-20')
-    v.persistent
-    r = v.search_items(search_terms)
+    r = v.search_items(keywords: keywords)
     h = r.to_h
     raise RuntimeError, h['Errors'][0]['Message'] unless r.status.ok?
   end
@@ -54,13 +53,4 @@ class CandyWrapper
     )
   end
   private_class_method :response_group
-
-  def self.search_args(keyword)
-    {
-      operation: 'ItemSearch',
-      search_index: 'Books',
-      keywords: keyword
-    }
-  end
-  private_class_method :search_args
 end
