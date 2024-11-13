@@ -7,6 +7,7 @@ describe Location do
 
   describe '#new' do
     context 'with no args' do
+      # rubocop:disable RSpec/NestedGroups
       describe '#latLng=' do
         context "with '1,2'" do
           before { location.latLng = '1,2' }
@@ -20,6 +21,7 @@ describe Location do
       describe '#unowned?' do
         it { expect(location.unowned?).to be true }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
 
     context "with book_keywords: 'sun also rises'" do
@@ -31,6 +33,7 @@ describe Location do
 
       let(:metadata) { { asin: 'asin-value', itunes_id: 'itunes-value', title: 'The Sun Also Rises' } }
 
+      # rubocop:disable RSpec/NestedGroups
       describe '#asin' do
         it { expect(location.asin).to be_present }
       end
@@ -42,22 +45,27 @@ describe Location do
       describe '#title' do
         it { expect(location.title).to eq 'The Sun Also Rises' }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
 
     context 'with user_id: 1' do
       subject(:location) { described_class.new(user_id: 1) }
 
+      # rubocop:disable RSpec/NestedGroups
       describe '#owned?' do
         it { expect(location.owned?).to be true }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
 
     context 'with user_token: 1' do
       subject(:location) { described_class.new(user_token: 1) }
 
+      # rubocop:disable RSpec/NestedGroups
       describe '#owned?' do
         it { expect(location.owned?).to be true }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 end

@@ -5,7 +5,7 @@ require 'spec_helper'
 describe CandyWrapper do
   describe '.book' do
     context "with 'sun also rises'" do
-      subject do
+      subject(:book) do
         described_class.book 'sun also rises'
       rescue HTTP::ConnectionError
         pending 'waiting for a network connection'
@@ -15,23 +15,25 @@ describe CandyWrapper do
         raise
       end
 
+      # rubocop:disable RSpec/NestedGroups
       describe ':asin' do
-        it { expect(subject[:asin]).to match(/[0-9]{10}/) }
+        it { expect(book[:asin]).to match(/[0-9]{10}/) }
       end
 
       describe ':author' do
-        it { expect(subject[:author]).to eq 'Ernest Hemingway' }
+        it { expect(book[:author]).to eq 'Ernest Hemingway' }
       end
 
       describe ':title' do
-        it { expect(subject[:title]).to eq 'The Sun Also Rises' }
+        it { expect(book[:title]).to eq 'The Sun Also Rises' }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 
   describe '.review' do
     context 'with a valid ASIN' do
-      subject do
+      subject(:review) do
         described_class.review book[:asin]
       rescue HTTP::ConnectionError
         pending 'waiting for a network connection'
@@ -43,15 +45,17 @@ describe CandyWrapper do
 
       let(:book) { described_class.book('sun also rises') }
 
+      # rubocop:disable RSpec/NestedGroups
       describe ':review' do
-        it { expect(subject[:review]).to be_present }
+        it { expect(review[:review]).to be_present }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 
   describe '.thumbnail' do
     context 'with a valid ASIN' do
-      subject do
+      subject(:thumbnail) do
         described_class.thumbnail book[:asin]
       rescue HTTP::ConnectionError
         pending 'waiting for a network connection'
@@ -63,17 +67,19 @@ describe CandyWrapper do
 
       let(:book) { described_class.book('sun also rises') }
 
+      # rubocop:disable RSpec/NestedGroups
       describe ':image_url' do
-        it { expect(subject[:image_url]).to be_present }
+        it { expect(thumbnail[:image_url]).to be_present }
       end
 
       describe ':image_width' do
-        it { expect(subject[:image_width].to_i).to be_positive }
+        it { expect(thumbnail[:image_width].to_i).to be_positive }
       end
 
       describe ':image_height' do
-        it { expect(subject[:image_height].to_i).to be_positive }
+        it { expect(thumbnail[:image_height].to_i).to be_positive }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 end
