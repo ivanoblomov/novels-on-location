@@ -1,5 +1,5 @@
 # set environment variables here and figaro will do the rest
-MAPS_KEY: ''
+GOOGLE_MAPS_API_KEY: ''
 SENDGRID_PASSWORD: ''
 SENDGRID_USERNAME: ''
 TWITTER_ACCESS_TOKEN: ''
