@@ -138,6 +138,10 @@ GEM
       railties (>= 5.2, < 8)
     cucumber-tag-expressions (6.1.1)
     daemons (1.4.1)
+    database_cleaner-core (2.0.1)
+    database_cleaner-mongo (2.0.0)
+      database_cleaner-core (~> 2.0.0)
+      mongo (~> 2.0)
     date (3.4.0)
     diff-lcs (1.5.1)
     docile (1.4.1)
@@ -459,6 +463,7 @@ DEPENDENCIES
   cancancan
   coffee-rails
   cucumber-rails
+  database_cleaner-mongo
   embiggen
   figaro
   google_maps_geocoder
