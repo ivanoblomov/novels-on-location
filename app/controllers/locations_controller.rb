@@ -3,7 +3,7 @@
 # rubocop:disable Metrics/ClassLength
 # Manages Locations.
 class LocationsController < ApplicationController
-  PERMITTED_PARAMS ||= %i[
+  PERMITTED_PARAMS = %i[
     address book_keywords latLng notes tags title user_id user_token
   ].freeze
 
