@@ -1,4 +1,7 @@
 # set environment variables here and figaro will do the rest
+AMAZON_ACCESS_KEY_ID: ''
+AMAZON_SECRET_ACCESS_KEY: ''
+FACEBOOK_APP_ID: ''
 GOOGLE_MAPS_API_KEY: ''
 SENDGRID_PASSWORD: ''
 SENDGRID_USERNAME: ''
