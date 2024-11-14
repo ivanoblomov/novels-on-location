@@ -1,3 +1,4 @@
+# set environment variables here and figaro will do the rest
 MAPS_KEY: ''
 SENDGRID_PASSWORD: ''
 SENDGRID_USERNAME: ''
