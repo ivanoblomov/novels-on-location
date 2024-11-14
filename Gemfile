@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 ruby '3.3.6'
 
 gem 'actionview-encoded_mail_to'
-gem 'cancan'
+gem 'cancancan'
 gem 'embiggen'
 gem 'figaro'
 gem 'google_maps_geocoder'

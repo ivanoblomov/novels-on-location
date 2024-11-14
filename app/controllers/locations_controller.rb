@@ -10,7 +10,7 @@ class LocationsController < ApplicationController
   authorize_resource only: %i[
     bookmark create destroy index new show unbookmark update
   ]
-  before_filter :find_location,
+  before_action :find_location,
                 only: %i[bookmark destroy show unbookmark update]
   helper_method :location_kind, :location_query
   respond_to :html, :json
@@ -23,7 +23,7 @@ class LocationsController < ApplicationController
 
   def snapshots
     @locations = scope_for_snapshot
-    return error_404 if @locations.blank?
+    return error404 if @locations.blank?
 
     set_user_name if reader_link?
     render layout: false
@@ -36,7 +36,7 @@ class LocationsController < ApplicationController
 
   def index
     @locations = Location.all.to_a
-    return error_404 if @locations.blank?
+    return error404 if @locations.blank?
 
     set_user_name if reader_link?
 
@@ -92,7 +92,7 @@ class LocationsController < ApplicationController
       @location = find_location_by_id
       redirect_to canonical_location_url, status: :moved_permanently
     else
-      error_404
+      error404
     end
   end
 

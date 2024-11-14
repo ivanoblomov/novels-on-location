@@ -3,18 +3,18 @@
   <url>
     <loc><%= root_url %></loc>
 <% if l = Location.last_updated %>
-    <lastmod><%= l.updated_at.to_s :w3c_datetime %></lastmod>
+    <lastmod><%= l.updated_at.to_formatted_s :w3c_datetime %></lastmod>
 <% end %>
   </url>
   <url>
     <loc><%= integration_url %></loc>
-    <lastmod><%= File.mtime('app/views/application/integration.html.erb').to_s :w3c_datetime %></lastmod>
+    <lastmod><%= File.mtime('app/views/application/integration.html.erb').to_formatted_s :w3c_datetime %></lastmod>
   </url>
 <% @locations.each do |location| %>
   <url>
     <loc><%= location_url location %></loc>
   <% if location.updated_at %>
-    <lastmod><%= location.updated_at.to_s :w3c_datetime %></lastmod>
+    <lastmod><%= location.updated_at.to_formatted_s :w3c_datetime %></lastmod>
   <% end %>
   </url>
   <url>

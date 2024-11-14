@@ -3,8 +3,8 @@
 module Admin
   # Manage Locations
   class LocationsController < ApplicationController
-    before_filter :authenticate_user!
-    before_filter :find_location, only: :push
+    before_action :authenticate_user!
+    before_action :find_location, only: :push
     layout 'admin'
 
     def push

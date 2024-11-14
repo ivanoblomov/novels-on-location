@@ -34,7 +34,7 @@ class ApplicationController < ActionController::Base
   end
 
   def error404
-    flash.now[:error] = t('.message')
+    flash.now[:error] = t('.location_not_found')
     render template: 'error', status: :not_found
   end
 

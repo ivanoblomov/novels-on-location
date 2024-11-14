@@ -156,7 +156,7 @@ class Location
   end
 
   def added_at_s
-    added_at && added_at.localtime.to_s(:date_time)
+    added_at&.localtime&.to_fs(:date_time)
   end
 
   def amazon_url
