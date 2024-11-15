@@ -247,7 +247,6 @@ GEM
       timeout
     net-smtp (0.5.0)
       net-protocol
-    newrelic_rpm (9.15.0)
     nio4r (2.7.4)
     nokogiri (1.16.7-aarch64-linux)
       racc (~> 1.4)
@@ -474,7 +473,6 @@ DEPENDENCIES
   jquery-rails
   mongoid
   mongoid-slug
-  newrelic_rpm
   pry
   rack-rewrite
   rails
