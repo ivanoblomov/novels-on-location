@@ -16,7 +16,6 @@ gem 'mongoid'
 gem 'mongoid-slug'
 gem 'rack-rewrite'
 gem 'rails'
-gem 'rails_12factor', group: :production
 gem 'responders'
 gem 'scaffold_logic'
 gem 'thin'
