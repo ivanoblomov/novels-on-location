@@ -14,7 +14,6 @@ gem 'itunes-search-api'
 gem 'jquery-rails'
 gem 'mongoid'
 gem 'mongoid-slug'
-gem 'newrelic_rpm'
 gem 'rack-rewrite'
 gem 'rails'
 gem 'rails_12factor', group: :production
