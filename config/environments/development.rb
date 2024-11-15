@@ -11,7 +11,7 @@ NovelsOnLocation::Application.configure do
   config.assets.compress = false
   config.assets.debug = true
   config.eager_load = false
-  config.time_zone = 'America/Chicago'
+  config.time_zone = 'America/New_York'
   # custom
   config.main_host = 'localhost'
 end
