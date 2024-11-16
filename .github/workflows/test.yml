@@ -7,6 +7,9 @@ jobs:
     environment: staging
     runs-on: ubuntu-latest
     steps:
+    - uses: supercharge/mongodb-github-action@5a87bd81f88e2a8b195f8b7b656f5cda1350815a
+      with:
+        mongodb-version: 8.0
     - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
     - uses: ruby/setup-ruby@a2bbe5b1b236842c1cb7dd11e8e3b51e0a616acc
       with:
