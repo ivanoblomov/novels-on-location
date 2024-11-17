@@ -454,7 +454,6 @@ PLATFORMS
 
 DEPENDENCIES
   actionview-encoded_mail_to
-  activerecord
   cancancan
   coffee-rails
   cucumber-rails
