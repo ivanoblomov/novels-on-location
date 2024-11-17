@@ -51,3 +51,5 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :deletion
+# disable due to https://github.com/DatabaseCleaner/database_cleaner-mongoid/issues/16
+Cucumber::Rails::Database.autorun_database_cleaner = false
