@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'capybara/rspec'
 require 'selenium/webdriver'
 
@@ -12,7 +14,6 @@ Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new
 
   Capybara::Selenium::Driver.new(app,
-    browser: :chrome,
-    options: options
-  )
+                                 browser: :chrome,
+                                 options: options)
 end
