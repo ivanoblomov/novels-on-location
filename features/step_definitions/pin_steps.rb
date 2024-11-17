@@ -51,7 +51,9 @@ Given('multiple pins') do
 end
 
 When('I search for keywords matching one of their locations') do
+  pending
 end
 
 Then('it should hide all the other pins') do
+  pending
 end
