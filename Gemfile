@@ -29,6 +29,7 @@ group :assets do
 end
 
 group :test do
+  gem 'activerecord'
   gem 'cucumber-rails', require: false
   gem 'database_cleaner-mongo'
   gem 'inch'
