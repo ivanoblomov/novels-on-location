@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/BlockLength
 Given('multiple pins') do
   Location.create(
     address: 'Plaza del Castillo, 44B, 31001 Pamplona, Navarre, Spain',
@@ -49,6 +50,7 @@ Given('multiple pins') do
     user_token: 'suwWgD82Ucp00DysVNFuGxHWGtvjF9ns8238IK3V3/I='
   )
 end
+# rubocop:enable Metrics/BlockLength
 
 When('I search for keywords matching one of their locations') do
   pending
