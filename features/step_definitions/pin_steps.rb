@@ -2,51 +2,51 @@
 
 Given('multiple pins') do
   Location.create(
-    address: "Plaza del Castillo, 44B, 31001 Pamplona, Navarre, Spain",
-    asin: "0743297334",
-    author: "Ernest Hemingway",
+    address: 'Plaza del Castillo, 44B, 31001 Pamplona, Navarre, Spain',
+    asin: '0743297334',
+    author: 'Ernest Hemingway',
     book_keywords: nil,
     bookmark_user_ids: [],
-    city: "Pamplona",
-    country: "Spain",
-    image_height: "75",
-    image_url: "http://ecx.images-amazon.com/images/I/413SnoVxOxL._SL75_.jpg",
-    image_width: "49",
-    itunes_id: 381464166,
-    lat_lng: ["42.817422", "-1.64325"],
+    city: 'Pamplona',
+    country: 'Spain',
+    image_height: '75',
+    image_url: 'http://ecx.images-amazon.com/images/I/413SnoVxOxL._SL75_.jpg',
+    image_width: '49',
+    itunes_id: 381_464_166,
+    lat_lng: ['42.817422', '-1.64325'],
     notes: nil,
     review:
     "The quintessential novel of the Lost Generation, <I>The Sun Also Rises</i> is one of Ernest Hemingway's masterpieces and a classic example of his spare but powerful writing style. A poignant look at the disillusionment and angst of the post-World War I generation, the novel introduces two of Hemingway's most unforgettable characters: Jake Barnes and Lady Brett Ashley. The story follows the flamboyant Brett and the hapless Jake as they journey from the wild nightlife of 1920s Paris to the brutal bullfighting rings of Spain with a motley group of expatriates. It is an age of moral bankruptcy, spiritual dissolution, unrealized love, and vanishing illusions. First published in 1926, <I>The Sun Also Rises</i> helped to establish Hemingway as one of the greatest writers of the twentieth century",
     state: nil,
-    title: "The Sun Also Rises",
-    tags: "Cafe Iruña, Pamplona",
+    title: 'The Sun Also Rises',
+    tags: 'Cafe Iruña, Pamplona',
     url:
-    "http://www.amazon.com/Sun-Also-Rises-Ernest-Hemingway/dp/0743297334%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0743297334",
-    user_id: "666325406",
-    user_token: "suwWgD82Ucp00DysVNFuGxHWGtvjF9ns8238IK3V3/I="
+    'http://www.amazon.com/Sun-Also-Rises-Ernest-Hemingway/dp/0743297334%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0743297334',
+    user_id: '666325406',
+    user_token: 'suwWgD82Ucp00DysVNFuGxHWGtvjF9ns8238IK3V3/I='
   )
   Location.create(
-    address: "84 Commercial Street, London, Greater London E1 6LY, UK",
-    asin: "0958578346",
-    author: "Alan Moore",
+    address: '84 Commercial Street, London, Greater London E1 6LY, UK',
+    asin: '0958578346',
+    author: 'Alan Moore',
     book_keywords: nil,
     bookmark_user_ids: [],
-    city: "London",
-    country: "United Kingdom",
-    image_height: "75",
-    image_url: "http://ecx.images-amazon.com/images/I/51OytRMAizL._SL75_.jpg",
-    image_width: "56",
-    itunes_id: 469299058,
-    lat_lng: ["51.519326", "-0.074316"],
+    city: 'London',
+    country: 'United Kingdom',
+    image_height: '75',
+    image_url: 'http://ecx.images-amazon.com/images/I/51OytRMAizL._SL75_.jpg',
+    image_width: '56',
+    itunes_id: 469_299_058,
+    lat_lng: ['51.519326', '-0.074316'],
     notes: nil,
     review:
-    "FROM HELL is the story of Jack the Ripper, perhaps the most infamous man in the annals of murder. Detailing the events leading up to the Whitechapel killings and the cover-up that followed, FROM HELL is a meditation on the mind of a madman whose savagery and violence gave birth to the 20th century. The serialized story, presented in its entirety in this volume, has garnered widespread attention from critics and scholars. Often regarded as one of the most significant graphic novels ever published, FROM HELL combines meticulous research with educated speculation, resulting in a masterpiece of historical fiction both compelling and terrifying. This new edition, which has been completely re-mastered, is certainly the finest edition of the book produced to date.",
+    'FROM HELL is the story of Jack the Ripper, perhaps the most infamous man in the annals of murder. Detailing the events leading up to the Whitechapel killings and the cover-up that followed, FROM HELL is a meditation on the mind of a madman whose savagery and violence gave birth to the 20th century. The serialized story, presented in its entirety in this volume, has garnered widespread attention from critics and scholars. Often regarded as one of the most significant graphic novels ever published, FROM HELL combines meticulous research with educated speculation, resulting in a masterpiece of historical fiction both compelling and terrifying. This new edition, which has been completely re-mastered, is certainly the finest edition of the book produced to date.',
     state: nil,
-    title: "From Hell",
-    tags: "The Ten Bells, Spitalfields",
-    url: "http://www.amazon.com/Hell-Alan-Moore/dp/0958578346%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0958578346",
-    user_id: "666325406",
-    user_token: "suwWgD82Ucp00DysVNFuGxHWGtvjF9ns8238IK3V3/I="
+    title: 'From Hell',
+    tags: 'The Ten Bells, Spitalfields',
+    url: 'http://www.amazon.com/Hell-Alan-Moore/dp/0958578346%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0958578346',
+    user_id: '666325406',
+    user_token: 'suwWgD82Ucp00DysVNFuGxHWGtvjF9ns8238IK3V3/I='
   )
 end
 
