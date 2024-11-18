@@ -78,6 +78,7 @@ Capybara.register_driver :selenium do |app|
   options.add_argument('--disable-gpu')
   options.add_argument('--disable-dev-shm-usage') # overcome limited resource problems
   options.add_argument('--window-size=1366,720')
+  options.add_argument('--remote-debugging-pipe')
 
   Capybara::Selenium::Driver.new(app,
                                  browser: :chrome,
