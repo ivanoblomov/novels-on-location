@@ -28,9 +28,11 @@ group :assets do
 end
 
 group :test do
+  gem 'capybara'
   gem 'database_cleaner-mongo'
   gem 'inch'
   gem 'pry'
+  gem 'puma', github: 'puma/puma', branch: 'master'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-performance'
