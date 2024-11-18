@@ -73,12 +73,9 @@ end
 Capybara.always_include_port = true
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument('--headless')
+  # https://issues.chromium.org/issues/42323434#comment64
+  options.add_argument('--disable-dev-shm-usage')
   options.add_argument('--no-sandbox')
-  options.add_argument('--disable-gpu')
-  options.add_argument('--disable-dev-shm-usage') # overcome limited resource problems
-  options.add_argument('--window-size=1366,720')
-  options.add_argument('--remote-debugging-pipe')
 
   Capybara::Selenium::Driver.new(app,
                                  browser: :chrome,

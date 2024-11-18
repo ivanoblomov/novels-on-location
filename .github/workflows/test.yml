@@ -15,9 +15,8 @@ jobs:
       with:
         ruby-version: 3.3.6
         bundler-cache: true
-      # make sure DISPLAY env var is accessible in the context where the tests are run
+    # https://issues.chromium.org/issues/42323434#comment64
     - run: export DISPLAY=:99
-      # start the display server
     - run: Xvfb :99 -ac -screen 0 1280x1024x24 &
     - run: bundle exec rspec
     - run: bundle exec rubocop
