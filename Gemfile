@@ -29,12 +29,12 @@ end
 
 group :test do
   gem 'capybara'
-  gem 'database_cleaner-mongo'
   gem 'inch'
   gem 'pry'
   gem 'puma'
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'rubocop-capybara'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'

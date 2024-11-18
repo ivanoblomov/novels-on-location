@@ -108,10 +108,6 @@ GEM
     connection_pool (2.4.1)
     crass (1.0.6)
     csv (3.3.0)
-    database_cleaner-core (2.0.1)
-    database_cleaner-mongo (2.0.0)
-      database_cleaner-core (~> 2.0.0)
-      mongo (~> 2.0)
     date (3.4.0)
     diff-lcs (1.5.1)
     docile (1.4.1)
@@ -318,6 +314,8 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.36.1)
       parser (>= 3.3.1.0)
+    rubocop-capybara (2.21.0)
+      rubocop (~> 1.41)
     rubocop-performance (1.23.0)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
@@ -429,7 +427,6 @@ DEPENDENCIES
   cancancan
   capybara
   coffee-rails
-  database_cleaner-mongo
   embiggen
   figaro
   google_maps_geocoder
@@ -447,6 +444,7 @@ DEPENDENCIES
   responders
   rspec-rails
   rubocop
+  rubocop-capybara
   rubocop-performance
   rubocop-rails
   rubocop-rspec
