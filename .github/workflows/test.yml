@@ -15,9 +15,6 @@ jobs:
       with:
         ruby-version: 3.3.6
         bundler-cache: true
-    # https://issues.chromium.org/issues/42323434#comment64
-    - run: export DISPLAY=:99
-    - run: Xvfb :99 -ac -screen 0 1280x1024x24 &
     - run: bundle exec rspec
     - run: bundle exec rubocop
 #     - run: bundle exec inch --pedantic
