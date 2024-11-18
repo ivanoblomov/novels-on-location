@@ -73,6 +73,7 @@ end
 Capybara.always_include_port = true
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--disable-dev-shm-usage') # overcome limited resource problems
 
   Capybara::Selenium::Driver.new(app,
                                  browser: :chrome,
