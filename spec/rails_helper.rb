@@ -56,13 +56,11 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 Capybara.configure do |config|
-  config.default_max_wait_time = 5 # seconds
   config.default_driver = :selenium
   config.javascript_driver = :selenium
   config.app_host = 'http://localhost'
 end
 Capybara.always_include_port = true
-Capybara.server = :puma
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new
 
@@ -70,4 +68,3 @@ Capybara.register_driver :selenium do |app|
                                  browser: :chrome,
                                  options: options)
 end
-
