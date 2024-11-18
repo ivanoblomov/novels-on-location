@@ -73,9 +73,6 @@ end
 Capybara.always_include_port = true
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new
-  # https://issues.chromium.org/issues/42323434#comment64
-  options.add_argument('--disable-dev-shm-usage')
-  options.add_argument('--no-sandbox')
 
   Capybara::Selenium::Driver.new(app,
                                  browser: :chrome,
