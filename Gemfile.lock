@@ -294,6 +294,7 @@ GEM
     responders (3.1.1)
       actionpack (>= 5.2)
       railties (>= 5.2)
+    rexml (3.3.9)
     rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
@@ -337,6 +338,7 @@ GEM
       rubocop (~> 1.61)
       rubocop-rspec (~> 3, >= 3.0.1)
     ruby-progressbar (1.13.0)
+    rubyzip (2.3.2)
     sass-rails (6.0.0)
       sassc-rails (~> 2.1, >= 2.1.1)
     sassc (2.4.0)
@@ -349,6 +351,12 @@ GEM
       tilt
     scaffold_logic (2.0.0)
     securerandom (0.3.2)
+    selenium-webdriver (4.26.0)
+      base64 (~> 0.2)
+      logger (~> 1.4)
+      rexml (~> 3.2, >= 3.2.5)
+      rubyzip (>= 1.2.2, < 3.0)
+      websocket (~> 1.0)
     simple_oauth (0.3.1)
     simplecov (0.22.0)
       docile (~> 1.1)
@@ -396,6 +404,7 @@ GEM
     vacuum (4.2.0)
       aws-sigv4 (~> 1.0)
       http (>= 4.0, < 6.0)
+    websocket (1.2.11)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -449,6 +458,7 @@ DEPENDENCIES
   rubocop-rspec_rails
   sass-rails
   scaffold_logic
+  selenium-webdriver
   simplecov
   twitter
   uglifier
