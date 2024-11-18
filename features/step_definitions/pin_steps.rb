@@ -57,7 +57,9 @@ end
 # rubocop:enable Metrics/BlockLength
 
 When('I search for keywords matching one of their locations') do
-  pending
+  visit root_path
+  binding.pry
+  fill_in 'book-input', with: Location.first.title
 end
 
 Then('it should hide all the other pins') do
