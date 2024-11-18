@@ -32,7 +32,7 @@ group :test do
   gem 'database_cleaner-mongo'
   gem 'inch'
   gem 'pry'
-  gem 'puma', github: 'puma/puma', branch: 'master'
+  gem 'puma'
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-performance'
