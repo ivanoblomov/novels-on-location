@@ -18,7 +18,7 @@ jobs:
       # make sure DISPLAY env var is accessible in the context where the tests are run
     - run: export DISPLAY=:99
       # start the display server
-    - run Xvfb :99 -ac -screen 0 1280x1024x24 &
+    - run: Xvfb :99 -ac -screen 0 1280x1024x24 &
     - run: bundle exec rspec
     - run: bundle exec cucumber --no-strict --publish-quiet
     - run: bundle exec rubocop
