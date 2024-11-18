@@ -33,7 +33,7 @@ RSpec.configure do |config|
   # should set use_transactional_fixtures to false.
   #
   # config.fixture_path = Rails.root.join('spec/fixtures')
-  # config.use_transactional_fixtures = true
+  config.use_transactional_fixtures = true
 
   # RSpec Rails uses metadata to mix in different behaviours to your tests,
   # for example enabling you to call `get` and `post` in request specs. e.g.:
@@ -56,6 +56,14 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.before(:each, type: :system) do
+    driven_by :rack_test
+  end
+
+  config.before(:each, type: :system, js: true) do
+    driven_by :selenium
+  end
 end
 Capybara.configure do |config|
   config.default_driver = :selenium

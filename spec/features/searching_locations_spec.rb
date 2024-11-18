@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.feature 'Searching for Locations' do
+RSpec.describe 'Searching for Locations', type: :system, js: true do
   scenario 'User searches for a Location' do
     visit root_path
     fill_in '#book-input', with: Location.first.title
