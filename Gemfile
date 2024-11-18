@@ -18,7 +18,6 @@ gem 'rack-rewrite'
 gem 'rails'
 gem 'responders'
 gem 'scaffold_logic'
-gem 'thin'
 gem 'twitter'
 gem 'vacuum'
 
@@ -29,7 +28,6 @@ group :assets do
 end
 
 group :test do
-  gem 'cucumber-rails', require: false
   gem 'database_cleaner-mongo'
   gem 'inch'
   gem 'pry'
