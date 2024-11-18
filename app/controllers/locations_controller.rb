@@ -34,9 +34,10 @@ class LocationsController < ApplicationController
     format_response
   end
 
+  # rubocop:disable Metrics/AbcSize
   def index
     @locations = Location.all.to_a
-    return error404 if @locations.blank?
+    return error404 if @locations.blank? && Location.count.positive?
 
     set_user_name if reader_link?
 
@@ -50,6 +51,7 @@ class LocationsController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def show; end
 
