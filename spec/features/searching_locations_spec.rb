@@ -4,7 +4,11 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/ExampleLength
 RSpec.describe 'Searching for Locations', :js, type: :system do
-  pending if ENV['GITHUB_ACTIONS']
+  if ENV['GITHUB_ACTIONS']
+    pending 'Disabling JavaScript on CI until Selenium bug is fixed'
+    # https://github.com/SeleniumHQ/selenium/issues/14609
+    raise
+  end
 
   scenario 'User searches for a Location' do
     Location.destroy_all
