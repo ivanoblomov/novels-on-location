@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 # rubocop:disable RSpec/ExampleLength
-RSpec.describe 'Searching for Locations', :js, type: :system do
+RSpec.describe 'Searching for Locations', js: !ENV['GITHUB_ACTIONS'], type: :system do
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed'
     # https://github.com/SeleniumHQ/selenium/issues/14609
