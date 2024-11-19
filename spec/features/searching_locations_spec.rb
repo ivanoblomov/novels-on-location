@@ -29,6 +29,21 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
 
         it('hides other Locations') { expect(visible_pins).to eq 1 }
       end
+
+#       Scenario: Visitor searches for an author
+#         Given multiple pins
+#         When I search for an author matching one of their books
+#         Then it should hide all the other pins
+#
+#       Scenario: Visitor searches for a title
+#         Given multiple pins
+#         When I search for a title matching one of their books
+#         Then it should hide all the other pins
+#
+#       Scenario: Visitor searches for a tag
+#         Given multiple pins
+#         When I search for a tag matching one of them
+#         Then it should hide all the other pins
     end
   end
 end
