@@ -5,7 +5,6 @@ require 'rails_helper'
 RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system do
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
-    raise
   else
     context 'when multiple Locations exist' do
       let(:sun_also_rises) do
