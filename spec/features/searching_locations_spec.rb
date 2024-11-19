@@ -12,11 +12,8 @@ RSpec.describe 'Searching for Locations', :js, type: :system do
                     lat_lng: ['51.519326', '-0.074316']
     visit root_path
     fill_in 'book-input', with: Location.first.title
-    Timeout.timeout(Capybara.default_max_wait_time) do
-      loop until page.evaluate_script('jQuery.active').zero?
-    end
-    # this must be reduced to a one-liner because only the first return-value resolves
-    script = 'c = 0; Object.values(nOL.pins).forEach( (pin) => { if (pin.map) c++; } ); c;'
+    # count visible pins (where map is defined)
+    script = 'Object.values(nOL.pins).filter((pin) => pin.map).length;'
     pin_count = evaluate_script script
     expect(pin_count).to eq 1
   end
