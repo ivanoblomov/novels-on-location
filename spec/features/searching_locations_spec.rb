@@ -22,9 +22,9 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       it('the balloon shows a Delete button') { expect(page).to have_css 'input[value=Delete]' }
 
       context 'when a User clicks Zoom' do
-        before { click_button 'Zoom' }
+        before { click_link_or_button 'Zoom' }
 
-        it('the map zooms in') { expect(evaluate_script 'nOL.map.zoom').to be > 10 }
+        it('the map zooms in') { expect(evaluate_script('nOL.map.zoom')).to be > 10 }
       end
     end
 
