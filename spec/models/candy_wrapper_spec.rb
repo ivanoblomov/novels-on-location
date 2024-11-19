@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-
 describe CandyWrapper do
   describe '.book' do
     context "with 'sun also rises'" do

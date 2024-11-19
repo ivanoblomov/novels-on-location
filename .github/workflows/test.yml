@@ -16,7 +16,6 @@ jobs:
         ruby-version: 3.3.6
         bundler-cache: true
     - run: bundle exec rspec
-    - run: bundle exec cucumber --no-strict --publish-quiet
     - run: bundle exec rubocop
 #     - run: bundle exec inch --pedantic
 #     - uses: aktions/codeclimate-test-reporter@7634aa9ac7883182f583f15ff7b6ff519939dd0a

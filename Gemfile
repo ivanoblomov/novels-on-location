@@ -18,7 +18,6 @@ gem 'rack-rewrite'
 gem 'rails'
 gem 'responders'
 gem 'scaffold_logic'
-gem 'thin'
 gem 'twitter'
 gem 'vacuum'
 
@@ -29,15 +28,17 @@ group :assets do
 end
 
 group :test do
-  gem 'cucumber-rails', require: false
-  gem 'database_cleaner-mongo'
+  gem 'capybara'
   gem 'inch'
   gem 'pry'
+  gem 'puma'
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'rubocop-capybara'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'rubocop-rspec_rails'
+  gem 'selenium-webdriver'
   gem 'simplecov'
 end
