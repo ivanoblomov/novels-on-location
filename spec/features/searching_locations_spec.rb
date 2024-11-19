@@ -2,11 +2,11 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system do
+describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system do
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
-    context 'when a Location exists and User clicks its pin' do
+    context 'when a Location exists and a User clicks its pin' do
       before do
         Location.destroy_all
         Location.create author: 'Alan Moore',
@@ -16,10 +16,10 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
         find('div[role=button]').click
       end
 
-      it { expect(page).to have_css 'div.map-balloon' }
-      it { expect(page).to have_css 'input[value=Zoom]' }
-      it { expect(page).to have_css 'input[value=Tag]' }
-      it { expect(page).to have_css 'input[value=Delete]' }
+      it('the map opens its balloon') { expect(page).to have_css 'div.map-balloon' }
+      it('the balloon shows a Zoom button') { expect(page).to have_css 'input[value=Zoom]' }
+      it('the balloon shows a Tag button') { expect(page).to have_css 'input[value=Tag]' }
+      it('the balloon shows a Delete button') { expect(page).to have_css 'input[value=Delete]' }
     end
 
     # Scenario: I zoom a pin
@@ -45,31 +45,31 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
                         lat_lng: ['42.817422', '-1.64325']
       end
 
-      context 'when User searches for an author' do
+      context 'when User searches for a matching author' do
         before do
           visit root_path
           fill_in 'book-input', with: 'hemingway'
         end
 
-        it('hides other Locations') { expect(visible_pins).to eq 1 }
+        it('the map hides other Locations') { expect(visible_pins).to eq 1 }
       end
 
-      context 'when User searches for a title' do
+      context 'when User searches for a matching title' do
         before do
           visit root_path
           fill_in 'book-input', with: 'sun also rises'
         end
 
-        it('hides other Locations') { expect(visible_pins).to eq 1 }
+        it('the map hides other Locations') { expect(visible_pins).to eq 1 }
       end
 
-      context 'when User searches for a tag' do
+      context 'when User searches for a matching tag' do
         before do
           visit root_path
           fill_in 'book-input', with: 'ten bells'
         end
 
-        it('hides other Locations') { expect(visible_pins).to eq 1 }
+        it('the map hides other Locations') { expect(visible_pins).to eq 1 }
       end
     end
   end
