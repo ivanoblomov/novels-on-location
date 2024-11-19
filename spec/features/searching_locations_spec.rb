@@ -20,13 +20,14 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       it('the balloon shows a Zoom button') { expect(page).to have_css 'input[value=Zoom]' }
       it('the balloon shows a Tag button') { expect(page).to have_css 'input[value=Tag]' }
       it('the balloon shows a Delete button') { expect(page).to have_css 'input[value=Delete]' }
+
+      context 'when a User clicks Zoom' do
+        before { click_button 'Zoom' }
+
+        it('the map zooms in') { expect(evaluate_script 'nOL.map.zoom').to be > 10 }
+      end
     end
 
-    # Scenario: I zoom a pin
-    #   Given an open balloon
-    #   When I click zoom
-    #   Then it should increase the zoom level
-    #
     context 'when multiple Locations exist' do
       subject(:visible_pins) { evaluate_script script }
 
