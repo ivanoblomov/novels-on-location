@@ -33,6 +33,7 @@ group :test do
   gem 'pry'
   gem 'puma'
   gem 'rspec-rails'
+  gem 'rspec-wait'
   gem 'rubocop'
   gem 'rubocop-capybara'
   gem 'rubocop-performance'
