@@ -28,9 +28,7 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
           fill_in 'book-input', with: sun_also_rises.title
         end
 
-        it 'hides other Locations' do
-          expect(visible_pins).to eq 1
-        end
+        it('hides other Locations') { expect(visible_pins).to eq 1 }
       end
     end
   end
