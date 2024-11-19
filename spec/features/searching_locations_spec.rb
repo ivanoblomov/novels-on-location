@@ -6,6 +6,17 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
+    # Scenario: I click a pin
+    #   Given a pin
+    #   When I click it
+    #   Then a ballloon opens
+    #   And I should see a zoom, tag, and delete button
+    #
+    # Scenario: I zoom a pin
+    #   Given an open balloon
+    #   When I click zoom
+    #   Then it should increase the zoom level
+    #
     context 'when multiple Locations exist' do
       subject(:visible_pins) { evaluate_script script }
 

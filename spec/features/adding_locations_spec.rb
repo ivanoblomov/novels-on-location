@@ -20,17 +20,6 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
     #   And asks me to confirm the first matching book
     #   And adds a pin
     #
-    # Scenario: I click a pin
-    #   Given a pin
-    #   When I click it
-    #   Then a ballloon opens
-    #   And I should see a zoom, tag, and delete button
-    #
-    # Scenario: I zoom a pin
-    #   Given an open balloon
-    #   When I click zoom
-    #   Then it should increase the zoom level
-    #
     # Scenario: I tag a pin
     #   Given an open balloon
     #   When I click tag
