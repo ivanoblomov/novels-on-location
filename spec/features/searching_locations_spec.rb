@@ -6,12 +6,22 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
-    # Scenario: I click a pin
-    #   Given a pin
-    #   When I click it
-    #   Then a ballloon opens
-    #   And I should see a zoom, tag, and delete button
-    #
+    context 'when a Location exists and User clicks its pin' do
+      before do
+        Location.destroy_all
+        Location.create author: 'Alan Moore',
+                        lat_lng: ['51.519326', '-0.074316'],
+                        title: 'From Hell'
+        visit root_path
+        find('div[role=button]').click
+      end
+
+      it { expect(page).to have_css 'div.map-balloon' }
+      it { expect(page).to have_css 'input[value=Zoom]' }
+      it { expect(page).to have_css 'input[value=Tag]' }
+      it { expect(page).to have_css 'input[value=Delete]' }
+    end
+
     # Scenario: I zoom a pin
     #   Given an open balloon
     #   When I click zoom
@@ -23,7 +33,8 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
       let(:script) do
         'Object.values(nOL.pins).filter((pin) => pin.map).length;' # count visible pins (where map is defined)
       end
-      let(:sun_also_rises) do
+
+      before do
         Location.destroy_all
         Location.create author: 'Alan Moore',
                         lat_lng: ['51.519326', '-0.074316'],
@@ -37,7 +48,7 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
       context 'when User searches for an author' do
         before do
           visit root_path
-          fill_in 'book-input', with: sun_also_rises.author
+          fill_in 'book-input', with: 'hemingway'
         end
 
         it('hides other Locations') { expect(visible_pins).to eq 1 }
@@ -46,7 +57,7 @@ RSpec.describe 'Novels: On Location', js: !ENV['GITHUB_ACTIONS'], type: :system 
       context 'when User searches for a title' do
         before do
           visit root_path
-          fill_in 'book-input', with: sun_also_rises.title
+          fill_in 'book-input', with: 'sun also rises'
         end
 
         it('hides other Locations') { expect(visible_pins).to eq 1 }
