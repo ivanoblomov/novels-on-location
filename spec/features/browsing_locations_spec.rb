@@ -23,10 +23,10 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     context 'when a Location exists and a User clicks its pin' do
       before do
         Location.destroy_all
-        Location.create author: 'Alan Moore',
-                        lat_lng: ['51.519326', '-0.074316'],
-                        title: 'From Hell',
-                        user_id: '666325406'
+        Location.find_or_create_by author: 'Alan Moore',
+                                   lat_lng: ['51.519326', '-0.074316'],
+                                   title: 'From Hell',
+                                   user_id: '666325406'
         visit root_path
         find('div[role=button]').click
       end
@@ -50,16 +50,16 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
 
     context 'when multiple Locations exist' do
       let(:from_hell) do
-        Location.create author: 'Alan Moore',
-                        lat_lng: ['51.519326', '-0.074316'],
-                        tags: 'The Ten Bells, Spitalfields',
-                        title: 'From Hell',
-                        user_id: '666325406'
+        Location.find_or_create_by author: 'Alan Moore',
+                                   lat_lng: ['51.519326', '-0.074316'],
+                                   tags: 'The Ten Bells, Spitalfields',
+                                   title: 'From Hell',
+                                   user_id: '666325406'
       end
       let(:sun_also_rises) do
-        Location.create author: 'Ernest Hemingway',
-                        title: 'The Sun Also Rises',
-                        lat_lng: ['42.817422', '-1.64325']
+        Location.find_or_create_by author: 'Ernest Hemingway',
+                                   title: 'The Sun Also Rises',
+                                   lat_lng: ['42.817422', '-1.64325']
       end
 
       before do

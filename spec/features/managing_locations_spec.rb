@@ -35,9 +35,9 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     context 'when a Location exists and its balloon is open' do
       before do
         Location.destroy_all
-        Location.create author: 'Alan Moore',
-                        lat_lng: ['51.519326', '-0.074316'],
-                        title: 'From Hell'
+        Location.find_or_create_by author: 'Alan Moore',
+                                   lat_lng: ['51.519326', '-0.074316'],
+                                   title: 'From Hell'
         visit root_path
         find('div[role=button]').click
       end
