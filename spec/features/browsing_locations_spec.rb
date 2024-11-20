@@ -91,7 +91,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         before do
           visit root_path
           original_visible_pins
-          find_by_id('pin-display-button').click
+          click_button 'Pins: All'
         end
 
         let(:original_visible_pins) { evaluate_script script }
