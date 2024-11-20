@@ -6,11 +6,11 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
-    context 'when the map is in write mode and a User double-clicks it' do
+    context 'when the map is in Add Pins mode and a User double-clicks it' do
       before do
         Location.destroy_all
         visit root_path
-        find_by_id('mode-button').click
+        click_on 'Mode: Zoom'
         execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -.074316))' # HACK: since double-click fails
         accept_confirm(with: 'from hell')
         pending 'Amazon integration'

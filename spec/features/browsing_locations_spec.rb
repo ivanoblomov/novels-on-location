@@ -6,6 +6,20 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
+    context 'when the map loads and a User double-clicks it' do
+      before do
+        visit root_path
+        original_zoom_level
+        find_by_id('map-canvas').double_click
+      end
+
+      let(:original_zoom_level) { evaluate_script('nOL.map.zoom') }
+
+      # rubocop:disable RSpec/NoExpectationExample
+      it('the map zooms in') { wait_for { evaluate_script('nOL.map.zoom') }.to be > original_zoom_level }
+      # rubocop:enable RSpec/NoExpectationExample
+    end
+
     context 'when a Location exists and a User clicks its pin' do
       before do
         Location.destroy_all
@@ -71,6 +85,19 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         end
 
         it('the map hides other Locations') { expect(visible_pins).to eq 1 }
+      end
+
+      context 'when User clicks Pins: All' do
+        before do
+          visit root_path
+          original_visible_pins
+          click_on 'Pins: All'
+        end
+
+        let(:original_visible_pins) { evaluate_script script }
+
+        it("the map hides other people's Locations") { expect(visible_pins).to be < original_visible_pins }
+        it('the Pins button is labeled My Pins') { expect(page).to have_selector(:link_or_button, 'Pins: My Pins') }
       end
     end
   end
