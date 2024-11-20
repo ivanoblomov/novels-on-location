@@ -15,7 +15,9 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
 
       let(:original_zoom_level) { evaluate_script('nOL.map.zoom') }
 
+      # rubocop:disable RSpec/NoExpectationExample
       it('the map zooms in') { wait_for { evaluate_script('nOL.map.zoom') }.to be > original_zoom_level }
+      # rubocop:enable RSpec/NoExpectationExample
     end
 
     context 'when a Location exists and a User clicks its pin' do
@@ -83,6 +85,15 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         end
 
         it('the map hides other Locations') { expect(visible_pins).to eq 1 }
+      end
+
+      context 'when User clicks Pins' do
+        before do
+          visit root_path
+          find_by_id('pin-display-button').click
+        end
+
+        it("the map hides other people's Locations") { expect(visible_pins).to eq 0 }
       end
     end
   end
