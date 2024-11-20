@@ -25,15 +25,21 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         Location.destroy_all
         Location.create author: 'Alan Moore',
                         lat_lng: ['51.519326', '-0.074316'],
-                        title: 'From Hell'
+                        title: 'From Hell',
+                        user_id: '666325406'
         visit root_path
         find('div[role=button]').click
       end
 
       it('the map opens its balloon') { expect(page).to have_css 'div.map-balloon' }
       it('the balloon shows a Zoom button') { expect(page).to have_css 'input[value=Zoom]' }
+      it('the balloon shows a Annotate button') { expect(page).to have_css 'input[value=Annotate]' }
+      it('the balloon shows a Remap button') { expect(page).to have_css 'input[value=Remap]' }
       it('the balloon shows a Tag button') { expect(page).to have_css 'input[value=Tag]' }
       it('the balloon shows a Delete button') { expect(page).to have_css 'input[value=Delete]' }
+      it('the balloon shows a All Locations for Novel button') { expect(page).to have_link 'All Locations for Novel' }
+      it('the balloon shows a All Novels by Author button') { expect(page).to have_link 'All Locations for Novel' }
+      it('the balloon shows a All Pins by Reader button') { expect(page).to have_link 'All Pins by Reader' }
 
       context 'when a User clicks Zoom' do
         before { click_link_or_button 'Zoom' }
@@ -47,7 +53,8 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         Location.create author: 'Alan Moore',
                         lat_lng: ['51.519326', '-0.074316'],
                         tags: 'The Ten Bells, Spitalfields',
-                        title: 'From Hell'
+                        title: 'From Hell',
+                        user_id: '666325406'
       end
       let(:script) do
         'Object.values(nOL.pins).filter((pin) => pin.map).length;' # count visible pins (where map is defined)
