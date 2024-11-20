@@ -11,7 +11,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
 
       it 'the map zooms in' do
         visit root_path
-        expect(page).to have_content 'Keyboard shortcuts' # wait for map to render
+        wait_for { page }.to have_content 'Keyboard shortcuts'
         original_zoom_level
         find_by_id('map-canvas').double_click
         expect(evaluate_script('nOL.map.zoom')).to be >= original_zoom_level
