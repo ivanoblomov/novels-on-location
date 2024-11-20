@@ -6,12 +6,18 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
-    # Scenario: I add a pin
-    #   Given it's in write mode
-    #   When I double-click the map
-    #   Then it prompts me for book keywords
-    #   And asks me to confirm the first matching book
-    #   And adds a pin
+    context 'when the map is in write mode and a User double-clicks it' do
+      before do
+        Location.destroy_all
+        visit root_path
+        find_by_id('mode-button').click
+        execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -0.074316))' # hack since double-click fails
+        accept_confirm(with: 'from hell')
+        pending 'Amazon integration'
+      end
+
+      it('the Location is created') { expect(Location.count).to eq 1 }
+    end
 
     context 'when a User enters a specific place and keywords for the book' do
       before do
