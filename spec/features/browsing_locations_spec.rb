@@ -114,3 +114,19 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     end
   end
 end
+
+        context 'when the User clicks All Novels by Author' do
+          before { click_link_or_button 'All Novels by Author' }
+
+          it('the map hides The Sun Also Rises') {
+            expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
+          }
+        end
+
+        context 'when the User clicks All Pins by Reader' do
+          before { click_link_or_button 'All Pins by Reader' }
+
+          it('the map hides The Sun Also Rises') {
+            expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
+          }
+        end
