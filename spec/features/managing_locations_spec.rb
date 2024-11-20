@@ -12,12 +12,19 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     #   Then it prompts me for book keywords
     #   And asks me to confirm the first matching book
     #   And adds a pin
-    #
-    # Scenario: I search for a specific place
-    #   When I enter a specific place
-    #   Then it prompts me for book keywords
-    #   And asks me to confirm the first matching book
-    #   And adds a pin
+
+    context 'when a User enters a specific place and keywords for the book' do
+      before do
+        Location.destroy_all
+        visit root_path
+        fill_in 'place-input', with: "san sebastian\n"
+        accept_prompt(with: 'sun also rises')
+        accept_alert
+        pending
+      end
+
+      it('the Location is created') { expect(Location.count).to eq 1 }
+    end
 
     context 'when a Location exists and its balloon is open' do
       before do
