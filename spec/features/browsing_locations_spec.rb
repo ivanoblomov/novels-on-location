@@ -32,14 +32,14 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       end
 
       it('the map opens its balloon') { expect(page).to have_css 'div.map-balloon' }
-      it('the balloon shows a Zoom button') { expect(page).to have_css 'input[value=Zoom]' }
-      it('the balloon shows a Annotate button') { expect(page).to have_css 'input[value=Annotate]' }
-      it('the balloon shows a Remap button') { expect(page).to have_css 'input[value=Remap]' }
-      it('the balloon shows a Tag button') { expect(page).to have_css 'input[value=Tag]' }
-      it('the balloon shows a Delete button') { expect(page).to have_css 'input[value=Delete]' }
-      it('the balloon shows a All Locations for Novel button') { expect(page).to have_link 'All Locations for Novel' }
-      it('the balloon shows a All Novels by Author button') { expect(page).to have_link 'All Locations for Novel' }
-      it('the balloon shows a All Pins by Reader button') { expect(page).to have_link 'All Pins by Reader' }
+      it('the balloon shows a Zoom button') { expect(page).to have_button 'Zoom' }
+      it('the balloon shows an Annotate button') { expect(page).to have_button 'Annotate' }
+      it('the balloon shows a Remap button') { expect(page).to have_button 'Remap' }
+      it('the balloon shows a Tag button') { expect(page).to have_button 'Tag' }
+      it('the balloon shows a Delete button') { expect(page).to have_button 'Delete' }
+      it('the balloon shows an All Locations for Novel button') { expect(page).to have_link 'All Locations for Novel' }
+      it('the balloon shows an All Novels by Author button') { expect(page).to have_link 'All Locations for Novel' }
+      it('the balloon shows an All Pins by Reader button') { expect(page).to have_link 'All Pins by Reader' }
 
       context 'when a User clicks Zoom' do
         before { click_link_or_button 'Zoom' }
