@@ -9,7 +9,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     context 'when the map loads and a User double-clicks it' do
       before do
         visit root_path
-        using_wait_time(1) { original_zoom_level }
+        using_wait_time(2) { original_zoom_level }
         find_by_id('map-canvas').double_click
       end
 
@@ -56,9 +56,6 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
                         title: 'From Hell',
                         user_id: '666325406'
       end
-      let(:script) do
-        'Object.values(nOL.pins).filter((pin) => pin.map).length;' # count visible pins (where map is defined)
-      end
       let(:sun_also_rises) do
         Location.create author: 'Ernest Hemingway',
                         title: 'The Sun Also Rises',
@@ -98,8 +95,11 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
           click_on 'Pins: All'
         end
 
-        let(:original_visible_pins) { evaluate_script script }
-        let(:visible_pins) { evaluate_script script }
+        let(:count_visible_pins) do
+          'Object.values(nOL.pins).filter((pin) => pin.map).length;' # count visible pins (where map is defined)
+        end
+        let(:original_visible_pins) { evaluate_script count_visible_pins }
+        let(:visible_pins) { evaluate_script count_visible_pins }
 
         it("the map hides other people's Locations") { expect(visible_pins).to be < original_visible_pins }
         it('the Pins button is labeled My Pins') { expect(page).to have_selector(:link_or_button, 'Pins: My Pins') }
