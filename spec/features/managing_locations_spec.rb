@@ -42,6 +42,24 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         find('div[role=button]').click
       end
 
+      context 'when a User annotates it' do
+        before do
+          accept_prompt(with: 'Originally serialized in the anthology Taboo') do
+            click_link_or_button 'Annotate'
+          end
+        end
+
+        # rubocop:disable RSpec/NoExpectationExample
+        it("the Location's note persists") {
+          wait_for do
+            Location.first.reload.notes
+          end.to eq 'Originally serialized in the anthology Taboo'
+        }
+        # rubocop:enable RSpec/NoExpectationExample
+      end
+
+      context 'when a User remaps it'
+
       context 'when a User tags it' do
         before { accept_prompt(with: 'The Ten Bells') { click_link_or_button 'Tag' } }
 
