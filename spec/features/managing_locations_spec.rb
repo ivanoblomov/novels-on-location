@@ -43,9 +43,7 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       end
 
       context 'when a User tags it' do
-        before do
-          accept_prompt(with: 'The Ten Bells') { click_link_or_button 'Tag' }
-        end
+        before { accept_prompt(with: 'The Ten Bells') { click_link_or_button 'Tag' } }
 
         # rubocop:disable RSpec/NoExpectationExample
         it("the Location's tag persists") { wait_for { Location.first.reload.tags }.to eq 'The Ten Bells' }
