@@ -1,8 +1,8 @@
 # Novels: On Location
 
-[![Build status](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/FoveaCentral/google_maps_geocoder/actions/workflows/test.yml)
-[![Build status](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/FoveaCentral/hit_counter/actions/workflows/test.yml)
-[![test](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml/badge.svg)](https://github.com/FoveaCentral/vaccinesignup/actions/workflows/test.yml)
+[![Build status](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml)
+[![Build status](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml)
+[![test](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml/badge.svg)](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml)
 [![test](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml)
 [![test](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml)
 <!--
