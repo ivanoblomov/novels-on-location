@@ -1,5 +1,9 @@
 # Novels: On Location
 
+[![Build status](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/FoveaCentral/google_maps_geocoder/actions/workflows/test.yml)
+[![Build status](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/FoveaCentral/hit_counter/actions/workflows/test.yml)
+[![test](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml/badge.svg)](https://github.com/FoveaCentral/vaccinesignup/actions/workflows/test.yml)
+[![test](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml)
 [![test](https://github.com/ivanoblomov/novels-on-location/workflows/test/badge.svg)](https://github.com/ivanoblomov/novels-on-location/actions/workflows/test.yml)
 <!--
 [![Maintainability](https://api.codeclimate.com/v1/badges/9818a986253d2a477bb8/maintainability)](https://codeclimate.com/github/ivanoblomov/novels-on-location/maintainability)
