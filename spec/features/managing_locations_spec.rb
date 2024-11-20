@@ -20,7 +20,7 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         fill_in 'place-input', with: "san sebastian\n"
         accept_prompt(with: 'sun also rises')
         accept_alert
-        pending
+        pending 'Amazon integration'
       end
 
       it('the Location is created') { expect(Location.count).to eq 1 }
