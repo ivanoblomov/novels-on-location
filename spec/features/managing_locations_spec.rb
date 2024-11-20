@@ -19,7 +19,7 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     #   And asks me to confirm the first matching book
     #   And adds a pin
 
-    context 'when a Location exists, its balloon is open, and a User tags it' do
+    context 'when a Location exists and its balloon is open' do
       before do
         Location.destroy_all
         Location.create author: 'Alan Moore',
@@ -27,19 +27,29 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
                         title: 'From Hell'
         visit root_path
         find('div[role=button]').click
-        click_link_or_button 'Tag'
-        accept_prompt(with: 'The Ten Bells')
       end
 
-      # rubocop:disable RSpec/NoExpectationExample
-      it("the Location's tag persists") { wait_for { Location.first.reload.tags }.to eq 'The Ten Bells' }
-      # rubocop:enable RSpec/NoExpectationExample
-    end
+      context 'when a User tags it' do
+        before do
+          click_link_or_button 'Tag'
+          accept_prompt(with: 'The Ten Bells')
+        end
 
-    # Scenario: I delete a pin
-    #   Given an open balloon
-    #   When I click delete
-    #   Then it asks for confirmation
-    #   And deletes the pin
+        # rubocop:disable RSpec/NoExpectationExample
+        it("the Location's tag persists") { wait_for { Location.first.reload.tags }.to eq 'The Ten Bells' }
+        # rubocop:enable RSpec/NoExpectationExample
+      end
+
+      context 'when a User deletes it' do
+        before do
+          click_link_or_button 'Delete'
+          accept_confirm
+        end
+
+        # rubocop:disable RSpec/NoExpectationExample
+        it { wait_for { Location.count }.to eq 0 }
+        # rubocop:enable RSpec/NoExpectationExample
+      end
+    end
   end
 end
