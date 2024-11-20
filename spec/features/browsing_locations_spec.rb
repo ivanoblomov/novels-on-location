@@ -56,11 +56,11 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         Location.create author: 'Ernest Hemingway',
                         title: 'The Sun Also Rises',
                         lat_lng: ['42.817422', '-1.64325']
+        visit root_path
       end
 
       context 'when User searches for a matching author' do
         before do
-          visit root_path
           fill_in 'book-input', with: 'hemingway'
         end
 
@@ -69,7 +69,6 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
 
       context 'when User searches for a matching title' do
         before do
-          visit root_path
           fill_in 'book-input', with: 'sun also rises'
         end
 
@@ -78,7 +77,6 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
 
       context 'when User searches for a matching tag' do
         before do
-          visit root_path
           fill_in 'book-input', with: 'ten bells'
         end
 
@@ -87,7 +85,6 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
 
       context 'when User clicks Pins: All' do
         before do
-          visit root_path
           original_visible_pins
           click_on 'Pins: All'
         end
