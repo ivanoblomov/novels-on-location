@@ -56,14 +56,8 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
-
-  config.before(:each, type: :system) do
-    driven_by :rack_test
-  end
-
-  config.before(:each, :js, type: :system) do
-    driven_by :selenium
-  end
+  config.before(:each, type: :system) { driven_by :rack_test }
+  config.before(:each, :js, type: :system) { driven_by :selenium }
 end
 Capybara.configure do |config|
   config.default_driver = :selenium
@@ -73,7 +67,6 @@ end
 Capybara.always_include_port = true
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new
-
   Capybara::Selenium::Driver.new(app,
                                  browser: :chrome,
                                  options: options)

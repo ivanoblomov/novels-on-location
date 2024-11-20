@@ -35,11 +35,36 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     context 'when a Location exists and its balloon is open' do
       before do
         Location.destroy_all
-        Location.create author: 'Alan Moore',
-                        lat_lng: ['51.519326', '-0.074316'],
-                        title: 'From Hell'
+        Location.find_or_create_by author: 'Alan Moore',
+                                   lat_lng: ['51.519326', '-0.074316'],
+                                   title: 'From Hell'
         visit root_path
         find('div[role=button]').click
+      end
+
+      context 'when a User annotates it' do
+        before { accept_prompt(with: 'Originally serialized in Taboo') { click_link_or_button 'Annotate' } }
+
+        # rubocop:disable RSpec/NoExpectationExample
+        it("the Location's note persists") {
+          wait_for { Location.first.reload.notes }.to eq 'Originally serialized in Taboo'
+        }
+        # rubocop:enable RSpec/NoExpectationExample
+      end
+
+      context 'when a User remaps it' do
+        before do
+          original_coordinates
+          accept_prompt(with: '1 Highbury Place, Islington') { click_link_or_button 'Remap' }
+        end
+
+        let(:original_coordinates) { Location.first.lat_lng }
+
+        # rubocop:disable RSpec/NoExpectationExample
+        it("the Location's new coordinates persist") do
+          wait_for { Location.first.reload.lat_lng }.not_to eq original_coordinates
+        end
+        # rubocop:enable RSpec/NoExpectationExample
       end
 
       context 'when a User tags it' do
