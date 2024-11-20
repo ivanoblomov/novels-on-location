@@ -87,13 +87,17 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         it('the map hides other Locations') { expect(visible_pins).to eq 1 }
       end
 
-      context 'when User clicks Pins' do
+      context 'when User clicks Pins: All' do
         before do
           visit root_path
+          original_visible_pins
           find_by_id('pin-display-button').click
         end
 
-        it("the map hides other people's Locations") { expect(visible_pins).to eq 0 }
+        let(:original_visible_pins) { evaluate_script script }
+
+        it("the map hides other people's Locations") { expect(visible_pins).to be < original_visible_pins }
+        it("the Pins button is labeled My Pins") { expect(page).to have_selector(:link_or_button, 'Pins: My Pins') }
       end
     end
   end
