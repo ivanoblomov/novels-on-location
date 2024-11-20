@@ -102,7 +102,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         let(:visible_pins) { evaluate_script count_visible_pins }
 
         it("the map hides other people's Locations") { expect(visible_pins).to be < original_visible_pins }
-        it('the Pins button is labeled My Pins') { expect(page).to have_selector(:link_or_button, 'Pins: My Pins') }
+        it('the Pins button is labeled My Pins') { expect(page).to have_css(:link_or_button, 'Pins: My Pins') }
       end
 
       context "when From Hell's balloon is open" do
