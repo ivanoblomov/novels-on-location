@@ -72,19 +72,19 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         visit root_path
       end
 
-      context 'when User searches for a matching author' do
+      context 'when User searches for "hemingway"' do
         before { fill_in 'book-input', with: 'hemingway' }
 
         it('the map hides From Hell') { expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_nil }
       end
 
-      context 'when User searches for a matching title' do
+      context 'when User searches for "sun also rises"' do
         before { fill_in 'book-input', with: 'sun also rises' }
 
         it('the map hides From Hell') { expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_nil }
       end
 
-      context 'when User searches for a matching tag' do
+      context 'when User searches for "ten bells"' do
         before { fill_in 'book-input', with: 'ten bells' }
 
         it('the map hides The Sun Also Rises') {
@@ -105,7 +105,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         it('the Pins button is labeled My Pins') { expect(page).to have_selector(:link_or_button, 'Pins: My Pins') }
       end
 
-      context "when a Location's balloon is open" do
+      context "when From Hell's balloon is open" do
         before do
           first('div[role=button]').click
         end
@@ -117,10 +117,6 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
           }
         end
-      end
-    end
-  end
-end
 
         context 'when the User clicks All Novels by Author' do
           before { click_link_or_button 'All Novels by Author' }
@@ -137,3 +133,7 @@ end
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
           }
         end
+      end
+    end
+  end
+end
