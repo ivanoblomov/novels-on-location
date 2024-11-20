@@ -44,8 +44,7 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
 
       context 'when a User tags it' do
         before do
-          click_link_or_button 'Tag'
-          accept_prompt(with: 'The Ten Bells')
+          accept_prompt(with: 'The Ten Bells') { click_link_or_button 'Tag' }
         end
 
         # rubocop:disable RSpec/NoExpectationExample
