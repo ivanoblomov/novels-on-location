@@ -6,6 +6,18 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
+    context 'when the map loads and a User double-clicks it' do
+      before do
+        visit root_path
+        original_zoom_level
+        find_by_id('map-canvas').double_click
+      end
+
+      let(:original_zoom_level) { evaluate_script('nOL.map.zoom') }
+
+      it('the map zooms in') { expect(evaluate_script('nOL.map.zoom')).to be > original_zoom_level }
+    end
+
     context 'when a Location exists and a User clicks its pin' do
       before do
         Location.destroy_all
