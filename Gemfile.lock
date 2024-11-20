@@ -285,6 +285,10 @@ GEM
       actionpack (>= 5.2)
       railties (>= 5.2)
     rexml (3.3.9)
+    rspec (3.13.0)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
     rspec-core (3.13.2)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.3)
@@ -302,6 +306,8 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
+    rspec-wait (1.0.1)
+      rspec (>= 3.4)
     rubocop (1.68.0)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
@@ -443,6 +449,7 @@ DEPENDENCIES
   rails
   responders
   rspec-rails
+  rspec-wait
   rubocop
   rubocop-capybara
   rubocop-performance
