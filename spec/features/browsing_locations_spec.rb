@@ -6,6 +6,15 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
+    let(:from_hell) do
+      Location.find_or_create_by author: 'Alan Moore',
+                                 lat_lng: ['51.519326', '-0.074316'],
+                                 title: 'From Hell',
+                                 url:
+'http://www.amazon.com/Sun-Also-Rises-Ernest-Hemingway/dp/0743297334%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0743297334',
+                                 user_id: '666325406'
+    end
+
     context 'when the map loads and a User double-clicks it' do
       let(:original_zoom_level) { evaluate_script('nOL.map.zoom') }
 
@@ -21,15 +30,20 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     context 'when a Location exists and a User clicks its pin' do
       before do
         Location.destroy_all
-        Location.find_or_create_by author: 'Alan Moore',
-                                   lat_lng: ['51.519326', '-0.074316'],
-                                   title: 'From Hell',
-                                   user_id: '666325406'
         visit root_path
         find('div[role=button]').click
       end
 
       it('the map opens its balloon') { expect(page).to have_css 'div.map-balloon' }
+
+      it "the balloon shows the novel's title linked to Amazon" do
+        expect(page).to have_link 'From Hell', href: from_hell.url
+      end
+
+      it "the balloon shows the novel's author linked to Wikipedia" do
+        expect(page).to have_link 'Alan Moore', href: 'http://en.wikipedia.org/wiki/Alan%20Moore'
+      end
+
       it('the balloon shows a Zoom button') { expect(page).to have_button 'Zoom' }
       it('the balloon shows an Annotate button') { expect(page).to have_button 'Annotate' }
       it('the balloon shows a Remap button') { expect(page).to have_button 'Remap' }
@@ -47,13 +61,6 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     end
 
     context 'when multiple Locations exist' do
-      let(:from_hell) do
-        Location.find_or_create_by author: 'Alan Moore',
-                                   lat_lng: ['51.519326', '-0.074316'],
-                                   tags: 'The Ten Bells, Spitalfields',
-                                   title: 'From Hell',
-                                   user_id: '666325406'
-      end
       let(:sun_also_rises) do
         Location.find_or_create_by author: 'Ernest Hemingway',
                                    title: 'The Sun Also Rises',
