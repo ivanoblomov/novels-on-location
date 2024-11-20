@@ -45,19 +45,25 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     context 'when multiple Locations exist' do
       subject(:visible_pins) { evaluate_script script }
 
-      let(:script) do
-        'Object.values(nOL.pins).filter((pin) => pin.map).length;' # count visible pins (where map is defined)
-      end
-
-      before do
-        Location.destroy_all
+      let(:from_hell) do
         Location.create author: 'Alan Moore',
                         lat_lng: ['51.519326', '-0.074316'],
                         tags: 'The Ten Bells, Spitalfields',
                         title: 'From Hell'
+      end
+      let(:script) do
+        'Object.values(nOL.pins).filter((pin) => pin.map).length;' # count visible pins (where map is defined)
+      end
+      let(:sun_also_rises) do
         Location.create author: 'Ernest Hemingway',
                         title: 'The Sun Also Rises',
                         lat_lng: ['42.817422', '-1.64325']
+      end
+
+      before do
+        Location.destroy_all
+        from_hell
+        sun_also_rises
         visit root_path
       end
 
