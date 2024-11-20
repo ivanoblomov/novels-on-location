@@ -7,17 +7,15 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
     context 'when the map loads and a User double-clicks it' do
-      before do
-        visit root_path
-        using_wait_time(2) { original_zoom_level }
-        find_by_id('map-canvas').double_click
-      end
-
       let(:original_zoom_level) { evaluate_script('nOL.map.zoom') }
 
-      # rubocop:disable RSpec/NoExpectationExample
-      it('the map zooms in') { wait_for { evaluate_script('nOL.map.zoom') }.to be >= original_zoom_level }
-      # rubocop:enable RSpec/NoExpectationExample
+      it 'the map zooms in' do
+        visit root_path
+        expect(page).to have_content 'Keyboard shortcuts' # wait for map to render
+        original_zoom_level
+        find_by_id('map-canvas').double_click
+        expect(evaluate_script('nOL.map.zoom')).to be >= original_zoom_level
+      end
     end
 
     context 'when a Location exists and a User clicks its pin' do
