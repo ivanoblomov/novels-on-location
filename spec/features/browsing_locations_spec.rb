@@ -106,9 +106,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       end
 
       context "when From Hell's balloon is open" do
-        before do
-          first('div[role=button]').click
-        end
+        before { first('div[role=button]').click }
 
         context 'when the User clicks All Locations for Novel' do
           before { click_link_or_button 'All Locations for Novel' }

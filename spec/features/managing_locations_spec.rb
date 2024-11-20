@@ -43,15 +43,11 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       end
 
       context 'when a User annotates it' do
-        before do
-          accept_prompt(with: 'Originally serialized in the anthology Taboo') do
-            click_link_or_button 'Annotate'
-          end
-        end
+        before { accept_prompt(with: 'Originally serialized in Taboo') { click_link_or_button 'Annotate' } }
 
         # rubocop:disable RSpec/NoExpectationExample
         it("the Location's note persists") {
-          wait_for { Location.first.reload.notes }.to eq 'Originally serialized in the anthology Taboo'
+          wait_for { Location.first.reload.notes }.to eq 'Originally serialized in Taboo'
         }
         # rubocop:enable RSpec/NoExpectationExample
       end
