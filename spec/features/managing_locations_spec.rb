@@ -11,7 +11,7 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         Location.destroy_all
         visit root_path
         find_by_id('mode-button').click
-        execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -0.074316))' # hack since double-click fails
+        execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -.074316))' # HACK: since double-click fails
         accept_confirm(with: 'from hell')
         pending 'Amazon integration'
       end
