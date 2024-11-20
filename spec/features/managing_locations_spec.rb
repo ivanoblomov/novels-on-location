@@ -47,7 +47,7 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         end
 
         # rubocop:disable RSpec/NoExpectationExample
-        it { wait_for { Location.count }.to eq 0 }
+        it('the Location no longer exists') { wait_for { Location.count }.to eq 0 }
         # rubocop:enable RSpec/NoExpectationExample
       end
     end
