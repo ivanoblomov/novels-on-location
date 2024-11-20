@@ -58,7 +58,18 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         # rubocop:enable RSpec/NoExpectationExample
       end
 
-      context 'when a User remaps it'
+      context 'when a User remaps it' do
+        before do
+          original_coordinates
+          accept_prompt(with: '1 Highbury Place, Islington') { click_link_or_button 'Remap' }
+        end
+
+        let(:original_coordinates) { Location.first.lat_lng }
+
+        # rubocop:disable RSpec/NoExpectationExample
+        it("the Location's tag persists") { wait_for { Location.first.reload.lat_lng }.not_to eq original_coordinates }
+        # rubocop:enable RSpec/NoExpectationExample
+      end
 
       context 'when a User tags it' do
         before { accept_prompt(with: 'The Ten Bells') { click_link_or_button 'Tag' } }
