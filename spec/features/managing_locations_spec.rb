@@ -51,9 +51,7 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
 
         # rubocop:disable RSpec/NoExpectationExample
         it("the Location's note persists") {
-          wait_for do
-            Location.first.reload.notes
-          end.to eq 'Originally serialized in the anthology Taboo'
+          wait_for { Location.first.reload.notes }.to eq 'Originally serialized in the anthology Taboo'
         }
         # rubocop:enable RSpec/NoExpectationExample
       end
