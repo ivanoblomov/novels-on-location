@@ -15,7 +15,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
 
       let(:original_zoom_level) { evaluate_script('nOL.map.zoom') }
 
-      it('the map zooms in') { expect(evaluate_script('nOL.map.zoom')).to be > original_zoom_level }
+      it('the map zooms in') { wait_for { evaluate_script('nOL.map.zoom') }.to be > original_zoom_level }
     end
 
     context 'when a Location exists and a User clicks its pin' do
