@@ -106,6 +106,14 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       context "when From Hell's balloon is open" do
         before { first('div[role=button]').click }
 
+        context "when the User clicks the tag 'Spitalfields'" do
+          before { click_link_or_button 'Spitalfields' }
+
+          it('the map hides The Sun Also Rises') {
+            expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
+          }
+        end
+
         context 'when the User clicks All Locations for Novel' do
           before { click_link_or_button 'All Locations for Novel' }
 
