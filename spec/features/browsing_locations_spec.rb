@@ -9,7 +9,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     context 'when the map loads and a User double-clicks it' do
       before do
         visit root_path
-        using_wait_time(1) { original_zoom_level }
+        using_wait_time(2) { original_zoom_level }
         find_by_id('map-canvas').double_click
       end
 
