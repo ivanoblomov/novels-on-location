@@ -38,7 +38,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       it('the balloon shows a Tag button') { expect(page).to have_button 'Tag' }
       it('the balloon shows a Delete button') { expect(page).to have_button 'Delete' }
       it('the balloon shows an All Locations for Novel button') { expect(page).to have_link 'All Locations for Novel' }
-      it('the balloon shows an All Novels by Author button') { expect(page).to have_link 'All Locations for Novel' }
+      it('the balloon shows an All Novels by Author button') { expect(page).to have_link 'All Novels by Author' }
       it('the balloon shows an All Pins by Reader button') { expect(page).to have_link 'All Pins by Reader' }
 
       context 'when a User clicks Zoom' do
