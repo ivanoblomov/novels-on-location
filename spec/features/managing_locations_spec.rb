@@ -67,7 +67,9 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         let(:original_coordinates) { Location.first.lat_lng }
 
         # rubocop:disable RSpec/NoExpectationExample
-        it("the Location's tag persists") { wait_for { Location.first.reload.lat_lng }.not_to eq original_coordinates }
+        it("the Location's new coordinates persist") do
+          wait_for { Location.first.reload.lat_lng }.not_to eq original_coordinates
+        end
         # rubocop:enable RSpec/NoExpectationExample
       end
 
