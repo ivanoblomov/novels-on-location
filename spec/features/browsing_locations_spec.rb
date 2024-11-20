@@ -91,13 +91,13 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         before do
           visit root_path
           original_visible_pins
-          click_button 'Pins: All'
+          click_on 'Pins: All'
         end
 
         let(:original_visible_pins) { evaluate_script script }
 
         it("the map hides other people's Locations") { expect(visible_pins).to be < original_visible_pins }
-        it("the Pins button is labeled My Pins") { expect(page).to have_selector(:link_or_button, 'Pins: My Pins') }
+        it('the Pins button is labeled My Pins') { expect(page).to have_selector(:link_or_button, 'Pins: My Pins') }
       end
     end
   end
