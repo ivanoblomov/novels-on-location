@@ -36,6 +36,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       end
 
       it('the map opens its balloon') { expect(page).to have_css 'div.map-balloon' }
+      it('the balloon doesn\'t show "null"') { expect(page).not_to have_css "h2", text: 'null' }
 
       it "the balloon shows the novel's title linked to Amazon" do
         expect(page).to have_link 'From Hell', href: from_hell.amazon_url
