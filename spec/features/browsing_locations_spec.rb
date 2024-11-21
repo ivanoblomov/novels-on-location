@@ -7,11 +7,11 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
     let(:from_hell) do
-      Location.find_or_create_by author: 'Alan Moore',
+      Location.find_or_create_by asin: '0958578346',
+                                 author: 'Alan Moore',
                                  lat_lng: ['51.519326', '-0.074316'],
+                                 tags: 'The Ten Bells, Spitalfields',
                                  title: 'From Hell',
-                                 url:
-'http://www.amazon.com/Sun-Also-Rises-Ernest-Hemingway/dp/0743297334%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0743297334',
                                  user_id: '666325406'
     end
 
@@ -30,6 +30,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     context 'when a Location exists and a User clicks its pin' do
       before do
         Location.destroy_all
+        from_hell
         visit root_path
         find('div[role=button]').click
       end
@@ -37,7 +38,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       it('the map opens its balloon') { expect(page).to have_css 'div.map-balloon' }
 
       it "the balloon shows the novel's title linked to Amazon" do
-        expect(page).to have_link 'From Hell', href: from_hell.url
+        expect(page).to have_link 'From Hell', href: from_hell.amazon_url
       end
 
       it "the balloon shows the novel's author linked to Wikipedia" do
@@ -49,14 +50,19 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       it('the balloon shows a Remap button') { expect(page).to have_button 'Remap' }
       it('the balloon shows a Tag button') { expect(page).to have_button 'Tag' }
       it('the balloon shows a Delete button') { expect(page).to have_button 'Delete' }
+      it('the balloon shows a Buy from Amazon link') { expect(page).to have_link href: from_hell.amazon_url }
 
       it "the balloon shows the novel's reader linked to Facebook" do
+        pending 'Facebook integration'
         expect(page).to have_link 'Roderick Monje', href: 'http://www.facebook.com/profile.php?id=666325406'
       end
 
-      it('the balloon shows an All Locations for Novel button') { expect(page).to have_link 'All Locations for Novel' }
-      it('the balloon shows an All Novels by Author button') { expect(page).to have_link 'All Novels by Author' }
-      it('the balloon shows an All Pins by Reader button') { expect(page).to have_link 'All Pins by Reader' }
+      it 'the balloon shows an "All Locations for Novel" button' do
+        expect(page).to have_link 'All Locations for Novel'
+      end
+
+      it('the balloon shows an "All Novels by Author" button') { expect(page).to have_link 'All Novels by Author' }
+      it('the balloon shows an "All Pins by Reader" button') { expect(page).to have_link 'All Pins by Reader' }
 
       context 'when a User clicks Zoom' do
         before { click_link_or_button 'Zoom' }
