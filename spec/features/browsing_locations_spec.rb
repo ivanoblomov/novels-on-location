@@ -50,7 +50,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       it('the balloon shows a Remap button') { expect(page).to have_button 'Remap' }
       it('the balloon shows a Tag button') { expect(page).to have_button 'Tag' }
       it('the balloon shows a Delete button') { expect(page).to have_button 'Delete' }
-      it('the balloon shows a Buy from Amazon link') { expect(page).to have_link href: from_hell.amazon_url }
+      it('the balloon shows a "Buy from Amazon" link') { expect(page).to have_link href: from_hell.amazon_url }
 
       it "the balloon shows the novel's reader linked to Facebook" do
         pending 'Facebook integration'
@@ -105,7 +105,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         }
       end
 
-      context 'when User clicks Pins: All' do
+      context 'when User clicks "Pins: All"' do
         before do
           original_visible_pins
           click_on 'Pins: All'
@@ -118,40 +118,40 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         let(:visible_pins) { evaluate_script count_visible_pins }
 
         it("the map hides other people's Locations") { expect(visible_pins).to be < original_visible_pins }
-        it('the Pins button is labeled My Pins') { expect(page).to have_button('Pins: My Pins') }
+        it('the Pins button is labeled "My Pins"') { expect(page).to have_button('Pins: My Pins') }
       end
 
       context "when From Hell's balloon is open" do
         before { first('div[role=button]').click }
 
-        context "when the User clicks the tag 'Spitalfields'" do
+        context 'when the User clicks the tag "Spitalfields"' do
           before { click_link_or_button 'Spitalfields' }
 
-          it('the map hides The Sun Also Rises') {
+          it('the map hides "The Sun Also Rises"') {
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
           }
         end
 
-        context 'when the User clicks All Locations for Novel' do
+        context 'when the User clicks "All Locations for Novel"' do
           before { click_link_or_button 'All Locations for Novel' }
 
-          it('the map hides The Sun Also Rises') {
+          it('the map hides "The Sun Also Rises"') {
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
           }
         end
 
-        context 'when the User clicks All Novels by Author' do
+        context 'when the User clicks "All Novels by Author"' do
           before { click_link_or_button 'All Novels by Author' }
 
-          it('the map hides The Sun Also Rises') {
+          it('the map hides "The Sun Also Rises"') {
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
           }
         end
 
-        context 'when the User clicks All Pins by Reader' do
+        context 'when the User clicks "All Pins by Reader"' do
           before { click_link_or_button 'All Pins by Reader' }
 
-          it('the map hides The Sun Also Rises') {
+          it('the map hides "The Sun Also Rises"') {
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
           }
         end

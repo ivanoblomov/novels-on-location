@@ -6,7 +6,7 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
   if ENV['GITHUB_ACTIONS']
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
-    context 'when the map is in Add Pins mode and a User double-clicks it' do
+    context 'when the map is in "Add Pins" mode and a User double-clicks it' do
       before do
         Location.destroy_all
         visit root_path
