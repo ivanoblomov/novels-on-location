@@ -3,6 +3,17 @@
 describe Location do
   subject(:location) { described_class.new }
 
+  describe '#geocode' do
+    context 'with "white house"' do
+      # rubocop:enable RSpec/MultipleExpectations
+      it 'sets Washington, DC' do
+        lat, lng = location.lat_lng
+        expect(lat).to be_within(0.005).of(38.8976633) and expect(lng).to be_within(0.005).of(-77.0365739)
+      end
+      # rubocop:disable RSpec/MultipleExpectations
+    end
+  end
+
   describe '#new' do
     context 'with no args' do
       # rubocop:disable RSpec/NestedGroups
