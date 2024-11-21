@@ -308,7 +308,6 @@ class Location
     ]
   end
 
-  # rubocop:disable Metrics/AbcSize
   def geocode(coordinates_or_keyword)
     g = GoogleMapsGeocoder.new coordinates_or_keyword
     self.address = g.formatted_address
@@ -317,7 +316,6 @@ class Location
     self.country = g.country_long_name
     self.state = g.state_short_name if usa?
   end
-  # rubocop:enable Metrics/AbcSize
 
   def negate?
     rand(2).zero?
