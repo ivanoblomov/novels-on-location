@@ -88,19 +88,19 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       context 'when User searches for "hemingway"' do
         before { fill_in 'book-input', with: 'hemingway' }
 
-        it('the map hides From Hell') { expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_nil }
+        it('the map hides "From Hell"') { expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_nil }
       end
 
       context 'when User searches for "sun also rises"' do
         before { fill_in 'book-input', with: 'sun also rises' }
 
-        it('the map hides From Hell') { expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_nil }
+        it('the map hides "From Hell"') { expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_nil }
       end
 
       context 'when User searches for "ten bells"' do
         before { fill_in 'book-input', with: 'ten bells' }
 
-        it('the map hides The Sun Also Rises') {
+        it('the map hides "The Sun Also Rises"') {
           expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
         }
       end
