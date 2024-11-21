@@ -32,7 +32,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         Location.destroy_all
         from_hell
         visit root_path
-        find('div[role=button]').click
+        wait_for { find('div[role=button]').click }
       end
 
       it('the map opens its balloon') { expect(page).to have_css 'div.map-balloon' }
