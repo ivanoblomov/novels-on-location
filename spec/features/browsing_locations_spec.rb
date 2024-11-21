@@ -57,12 +57,12 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         expect(page).to have_link 'Roderick Monje', href: 'http://www.facebook.com/profile.php?id=666325406'
       end
 
-      it 'the balloon shows an "All Locations for Novel" button' do
+      it 'the balloon shows an "All Locations for Novel" link' do
         expect(page).to have_link 'All Locations for Novel'
       end
 
-      it('the balloon shows an "All Novels by Author" button') { expect(page).to have_link 'All Novels by Author' }
-      it('the balloon shows an "All Pins by Reader" button') { expect(page).to have_link 'All Pins by Reader' }
+      it('the balloon shows an "All Novels by Author" link') { expect(page).to have_link 'All Novels by Author' }
+      it('the balloon shows an "All Pins by Reader" link') { expect(page).to have_link 'All Pins by Reader' }
 
       context 'when a User clicks Zoom' do
         before { click_link_or_button 'Zoom' }
