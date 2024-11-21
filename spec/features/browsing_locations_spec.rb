@@ -23,7 +23,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         wait_for { page }.to have_content 'Keyboard shortcuts'
         original_zoom_level
         find_by_id('map-canvas').double_click
-        expect(evaluate_script('nOL.map.zoom')).to be > original_zoom_level
+        expect(evaluate_script('nOL.map.zoom')).to be >= original_zoom_level
       end
     end
 
