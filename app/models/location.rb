@@ -337,7 +337,7 @@ class Location
     send :displace if matching_coordinates.present?
     set_address_info
   rescue StandardError => e
-    Rails.logger.warn "Can't set address for #{slug || to_s}"
+    Rails.logger.warn "Can't set address for #{slug || to_s}: #{e}"
     Rails.logger.warn e.backtrace * "\n"
   end
 
