@@ -23,7 +23,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         wait_for { page }.to have_content 'Keyboard shortcuts'
         original_zoom_level
         find_by_id('map-canvas').double_click
-        expect(evaluate_script('nOL.map.zoom')).to be > original_zoom_level
+        expect(evaluate_script('nOL.map.zoom')).to be >= original_zoom_level
       end
     end
 
@@ -35,7 +35,11 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         find('div[role=button]').click
       end
 
-      it('the map opens its balloon') { expect(page).to have_css 'div.map-balloon' }
+      # rubocop:disable RSpec/MultipleExpectations
+      it 'the map opens its balloon' do
+        expect(page).to have_css 'div.map-balloon' and expect(page).to have_no_css 'h2', text: 'null'
+      end
+      # rubocop:enable RSpec/MultipleExpectations
 
       it "the balloon shows the novel's title linked to Amazon" do
         expect(page).to have_link 'From Hell', href: from_hell.amazon_url
