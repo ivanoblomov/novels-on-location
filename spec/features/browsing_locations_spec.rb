@@ -121,7 +121,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         it('the Pins button is labeled "My Pins"') { expect(page).to have_button('Pins: My Pins') }
       end
 
-      context "when From Hell's balloon is open" do
+      context 'when "From Hell"\'s balloon is open' do
         before { first('div[role=button]').click }
 
         context 'when the User clicks the tag "Spitalfields"' do
