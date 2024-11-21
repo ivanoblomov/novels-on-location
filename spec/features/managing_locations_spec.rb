@@ -22,9 +22,10 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     context 'when a User enters a specific place and keywords for the book' do
       before do
         Location.destroy_all
-        visit root_path
-        fill_in 'place-input', with: "san sebastian\n"
-        accept_prompt(with: 'sun also rises')
+        accept_prompt(with: 'sun also rises') do
+          visit root_path
+          fill_in 'place-input', with: "san sebastian\n"
+        end
         accept_alert
         pending 'Amazon integration'
       end
