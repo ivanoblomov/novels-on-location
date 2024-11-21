@@ -66,4 +66,17 @@ describe Location do
       # rubocop:enable RSpec/NestedGroups
     end
   end
+
+  describe '#geocode' do
+    context 'with "white house"' do
+      before { location.send :geocode, 'white house' }
+
+      # rubocop:disable RSpec/MultipleExpectations
+      it 'sets Washington, DC' do
+        lat, lng = location.lat_lng.map(&:to_f)
+        expect(lat).to be_within(0.005).of(38.8976633) and expect(lng).to be_within(0.005).of(-77.0365739)
+      end
+      # rubocop:enable RSpec/MultipleExpectations
+    end
+  end
 end
