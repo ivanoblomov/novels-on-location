@@ -233,7 +233,7 @@ class Location
   end
 
   def look_up
-    set_attributes_asin_itunes_id
+    set_attributes_from_google_books
   rescue StandardError
     Rails.logger.warn "Can't look-up #{book_keywords || asin || title}"
   end
@@ -345,12 +345,27 @@ class Location
     geocode lat_lng ? lat_lng * ', ' : tags
   end
 
+  # Set attributes from an Amazon Products API call
   def set_attributes_asin_itunes_id
     self.attributes = CandyWrapper.book(book_keywords) if new_record?
     book = CandyWrapper.book(title_for_regex)
     self.asin = CandyWrapper.book(title_for_regex)[:asin] if book && asin.blank?
     set_itunes_id if itunes_id.blank?
   end
+
+  # Set attributes from a Google Books API call
+  # rubocop:disable Metrics/AbcSize
+  def set_attributes_from_google_books
+    book = GoogleBooks.search(book_keywords).first
+    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}'"
+    self.author = book.authors
+    self.image_url = book.instance_variable_get(:@volume_info)['imageLinks']['smallThumbnail']
+    self.review = book.description
+    self.title = book.title
+    self.url = book.info_link
+    book
+  end
+  # rubocop:enable Metrics/AbcSize
 
   def set_itunes_id
     return if title_for_regex.blank?
