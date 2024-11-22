@@ -14,7 +14,7 @@
     }
   %>
   <meta name=description content="<%= description %>"/>
-  <meta name=keywords content="<%= @meta_keywords || 'google maps, amazon, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
+  <meta name=keywords content="<%= @meta_keywords || 'google maps, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
   <meta property="<%= property %>" content="<%= content %>"/><% end if facebook? || Rails.env.development? %>
   <%= stylesheet_link_tag 'ajax_crawling' %>
   <title><%= title %></title>
@@ -22,7 +22,7 @@
   <body>
     <div id=headers>
       <h1>Novels: On Location</h1>
-      <h2><%= Rails.application.config.main_host %> is a Google-Maps/Amazon mash-up for finding books that take place where you're traveling. Browse or search the map and make your next destination come alive!</h2>
+      <h2><%= Rails.application.config.main_host %> is a Google-Books/Maps mash-up for finding books that take place where you're traveling. Browse or search the map and make your next destination come alive!</h2>
     </div>
 
     <ol>

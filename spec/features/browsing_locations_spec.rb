@@ -41,7 +41,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       end
       # rubocop:enable RSpec/MultipleExpectations
 
-      it "the balloon shows the novel's title linked to Amazon" do
+      it "the balloon shows the novel's title as a link" do
         expect(page).to have_link 'From Hell', href: from_hell.store_url
       end
 
