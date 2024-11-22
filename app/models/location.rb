@@ -111,14 +111,6 @@ class Location
     Location.order_by(%i[updated_at desc]).limit(1).first
   end
 
-  def self.look_up_amazon
-    Location.missing_amazon.map do |l|
-      l.look_up
-      l.save
-    end
-    Location.missing_amazon.count
-  end
-
   def self.look_up_itunes
     Location.missing_itunes.map do |l|
       l.look_up
