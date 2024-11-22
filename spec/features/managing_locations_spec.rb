@@ -12,22 +12,23 @@ RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
         visit root_path
         click_on 'Mode: Zoom'
         execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -.074316))' # HACK: since double-click fails
-        accept_confirm(with: 'from hell')
-        pending 'Amazon integration'
+        accept_prompt with: 'from hell alan moore'
+        accept_confirm
       end
 
-      it('the Location is created') { expect(Location.count).to eq 1 }
+      # rubocop:disable RSpec/NoExpectationExample
+      it('the Location is created') { wait_for { Location.count }.to eq 1 }
+      # rubocop:enable RSpec/NoExpectationExample
     end
 
-    context 'when a User enters a specific place and keywords for the book' do
+    context 'when a User enters a specific place, keywords for the book, and some notes' do
       before do
         Location.destroy_all
         visit root_path
-        accept_prompt(with: 'sun also rises') do
-          fill_in 'place-input', with: "san sebastian\n"
-        end
-        accept_alert
-        pending 'Amazon integration'
+        fill_in 'place-input', with: "san sebastian\n"
+        accept_prompt(with: 'sun also rises')
+        accept_confirm
+        accept_prompt(with: 'a swim after rejection')
       end
 
       it('the Location is created') { expect(Location.count).to eq 1 }
