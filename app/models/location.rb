@@ -356,6 +356,7 @@ class Location
   # Set attributes from a Google Books API call
   def set_attributes_from_google_books
     book = GoogleBooks.search(book_keywords).first
+    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}'"
     self.author = book.authors
     self.image_url = book.instance_variable_get(:@volume_info)['imageLinks']['smallThumbnail']
     self.review = book.description
