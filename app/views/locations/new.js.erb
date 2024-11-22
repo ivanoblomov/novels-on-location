@@ -1,5 +1,5 @@
 <% if @location.valid? %>
-if (confirm("Is this the book you meant? <%= j @location.title %> by <%= j @location.author %>")) nOL.createPin([<%= @location.lat_lng * ',' %>], <%= sanitize filter_param! @location.tags %>, <%= sanitize filter_param! @location.address %>, <%= sanitize filter_param! @location.asin %>);
+if (confirm("Is this the book you meant? <%= j @location.title %> by <%= j @location.author %>")) nOL.createPin([<%= @location.lat_lng * ',' %>], <%= sanitize filter_param! @location.tags %>, <%= sanitize filter_param! @location.address %>, <%= sanitize filter_param! @location.book_keywords %>);
 <% else %>
 alert("Can't find the book '<%= j params[:location][:book_keywords] %>'!");
 <% end %>
