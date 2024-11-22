@@ -137,6 +137,8 @@ GEM
       activesupport (>= 6.1)
     google_maps_geocoder (1.0.1)
       rack (>= 2.1.4, < 3.2.0)
+    googlebooks (0.0.9)
+      httparty
     htmlentities (4.3.4)
     http (5.2.0)
       addressable (~> 2.8)
@@ -436,6 +438,7 @@ DEPENDENCIES
   embiggen
   figaro
   google_maps_geocoder
+  googlebooks
   htmlentities
   httparty
   inch
