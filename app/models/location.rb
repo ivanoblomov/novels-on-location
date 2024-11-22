@@ -55,7 +55,6 @@ class Location
   )
   scope :duplicate, ->(criteria) { where criteria }
   scope :ios, -> { where(user_token: REG_EX_USER_TOKEN) }
-  scope :missing_amazon, -> { where(asin: nil) }
   scope :missing_itunes, -> { where(itunes_id: nil) }
   scope :place, ->(v) { where address: /#{v}/i }
   scope :search, lambda { |v|
@@ -343,14 +342,6 @@ class Location
     return if place.present?
 
     geocode lat_lng ? lat_lng * ', ' : tags
-  end
-
-  # Set attributes from an Amazon Products API call
-  def set_attributes_asin_itunes_id
-    self.attributes = CandyWrapper.book(book_keywords) if new_record?
-    book = CandyWrapper.book(title_for_regex)
-    self.asin = CandyWrapper.book(title_for_regex)[:asin] if book && asin.blank?
-    set_itunes_id if itunes_id.blank?
   end
 
   # Set attributes from a Google Books API call

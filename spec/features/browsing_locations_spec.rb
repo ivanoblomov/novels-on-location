@@ -7,8 +7,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
     let(:from_hell) do
-      Location.find_or_create_by asin: '0958578346',
-                                 author: 'Alan Moore',
+      Location.find_or_create_by author: 'Alan Moore',
                                  lat_lng: ['51.519326', '-0.074316'],
                                  tags: 'The Ten Bells, Spitalfields',
                                  title: 'From Hell',
