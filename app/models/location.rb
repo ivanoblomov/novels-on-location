@@ -17,8 +17,7 @@ class Location
     'search' => :search
   }.freeze
   VIRTUAL_ATTRIBUTES = %i[
-    added_at added_at_s amazon_url id itunes_affiliate_url place slug terms
-    title_for_regex writable
+    added_at added_at_s id itunes_affiliate_url place slug terms store_url title_for_regex writable
   ].freeze
 
   field :_slugs, type: Array, default: []
@@ -152,6 +151,8 @@ class Location
   end
 
   def amazon_url
+    return nil if asin.nil?
+
     "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag" \
       "=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
   end
@@ -255,6 +256,10 @@ class Location
   def place
     place = (usa? ? [city, state] : [city, country]).compact * ', '
     place.presence || address
+  end
+
+  def store_url
+    url || amazon_url
   end
 
   def terms

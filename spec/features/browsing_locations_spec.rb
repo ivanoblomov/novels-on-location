@@ -41,7 +41,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       # rubocop:enable RSpec/MultipleExpectations
 
       it "the balloon shows the novel's title linked to Amazon" do
-        expect(page).to have_link 'From Hell', href: from_hell.amazon_url
+        expect(page).to have_link 'From Hell', href: from_hell.store_url
       end
 
       it "the balloon shows the novel's author linked to Wikipedia" do
@@ -53,7 +53,7 @@ describe 'Browsing novel Locations', js: !ENV['GITHUB_ACTIONS'], type: :system d
       it('the balloon shows a Remap button') { expect(page).to have_button 'Remap' }
       it('the balloon shows a Tag button') { expect(page).to have_button 'Tag' }
       it('the balloon shows a Delete button') { expect(page).to have_button 'Delete' }
-      it('the balloon shows a "Buy from Amazon" link') { expect(page).to have_link href: from_hell.amazon_url }
+      it('the balloon shows a "Buy from Amazon" link') { expect(page).to have_link href: from_hell.store_url }
 
       it "the balloon shows the novel's reader linked to Facebook" do
         pending 'Facebook integration'
