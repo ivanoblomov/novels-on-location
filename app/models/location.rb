@@ -32,6 +32,7 @@ class Location
   field :image_height
   field :image_url
   field :image_width
+  field :isbn
   field :itunes_id
   field :lat_lng, type: Array
   field :notes
@@ -351,6 +352,7 @@ class Location
     Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}'"
     self.author = book.authors
     self.image_url = book.instance_variable_get(:@volume_info)['imageLinks']['smallThumbnail']
+    self.isbn = book.isbn
     self.review = book.description
     self.title = book.title
     self.url = book.info_link
