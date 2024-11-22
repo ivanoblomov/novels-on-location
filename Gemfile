@@ -20,7 +20,6 @@ gem 'rails'
 gem 'responders'
 gem 'scaffold_logic'
 gem 'twitter'
-gem 'vacuum'
 
 group :assets do
   gem 'coffee-rails'
