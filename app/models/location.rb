@@ -354,6 +354,7 @@ class Location
   end
 
   # Set attributes from a Google Books API call
+  # rubocop:disable Metrics/AbcSize
   def set_attributes_from_google_books
     book = GoogleBooks.search(book_keywords).first
     Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}'"
@@ -364,6 +365,7 @@ class Location
     self.url = book.info_link
     book
   end
+  # rubocop:enable Metrics/AbcSize
 
   def set_itunes_id
     return if title_for_regex.blank?
