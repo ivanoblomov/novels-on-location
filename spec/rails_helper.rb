@@ -57,7 +57,9 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
   config.before(:each, type: :system) { driven_by :rack_test }
-  config.before(:each, :js, type: :system) { driven_by :selenium }
+  config.before(:each, :js, type: :system) do |example|
+    driven_by example.metadata[:js]
+  end
 end
 Capybara.configure do |config|
   config.default_driver = :selenium

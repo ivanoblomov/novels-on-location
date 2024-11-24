@@ -2,10 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Managing Locations', js: !ENV['GITHUB_ACTIONS'], type: :system do
-  if ENV['GITHUB_ACTIONS']
-    pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
-  else
+RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :system do
     context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
       before do
         Location.destroy_all
