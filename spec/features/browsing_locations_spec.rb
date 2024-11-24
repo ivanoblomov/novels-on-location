@@ -158,5 +158,4 @@ describe 'Browsing novel Locations', js: :selenium_chrome_headless, type: :syste
         end
       end
     end
-  end
 end

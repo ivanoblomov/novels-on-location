@@ -85,5 +85,4 @@ RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :syste
         # rubocop:enable RSpec/NoExpectationExample
       end
     end
-  end
 end
