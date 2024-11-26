@@ -32,6 +32,8 @@ describe Location do
 
       describe('#image_url') { it { expect(location.image_url).to be_present } }
 
+      describe('#isbn') { it { expect(location.isbn).to be_present } }
+
       describe('#review') { it { expect(location.review).to be_present } }
 
       describe('#title') { it { expect(location.title).to eq 'The Sun Also Rises' } }

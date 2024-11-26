@@ -41,8 +41,8 @@ describe 'Browsing novel Locations', js: :selenium_chrome_headless, type: :syste
       end
       # rubocop:enable RSpec/MultipleExpectations
 
-      it "the balloon shows the novel's title linked to Amazon" do
-        expect(page).to have_link 'From Hell', href: from_hell.amazon_url
+      it "the balloon shows the novel's title as a link" do
+        expect(page).to have_link 'From Hell', href: from_hell.store_url
       end
 
       it "the balloon shows the novel's author linked to Wikipedia" do
@@ -54,7 +54,6 @@ describe 'Browsing novel Locations', js: :selenium_chrome_headless, type: :syste
       it('the balloon shows a Remap button') { expect(page).to have_button 'Remap' }
       it('the balloon shows a Tag button') { expect(page).to have_button 'Tag' }
       it('the balloon shows a Delete button') { expect(page).to have_button 'Delete' }
-      it('the balloon shows a "Buy from Amazon" link') { expect(page).to have_link href: from_hell.amazon_url }
 
       it "the balloon shows the novel's reader linked to Facebook" do
         pending 'Facebook integration'
