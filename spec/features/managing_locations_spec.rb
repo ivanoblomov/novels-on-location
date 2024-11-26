@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Managing Locations', js: :rack_test, type: :system do
+RSpec.describe 'Managing Locations', js: :selenium_chrome, type: :system do
     context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
       before do
         Location.destroy_all

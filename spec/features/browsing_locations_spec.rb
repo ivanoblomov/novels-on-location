@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Browsing novel Locations', js: :selenium, type: :system do
+describe 'Browsing novel Locations', js: :selenium_chrome, type: :system do
     let(:from_hell) do
       Location.find_or_create_by asin: '0958578346',
                                  author: 'Alan Moore',
