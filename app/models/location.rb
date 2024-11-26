@@ -353,6 +353,7 @@ class Location
     self.review = book.description
     self.title = book.title
     self.url = book.info_link
+    set_itunes_id
     book
   end
   # rubocop:enable Metrics/AbcSize
