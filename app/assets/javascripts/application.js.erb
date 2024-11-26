@@ -596,8 +596,6 @@ nOL.openBalloon = function(location) {
   else
     html += '<p><em>No reviews found.</em></p>';
   if (location.notes) html += '<h3>Reader Notes</h3><p>' + location.notes + '</p>';
-  if (location.asin)
-    html += '<a href="' + location.store_url + '" target=_blank><img src="https://images-na.ssl-images-amazon.com/images/G/01/buttons/buy-from-tan.gif" alt="Buy ' + location.title + '"></a>';
   if (location.itunes_id)
     html += ' <a class=store href="' + location.itunes_affiliate_url + '" target=_blank></a>';
   html += '<br/>';
