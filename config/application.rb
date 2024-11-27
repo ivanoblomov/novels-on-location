@@ -4,7 +4,7 @@ require File.expand_path 'boot', __dir__
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'sprockets/railtie'
-Bundler.require(*Rails.groups)
+Bundler.require(*Rails.groups, :rake)
 module NovelsOnLocation
   # Configure app and redirects
   class Application < Rails::Application
