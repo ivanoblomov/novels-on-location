@@ -344,10 +344,11 @@ class Location
   end
 
   # Set attributes from a Google Books API call
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def set_attributes_from_google_books
     book = GoogleBooks.search(book_keywords).first
-    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}'"
+    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' from keywords " \
+                      "'#{book_keywords}'"
     self.author = book.authors
     self.image_url = book.instance_variable_get(:@volume_info)['imageLinks']['smallThumbnail']
     self.isbn = book.isbn
@@ -357,7 +358,7 @@ class Location
     set_itunes_id
     book
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   def set_itunes_id
     return if title_for_regex.blank?
