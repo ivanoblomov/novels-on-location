@@ -346,9 +346,10 @@ class Location
   # Set attributes from a Google Books API call
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def set_attributes_from_google_books
-    book = GoogleBooks.search(book_keywords).first
-    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' from keywords " \
-                      "'#{book_keywords}'"
+    search_terms = book_keywords.presence || title
+    book = GoogleBooks.search(search_terms).first
+    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' from search terms " \
+                      "'#{search_terms}'"
     self.author = book.authors
     self.image_url = book.instance_variable_get(:@volume_info)['imageLinks']['smallThumbnail']
     self.isbn = book.isbn
