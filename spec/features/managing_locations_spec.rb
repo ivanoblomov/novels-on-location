@@ -34,6 +34,37 @@ RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :syste
       it('the Location is created') { expect(Location.count).to eq 1 }
     end
 
+    context 'when a Location exists and a User drags its pin to a new place' do
+      let(:la_concha) do
+        Location.find_or_create_by author: 'Ernest Hemingway',
+                                   lat_lng: ['43.3186188', '-1.9860118'],
+                                   title: 'The Sun Also Rises'
+      end
+      let(:pins) { all('div[role=button]') }
+      let(:the_ritz) do
+        Location.find_or_create_by author: 'Ernest Hemingway',
+                                   lat_lng: ['40.4157577', '-3.692606699999999'],
+                                   title: 'The Sun Also Rises'
+      end
+
+      before do
+        Location.destroy_all
+        la_concha
+        the_ritz
+        visit root_path
+        source = pins[0]
+        target = pins[1]
+        accept_confirm { source.drag_to target }
+      end
+
+      # rubocop:disable RSpec/NoExpectationExample
+      it "the Location's new coordinates persist" do
+        wait_for { la_concha.reload.lat_lng[0].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[0].to_f) and
+          wait_for { la_concha.reload.lat_lng[1].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[1].to_f)
+      end
+      # rubocop:enable RSpec/NoExpectationExample
+    end
+
     context 'when a Location exists and its balloon is open' do
       before do
         Location.destroy_all
