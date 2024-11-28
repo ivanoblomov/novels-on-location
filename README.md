@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/ivanoblomov/novels-on-location/badge.svg?branch=main&kill_cache=1)](https://coveralls.io/github/ivanoblomov/novels-on-location?branch=main)
 -->
 
-*[Novels: On Location](http://NovelsOnLocation.com)* is a Google Maps & Books mash-up for finding books that take place where you're traveling. Browse or search the map and make your next destination come alive!
+*[Novels: On Location](http://NovelsOnLocation.com)* is a Google Maps & Books mash-up for finding novels that take place where you're traveling. Browse or search the map and make your next destination come alive!
 
 ## Back-up DB
 
