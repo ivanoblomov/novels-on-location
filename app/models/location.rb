@@ -55,6 +55,7 @@ class Location
   )
   scope :duplicate, ->(criteria) { where criteria }
   scope :ios, -> { where(user_token: REG_EX_USER_TOKEN) }
+  scope :missing_isbn, -> { where(isbn: nil) }
   scope :missing_itunes, -> { where(itunes_id: nil) }
   scope :place, ->(v) { where address: /#{v}/i }
   scope :search, lambda { |v|
