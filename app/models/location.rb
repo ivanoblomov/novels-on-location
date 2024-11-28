@@ -103,7 +103,7 @@ class Location
     hit = ITunesSearchAPI.search(media: 'ebook', term: title).try :first
     return hit['trackId'] if hit
 
-    Rails.logger.warn "iTunes can't find: #{title}"
+    Rails.logger.warn "Location.search_itunes: Can't find: #{title}"
     nil
   end
 
@@ -229,7 +229,7 @@ class Location
   def look_up
     set_attributes_from_google_books
   rescue StandardError
-    Rails.logger.warn "Can't look-up #{book_keywords || asin || title}"
+    Rails.logger.warn "Location#look_up: Can't find #{book_keywords.presence || title}"
   end
 
   def matching_coordinates
@@ -277,7 +277,7 @@ class Location
   def tweet
     TWITTER_CLIENT.update tweet_message
   rescue StandardError
-    Rails.logger.warn "Can't tweet #{tweet_message}"
+    Rails.logger.warn "Location#tweet: Can't tweet #{tweet_message}"
   end
 
   def tweet_too_long?
@@ -333,7 +333,7 @@ class Location
     send :displace if matching_coordinates.present?
     set_address_info
   rescue StandardError => e
-    Rails.logger.warn "Can't set address for #{slug || to_s}: #{e}"
+    Rails.logger.warn "Location#set_address: Can't set address for #{slug || to_s}: #{e}"
     Rails.logger.warn e.backtrace * "\n"
   end
 
