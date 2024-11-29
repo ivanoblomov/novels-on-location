@@ -5,8 +5,8 @@ TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
 
 # rubocop:disable Metrics/BlockLength
 namespace :novels do
-  desc 'Restore Locations from Twitter feed'
-  task look_up: :environment do
+  desc 'Update Locations with Google Books info'
+  task update_with_google_info: :environment do
     Location.missing_isbn.each do |location|
       location.set_attributes_from_google_books
       if location.save
