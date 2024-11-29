@@ -228,8 +228,6 @@ class Location
 
   def look_up
     set_attributes_from_google_books
-  rescue StandardError
-    Rails.logger.warn "Location#look_up: Can't find #{book_keywords.presence || title}"
   end
 
   def matching_coordinates
@@ -346,16 +344,21 @@ class Location
   # Set attributes from a Google Books API call
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def set_attributes_from_google_books
-    search_terms = book_keywords.presence || title
+    search_terms = if title.present?
+                     "#{title} #{author.presence}"
+                   else
+                     book_keywords
+                   end
     book = GoogleBooks.search(search_terms).first
-    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' from search terms " \
-                      "'#{search_terms}'"
-    self.author = book.authors
-    self.image_url = book.instance_variable_get(:@volume_info)['imageLinks']['smallThumbnail']
-    self.isbn = book.isbn
-    self.review = book.description
-    self.title = book.title
-    self.url = book.info_link
+    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' by #{book.authors} from " \
+                      "search terms '#{search_terms}'"
+    self.author ||= book.authors
+    volume_info = book.instance_variable_get(:@volume_info)
+    self.image_url ||= volume_info && volume_info['imageLinks'] && volume_info['imageLinks']['smallThumbnail']
+    self.isbn ||= book.isbn
+    self.review ||= book.description
+    self.title ||= book.title
+    self.url ||= book.info_link
     set_itunes_id
     book
   end
