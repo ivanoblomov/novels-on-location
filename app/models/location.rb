@@ -353,17 +353,21 @@ class Location
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def set_attributes_from_google_books
     book = GoogleBooks.search(search_terms).first
-    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' by #{book.authors} from " \
-                      "search terms '#{search_terms}'"
-    self.author ||= book.authors
-    volume_info = book.instance_variable_get(:@volume_info)
-    self.image_url ||= volume_info && volume_info['imageLinks'] && volume_info['imageLinks']['smallThumbnail']
-    self.isbn ||= book.isbn
-    self.review ||= book.description
-    self.title ||= book.title
-    self.url ||= book.info_link
-    set_itunes_id
-    book
+    if book
+      Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' by #{book.authors} from " \
+                        "search terms '#{search_terms}'"
+      self.author ||= book.authors
+      volume_info = book.instance_variable_get(:@volume_info)
+      self.image_url ||= volume_info && volume_info['imageLinks'] && volume_info['imageLinks']['smallThumbnail']
+      self.isbn ||= book.isbn
+      self.review ||= book.description
+      self.title ||= book.title
+      self.url ||= book.info_link
+      set_itunes_id
+      book
+    else
+      Rails.logger.warn "Location#set_attributes_from_google_books: Can't find anything matching #{search_terms}"
+    end
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
