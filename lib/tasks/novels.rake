@@ -9,7 +9,11 @@ namespace :novels do
   task look_up: :environment do
     Location.missing_isbn.each do |location|
       location.look_up
-      p "novels:look_up: Can't save #{location.errors.full_messages}" unless location.save
+      if location.save
+        p "Updated #{location.title} by #{location.author} in #{location.place}"
+      else
+        p "Can't save #{location.errors.full_messages}"
+      end
     end
   end
 
