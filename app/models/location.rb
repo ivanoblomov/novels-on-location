@@ -113,7 +113,7 @@ class Location
 
   def self.look_up_itunes
     Location.missing_itunes.map do |l|
-      l.look_up
+      l.set_attributes_from_google_books
       l.save
     end
     Location.missing_itunes.count
@@ -170,7 +170,7 @@ class Location
 
   def book_keywords=(value)
     self[:book_keywords] = value
-    look_up
+    set_attributes_from_google_books
   end
 
   # rubocop:disable Naming/MethodName
@@ -224,10 +224,6 @@ class Location
 
   def longitude=(long)
     self.lat_lng = [latitude, long.to_s]
-  end
-
-  def look_up
-    set_attributes_from_google_books
   end
 
   def matching_coordinates

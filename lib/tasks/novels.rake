@@ -8,7 +8,7 @@ namespace :novels do
   desc 'Restore Locations from Twitter feed'
   task look_up: :environment do
     Location.missing_isbn.each do |location|
-      location.look_up
+      location.set_attributes_from_google_books
       if location.save
         p "Updated #{location.title} by #{location.author} in #{location.place}"
       else
