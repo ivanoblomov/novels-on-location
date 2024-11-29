@@ -101,8 +101,8 @@ class Location
 
   def self.search_itunes(title)
     hit = ITunesSearchAPI.search(media: 'ebook', term: title).try :first
-    return hit['trackId'] if hit
-
+    hit['trackId'] if hit
+  rescue StandardError
     Rails.logger.warn "Location.search_itunes: Can't find: #{title}"
     nil
   end
