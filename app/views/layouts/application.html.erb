@@ -2,7 +2,7 @@
 <html<%= ' prefix="og: http://ogp.me/ns#"' if facebook? %>>
 <head>
 <meta charset=utf-8 /><%
-  @meta_description ||= "A Google-Maps/Amazon mash-up for finding books that take place where you're traveling. Search the map and make your next destination come alive!"
+  @meta_description ||= "A Google Maps & Books mash-up for finding books that take place where you're traveling. Search the map and make your next destination come alive!"
   @og_tags ||= {}
   @og_tags = {
     'og:title' => 'Novels: On Location',
@@ -17,7 +17,7 @@
 <meta name=apple-mobile-web-app-capable content="yes"/>
 <meta name=description content="<%= @meta_description %>"/><% if w3c_validator? %>
 <meta name="fragment" content="!"/><% end %>
-<meta name=keywords content="<%= @meta_keywords || 'google maps, amazon, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
+<meta name=keywords content="<%= @meta_keywords || 'google maps, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
 <meta property="<%= property %>" content="<%= content %>"/><% end if facebook? || Rails.env.development?; if params[:canonical_url] %>
 <link rel=canonical href="<%= params[:canonical_url] %>"/><% end %>
 <%= csrf_meta_tag %>

@@ -1,6 +1,6 @@
 <div itemscope itemtype="http://data-vocabulary.org/Product">
   <h1>
-    <a href="<%= @location.amazon_url %>" target="_blank" title="Check out <%= @location.title %> on Amazon">
+    <a href="<%= @location.store_url %>" target="_blank" title="Check out <%= @location.title %>">
       <%= image_tag @location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :itemprop => 'image', :width => @location.image_width if @location.image_url %><span itemprop=name><%= @location.title %></span>
     </a>
   </h1>

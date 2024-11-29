@@ -17,8 +17,7 @@ class Location
     'search' => :search
   }.freeze
   VIRTUAL_ATTRIBUTES = %i[
-    added_at added_at_s amazon_url id itunes_affiliate_url place slug terms
-    title_for_regex writable
+    added_at added_at_s id itunes_affiliate_url place slug terms store_url title_for_regex writable
   ].freeze
 
   field :_slugs, type: Array, default: []
@@ -32,6 +31,7 @@ class Location
   field :image_height
   field :image_url
   field :image_width
+  field :isbn
   field :itunes_id
   field :lat_lng, type: Array
   field :notes
@@ -55,7 +55,6 @@ class Location
   )
   scope :duplicate, ->(criteria) { where criteria }
   scope :ios, -> { where(user_token: REG_EX_USER_TOKEN) }
-  scope :missing_amazon, -> { where(asin: nil) }
   scope :missing_itunes, -> { where(itunes_id: nil) }
   scope :place, ->(v) { where address: /#{v}/i }
   scope :search, lambda { |v|
@@ -81,7 +80,7 @@ class Location
   validates :title, presence: true
 
   def self.book_count
-    Location.all.map(&:asin).uniq.size
+    Location.all.map(&:isbn).uniq.size
   end
 
   def self.displace_duplicate_coordinates(
@@ -109,14 +108,6 @@ class Location
 
   def self.last_updated
     Location.order_by(%i[updated_at desc]).limit(1).first
-  end
-
-  def self.look_up_amazon
-    Location.missing_amazon.map do |l|
-      l.look_up
-      l.save
-    end
-    Location.missing_amazon.count
   end
 
   def self.look_up_itunes
@@ -160,6 +151,8 @@ class Location
   end
 
   def amazon_url
+    return nil if asin.nil?
+
     "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag" \
       "=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
   end
@@ -233,7 +226,7 @@ class Location
   end
 
   def look_up
-    set_attributes_asin_itunes_id
+    set_attributes_from_google_books
   rescue StandardError
     Rails.logger.warn "Can't look-up #{book_keywords || asin || title}"
   end
@@ -263,6 +256,10 @@ class Location
   def place
     place = (usa? ? [city, state] : [city, country]).compact * ', '
     place.presence || address
+  end
+
+  def store_url
+    url || amazon_url
   end
 
   def terms
@@ -308,16 +305,14 @@ class Location
     ]
   end
 
-  # rubocop:disable Metrics/AbcSize
   def geocode(coordinates_or_keyword)
     g = GoogleMapsGeocoder.new coordinates_or_keyword
     self.address = g.formatted_address
     self.city = g.city
-    self.lat_lng = [gmg.lat.to_s, gmg.lng.to_s]
+    self.lat_lng = [g.lat.to_s, g.lng.to_s]
     self.country = g.country_long_name
     self.state = g.state_short_name if usa?
   end
-  # rubocop:enable Metrics/AbcSize
 
   def negate?
     rand(2).zero?
@@ -337,7 +332,7 @@ class Location
     send :displace if matching_coordinates.present?
     set_address_info
   rescue StandardError => e
-    Rails.logger.warn "Can't set address for #{slug || to_s}"
+    Rails.logger.warn "Can't set address for #{slug || to_s}: #{e}"
     Rails.logger.warn e.backtrace * "\n"
   end
 
@@ -347,12 +342,21 @@ class Location
     geocode lat_lng ? lat_lng * ', ' : tags
   end
 
-  def set_attributes_asin_itunes_id
-    self.attributes = CandyWrapper.book(book_keywords) if new_record?
-    book = CandyWrapper.book(title_for_regex)
-    self.asin = CandyWrapper.book(title_for_regex)[:asin] if book && asin.blank?
-    set_itunes_id if itunes_id.blank?
+  # Set attributes from a Google Books API call
+  # rubocop:disable Metrics/AbcSize
+  def set_attributes_from_google_books
+    book = GoogleBooks.search(book_keywords).first
+    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}'"
+    self.author = book.authors
+    self.image_url = book.instance_variable_get(:@volume_info)['imageLinks']['smallThumbnail']
+    self.isbn = book.isbn
+    self.review = book.description
+    self.title = book.title
+    self.url = book.info_link
+    set_itunes_id
+    book
   end
+  # rubocop:enable Metrics/AbcSize
 
   def set_itunes_id
     return if title_for_regex.blank?

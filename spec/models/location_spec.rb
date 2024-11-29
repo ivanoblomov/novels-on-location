@@ -25,24 +25,20 @@ describe Location do
     context "with book_keywords: 'sun also rises'" do
       subject(:location) { described_class.new(book_keywords: 'sun also rises') }
 
-      before do
-        allow(CandyWrapper).to receive(:book).and_return(metadata)
-      end
-
-      let(:metadata) { { asin: 'asin-value', itunes_id: 'itunes-value', title: 'The Sun Also Rises' } }
+      before { location.send :set_attributes_from_google_books }
 
       # rubocop:disable RSpec/NestedGroups
-      describe '#asin' do
-        it { expect(location.asin).to be_present }
-      end
+      describe('#author') { it { expect(location.author).to eq 'Ernest Hemingway' } }
 
-      describe '#itunes_id' do
-        it { expect(location.itunes_id).to be_present }
-      end
+      describe('#image_url') { it { expect(location.image_url).to be_present } }
 
-      describe '#title' do
-        it { expect(location.title).to eq 'The Sun Also Rises' }
-      end
+      describe('#isbn') { it { expect(location.isbn).to be_present } }
+
+      describe('#review') { it { expect(location.review).to be_present } }
+
+      describe('#title') { it { expect(location.title).to eq 'The Sun Also Rises' } }
+
+      describe('#url') { it { expect(location.url).to be_present } }
       # rubocop:enable RSpec/NestedGroups
     end
 
@@ -64,6 +60,19 @@ describe Location do
         it { expect(location.owned?).to be true }
       end
       # rubocop:enable RSpec/NestedGroups
+    end
+  end
+
+  describe '#geocode' do
+    context 'with "white house"' do
+      before { location.send :geocode, 'white house' }
+
+      # rubocop:disable RSpec/MultipleExpectations
+      it 'sets Washington, DC' do
+        lat, lng = location.lat_lng.map(&:to_f)
+        expect(lat).to be_within(0.005).of(38.8976633) and expect(lng).to be_within(0.005).of(-77.0365739)
+      end
+      # rubocop:enable RSpec/MultipleExpectations
     end
   end
 end

@@ -28,7 +28,7 @@
   <div class="booklet<%= '-duplicate' if location.duplicate? %> threecol<%= ' last' if locations.index(location) == 2 %>">
     <div class=booklet-header>
       <span class=booklet-index><%= i %></span>
-      <%= link_to image_tag(location.image_url, :alt => "Cover of #{location.title}", :class => 'thumbnail', :height => location.image_height, :width => location.image_width), location.url, :target => '_blank', :title => "Check out #{location.title} on Amazon" if location.image_url %>
+      <%= link_to image_tag(location.image_url, :alt => "Cover of #{location.title}", :class => 'thumbnail', :height => location.image_height, :width => location.image_width), location.url, :target => '_blank', :title => "Check out #{location.title}" if location.image_url %>
       <h2><%= link_to location.title, location.url, :target => '_blank' %></h2>
       <h3>by <%= wikipedia_link_to location.author %></h3>
     </div>
