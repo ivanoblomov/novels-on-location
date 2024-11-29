@@ -173,11 +173,11 @@ class Location
     look_up
   end
 
-  # rubocop:disable Style/MethodName
+  # rubocop:disable Naming/MethodName
   def latLng=(value)
-    # rubocop:enable Style/MethodName
     self.lat_lng = value.split ','
   end
+  # rubocop:enable Naming/MethodName
 
   def duplicate?
     duplicates.count > 1
@@ -327,6 +327,14 @@ class Location
     negate? ? delta : -delta
   end
 
+  def search_terms
+    @search_terms ||= if title.present?
+                        "#{title} #{author.presence}"
+                      else
+                        book_keywords
+                      end
+  end
+
   def set_address
     send :displace if matching_coordinates.present?
     set_address_info
@@ -342,13 +350,8 @@ class Location
   end
 
   # Set attributes from a Google Books API call
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def set_attributes_from_google_books
-    search_terms = if title.present?
-                     "#{title} #{author.presence}"
-                   else
-                     book_keywords
-                   end
     book = GoogleBooks.search(search_terms).first
     Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' by #{book.authors} from " \
                       "search terms '#{search_terms}'"
@@ -362,7 +365,7 @@ class Location
     set_itunes_id
     book
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 
   def set_itunes_id
     return if title_for_regex.blank?
