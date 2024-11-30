@@ -8,7 +8,7 @@ namespace :novels do
   desc 'Update Locations with Google Books info'
   task update_with_google_info: :environment do
     Location.missing_isbn.each do |location|
-      location.set_attributes_from_google_books
+      location.send :set_attributes_from_google_books
       if location.save
         p "Updated #{location.title} by #{location.author} in #{location.place}"
       else
