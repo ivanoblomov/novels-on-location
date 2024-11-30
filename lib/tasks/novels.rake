@@ -7,22 +7,22 @@ TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
 namespace :novels do
   desc 'Update Locations with Google Books info'
   task update_with_google_info: :environment do
-    i = 0
+    updated = 0
     total = Location.missing_isbn.count
     puts "Found #{total} Locations."
-    Location.missing_isbn.each do |location|
+    Location.missing_isbn.each_with_index do |location, index|
       location.send :set_attributes_from_google_books
       next unless location.changed?
 
       changed = location.changed
       if location.save
-        i += 1
-        puts "#{i} Updated #{changed * ', '} for #{location}"
+        updated += 1
+        puts "#{updated}/#{total - index - 1} Updated #{changed * ', '} for #{location}"
       else
         puts "Can't save #{location.errors.full_messages}"
       end
     end
-    puts "Updated #{i} out of #{total} Locations."
+    puts "Updated #{updated} out of #{total} Locations."
   end
 
   desc 'Restore Locations from Twitter feed'
