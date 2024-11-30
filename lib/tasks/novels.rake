@@ -16,7 +16,7 @@ namespace :novels do
       next unless location.changed?
 
       changed = location.changed
-      changed_set << changed
+      changed_set.merge changed
       if location.save
         updated += 1
         puts "#{updated}/#{total - index - 1} Updated #{changed * ', '} for #{location}"
