@@ -9,6 +9,7 @@ namespace :novels do
   task update_with_google_info: :environment do
     i = 0
     total = Location.missing_isbn.count
+    puts "Found #{total} Locations."
     Location.missing_isbn.each do |location|
       location.send :set_attributes_from_google_books
       next unless location.changed?
