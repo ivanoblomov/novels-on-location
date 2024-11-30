@@ -139,7 +139,7 @@ class Location
   end
 
   def to_s
-    %("#{title}" by "#{author}" set in #{address})
+    %(#{author}'s "#{title}" set in #{place})
   end
 
   # Instance methods ===========================================================

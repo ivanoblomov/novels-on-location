@@ -10,9 +10,9 @@ namespace :novels do
     Location.missing_isbn.each do |location|
       location.send :set_attributes_from_google_books
       if location.save
-        p "Updated #{location.title} by #{location.author} in #{location.place}"
+        puts "Updated #{location}"
       else
-        p "Can't save #{location.errors.full_messages}"
+        puts "Can't save #{location.errors.full_messages}"
       end
     end
   end
