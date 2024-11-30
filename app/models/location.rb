@@ -359,7 +359,7 @@ class Location
       self.review ||= book.description
       self.title ||= book.title
       self.url ||= book.info_link
-      set_itunes_id
+      set_itunes_id if itunes_id.blank?
       book
     else
       Rails.logger.warn "Location#set_attributes_from_google_books: Can't find anything matching #{search_terms}"
