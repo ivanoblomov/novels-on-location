@@ -9,10 +9,13 @@ namespace :novels do
   task update_with_google_info: :environment do
     Location.missing_isbn.each do |location|
       location.send :set_attributes_from_google_books
-      if location.save
-        puts "Updated #{location}"
-      else
-        puts "Can't save #{location.errors.full_messages}"
+      if location.changed?
+        changed = location.changed
+        if location.save
+          puts "Updated #{changed * ', '} for #{location}"
+        else
+          puts "Can't save #{location.errors.full_messages}"
+        end
       end
     end
   end
