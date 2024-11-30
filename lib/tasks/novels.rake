@@ -16,7 +16,7 @@ namespace :novels do
 
       changed = location.changed
       if location.save
-        i = i + 1
+        i += 1
         puts "#{i} Updated #{changed * ', '} for #{location}"
       else
         puts "Can't save #{location.errors.full_messages}"
