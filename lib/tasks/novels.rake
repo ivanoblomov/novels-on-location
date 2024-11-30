@@ -24,7 +24,7 @@ namespace :novels do
         puts "Can't save #{location.errors.full_messages}"
       end
     end
-    puts "Updated #{changed_set.to_a * ', '} #{updated} out of #{total} Locations."
+    puts "Updated #{changed_set.to_a * ', '} in #{updated} out of #{total} Locations."
   end
 
   desc 'Restore Locations from Twitter feed'
