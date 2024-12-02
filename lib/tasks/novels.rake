@@ -12,8 +12,17 @@ namespace :novels do
     updated = 0
     puts "Found #{total} Locations."
     Location.missing_isbn.each_with_index do |location, index|
-      location.send :update_with_google_books
-      next unless location.changed?
+      response = GoogleBooks.search(location.send(:search_terms))
+      book = response.first
+      if book
+        location.send :update_from_google_book, book
+      elsif response.instance_variable_get(:@response)['totalItems']&.zero?
+        puts "Can't find anything matching #{location.send(:search_terms)} for #{location}"
+        next
+      else
+        abort response.instance_variable_get(:@response)['error']['message']
+      end
+      sleep(0.1) && next unless location.changed?
 
       changed = location.changed
       changed_set.merge changed
