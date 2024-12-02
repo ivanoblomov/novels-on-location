@@ -348,7 +348,8 @@ class Location
   # Set attributes from a Google Books API call
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def set_attributes_from_google_books
-    book = GoogleBooks.search(search_terms).first
+    response = GoogleBooks.search(search_terms)
+    book = response.first
     if book
       Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' by #{book.authors} from " \
                         "search terms '#{search_terms}'"
@@ -362,7 +363,7 @@ class Location
       set_itunes_id if itunes_id.blank?
       book
     else
-      Rails.logger.warn "Location#set_attributes_from_google_books: Can't find anything matching #{search_terms}"
+      Rails.logger.warn "Location#set_attributes_from_google_books: Can't find anything matching #{search_terms} => #{ response.instance_variable_get(:@response)['error']['message']}"
     end
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
