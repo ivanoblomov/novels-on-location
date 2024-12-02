@@ -6,7 +6,7 @@ TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
 # rubocop:disable Metrics/BlockLength
 namespace :novels do
   desc 'Update Locations with Google Books info'
-  task update_with_google_info: :environment do
+  task update_with_google_books: :environment do
     changed_set = Set.new
     total = Location.missing_isbn.count
     updated = 0
