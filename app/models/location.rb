@@ -55,6 +55,7 @@ class Location
   )
   scope :duplicate, ->(criteria) { where criteria }
   scope :ios, -> { where(user_token: REG_EX_USER_TOKEN) }
+  scope :missing_isbn, -> { where(isbn: nil) }
   scope :missing_itunes, -> { where(itunes_id: nil) }
   scope :place, ->(v) { where address: /#{v}/i }
   scope :search, lambda { |v|
@@ -71,7 +72,7 @@ class Location
   scope :user_id, ->(v) { where user_id: v }
   scope :with_lat_lng, ->(v) { where lat_lng: v }
 
-  before_save :set_address
+  before_save :displace_or_geocode
   after_create :notify
   attr_accessor :writable
 
@@ -100,9 +101,9 @@ class Location
 
   def self.search_itunes(title)
     hit = ITunesSearchAPI.search(media: 'ebook', term: title).try :first
-    return hit['trackId'] if hit
-
-    Rails.logger.warn "iTunes can't find: #{title}"
+    hit['trackId'] if hit
+  rescue StandardError
+    Rails.logger.warn "Location.search_itunes: Can't find: #{title}"
     nil
   end
 
@@ -112,7 +113,7 @@ class Location
 
   def self.look_up_itunes
     Location.missing_itunes.map do |l|
-      l.look_up
+      l.update_with_google_books
       l.save
     end
     Location.missing_itunes.count
@@ -138,7 +139,7 @@ class Location
   end
 
   def to_s
-    %("#{title}" by "#{author}" set in #{address})
+    %(#{author}'s "#{title}" set in #{place})
   end
 
   # Instance methods ===========================================================
@@ -169,14 +170,14 @@ class Location
 
   def book_keywords=(value)
     self[:book_keywords] = value
-    look_up
+    update_with_google_books
   end
 
-  # rubocop:disable Style/MethodName
+  # rubocop:disable Naming/MethodName
   def latLng=(value)
-    # rubocop:enable Style/MethodName
     self.lat_lng = value.split ','
   end
+  # rubocop:enable Naming/MethodName
 
   def duplicate?
     duplicates.count > 1
@@ -225,13 +226,9 @@ class Location
     self.lat_lng = [latitude, long.to_s]
   end
 
-  def look_up
-    set_attributes_from_google_books
-  rescue StandardError
-    Rails.logger.warn "Can't look-up #{book_keywords || asin || title}"
-  end
-
   def matching_coordinates
+    return unless lat_lng
+
     Location.with_lat_lng(lat_lng) - [self]
   end
 
@@ -276,7 +273,7 @@ class Location
   def tweet
     TWITTER_CLIENT.update tweet_message
   rescue StandardError
-    Rails.logger.warn "Can't tweet #{tweet_message}"
+    Rails.logger.warn "Location#tweet: Can't tweet #{tweet_message}"
   end
 
   def tweet_too_long?
@@ -299,12 +296,15 @@ class Location
   private
 
   def displace
+    return unless lat_lng
+
     self.lat_lng = [
       (lat_lng[0].to_f + random_delta).to_s,
       (lat_lng[1].to_f + random_delta).to_s
     ]
   end
 
+  # rubocop:disable Metrics/AbcSize
   def geocode(coordinates_or_keyword)
     g = GoogleMapsGeocoder.new coordinates_or_keyword
     self.address = g.formatted_address
@@ -312,7 +312,10 @@ class Location
     self.lat_lng = [g.lat.to_s, g.lng.to_s]
     self.country = g.country_long_name
     self.state = g.state_short_name if usa?
+  rescue StandardError => e
+    Rails.logger.warn "Location#geocode: Can't set address for #{slug || to_s}: #{e}"
   end
+  # rubocop:enable Metrics/AbcSize
 
   def negate?
     rand(2).zero?
@@ -328,35 +331,20 @@ class Location
     negate? ? delta : -delta
   end
 
-  def set_address
-    send :displace if matching_coordinates.present?
-    set_address_info
-  rescue StandardError => e
-    Rails.logger.warn "Can't set address for #{slug || to_s}: #{e}"
-    Rails.logger.warn e.backtrace * "\n"
+  def search_terms
+    @search_terms ||= if title.present?
+                        "#{title} #{author.presence}"
+                      else
+                        book_keywords
+                      end
   end
 
-  def set_address_info
+  def displace_or_geocode
+    send :displace if matching_coordinates.present?
     return if place.present?
 
     geocode lat_lng ? lat_lng * ', ' : tags
   end
-
-  # Set attributes from a Google Books API call
-  # rubocop:disable Metrics/AbcSize
-  def set_attributes_from_google_books
-    book = GoogleBooks.search(book_keywords).first
-    Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}'"
-    self.author = book.authors
-    self.image_url = book.instance_variable_get(:@volume_info)['imageLinks']['smallThumbnail']
-    self.isbn = book.isbn
-    self.review = book.description
-    self.title = book.title
-    self.url = book.info_link
-    set_itunes_id
-    book
-  end
-  # rubocop:enable Metrics/AbcSize
 
   def set_itunes_id
     return if title_for_regex.blank?
@@ -370,6 +358,35 @@ class Location
 
   def tweet_message
     "#{new_pin_message} Learn more at #{nol_url} #lp"
+  end
+
+  def update_from_google_book(book)
+    self.author ||= book.authors
+    self.isbn ||= book.isbn
+    self.review ||= book.description
+    self.title ||= book.title
+    update_urls_from_google_book(book)
+    set_itunes_id if itunes_id.blank?
+    book
+  end
+
+  def update_with_google_books
+    response = GoogleBooks.search(search_terms)
+    book = response.first
+    if book
+      Rails.logger.info "Location#update_with_google_books: Found '#{book.title}' by #{book.authors} from search " \
+                        "terms '#{search_terms}'"
+      update_from_google_book(book)
+    else
+      Rails.logger.warn "Location#update_with_google_books: Can't find anything matching #{search_terms} => " \
+                        "#{response.instance_variable_get(:@response)['error']['message']}"
+    end
+  end
+
+  def update_urls_from_google_book(book)
+    volume_info = book.instance_variable_get(:@volume_info)
+    self.image_url ||= volume_info && volume_info['imageLinks'] && volume_info['imageLinks']['smallThumbnail']
+    self.url ||= book.info_link
   end
 end
 # rubocop:enable Metrics/ClassLength
