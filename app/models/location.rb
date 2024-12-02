@@ -312,7 +312,6 @@ class Location
     self.country = g.country_long_name
     self.state = g.state_short_name if usa?
   rescue StandardError => e
-    binding.pry
     Rails.logger.warn "Location#geocode: Can't set address for #{slug || to_s}: #{e}"
     Rails.logger.warn e.backtrace * "\n"
   end
