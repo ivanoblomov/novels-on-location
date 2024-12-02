@@ -363,7 +363,8 @@ class Location
       set_itunes_id if itunes_id.blank?
       book
     else
-      Rails.logger.warn "Location#set_attributes_from_google_books: Can't find anything matching #{search_terms} => #{response.instance_variable_get(:@response)['error']['message']}"
+      Rails.logger.warn "Location#set_attributes_from_google_books: Can't find anything matching #{search_terms} => " \
+                        "#{response.instance_variable_get(:@response)['error']['message']}"
     end
   end
   # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
