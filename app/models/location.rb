@@ -305,14 +305,17 @@ class Location
   end
 
   def geocode(coordinates_or_keyword)
-    g = GoogleMapsGeocoder.new coordinates_or_keyword
-    self.address = g.formatted_address
-    self.city = g.city
-    self.lat_lng = [g.lat.to_s, g.lng.to_s]
-    self.country = g.country_long_name
-    self.state = g.state_short_name if usa?
+    self.address = geocoder(coordinates_or_keyword).formatted_address
+    self.city = geocoder.city
+    self.country = geocoder.country_long_name
+    self.lat_lng = [geocoder.lat.to_s, geocoder.lng.to_s]
+    self.state = geocoder.state_short_name if usa?
+  end
+
+  def geocoder(coordinates_or_keyword)
+    @geocoder ||= GoogleMapsGeocoder.new(coordinates_or_keyword)
   rescue StandardError => e
-    Rails.logger.warn "Location#geocode: Can't set address for #{slug || to_s}: #{e}"
+    Rails.logger.warn "Location#geocoder: Can't set address for #{slug || to_s}: #{e}"
     Rails.logger.warn e.backtrace * "\n"
   end
 
