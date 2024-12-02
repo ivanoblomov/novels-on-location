@@ -311,6 +311,10 @@ class Location
     self.lat_lng = [g.lat.to_s, g.lng.to_s]
     self.country = g.country_long_name
     self.state = g.state_short_name if usa?
+  rescue StandardError => e
+    binding.pry
+    Rails.logger.warn "Location#geocode: Can't set address for #{slug || to_s}: #{e}"
+    Rails.logger.warn e.backtrace * "\n"
   end
 
   def negate?
@@ -338,9 +342,6 @@ class Location
   def set_address
     send :displace if matching_coordinates.present?
     set_address_info
-  rescue StandardError => e
-    Rails.logger.warn "Location#set_address: Can't set address for #{slug || to_s}: #{e}"
-    Rails.logger.warn e.backtrace * "\n"
   end
 
   def set_address_info
