@@ -340,10 +340,6 @@ class Location
 
   def set_address
     send :displace if matching_coordinates.present?
-    set_address_info
-  end
-
-  def set_address_info
     return if place.present?
 
     geocode lat_lng ? lat_lng * ', ' : tags
