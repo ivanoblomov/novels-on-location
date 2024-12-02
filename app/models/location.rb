@@ -227,6 +227,8 @@ class Location
   end
 
   def matching_coordinates
+    return unless lat_lng
+
     Location.with_lat_lng(lat_lng) - [self]
   end
 
@@ -294,6 +296,8 @@ class Location
   private
 
   def displace
+    return unless lat_lng
+
     self.lat_lng = [
       (lat_lng[0].to_f + random_delta).to_s,
       (lat_lng[1].to_f + random_delta).to_s
