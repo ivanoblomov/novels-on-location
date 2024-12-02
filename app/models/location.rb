@@ -304,6 +304,7 @@ class Location
     ]
   end
 
+  # rubocop:disable Metrics/AbcSize
   def geocode(coordinates_or_keyword)
     g = GoogleMapsGeocoder.new coordinates_or_keyword
     self.address = g.formatted_address
@@ -313,8 +314,8 @@ class Location
     self.state = g.state_short_name if usa?
   rescue StandardError => e
     Rails.logger.warn "Location#geocode: Can't set address for #{slug || to_s}: #{e}"
-    Rails.logger.warn e.backtrace * "\n"
   end
+  # rubocop:enable Metrics/AbcSize
 
   def negate?
     rand(2).zero?
