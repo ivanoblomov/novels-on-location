@@ -72,7 +72,7 @@ class Location
   scope :user_id, ->(v) { where user_id: v }
   scope :with_lat_lng, ->(v) { where lat_lng: v }
 
-  before_save :set_address
+  before_save :displace_or_geocode
   after_create :notify
   attr_accessor :writable
 
@@ -338,7 +338,7 @@ class Location
                       end
   end
 
-  def set_address
+  def displace_or_geocode
     send :displace if matching_coordinates.present?
     return if place.present?
 
