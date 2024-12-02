@@ -17,9 +17,10 @@ namespace :novels do
 
       changed = location.changed
       changed_set.merge changed
+      changes = location.changes
       if location.save
         updated += 1
-        puts "#{updated}/#{total - index - 1} Updated #{changed * ', '} for #{location}"
+        puts "#{updated}/#{total - index - 1} Updated #{changes} for #{location}"
       else
         puts "Can't save #{location.errors.full_messages}"
       end
