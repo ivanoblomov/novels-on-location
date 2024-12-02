@@ -113,7 +113,7 @@ class Location
 
   def self.look_up_itunes
     Location.missing_itunes.map do |l|
-      l.set_attributes_from_google_books
+      l.update_with_google_books
       l.save
     end
     Location.missing_itunes.count
@@ -170,7 +170,7 @@ class Location
 
   def book_keywords=(value)
     self[:book_keywords] = value
-    set_attributes_from_google_books
+    update_with_google_books
   end
 
   # rubocop:disable Naming/MethodName
@@ -345,30 +345,6 @@ class Location
     geocode lat_lng ? lat_lng * ', ' : tags
   end
 
-  # Set attributes from a Google Books API call
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-  def set_attributes_from_google_books
-    response = GoogleBooks.search(search_terms)
-    book = response.first
-    if book
-      Rails.logger.info "Location#set_attributes_from_google_books: Found '#{book.title}' by #{book.authors} from " \
-                        "search terms '#{search_terms}'"
-      self.author ||= book.authors
-      volume_info = book.instance_variable_get(:@volume_info)
-      self.image_url ||= volume_info && volume_info['imageLinks'] && volume_info['imageLinks']['smallThumbnail']
-      self.isbn ||= book.isbn
-      self.review ||= book.description
-      self.title ||= book.title
-      self.url ||= book.info_link
-      set_itunes_id if itunes_id.blank?
-      book
-    else
-      Rails.logger.warn "Location#set_attributes_from_google_books: Can't find anything matching #{search_terms} => " \
-                        "#{response.instance_variable_get(:@response)['error']['message']}"
-    end
-  end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-
   def set_itunes_id
     return if title_for_regex.blank?
 
@@ -381,6 +357,35 @@ class Location
 
   def tweet_message
     "#{new_pin_message} Learn more at #{nol_url} #lp"
+  end
+
+  def update_from_google_book(book)
+    self.author ||= book.authors
+    self.isbn ||= book.isbn
+    self.review ||= book.description
+    self.title ||= book.title
+    update_urls_from_google_book(book)
+    set_itunes_id if itunes_id.blank?
+    book
+  end
+
+  def update_with_google_books
+    response = GoogleBooks.search(search_terms)
+    book = response.first
+    if book
+      Rails.logger.info "Location#update_with_google_books: Found '#{book.title}' by #{book.authors} from search " \
+                        "terms '#{search_terms}'"
+      update_from_google_book(book)
+    else
+      Rails.logger.warn "Location#update_with_google_books: Can't find anything matching #{search_terms} => " \
+                        "#{response.instance_variable_get(:@response)['error']['message']}"
+    end
+  end
+
+  def update_urls_from_google_book(book)
+    volume_info = book.instance_variable_get(:@volume_info)
+    self.image_url ||= volume_info && volume_info['imageLinks'] && volume_info['imageLinks']['smallThumbnail']
+    self.url ||= book.info_link
   end
 end
 # rubocop:enable Metrics/ClassLength

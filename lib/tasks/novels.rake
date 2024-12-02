@@ -12,7 +12,7 @@ namespace :novels do
     updated = 0
     puts "Found #{total} Locations."
     Location.missing_isbn.each_with_index do |location, index|
-      location.send :set_attributes_from_google_books
+      location.send :update_with_google_books
       next unless location.changed?
 
       changed = location.changed
