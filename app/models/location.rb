@@ -102,8 +102,8 @@ class Location
   def self.search_itunes(title)
     hit = ITunesSearchAPI.search(media: 'ebook', term: title).try :first
     hit['trackId'] if hit
-  rescue StandardError
-    Rails.logger.warn "Location.search_itunes: Can't find: #{title}"
+  rescue RuntimeError
+    Rails.logger.error "Location.search_itunes: Can't find '#{title}'"
     nil
   end
 
@@ -272,8 +272,8 @@ class Location
 
   def tweet
     TWITTER_CLIENT.update tweet_message
-  rescue StandardError
-    Rails.logger.warn "Location#tweet: Can't tweet #{tweet_message}"
+  rescue RuntimeError
+    Rails.logger.error "Location#tweet: Can't tweet '#{tweet_message}'"
   end
 
   def tweet_too_long?
