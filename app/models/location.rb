@@ -378,8 +378,8 @@ class Location
                         "terms '#{search_terms}'"
       update_from_google_book(book)
     else
-      Rails.logger.warn "Location#update_with_google_books: Can't find anything matching #{search_terms} => " \
-                        "#{response.instance_variable_get(:@response)['error']['message']}"
+      Rails.logger.error "Location#update_with_google_books: Can't find anything matching #{search_terms} => " \
+                         "#{response.instance_variable_get(:@response)['error']['message']}"
     end
   end
 
