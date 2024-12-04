@@ -7,9 +7,8 @@ class User
   attr_accessor :id, :token
 
   def self.name(id)
-    ActiveSupport::JSON.decode(HTTParty.get("https://graph.facebook.com/#{id}")
-      .body)['name']
-  rescue e
+    ActiveSupport::JSON.decode(HTTParty.get("https://graph.facebook.com/#{id}").body)['name']
+  rescue RuntimeError => e
     Rails.logger.error "User.name: Can't identify user '#{id}' => #{e}"
   end
 
@@ -27,7 +26,6 @@ class User
   end
 
   def owns?(location)
-    location.owned? &&
-      (token == location.user_token || (id.present? && id == location.user_id))
+    location.owned? && (token == location.user_token || (id.present? && id == location.user_id))
   end
 end
