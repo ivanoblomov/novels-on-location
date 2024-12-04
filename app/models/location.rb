@@ -48,11 +48,7 @@ class Location
   index(title: 1)
   index(user_id: 1)
   scope :author, ->(v) { where author: /#{v}/i }
-  scope :browser, (
-    lambda do
-      where(user_token: nil).not.where(user_token: REG_EX_USER_TOKEN)
-    end
-  )
+  scope :browser, -> { where(user_token: nil).not.where(user_token: REG_EX_USER_TOKEN) }
   scope :duplicate, ->(criteria) { where criteria }
   scope :ios, -> { where(user_token: REG_EX_USER_TOKEN) }
   scope :missing_isbn, -> { where(isbn: nil) }
@@ -84,9 +80,7 @@ class Location
     Location.all.map(&:isbn).uniq.size
   end
 
-  def self.displace_duplicate_coordinates(
-    locations = Location.duplicate_coordinates
-  )
+  def self.displace_duplicate_coordinates(locations = Location.duplicate_coordinates)
     return if locations.blank?
 
     l = locations.last
@@ -102,8 +96,8 @@ class Location
   def self.search_itunes(title)
     hit = ITunesSearchAPI.search(media: 'ebook', term: title).try :first
     hit['trackId'] if hit
-  rescue StandardError
-    Rails.logger.warn "Location.search_itunes: Can't find: #{title}"
+  rescue RuntimeError
+    Rails.logger.error "Location.search_itunes: Can't find '#{title}'"
     nil
   end
 
@@ -235,8 +229,7 @@ class Location
   def nol_url
     return if title.blank?
 
-    "http://#{Rails.application.config.main_host}" \
-      "#{Rails.application.routes.url_helpers.location_path(self)}"
+    "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
   end
 
   def notify
@@ -272,8 +265,8 @@ class Location
 
   def tweet
     TWITTER_CLIENT.update tweet_message
-  rescue StandardError
-    Rails.logger.warn "Location#tweet: Can't tweet #{tweet_message}"
+  rescue RuntimeError
+    Rails.logger.error "Location#tweet: Can't tweet '#{tweet_message}'"
   end
 
   def tweet_too_long?
@@ -312,8 +305,8 @@ class Location
     self.lat_lng = [g.lat.to_s, g.lng.to_s]
     self.country = g.country_long_name
     self.state = g.state_short_name if usa?
-  rescue StandardError => e
-    Rails.logger.warn "Location#geocode: Can't set address for #{slug || to_s}: #{e}"
+  rescue GoogleMapsGeocoder::GeocodingError => e
+    Rails.logger.error "Location#geocode: Can't geocode '#{slug || to_s}': #{e}"
   end
   # rubocop:enable Metrics/AbcSize
 
@@ -322,8 +315,7 @@ class Location
   end
 
   def new_pin_message
-    "A fan just pinned \"#{title_for_regex.truncate 50}\"" \
-      "#{place.blank? ? '' : " to #{place}"}."
+    "A fan just pinned \"#{title_for_regex.truncate 50}\"#{place.blank? ? '' : " to #{place}"}."
   end
 
   def random_delta
@@ -378,8 +370,8 @@ class Location
                         "terms '#{search_terms}'"
       update_from_google_book(book)
     else
-      Rails.logger.warn "Location#update_with_google_books: Can't find anything matching #{search_terms} => " \
-                        "#{response.instance_variable_get(:@response)['error']['message']}"
+      Rails.logger.error "Location#update_with_google_books: Can't find anything matching '#{search_terms}' => " \
+                         "#{response.instance_variable_get(:@response)['error']['message']}"
     end
   end
 
