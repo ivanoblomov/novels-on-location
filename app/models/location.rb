@@ -313,7 +313,7 @@ class Location
     self.country = g.country_long_name
     self.state = g.state_short_name if usa?
   rescue GoogleMapsGeocoder::GeocodingError => e
-    Rails.logger.error "Location#geocode: Can't set address for #{slug || to_s}: #{e}"
+    Rails.logger.error "Location#geocode: Can't geocode '#{slug || to_s}': #{e}"
   end
   # rubocop:enable Metrics/AbcSize
 
