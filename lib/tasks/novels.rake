@@ -5,19 +5,45 @@ TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
 
 # rubocop:disable Metrics/BlockLength
 namespace :novels do
+  desc 'Update Locations with Google Books info'
+  task update_with_google_books: :environment do
+    changed_set = Set.new
+    total = Location.missing_isbn.count
+    updated = 0
+    puts "Found #{total} Locations."
+    Location.missing_isbn.each_with_index do |location, index|
+      sleep(1 / 3.0)
+      response = GoogleBooks.search(location.send(:search_terms))
+      book = response.first
+      if book
+        location.send :update_from_google_book, book
+      elsif response.instance_variable_get(:@response)['totalItems']&.zero?
+        puts "Can't find anything matching #{location.send(:search_terms)} for #{location}"
+        next
+      else
+        abort response.instance_variable_get(:@response)['error']['message']
+      end
+      next unless location.changed?
+
+      changed = location.changed
+      changed_set.merge changed
+      changes = location.changes
+      if location.save
+        updated += 1
+        puts "#{updated}/#{total - index - 1} Updated #{changes} for #{location}"
+      else
+        puts "Can't save #{location.errors.full_messages}"
+      end
+    end
+    puts "Updated #{changed_set.to_a * ', '} in #{updated} out of #{total} Locations."
+  end
+
   desc 'Restore Locations from Twitter feed'
   task restore: :environment do
-    @twitter_client = Twitter::REST::Client.new do |config|
-      config.consumer_key = 'Ms7Cl2g9eM0sZKRl8YA34Q'
-      config.consumer_secret = 'gQlXn8I9TtLcNSepF5D59DBkSI0Wv9pYl1465iAc4'
-      config.access_token = '490732052-SDJHy8huJ9J4Ic7aNIiR4T4XZiBxbMQ2eW2Qi2oz'
-      config.access_token_secret = 'N8B6ZPg0gxtqLOeEI7LVKbHCdXvZpHJqpRmmPNSWk'
-    end
-
     coder = HTMLEntities.new
     tweeted_locations = []
     skipped = []
-    tweets = @twitter_client.user_timeline 'NovelsOnLoc'
+    tweets = TWITTER_CLIENT.user_timeline 'NovelsOnLoc'
 
     tweets.each do |tweet|
       matches = TWEET_REGEX.match coder.decode tweet.text

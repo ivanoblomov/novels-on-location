@@ -25,7 +25,7 @@ describe Location do
     context "with book_keywords: 'sun also rises'" do
       subject(:location) { described_class.new(book_keywords: 'sun also rises') }
 
-      before { location.send :set_attributes_from_google_books }
+      before { location.send :update_with_google_books }
 
       # rubocop:disable RSpec/NestedGroups
       describe('#author') { it { expect(location.author).to eq 'Ernest Hemingway' } }
