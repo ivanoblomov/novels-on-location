@@ -10,7 +10,7 @@ class User
     ActiveSupport::JSON.decode(HTTParty.get("https://graph.facebook.com/#{id}")
       .body)['name']
   rescue e
-    Rails.logger.error e
+    Rails.logger.error "User.name: Can't identify user '#{id}' => #{e}"
   end
 
   def initialize(id, token)
