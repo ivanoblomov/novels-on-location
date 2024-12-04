@@ -48,11 +48,7 @@ class Location
   index(title: 1)
   index(user_id: 1)
   scope :author, ->(v) { where author: /#{v}/i }
-  scope :browser, (
-    lambda do
-      where(user_token: nil).not.where(user_token: REG_EX_USER_TOKEN)
-    end
-  )
+  scope :browser, -> { where(user_token: nil).not.where(user_token: REG_EX_USER_TOKEN) }
   scope :duplicate, ->(criteria) { where criteria }
   scope :ios, -> { where(user_token: REG_EX_USER_TOKEN) }
   scope :missing_isbn, -> { where(isbn: nil) }
@@ -84,9 +80,7 @@ class Location
     Location.all.map(&:isbn).uniq.size
   end
 
-  def self.displace_duplicate_coordinates(
-    locations = Location.duplicate_coordinates
-  )
+  def self.displace_duplicate_coordinates(locations = Location.duplicate_coordinates)
     return if locations.blank?
 
     l = locations.last
