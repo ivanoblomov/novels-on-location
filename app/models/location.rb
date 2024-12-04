@@ -235,8 +235,7 @@ class Location
   def nol_url
     return if title.blank?
 
-    "http://#{Rails.application.config.main_host}" \
-      "#{Rails.application.routes.url_helpers.location_path(self)}"
+    "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
   end
 
   def notify
@@ -322,8 +321,7 @@ class Location
   end
 
   def new_pin_message
-    "A fan just pinned \"#{title_for_regex.truncate 50}\"" \
-      "#{place.blank? ? '' : " to #{place}"}."
+    "A fan just pinned \"#{title_for_regex.truncate 50}\"#{place.blank? ? '' : " to #{place}"}."
   end
 
   def random_delta
