@@ -10,7 +10,7 @@ class User
     ActiveSupport::JSON.decode(HTTParty.get("https://graph.facebook.com/#{id}")
       .body)['name']
   rescue e
-    Rails.logger.warn e
+    Rails.logger.error e
   end
 
   def initialize(id, token)
