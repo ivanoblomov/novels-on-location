@@ -5,6 +5,7 @@ ruby '3.3.6'
 
 gem 'actionview-encoded_mail_to'
 gem 'cancancan'
+gem 'dockerfile-rails', '>= 1.6'
 gem 'figaro'
 gem 'googlebooks'
 gem 'google_maps_geocoder', require: 'google_maps_geocoder/google_maps_geocoder'
