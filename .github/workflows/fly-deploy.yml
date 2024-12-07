@@ -13,6 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only -a novels
+      - run: flyctl deploy --remote-only -a novels-on-location
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
