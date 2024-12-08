@@ -1,10 +1,11 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '3.3.6'
+ruby '3.1.6'
 
 gem 'actionview-encoded_mail_to'
 gem 'cancancan'
+gem 'dockerfile-rails', '>= 1.6'
 gem 'figaro'
 gem 'googlebooks'
 gem 'google_maps_geocoder', require: 'google_maps_geocoder/google_maps_geocoder'
