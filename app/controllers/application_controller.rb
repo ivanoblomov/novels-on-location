@@ -15,8 +15,7 @@ class ApplicationController < ActionController::Base
                        with: :null_session
 
   unless Rails.application.config.consider_all_requests_local
-    rescue_from ActionController::UnknownController,
-                Mongoid::Errors::DocumentNotFound,
+    rescue_from Mongoid::Errors::DocumentNotFound,
                 with: :error404
     rescue_from Exception do |exception|
       @exception = exception
