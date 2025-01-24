@@ -15,7 +15,7 @@ jobs:
       with:
         ruby-version: 3.1.6
         bundler-cache: true
-    - run: bundle exec rspec --format d
+    - run: bundle exec rspec
       env:
         GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
     - run: bundle exec rubocop
