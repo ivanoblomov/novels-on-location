@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :system do
-  if ENV['GITHUB_ACTIONS']
+  if false
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
     context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
