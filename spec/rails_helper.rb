@@ -67,6 +67,7 @@ Capybara.configure do |config|
   config.app_host = 'http://localhost'
 end
 Capybara.always_include_port = true
+Capybara.default_max_wait_time = 20
 Capybara.register_driver :selenium do |app|
   options = Selenium::WebDriver::Chrome::Options.new(args: ['no-sandbox'])
   Capybara::Selenium::Driver.new(app,
