@@ -68,7 +68,7 @@ Capybara.configure do |config|
 end
 Capybara.always_include_port = true
 Capybara.register_driver :selenium do |app|
-  options = Selenium::WebDriver::Chrome::Options.new
+  options = Selenium::WebDriver::Chrome::Options.new(args: ['no-sandbox'])
   Capybara::Selenium::Driver.new(app,
                                  browser: :chrome,
                                  options: options)
