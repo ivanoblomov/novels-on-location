@@ -28,7 +28,7 @@ RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :syste
       accept_prompt(with: 'a swim after rejection')
     end
 
-    it('the Location is created') { expect(Location.count).to eq 1 }
+    it('the Location is created') { wait_for { Location.count }.to eq 1 }
   end
 
   context 'when a Location exists and its balloon is open' do
