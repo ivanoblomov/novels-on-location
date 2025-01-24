@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Managing Locations', js: :selenium_chrome, type: :system do
+RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :system do
   if false
     pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
