@@ -38,6 +38,7 @@ RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :syste
                                  lat_lng: ['51.519326', '-0.074316'],
                                  title: 'From Hell'
       visit root_path
+      sleep 1
       find('div[role=button]').click
     end
 
