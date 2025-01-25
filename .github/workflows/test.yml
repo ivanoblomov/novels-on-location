@@ -22,7 +22,7 @@ jobs:
     - uses: actions/upload-artifact@v4
       if: failure()
       with:
-        name: dist-without-markdown
+        name: capybara-screenshots
         path: tmp/capybara/*.png
         if-no-files-found: ignore
 #     - run: bundle exec inch --pedantic
