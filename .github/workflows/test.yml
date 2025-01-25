@@ -19,6 +19,12 @@ jobs:
       env:
         GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
     - run: bundle exec rubocop
+    - uses: actions/upload-artifact@v4
+      if: failure()
+      with:
+        name: dist-without-markdown
+        path: tmp/capybara/*.png
+        if-no-files-found: ignore
 #     - run: bundle exec inch --pedantic
 #     - uses: aktions/codeclimate-test-reporter@7634aa9ac7883182f583f15ff7b6ff519939dd0a
 #       with:
