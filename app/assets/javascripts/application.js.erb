@@ -563,7 +563,7 @@ nOL.openBalloon = function(location) {
     html += '<h1><a href="' + location.store_url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '>' + location.title + '</a></h1>';
   else
     html += '<h1><a href="' + location.store_url + '" target="_blank">' + location.title + '</a></h1>';
-  html += '<h2>by <a href="http://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2>';
+  html += '<h2>by <a href="https://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2>';
   if (location.address) html += '<h2>' + location.address + '</h2>';
   if (location.review)
     html += '<p class="clear">' + location.review + '</p>';
@@ -574,7 +574,7 @@ nOL.openBalloon = function(location) {
     html += ' <a class=store href="' + location.itunes_affiliate_url + '" target=_blank></a>';
   html += '<br/>';
   if (location.user_id) {
-    html += 'Added by <a href="http://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || '(loading...)') + '</a> on ' + location.added_at_s;
+    html += 'Added by <a href="https://www.facebook.com/profile.php?id=' + location.user_id + '" id="' + location.user_id + '" target="_blank">' + (location.user_name || '(loading...)') + '</a> on ' + location.added_at_s;
   } else {
     html += 'Added on ' + location.added_at_s;
   }
