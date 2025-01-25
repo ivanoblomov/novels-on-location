@@ -4,18 +4,22 @@ require 'rails_helper'
 
 RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :system do
   if ENV['GITHUB_ACTIONS']
-    context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
-      before do
-        Location.destroy_all
-        visit root_path
-        click_on 'Mode: Zoom'
-        execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -.074316))' # HACK: since double-click fails
-        accept_prompt with: 'from hell alan moore'
-        accept_confirm
-      end
+    before do
+      Location.destroy_all
+      Location.find_or_create_by author: 'Alan Moore',
+                                 lat_lng: ['51.519326', '-0.074316'],
+                                 title: 'From Hell'
+      visit root_path
+      find('div[role=button]').click
+    end
+
+    context 'when a User annotates it' do
+      before { accept_prompt(with: 'Originally serialized in Taboo') { click_link_or_button 'Annotate' } }
 
       # rubocop:disable RSpec/NoExpectationExample
-      it('the Location is created') { wait_for { Location.count }.to eq 1 }
+      it("the Location's note persists") {
+        wait_for { Location.first.reload.notes }.to eq 'Originally serialized in Taboo'
+      }
       # rubocop:enable RSpec/NoExpectationExample
     end
   else
