@@ -78,7 +78,7 @@ module ApplicationHelper
   def facebook_link_to(location)
     # rubocop:disable Rails/HelperInstanceVariable
     link_to @user_name || 'Reader',
-            "http://www.facebook.com/profile.php?id=#{location.user_id}",
+            "https://www.facebook.com/profile.php?id=#{location.user_id}",
             target: '_blank',
             title: "Go to #{@user_name || 'Reader'}'s page on Facebook", rel: 'noopener'
     # rubocop:enable Rails/HelperInstanceVariable
@@ -92,7 +92,7 @@ module ApplicationHelper
 
   def google_link_to(link_text, options = {})
     link_to link_text,
-            "http://www.google.com/search?q=#{u link_text}",
+            "https://www.google.com/search?q=#{u link_text}",
             { target: '_blank', title: "Google #{link_text}" }.merge(options)
   end
 
@@ -163,7 +163,7 @@ module ApplicationHelper
     return if link_text.blank?
 
     link_to link_text,
-            "http://en.wikipedia.org/wiki/#{u link_text.tr(' ', '_')}",
+            "https://en.wikipedia.org/wiki/#{u link_text.tr(' ', '_')}",
             {
               target: '_blank', title: "Read about #{link_text} on Wikipedia"
             }.merge(options)

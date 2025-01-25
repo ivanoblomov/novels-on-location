@@ -7,7 +7,7 @@ sun_also_rises:
   city: 'Pamplona',
   country: 'Spain',
   image_height: '75',
-  image_url: 'http://ecx.images-amazon.com/images/I/413SnoVxOxL._SL75_.jpg',
+  image_url: 'https://ecx.images-amazon.com/images/I/413SnoVxOxL._SL75_.jpg',
   image_width: '49',
   itunes_id: 381_464_166,
   lat_lng: ['42.817422', '-1.64325'],
@@ -18,7 +18,7 @@ sun_also_rises:
   title: 'The Sun Also Rises',
   tags: 'Cafe Iruña, Pamplona',
   url:
-  'http://www.amazon.com/Sun-Also-Rises-Ernest-Hemingway/dp/0743297334%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0743297334',
+  'https://www.amazon.com/Sun-Also-Rises-Ernest-Hemingway/dp/0743297334%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0743297334',
   user_id: '666325406',
   user_token: 'suwWgD82Ucp00DysVNFuGxHWGtvjF9ns8238IK3V3/I='
 from_hell:
@@ -30,7 +30,7 @@ from_hell:
   city: 'London',
   country: 'United Kingdom',
   image_height: '75',
-  image_url: 'http://ecx.images-amazon.com/images/I/51OytRMAizL._SL75_.jpg',
+  image_url: 'https://ecx.images-amazon.com/images/I/51OytRMAizL._SL75_.jpg',
   image_width: '56',
   itunes_id: 469_299_058,
   lat_lng: ['51.519326', '-0.074316'],
@@ -40,6 +40,6 @@ from_hell:
   state: nil,
   title: 'From Hell',
   tags: 'The Ten Bells, Spitalfields',
-  url: 'http://www.amazon.com/Hell-Alan-Moore/dp/0958578346%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0958578346',
+  url: 'https://www.amazon.com/Hell-Alan-Moore/dp/0958578346%3FSubscriptionId%3DAKIAINFSZKSQ4ZTKFDZA%26tag%3Dws%26linkCode%3Dxm2%26camp%3D2025%26creative%3D165953%26creativeASIN%3D0958578346',
   user_id: '666325406',
   user_token: 'suwWgD82Ucp00DysVNFuGxHWGtvjF9ns8238IK3V3/I='

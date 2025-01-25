@@ -148,7 +148,7 @@ class Location
   def amazon_url
     return nil if asin.nil?
 
-    "http://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag" \
+    "https://www.amazon.com/gp/product/#{asin}/ref=as_li_tf_tl?ie=UTF8&tag" \
       "=novonloc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{asin}"
   end
 

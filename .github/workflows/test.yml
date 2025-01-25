@@ -15,10 +15,16 @@ jobs:
       with:
         ruby-version: 3.1.6
         bundler-cache: true
-    - run: bundle exec rspec --format d
+    - run: bundle exec rspec
       env:
         GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
     - run: bundle exec rubocop
+    - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
+      if: failure()
+      with:
+        name: capybara-screenshots
+        path: tmp/capybara/*.png
+        if-no-files-found: ignore
 #     - run: bundle exec inch --pedantic
 #     - uses: aktions/codeclimate-test-reporter@7634aa9ac7883182f583f15ff7b6ff519939dd0a
 #       with:
