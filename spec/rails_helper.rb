@@ -61,7 +61,7 @@ RSpec.configure do |config|
     driven_by example.metadata[:js]
   end
   config.after(type: :system) do
-    STDERR.puts page.driver.browser.logs.get(:browser)
+    Rails.logger.info page.driver.browser.logs.get(:browser)
   end
 end
 Capybara.configure do |config|
