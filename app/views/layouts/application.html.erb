@@ -34,7 +34,7 @@ input.map[type="button"]{background:#3B5998;color:white;float:left}
 .search{color:#777;margin:0}
 .search-links{float:right;font-size:10pt;font-weight:bold;padding:0}
 .thumbnail{border:black 1px solid;float:left;margin-bottom:5px;margin-right:5px}
-a.store{background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/badge_ibooks-sm.svg) no-repeat;display:inline-block;margin:0 0 2px 0;overflow:hidden;width:65px;height:15px}
+a.store{background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/badge_ibooks-sm.svg) no-repeat;display:inline-block;margin:0 0 2px 0;overflow:hidden;width:65px;height:15px}
 #appstore-link{margin:2px 0 0 3px}
 #applesearch{float:left;top:6px}
 #applesearch .sbox_l{background:url(<%= asset_path 'srch_l.gif' %>) no-repeat top left;float:left;width:19px;height:19px}
@@ -72,7 +72,7 @@ a.store{background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/bad
 <input type=button class=map id=pin-display-button title="Click to show only my pins" value="Pins: All"/>
 <%# link_to image_tag('http://r.mzstatic.com/images/web/linkmaker/badge_appstore-sm.gif', :alt => 'App Store'), 'https://itunes.apple.com/us/app/novels-on-location/id625973663?mt=8&uo=4', :class => 'links', :id => 'appstore-link', :target => 'itunes_store' %>
 <%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon'), :encode => 'hex', :class => 'links', :id => 'mail-button', :title => 'Send feedback' %>
-<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon'), 'http://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
+<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon'), 'https://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
 </div>
 <a class=no-print href="/integration" id=integration-link title="Learn how to integrate Novels: On Location with your site">N:OL Integration Notes</a>
 <div class=no-print id=social-toolbar>
@@ -81,9 +81,9 @@ a.store{background:url(http://linkmaker.itunes.apple.com/images/badges/en-us/bad
 <iframe<% if ie? %> allowTransparency=true frameBorder=0<% end %> id=tweet src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>"></iframe>
 <a href="https://twitter.com/novelsonloc" class="twitter-follow-button" data-show-count="false">Follow @novelsonloc</a>
 </div>
-<script src="http://maps.google.com/maps/api/js<%= "?key=#{ENV['GOOGLE_MAPS_API_KEY']}" %>"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script src="http://platform.twitter.com/widgets.js"></script>
+<script src="https://maps.google.com/maps/api/js<%= "?key=#{ENV['GOOGLE_MAPS_API_KEY']}" %>"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="https://platform.twitter.com/widgets.js"></script>
 <%= javascript_include_tag 'application' %>
 <script>
   window.fbAsyncInit=function(){
