@@ -31,6 +31,11 @@ nOL.init = function(settings) {
   nOL.defaultTitle = settings['defaultTitle'];
   nOL.host = settings['host'];
 
+  FB.init({appId:settings['fbAppId'],cookie:true,status:true,version:'v2.11',xfbml:true});
+  FB.getLoginStatus(function(response){
+    nOL.statusChangeCallback(response);
+  });
+
   nOL.map = new google.maps.Map($('#map-canvas')[0], {
     backgroundColor: 'white',
     center: new google.maps.LatLng(0, 0),
@@ -115,6 +120,10 @@ nOL.checkOrientation = function() {
 
 nOL.getFacebookName = function(location) {
   if (location.user_name == undefined) {
+    FB.api('/' + location.user_id, function(response) {
+      $('#' + location.user_id).text(response.name);
+      location.user_name = response.name;
+    });
   }
 }
 
@@ -125,6 +134,10 @@ nOL.getFriendIds = function() {
 }
 
 nOL.getFriends = function() {
+  FB.api('/me/friends', function(response) {
+    nOL.friends = response.data;
+    nOL.getFriendIds();
+  });
 }
 
 nOL.updateFacebookLikeButton = function() {
@@ -170,10 +183,23 @@ nOL.loggedIn = function() {
 }
 
 nOL.logIn = function() {
+  FB.login(function(response) {
+    console.log(response);
+    if (response.authResponse) {
+      nOL.initSession(response.authResponse);
+      document.location.reload();
+    } else {
+      console.log('193');
+    }
+  });
 }
 
 nOL.logOut = function() {
   console.log('logOut');
+  FB.logout(function(response) {
+    $.cookie('fb_id', null)
+    nOL.listenForLogin();
+  });
   console.log($.cookie('fb_id'));
   console.log('end');
 }

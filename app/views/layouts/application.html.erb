@@ -86,6 +86,7 @@ a.store{background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/ba
 <script src="https://platform.twitter.com/widgets.js"></script>
 <%= javascript_include_tag 'application' %>
 <script>
+  window.fbAsyncInit=function(){
     nOL.init({
       defaultTitle: "<%= default_title %>",
       <%= "error: \"#{flash[:error]}\",".html_safe if flash[:error] %>
@@ -93,6 +94,17 @@ a.store{background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/ba
       host: '<%= Rails.application.config.main_host %>',
       selectedLocationSlug: <%= (@location ? "'#{@location.slug}'" : 'null').html_safe %>,
     });
+  };
+  (function(d){
+    var js, id = 'facebook-jssdk';
+    if (d.getElementById(id))
+      return;
+    js = d.createElement('script');
+    js.id = id;
+    js.async = true;
+    js.src = 'https://connect.facebook.net/en_US/all.js';
+    d.getElementsByTagName('head')[0].appendChild(js);
+  }(document));
 </script>
 </body>
 </html>
