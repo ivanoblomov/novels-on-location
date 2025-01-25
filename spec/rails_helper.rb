@@ -60,6 +60,9 @@ RSpec.configure do |config|
   config.before(:each, :js, type: :system) do |example|
     driven_by example.metadata[:js]
   end
+  config.after(:each, type: :system) do |example|
+    warn page.driver.browser.logs.get(:browser) if example.exception
+  end
 end
 Capybara.configure do |config|
   config.default_driver = :selenium

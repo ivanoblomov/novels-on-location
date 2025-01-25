@@ -14,7 +14,7 @@
 %>
 <title><%= @title %></title>
 <meta name=apple-itunes-app content="app-id=625973663<%= ",app-argument=http://#{Rails.application.config.main_host}/locations/#{@location.slug}" if @location %>"/>
-<meta name=apple-mobile-web-app-capable content="yes"/>
+<meta name=mobile-web-app-capable content="yes"/>
 <meta name=description content="<%= @meta_description %>"/><% if w3c_validator? %>
 <meta name="fragment" content="!"/><% end %>
 <meta name=keywords content="<%= @meta_keywords || 'google maps, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
