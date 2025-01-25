@@ -4,7 +4,20 @@ require 'rails_helper'
 
 RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :system do
   if ENV['GITHUB_ACTIONS']
-    pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
+    context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
+      before do
+        Location.destroy_all
+        visit root_path
+        click_on 'Mode: Zoom'
+        execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -.074316))' # HACK: since double-click fails
+        accept_prompt with: 'from hell alan moore'
+        accept_confirm
+      end
+
+      # rubocop:disable RSpec/NoExpectationExample
+      it('the Location is created') { wait_for { Location.count }.to eq 1 }
+      # rubocop:enable RSpec/NoExpectationExample
+    end
   else
     context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
       before do
