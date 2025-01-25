@@ -4,24 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Managing Locations', js: :selenium_chrome_headless, type: :system do
   if ENV['GITHUB_ACTIONS']
-    before do
-      Location.destroy_all
-      Location.find_or_create_by author: 'Alan Moore',
-                                 lat_lng: ['51.519326', '-0.074316'],
-                                 title: 'From Hell'
-      visit root_path
-      find('div[role=button]').click
-    end
-
-    context 'when a User annotates it' do
-      before { accept_prompt(with: 'Originally serialized in Taboo') { click_link_or_button 'Annotate' } }
-
-      # rubocop:disable RSpec/NoExpectationExample
-      it("the Location's note persists") {
-        wait_for { Location.first.reload.notes }.to eq 'Originally serialized in Taboo'
-      }
-      # rubocop:enable RSpec/NoExpectationExample
-    end
+    pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
   else
     context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
       before do
