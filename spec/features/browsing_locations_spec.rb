@@ -47,7 +47,7 @@ describe 'Browsing novel Locations', js: :selenium_chrome_headless, type: :syste
 
       # rubocop:disable RSpec/NoExpectationExample
       it "the balloon shows the novel's author linked to Wikipedia" do
-        wait_for { page }.to have_link 'Alan Moore', href: 'http://en.wikipedia.org/wiki/Alan%20Moore'
+        wait_for { page }.to have_link 'Alan Moore', href: 'https://en.wikipedia.org/wiki/Alan%20Moore'
       end
       # rubocop:enable RSpec/NoExpectationExample
 
@@ -61,7 +61,7 @@ describe 'Browsing novel Locations', js: :selenium_chrome_headless, type: :syste
 
       it "the balloon shows the novel's reader linked to Facebook" do
         pending 'Facebook integration'
-        expect(page).to have_link 'Roderick Monje', href: 'http://www.facebook.com/profile.php?id=666325406'
+        expect(page).to have_link 'Roderick Monje', href: 'https://www.facebook.com/profile.php?id=666325406'
       end
 
       # rubocop:disable RSpec/NoExpectationExample
