@@ -2,10 +2,11 @@
 name: Feature request
 about: Suggest a feature for this project
 title: ''
-labels: 'enhancement'
+labels: enhancement
 assignees: ''
 
 ---
+
 # Feature Request
 
 ## Goal
