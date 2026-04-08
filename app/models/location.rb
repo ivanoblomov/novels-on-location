@@ -107,7 +107,7 @@ class Location
 
   def self.look_up_itunes
     Location.missing_itunes.map do |l|
-      l.update_with_google_books
+      l.rescue_update_with_google_books
       l.save
     end
     Location.missing_itunes.count
@@ -164,7 +164,7 @@ class Location
 
   def book_keywords=(value)
     self[:book_keywords] = value
-    update_with_google_books
+    rescue_update_with_google_books
   end
 
   # rubocop:disable Naming/MethodName
@@ -352,6 +352,11 @@ class Location
     "#{new_pin_message} Learn more at #{nol_url} #lp"
   end
 
+  def rescue_update_with_google_books
+    book = update_with_google_books
+  rescue RuntimeError
+  end
+
   def update_from_google_book(book)
     self.author ||= book.authors
     self.isbn ||= book.isbn
@@ -372,6 +377,7 @@ class Location
     else
       Rails.logger.error "Location#update_with_google_books: Can't find anything matching '#{search_terms}' => " \
                          "#{response.instance_variable_get(:@response)['error']['message']}"
+      raise RuntimeError
     end
   end
 

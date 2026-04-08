@@ -25,7 +25,11 @@ describe Location do
     context "with book_keywords: 'sun also rises'" do
       subject(:location) { described_class.new(book_keywords: 'sun also rises') }
 
-      before { location.send :update_with_google_books }
+      before do
+        location.send :update_with_google_books
+      rescue RuntimeError
+        pending 'waiting for query limit to pass'
+      end
 
       # rubocop:disable RSpec/NestedGroups
       describe('#author') { it { expect(location.author).to eq 'Ernest Hemingway' } }
