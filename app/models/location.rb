@@ -363,7 +363,7 @@ class Location
   end
 
   def update_with_google_books
-    response = GoogleBooks.search(search_terms)
+    response = GoogleBooks.search(search_terms, api_key: ENV['GOOGLE_MAPS_API_KEY'])
     book = response.first
     if book
       Rails.logger.info "Location#update_with_google_books: Found '#{book.title}' by #{book.authors} from search " \
