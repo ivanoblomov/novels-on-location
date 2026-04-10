@@ -76,3 +76,18 @@ Capybara.register_driver :selenium do |app|
                                  browser: :chrome,
                                  options: options)
 end
+VCR.configure do |config|
+  config.cassette_library_dir = 'spec/vcr_cassettes'
+  config.hook_into :webmock
+  config.configure_rspec_metadata!
+
+  # Crucial: Don't leak your keys in the cassettes!
+  config.filter_sensitive_data('<FACEBOOK_APP_ID>') { ENV['FACEBOOK_APP_ID'] }
+  config.filter_sensitive_data('<GOOGLE_MAPS_API_KEY>') { ENV['GOOGLE_MAPS_API_KEY'] }
+  config.filter_sensitive_data('<SENDGRID_PASSWORD>') { ENV['SENDGRID_PASSWORD'] }
+  config.filter_sensitive_data('<SENDGRID_USERNAME>') { ENV['SENDGRID_USERNAME'] }
+  config.filter_sensitive_data('<TWITTER_ACCESS_SECRET>') { ENV['TWITTER_ACCESS_SECRET'] }
+  config.filter_sensitive_data('<TWITTER_ACCESS_TOKEN>') { ENV['TWITTER_ACCESS_TOKEN'] }
+  config.filter_sensitive_data('<TWITTER_CONSUMER_KEY>') { ENV['TWITTER_CONSUMER_KEY'] }
+  config.filter_sensitive_data('<TWITTER_CONSUMER_SECRET>') { ENV['TWITTER_CONSUMER_SECRET'] }
+end
