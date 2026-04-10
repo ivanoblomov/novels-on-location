@@ -22,7 +22,7 @@ describe Location do
       # rubocop:enable RSpec/NestedGroups
     end
 
-    context "with book_keywords: 'sun also rises'", vcr: { cassette_name: 'sun_also_rises' } do
+    context "with book_keywords: 'sun also rises'", :vcr do
       subject(:location) { described_class.new(book_keywords: 'sun also rises') }
 
       before { location.send :update_with_google_books }
@@ -64,7 +64,7 @@ describe Location do
   end
 
   describe '#geocode' do
-    context 'with "white house"', vcr: { cassette_name: 'white_house' } do
+    context 'with "white house"', :vcr do
       before { location.send :geocode, 'white house' }
 
       # rubocop:disable RSpec/MultipleExpectations
