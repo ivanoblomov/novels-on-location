@@ -64,7 +64,7 @@ describe Location do
   end
 
   describe '#geocode' do
-    context 'with "white house"', vcr: { cassette_name: 'Location/_geocode/with_white_house_/sets_Washington_DC' } do
+    context 'with "white house"', vcr: { cassette_name: 'location_geocode_white_house' } do
       before { location.send :geocode, 'white house' }
 
       # rubocop:disable RSpec/MultipleExpectations
