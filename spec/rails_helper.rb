@@ -82,12 +82,12 @@ VCR.configure do |config|
   config.configure_rspec_metadata!
 
   # Crucial: Don't leak your keys in the cassettes!
-  config.filter_sensitive_data('<FACEBOOK_APP_ID>') { ENV['FACEBOOK_APP_ID'] }
-  config.filter_sensitive_data('<GOOGLE_MAPS_API_KEY>') { ENV['GOOGLE_MAPS_API_KEY'] }
-  config.filter_sensitive_data('<SENDGRID_PASSWORD>') { ENV['SENDGRID_PASSWORD'] }
-  config.filter_sensitive_data('<SENDGRID_USERNAME>') { ENV['SENDGRID_USERNAME'] }
-  config.filter_sensitive_data('<TWITTER_ACCESS_SECRET>') { ENV['TWITTER_ACCESS_SECRET'] }
-  config.filter_sensitive_data('<TWITTER_ACCESS_TOKEN>') { ENV['TWITTER_ACCESS_TOKEN'] }
-  config.filter_sensitive_data('<TWITTER_CONSUMER_KEY>') { ENV['TWITTER_CONSUMER_KEY'] }
-  config.filter_sensitive_data('<TWITTER_CONSUMER_SECRET>') { ENV['TWITTER_CONSUMER_SECRET'] }
+  config.filter_sensitive_data('<FACEBOOK_APP_ID>') { ENV.fetch('FACEBOOK_APP_ID', nil) }
+  config.filter_sensitive_data('<GOOGLE_MAPS_API_KEY>') { ENV.fetch('GOOGLE_MAPS_API_KEY', nil) }
+  config.filter_sensitive_data('<SENDGRID_PASSWORD>') { ENV.fetch('SENDGRID_PASSWORD', nil) }
+  config.filter_sensitive_data('<SENDGRID_USERNAME>') { ENV.fetch('SENDGRID_USERNAME', nil) }
+  config.filter_sensitive_data('<TWITTER_ACCESS_SECRET>') { ENV.fetch('TWITTER_ACCESS_SECRET', nil) }
+  config.filter_sensitive_data('<TWITTER_ACCESS_TOKEN>') { ENV.fetch('TWITTER_ACCESS_TOKEN', nil) }
+  config.filter_sensitive_data('<TWITTER_CONSUMER_KEY>') { ENV.fetch('TWITTER_CONSUMER_KEY', nil) }
+  config.filter_sensitive_data('<TWITTER_CONSUMER_SECRET>') { ENV.fetch('TWITTER_CONSUMER_SECRET', nil) }
 end
