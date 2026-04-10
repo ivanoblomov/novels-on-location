@@ -80,7 +80,7 @@ VCR.configure do |config|
   config.allow_http_connections_when_no_cassette = false
   config.cassette_library_dir = 'spec/vcr_cassettes'
   config.hook_into :webmock
-  config.configure_rspec_metadata!
+  #   config.configure_rspec_metadata!
 
   # Crucial: Don't leak your keys in the cassettes!
   config.filter_sensitive_data('<FACEBOOK_APP_ID>') { ENV.fetch('FACEBOOK_APP_ID', nil) }
