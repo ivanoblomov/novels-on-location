@@ -65,7 +65,7 @@ describe Location do
 
   describe '#geocode' do
     context 'with "white house"' do
-      before { VCR.use_cassette('location_geocode_white_house') { location.send :geocode, 'white house' } }
+      before { VCR.use_cassette('location_geocode_white_house', record: :new_episodes) { location.send :geocode, 'white house' } }
 
       # rubocop:disable RSpec/MultipleExpectations
       it 'sets Washington, DC' do
