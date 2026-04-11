@@ -22,10 +22,10 @@ describe Location do
       # rubocop:enable RSpec/NestedGroups
     end
 
-    context "with book_keywords: 'sun also rises'", vcr: { cassette_name: 'sun_also_rises' } do
-      subject(:location) { described_class.new(book_keywords: 'sun also rises') }
+    context "with book_keywords: 'sun also rises'" do
+      subject(:location) { VCR.use_cassette('sun_also_rises') { described_class.new(book_keywords: 'sun also rises') } }
 
-      before { location.send :update_with_google_books }
+      before { VCR.use_cassette('update_with_google_books') { location.send :update_with_google_books } }
 
       # rubocop:disable RSpec/NestedGroups
       describe('#author') { it { expect(location.author).to eq 'Ernest Hemingway' } }
@@ -64,8 +64,8 @@ describe Location do
   end
 
   describe '#geocode' do
-    context 'with "white house"', vcr: { cassette_name: 'location_geocode_white_house' } do
-      before { location.send :geocode, 'white house' }
+    context 'with "white house"' do
+      before { VCR.use_cassette('location_geocode_white_house') { location.send :geocode, 'white house' } }
 
       # rubocop:disable RSpec/MultipleExpectations
       it 'sets Washington, DC' do
