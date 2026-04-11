@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://www.googleapis.com/books/v1/volumes?country=&key=<GOOGLE_API_KEY>&maxResults=5&q=sun%20also%20rises&startIndex=0
+    uri: https://www.googleapis.com/books/v1/volumes?country=&key=<GOOGLE_MAPS_API_KEY>&maxResults=5&q=sun%20also%20rises&startIndex=0
     body:
       encoding: US-ASCII
       string: ''

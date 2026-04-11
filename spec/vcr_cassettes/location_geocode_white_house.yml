@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://maps.googleapis.com/maps/api/geocode/json?address=white%20house&key=<GOOGLE_API_KEY>
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=white%20house&key=<GOOGLE_MAPS_API_KEY>
     body:
       encoding: US-ASCII
       string: ''

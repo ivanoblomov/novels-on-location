@@ -1,6 +1,5 @@
 # set environment variables here and figaro will do the rest
 FACEBOOK_APP_ID: ''
-GOOGLE_API_KEY: ''
 GOOGLE_MAPS_API_KEY: ''
 SECRET_KEY_BASE: ''
 SENDGRID_PASSWORD: ''
