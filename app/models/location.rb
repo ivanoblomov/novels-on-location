@@ -299,7 +299,7 @@ class Location
 
   # rubocop:disable Metrics/AbcSize
   def geocode(coordinates_or_keyword)
-    g = GoogleMapsGeocoder.new coordinates_or_keyword
+    g = GoogleMapsGeocoder.new coordinates_or_keyword, logger: Rails.logger
     self.address = g.formatted_address
     self.city = g.city
     self.lat_lng = [g.lat.to_s, g.lng.to_s]
