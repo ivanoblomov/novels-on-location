@@ -44,4 +44,6 @@ group :test do
   gem 'rubocop-rspec_rails'
   gem 'selenium-webdriver'
   gem 'simplecov'
+  gem 'vcr'
+  gem 'webmock'
 end
