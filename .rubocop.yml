@@ -6,3 +6,4 @@ require:
   - rubocop-rspec_rails
 AllCops:
   NewCops: enable
+  TargetRubyVersion: 4.0
