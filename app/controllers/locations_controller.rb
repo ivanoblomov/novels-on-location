@@ -34,10 +34,9 @@ class LocationsController < ApplicationController
     format_response
   end
 
-  # rubocop:disable Metrics/AbcSize
   def index
     @locations = Location.all.to_a
-    return error404 if @locations.blank? && Location.count.positive?
+    return error404 if @locations.blank? && Location.any?
 
     set_user_name if reader_link?
 
@@ -51,7 +50,6 @@ class LocationsController < ApplicationController
       end
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   def show; end
 
@@ -165,7 +163,7 @@ class LocationsController < ApplicationController
 
   def strip_parens(keywords)
     if keywords.try(:include?, '(')
-      keywords[0..keywords.index('(') - 1]
+      keywords[0..(keywords.index('(') - 1)]
     else
       keywords
     end

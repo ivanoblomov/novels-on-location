@@ -21,7 +21,7 @@ describe 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
 
       it 'the map zooms in' do
         visit root_path
-        wait_for { page }.to have_content 'Keyboard shortcuts'
+        wait_for { page }.to have_text 'Keyboard shortcuts'
         original_zoom_level
         find_by_id('map-canvas').double_click
         expect(evaluate_script('nOL.map.zoom')).to be >= original_zoom_level

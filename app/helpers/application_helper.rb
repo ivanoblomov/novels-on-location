@@ -86,7 +86,7 @@ module ApplicationHelper
 
   def filter_param!(value)
     # rubocop:disable Rails/OutputSafety
-    "'#{value.blank? ? nil : j(value)}'".html_safe
+    "'#{j(value) if value.present?}'".html_safe
     # rubocop:enable Rails/OutputSafety
   end
 
