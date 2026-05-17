@@ -174,7 +174,7 @@ class Location
   # rubocop:enable Naming/MethodName
 
   def duplicate?
-    duplicates.count > 1
+    duplicates.many?
   end
 
   def duplicates
@@ -299,7 +299,7 @@ class Location
 
   # rubocop:disable Metrics/AbcSize
   def geocode(coordinates_or_keyword)
-    g = GoogleMapsGeocoder.new coordinates_or_keyword
+    g = GoogleMapsGeocoder.new coordinates_or_keyword, logger: Rails.logger
     self.address = g.formatted_address
     self.city = g.city
     self.lat_lng = [g.lat.to_s, g.lng.to_s]
@@ -315,7 +315,7 @@ class Location
   end
 
   def new_pin_message
-    "A fan just pinned \"#{title_for_regex.truncate 50}\"#{place.blank? ? '' : " to #{place}"}."
+    "A fan just pinned \"#{title_for_regex.truncate 50}\"#{" to #{place}" if place.present?}."
   end
 
   def random_delta

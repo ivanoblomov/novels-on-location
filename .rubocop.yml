@@ -1,8 +1,10 @@
-require:
+plugins:
   - rubocop-capybara
-  - rubocop-performance
   - rubocop-rails
   - rubocop-rspec
   - rubocop-rspec_rails
+require:
+  - rubocop-performance
 AllCops:
   NewCops: enable
+  TargetRubyVersion: 4.0
