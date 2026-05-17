@@ -113,7 +113,7 @@ class LocationsController < ApplicationController
   end
 
   def location_params
-    location_params = params.require(:location).permit PERMITTED_PARAMS
+    location_params = params.expect location: [PERMITTED_PARAMS]
     remove_null_user_id location_params
     location_params = rename_objective_c_keys location_params
     remove_virtual_attributes location_params
