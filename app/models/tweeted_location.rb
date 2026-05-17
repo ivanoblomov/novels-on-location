@@ -43,6 +43,6 @@ class TweetedLocation
   end
 
   def unique?
-    TweetedLocation.duplicates(place: place, title: title).count.zero?
+    TweetedLocation.duplicates(place: place, title: title).none?
   end
 end
