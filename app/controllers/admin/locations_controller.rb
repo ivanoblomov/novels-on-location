@@ -27,7 +27,7 @@ module Admin
     private
 
     def find_location
-      @location = Location.find params[:id]
+      @location = Location.find params.expect(:id)
     end
 
     def find_locations

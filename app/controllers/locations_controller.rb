@@ -86,7 +86,7 @@ class LocationsController < ApplicationController
 
   def find_location
     @location = find_location_by_id ||
-                Location.find(Moped::BSON::ObjectId(params[:id]))
+                Location.find(Moped::BSON::ObjectId(params.expect(:id)))
   rescue StandardError
     if Location.exists?(id: params[:id])
       @location = find_location_by_id
@@ -97,7 +97,7 @@ class LocationsController < ApplicationController
   end
 
   def find_location_by_id
-    Location.find params[:id]
+    Location.find params.expect(:id)
   end
 
   def format_response
@@ -108,12 +108,12 @@ class LocationsController < ApplicationController
   end
 
   def location_kind
-    params[:_escaped_fragment_].split('-')[0] if params[:_escaped_fragment_]
-                                                 .present?
+    params.expect(:_escaped_fragment_).split('-')[0] if params[:_escaped_fragment_]
+                                                        .present?
   end
 
   def location_params
-    location_params = params.require(:location).permit PERMITTED_PARAMS
+    location_params = params.expect location: [PERMITTED_PARAMS]
     remove_null_user_id location_params
     location_params = rename_objective_c_keys location_params
     remove_virtual_attributes location_params
@@ -121,8 +121,8 @@ class LocationsController < ApplicationController
   end
 
   def location_query
-    value = params[:_escaped_fragment_].split('-')[1..]
-    strip_parens CGI.unescape(params[:_escaped_fragment_].split('-')[1]) if
+    value = params.expect(:_escaped_fragment_).split('-')[1..]
+    strip_parens CGI.unescape(params.expect(:_escaped_fragment_).split('-')[1]) if
       value.present?
   end
 
@@ -150,7 +150,7 @@ class LocationsController < ApplicationController
   end
 
   def scope_for_snapshot
-    if params[:_escaped_fragment_].include? '-'
+    if params.expect(:_escaped_fragment_).include? '-'
       Location.scope_for_kind location_kind, location_query
     else
       Location.author params[:_escaped_fragment_]
