@@ -36,7 +36,7 @@ class LocationsController < ApplicationController
 
   def index
     @locations = Location.all.to_a
-    return error404 if @locations.blank? && Location.any?
+    return error404 if @locations.blank? && Location.exists?
 
     set_user_name if reader_link?
 
