@@ -21,6 +21,10 @@ WebMock.disable_net_connect!
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.after(:suite) do
+    FileUtils.rm_rf(Dir.glob('tmp/capybara/*'))
+  end
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
