@@ -26,7 +26,7 @@ RSpec.configure do |config|
       begin
         errors = page.driver.browser.logs.get(:browser)
         errors.each { |log| Rails.logger.error "[#{log.level}] #{log.message}" } if errors.present?
-      rescue StandardError
+      rescue StandardError => e
         Rails.logger.error "[Capybara Logging Extension] Could not capture browser logs: #{e.message}"
       end
     end
