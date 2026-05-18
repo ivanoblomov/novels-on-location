@@ -87,6 +87,7 @@ a.store{background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/ba
 <%= javascript_include_tag 'application' %>
 <script>
   window.fbAsyncInit=function(){
+    console.log('fbAsyncInit fired');
     nOL.init({
       defaultTitle: "<%= default_title %>",
       <%= "error: \"#{flash[:error]}\",".html_safe if flash[:error] %>

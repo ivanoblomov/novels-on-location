@@ -2,6 +2,8 @@
 //= require shortcut
 //= require_tree .
 var nOL = {};
+console.log('nOL object created');
+
 nOL.anchor = unescape(window.location.hash.substring(2));
 nOL.anchorKind = nOL.anchor.split('-')[0];
 nOL.bookPrompt = 'Find a mapped book';
@@ -25,6 +27,7 @@ nOL.twitterAccount = 'NovelsOnLoc%3ANovels%3A%20On%20Location';
 nOL.anchorQuery = nOL.anchor.split('-')[1] || nOL.anchorKind;
 
 nOL.init = function(settings) {
+  console.log('nOL.init called with settings:', settings);
   nOL.defaultTitle = settings['defaultTitle'];
   nOL.host = settings['host'];
 
@@ -261,7 +264,7 @@ nOL.promptForTag = function(id, tags) {
 }
 
 nOL.promptForNotes = function(id, notes) {
-  var value = prompt('Add anything noteworthy. Write about the climactic scene that took place here, for example, or the real-life landmark a setting from the story was modeled on.', unescape(notes || ''));
+  var value = prompt('Add anything noteworthy. Write about the climactic scene that took place here, for example, or the real-life landmark a setting from the story was modeled on.', unescape(notes));
   if (value) nOL.annotatePin(id, value);
 }
 
@@ -575,7 +578,7 @@ nOL.openBalloon = function(location) {
   html = '<div class="map-balloon">';
   if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location.id + '\')" type="button" value="Claim" title="Claim this pin"/>';
   if (location.writable)
-    html += '<input onClick="nOL.deletePin(\'' + location.id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location.id + '\', \'' + escape(location.tags) + '\')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForRemap(\'' + location.id + '\', \'' + escape(location.address) + '\')" type="button" value="Remap" title="Remap pin"/>';
+    html += '<input onClick="nOL.deletePin(\'' + location.id + '\')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag(\'' + location.id + '\', \'' + escape(location.tags || '') + '\')" type="button" value="Tag" title="Add tags to pin"/>';
   if (nOL.fb_session) {
     if (nOL.myBookmark(location))
       html += '<input onClick="nOL.unBookmarkPin(\'' + location.id + '\')" type="button" value="Un-Bookmark" title="Un-bookmark this pin"/>';
@@ -586,7 +589,7 @@ nOL.openBalloon = function(location) {
     html += '<input onClick="nOL.promptForNotes(\'' + location.id + '\', \'' + (escape(location.notes || '')) + '\')" type="button" value="Annotate" title="Annotate pin"/>';
   html += '<input onClick="nOL.zoomIn(nOL.toLatLng([' + location.lat_lng + ']))" type="button" value="Zoom" title="Zoom to pin"/>'
   if (location.image_url)
-    html += '<h1><a href="' + location.store_url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=' + location.image_width + '>' + location.title + '</a></h1>';
+    html += '<h1><a href="' + location.store_url + '" target="_blank"><img src="' + location.image_url + '" alt="Cover of ' + location.title + '" class="thumbnail" height=' + location.image_height + ' width=78/></a></h1>';
   else
     html += '<h1><a href="' + location.store_url + '" target="_blank">' + location.title + '</a></h1>';
   html += '<h2>by <a href="https://en.wikipedia.org/wiki/' + encodeURI(location.author) + '" target="_blank">' + location.author + '</a></h2>';
@@ -606,7 +609,7 @@ nOL.openBalloon = function(location) {
   }
   var authorPath = '/#!author-' + escape(location.author);
   var novelPath = '/#!novel-' + escape(location.title_for_regex);
-  html += '<br/><div class=search-links><a href="' + novelPath + '" onClick="nOL.showPins(\'' + location.title_for_regex + '\', \'' + novelPath + '\')" title="Show all locations for the novel ' + location.title + '">All Locations for Novel</a><span class=bullet>|</span><a href="' + authorPath + '" onClick="nOL.showPins(\'' + location.author + '\', \'' + authorPath + '\')" title="Show all novels by the author ' + location.author + '">All Novels by Author</a>';
+  html += '<br/><div class=search-links><a href="' + novelPath + '" onClick="nOL.showPins(\'' + location.title_for_regex + '\', \'' + novelPath + '\')" title="Show all locations for the novel ' + location.title + '">' + location.title_for_regex + '</a> <span class=bullet>|</span> <a href="' + authorPath + '" onClick="nOL.showPins(\'' + location.author + '\', \'' + authorPath + '\')" title="Show all locations by ' + location.author + '">' + location.author + '</a>';
   if (location.user_id) {
     var readerPath = '/#!reader-' + location.user_id;
     html += '<span class=bullet>|</span><a href="' + readerPath + '" id=reader-link onClick="nOL.showPins(\'' + location.user_id + '\', \'' + readerPath + '\')" title="Show all pins added by this reader">All Pins by Reader</a>';
@@ -875,4 +878,25 @@ jQuery.cookie = function(name, value, options) {
         }
         return cookieValue;
     }
+};
+
+// Fallback initialization if fbAsyncInit doesn't fire (for headless Chrome CI)
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', nOL.initializeIfNeeded);
+} else {
+  nOL.initializeIfNeeded();
+}
+
+nOL.initializeIfNeeded = function() {
+  setTimeout(function() {
+    if (!nOL.map && typeof google !== 'undefined' && google.maps) {
+      console.log('fbAsyncInit did not fire, initializing map directly');
+      nOL.init({
+        defaultTitle: 'Novels: On Location',
+        fbAppId: 0,
+        host: window.location.hostname,
+        selectedLocationSlug: null
+      });
+    }
+  }, 3000);
 };
