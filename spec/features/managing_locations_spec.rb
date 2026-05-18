@@ -9,8 +9,8 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
   else
     context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
       before do
-        Location.destroy_all
         visit root_path
+        Location.destroy_all
         click_on 'Mode: Zoom'
         execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -.074316))' # HACK: since double-click fails
         accept_prompt with: 'from hell alan moore'
