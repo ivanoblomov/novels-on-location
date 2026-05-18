@@ -91,7 +91,7 @@ a.store{background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/ba
       defaultTitle: "<%= default_title %>",
       <%= "error: \"#{flash[:error]}\",".html_safe if flash[:error] %>
       fbAppId: <%= Rails.application.config.facebook_app_id %>,
-      host: 'localhost',
+      host: '<%= Rails.application.config.main_host %>',
       selectedLocationSlug: <%= (@location ? "'#{@location.slug}'" : 'null').html_safe %>,
     });
   };
