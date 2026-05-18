@@ -4,7 +4,6 @@ on:
 permissions: read-all
 jobs:
   test:
-    environment: staging
     runs-on: ubuntu-latest
     steps:
     - uses: supercharge/mongodb-github-action@5a87bd81f88e2a8b195f8b7b656f5cda1350815a
