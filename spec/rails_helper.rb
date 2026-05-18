@@ -76,7 +76,7 @@ Capybara.register_driver :selenium_chrome_headless do |app|
                                  options: options)
 end
 Capybara.configure do |config|
-  config.default_driver = :selenium
+  config.default_driver = :selenium_chrome_headless
   config.javascript_driver = :selenium_chrome_headless
   config.app_host = 'http://localhost'
 end
