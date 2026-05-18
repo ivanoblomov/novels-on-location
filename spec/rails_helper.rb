@@ -70,8 +70,13 @@ Capybara.configure do |config|
   config.app_host = 'http://localhost'
 end
 Capybara.always_include_port = true
-Capybara.register_driver :selenium do |app|
+Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('--disable-dev-shm-usage') # Forces Chrome to use disk instead of /dev/shm memory
+  options.add_argument('--disable-gpu')
+  options.add_argument('--headless=new') # Use the modern headless engine
+  options.add_argument('--no-sandbox') # Essential for Linux containers
+  options.add_argument('--window-size=1400,1400')
   Capybara::Selenium::Driver.new(app,
                                  browser: :chrome,
                                  options: options)
