@@ -78,7 +78,7 @@ module ApplicationHelper
   def facebook_link_to(location)
     # rubocop:disable Rails/HelperInstanceVariable
     link_to @user_name || 'Reader',
-            "https://www.facebook.com/profile.php?id=#{location.user_id}",
+            "https://www.facebook.com/pages/PageName/#{location.user_id}",
             target: '_blank',
             title: "Go to #{@user_name || 'Reader'}'s page on Facebook", rel: 'noopener'
     # rubocop:enable Rails/HelperInstanceVariable
