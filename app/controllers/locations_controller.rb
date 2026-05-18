@@ -113,7 +113,9 @@ class LocationsController < ApplicationController
   end
 
   def location_params
+    # rubocop:disable Rails/StrongParametersExpect
     location_params = params.require(:location).permit PERMITTED_PARAMS
+    # rubocop:enable Rails/StrongParametersExpect
     remove_null_user_id location_params
     location_params = rename_objective_c_keys location_params
     remove_virtual_attributes location_params
