@@ -23,16 +23,12 @@ WebMock.disable_net_connect!
 RSpec.configure do |config|
   config.after(:each, type: :system) do |example|
     if example.exception
-      errors = page.driver.browser.logs.get(:browser)
-      if errors.present?
-        puts "--- BROWSER LOGS ---"
-        errors.each { |log| puts "[#{log.level}] #{log.message}" }
-        puts "--------------------"
-      else
-        puts "No browser errors"
+      begin
+        errors = page.driver.browser.logs.get(:browser)
+        errors.each { |log| Rails.logger.error "[#{log.level}] #{log.message}" } if errors.present?
+      rescue StandardError
+        Rails.logger.error "[Capybara Logging Extension] Could not capture browser logs: #{e.message}"
       end
-    else
-      puts "No exception"
     end
   end
 
