@@ -21,14 +21,18 @@ WebMock.disable_net_connect!
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
-  config.after(:each, type: :feature) do |example|
+  config.after(:each, type: :system) do |example|
     if example.exception
       errors = page.driver.browser.logs.get(:browser)
       if errors.present?
         puts "--- BROWSER LOGS ---"
         errors.each { |log| puts "[#{log.level}] #{log.message}" }
         puts "--------------------"
+      else
+        puts "No browser errors"
       end
+    else
+      puts "No exception"
     end
   end
 
