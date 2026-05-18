@@ -70,6 +70,12 @@ Capybara.configure do |config|
   config.app_host = 'http://localhost'
 end
 Capybara.always_include_port = true
+Capybara.register_driver :selenium do |app|
+  options = Selenium::WebDriver::Chrome::Options.new
+  Capybara::Selenium::Driver.new(app,
+                                 browser: :chrome,
+                                 options: options)
+end
 Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--disable-dev-shm-usage') # Forces Chrome to use disk instead of /dev/shm memory
