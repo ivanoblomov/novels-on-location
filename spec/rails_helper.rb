@@ -79,7 +79,9 @@ end
 Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--disable-dev-shm-usage') # Forces Chrome to use disk instead of /dev/shm memory
-  options.add_argument('--disable-gpu')
+  options.add_argument('--disable-extensions')
+  options.add_argument('--disable-default-apps')
+  options.add_argument('--enable-features=NetworkService,NetworkServiceInProcess')
   options.add_argument('--headless=new') # Use the modern headless engine
   options.add_argument('--no-sandbox') # Essential for Linux containers
   options.add_argument('--window-size=1400,1400')
