@@ -64,12 +64,6 @@ RSpec.configure do |config|
     warn page.driver.browser.logs.get(:browser) if example.exception
   end
 end
-Capybara.configure do |config|
-  config.default_driver = :selenium
-  config.javascript_driver = :selenium_chrome_headless
-  config.app_host = 'http://localhost'
-end
-Capybara.always_include_port = true
 Capybara.register_driver :selenium_chrome_headless do |app|
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--disable-dev-shm-usage') # Forces Chrome to use disk instead of /dev/shm memory
@@ -81,6 +75,12 @@ Capybara.register_driver :selenium_chrome_headless do |app|
                                  browser: :chrome,
                                  options: options)
 end
+Capybara.configure do |config|
+  config.default_driver = :selenium
+  config.javascript_driver = :selenium_chrome_headless
+  config.app_host = 'http://localhost'
+end
+Capybara.always_include_port = true
 VCR.configure do |config|
   config.allow_http_connections_when_no_cassette = true
   config.cassette_library_dir = 'spec/vcr_cassettes'
