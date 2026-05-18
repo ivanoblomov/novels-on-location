@@ -5,14 +5,12 @@ var nOL = {};
 nOL.anchor = unescape(window.location.hash.substring(2));
 nOL.anchorKind = nOL.anchor.split('-')[0];
 nOL.bookPrompt = 'Find a mapped book';
-nOL.bounds = new google.maps.LatLngBounds();
 nOL.clickingZooms = true;
 nOL.clickListener;
 nOL.defaultTitle;
 nOL.fb_session;
 nOL.friendIds = [];
 nOL.friends;
-nOL.geocoder = new google.maps.Geocoder();
 nOL.host;
 nOL.locations;
 nOL.map;
@@ -23,7 +21,6 @@ nOL.placePrompt = 'Find a place & map a book to it';
 nOL.r;
 nOL.sharingMessage = 'I%20found%20a%20book%20you%20might%20like%20with%20Novels%3A%20On%20Location,%20now%20available%20at%20the%20App%20Store%20http://AppStore.com/NovelsOnLocation';
 nOL.twitterAccount = 'NovelsOnLoc%3ANovels%3A%20On%20Location';
-nOL.zoomer = new google.maps.MaxZoomService();
 
 nOL.anchorQuery = nOL.anchor.split('-')[1] || nOL.anchorKind;
 
@@ -36,6 +33,8 @@ nOL.init = function(settings) {
     nOL.statusChangeCallback(response);
   });
 
+  nOL.bounds = new google.maps.LatLngBounds();
+  nOL.geocoder = new google.maps.Geocoder();
   nOL.map = new google.maps.Map($('#map-canvas')[0], {
     backgroundColor: 'white',
     center: new google.maps.LatLng(0, 0),
@@ -43,6 +42,7 @@ nOL.init = function(settings) {
     mapTypeId: google.maps.MapTypeId.HYBRID,
     minZoom: 2
   });
+  nOL.zoomer = new google.maps.MaxZoomService();
   nOL.getLocations(settings['selectedLocationSlug']);
 
   // Set prompts
