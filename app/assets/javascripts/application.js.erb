@@ -360,7 +360,7 @@ nOL.addPin = function(location) {
 
     google.maps.event.addListener(pin, 'dragend', function() {
       if (confirm('Move this pin?'))
-        nOL.movePin(location.id, pin.getPosition());
+        nOL.movePin(location.id, pin.position);
       else
         pin.setPosition(latLng);
     });
@@ -516,7 +516,7 @@ nOL.showMyPins = function() {
 nOL.showPin = function(id) {
   if (nOL.pins[id]) {
     nOL.pins[id].setMap(nOL.map);
-    nOL.bounds.extend(nOL.pins[id].getPosition());
+    nOL.bounds.extend(nOL.pins[id].position);
   }
 }
 
