@@ -4,9 +4,6 @@ require 'rails_helper'
 
 describe 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :selenium_chrome_headless,
                                      type: :system do
-  if ENV['NOT_GITHUB_ACTIONS']
-    pending 'Disabling JavaScript on CI until Selenium bug is fixed: https://github.com/SeleniumHQ/selenium/issues/14609'
-  else
     let(:from_hell) do
       Location.find_or_create_by asin: '0958578346',
                                  author: 'Alan Moore',
@@ -168,4 +165,3 @@ describe 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
       end
     end
   end
-end
