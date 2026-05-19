@@ -15,6 +15,7 @@ nOL.host;
 nOL.locations;
 nOL.map;
 nOL.openWindow;
+nOL.pinImage = document.createElement('img');
 nOL.pins = {};
 nOL.pinType = 0;
 nOL.placePrompt = 'Find a place & map a book to it';
@@ -23,6 +24,10 @@ nOL.sharingMessage = 'I%20found%20a%20book%20you%20might%20like%20with%20Novels%
 nOL.twitterAccount = 'NovelsOnLoc%3ANovels%3A%20On%20Location';
 
 nOL.anchorQuery = nOL.anchor.split('-')[1] || nOL.anchorKind;
+nOL.pinImage.alt = 'Quill';
+nOL.pinImage.src = '<%= asset_path 'pin.png' %>';
+nOL.pinImage.style.width = '23px';
+nOL.pinImage.style.height = '37px';
 
 nOL.init = function(settings) {
   nOL.defaultTitle = settings['defaultTitle'];
@@ -344,11 +349,8 @@ nOL.addPin = function(location) {
   if (location && location.lat_lng) {
     var latLng = nOL.toLatLng(location.lat_lng);
     var pin = new google.maps.marker.AdvancedMarkerElement({
+      content: nOL.pinImage,
       draggable: location.writable,
-      icon: {
-        anchor: new google.maps.Point(2, 35),
-        url: '<%= asset_path 'pin.png' %>'
-      },
       position: latLng
     });
 
