@@ -10,8 +10,7 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
       Location.destroy_all
       click_on 'Mode: Zoom'
       execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -.074316))' # HACK: since double-click fails
-      accept_prompt with: 'from hell alan moore'
-      accept_confirm
+      accept_confirm { accept_prompt with: 'from hell alan moore' }
     end
 
     # rubocop:disable RSpec/NoExpectationExample
