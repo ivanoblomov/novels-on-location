@@ -131,6 +131,7 @@ describe 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     context 'when "From Hell"\'s balloon is open' do
       before { first('div[role=button]').click }
 
+      # rubocop:disable RSpec/NestedGroups
       context 'when the User clicks the tag "Spitalfields"' do
         before { click_link_or_button 'Spitalfields' }
 
@@ -162,6 +163,7 @@ describe 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
           expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
         }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 end
