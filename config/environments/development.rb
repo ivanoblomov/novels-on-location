@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 NovelsOnLocation::Application.configure do
+  config.assume_ssl = true
   config.cache_classes = false
   config.whiny_nils = true
   config.consider_all_requests_local = true
