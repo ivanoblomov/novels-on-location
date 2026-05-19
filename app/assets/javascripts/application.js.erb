@@ -344,7 +344,6 @@ nOL.addPin = function(location) {
     var latLng = nOL.toLatLng(location.lat_lng);
     var pin = new google.maps.marker.AdvancedMarkerElement({
       draggable: location.writable,
-      animation: google.maps.Animation.DROP,
       icon: {
         anchor: new google.maps.Point(2, 35),
         url: '<%= asset_path 'pin.png' %>'
