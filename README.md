@@ -10,13 +10,19 @@
 
 ## Back-up DB
 
-```bash
+```sh
 mongo ds035735.mlab.com:35735/heroku_1gh6pvr9 -u heroku_1gh6pvr9 -p heroku_1gh6pvr9
 mongodump -h ds035735.mlab.com:35735 -d heroku_1gh6pvr9 -u heroku_1gh6pvr9 -p heroku_1gh6pvr9 -o ./db/backups/novels
 ```
 
 ## Restore DB locally
 
-```bash
+```sh
 mongorestore --db novels db/backups/heroku_1gh6pvr9/
+```
+
+## Start MongoDB
+
+```sh
+brew services start mongodb/brew/mongodb-community
 ```
