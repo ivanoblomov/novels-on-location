@@ -22,6 +22,7 @@ describe 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
       it 'the map zooms in' do
         visit root_path
 
+        p "facebook_app_id: #{Rails.application.config.facebook_app_id}"
         p '=== LINE-BY-LINE PAGE SOURCE ==='
         page.source.each_line.with_index(1) do |line, index|
           p "#{index}: #{line}" if index.between?(75, 90)
