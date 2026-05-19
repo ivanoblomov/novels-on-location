@@ -18,8 +18,6 @@ jobs:
     - run: bundle exec rspec spec/features/browsing_locations_spec.rb:19
       env:
         GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
-        LANG: en_US.UTF-8
-        LC_ALL: en_US.UTF-8
     - run: bundle exec rubocop
     - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
       if: failure()
