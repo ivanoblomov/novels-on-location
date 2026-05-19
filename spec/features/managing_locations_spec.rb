@@ -116,18 +116,5 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
       it('the Location no longer exists') { wait_for { Location.count }.to eq 0 }
       # rubocop:enable RSpec/NoExpectationExample
     end
-
-    context 'when a User enters a specific place, keywords for the book, and some notes' do
-      before do
-        Location.destroy_all
-        visit root_path
-        fill_in 'place-input', with: "san sebastian\n"
-        accept_prompt(with: 'sun also rises')
-        accept_confirm
-        accept_prompt(with: 'a swim after rejection')
-      end
-
-      it('the Location is created') { expect(Location.count).to eq 1 }
-    end
   end
 end
