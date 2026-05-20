@@ -24,14 +24,16 @@ mongodump -h ds035735.mlab.com:35735 -d heroku_1gh6pvr9 -u heroku_1gh6pvr9 -p he
 ```
 
 ### Restore DB locally
-
+sh:
 ```sh
 mongosh
 ```
+mongosh:
 ```js
 use novels
 db.dropDatabase()
 ```
+sh:
 ```sh
 mongorestore --db novels db/backups/heroku_1gh6pvr9/
 ```
