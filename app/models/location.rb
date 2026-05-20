@@ -77,7 +77,7 @@ class Location
   validates :title, presence: true
 
   def self.book_count
-    Location.all.map(&:isbn).uniq.size
+    Location.all.map(&:title).uniq.size
   end
 
   def self.displace_duplicate_coordinates(locations = Location.duplicate_coordinates)
