@@ -56,6 +56,9 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.before(:each, type: :request) do
+    host! Rails.application.config.main_host
+  end
   config.before(:each, type: :system) { driven_by :rack_test }
   config.before(:each, :js, type: :system) do |example|
     driven_by example.metadata[:js]
