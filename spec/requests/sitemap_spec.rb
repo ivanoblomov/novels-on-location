@@ -15,9 +15,9 @@ RSpec.describe 'routes' do
       end
     end
 
-    describe '/locations/1' do
+    describe '/locations/:non_existent' do
       it do
-        get location_path(1)
+        get location_path(:non_existent)
         expect(response).to have_http_status(:not_found)
       end
     end
