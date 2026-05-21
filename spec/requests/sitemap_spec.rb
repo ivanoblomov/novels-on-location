@@ -10,6 +10,13 @@ RSpec.describe 'routes' do
     end
   end
 
+  describe '/privacy' do
+    it do
+      get privacy_path
+      expect(response).to have_http_status(:ok)
+    end
+  end
+
   describe '/sitemap.xml' do
     it do
       get sitemap_path, headers: { 'ACCEPT' => 'application/xml' }
