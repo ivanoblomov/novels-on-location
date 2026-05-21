@@ -5,6 +5,10 @@ TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
 
 # rubocop:disable Metrics/BlockLength
 namespace :novels do
+  desc 'Clear log/ and tmp/'
+  task clear: [:environment, 'log:clear', 'tmp:clear'] do
+  end
+
   desc 'Update Locations with Google Books info'
   task update_with_google_books: :environment do
     changed_set = Set.new
