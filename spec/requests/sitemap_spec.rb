@@ -24,7 +24,7 @@ RSpec.describe 'routes' do
 
     describe '/' do
       it do
-        allow_any_instance_of(LocationsController).to receive(:index).and_raise(StandardError, "Something went horribly wrong")
+        allow_any_instance_of(LocationsController).to receive(:index).and_raise(StandardError)
         get root_path
         expect(response).to have_http_status(:internal_server_error)
       end
