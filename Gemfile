@@ -5,6 +5,7 @@ ruby '4.0.3'
 
 gem 'actionview-encoded_mail_to'
 gem 'cancancan'
+gem 'dockerfile-rails'
 gem 'figaro'
 gem 'googlebooks'
 gem 'google_maps_geocoder'
