@@ -67,7 +67,7 @@ end
 Capybara.configure do |config|
   config.default_driver = :selenium
   config.javascript_driver = :selenium
-  config.app_host = 'http://localhost'
+  config.app_host = "http://#{Rails.application.config.main_host}"
 end
 Capybara.always_include_port = true
 Capybara.register_driver :selenium do |app|
