@@ -3,6 +3,26 @@
 require 'rails_helper'
 
 RSpec.describe 'routes' do
+  describe 'with errors' do
+    around do |example|
+      original_setting = Rails.application.config.consider_all_requests_local
+      Rails.application.config.consider_all_requests_local = false
+
+      begin
+        example.run
+      ensure
+        Rails.application.config.consider_all_requests_local = original_setting
+      end
+    end
+
+    describe '/locations/1' do
+      it do
+        get location_path(1)
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+  end
+
   describe '/integration' do
     it do
       get integration_path
