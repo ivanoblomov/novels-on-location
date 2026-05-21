@@ -21,6 +21,14 @@ RSpec.describe 'routes' do
         expect(response).to have_http_status(:not_found)
       end
     end
+
+    describe '/' do
+      it do
+        allow_any_instance_of(LocationsController).to receive(:index).and_raise(StandardError, "Something went horribly wrong")
+        get root_path
+        expect(response).to have_http_status(:internal_server_error)
+      end
+    end
   end
 
   describe '/integration' do
