@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-describe 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :selenium_chrome_headless,
-                                     type: :system do
+feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :selenium_chrome_headless,
+                                    type: :system do
   let(:from_hell) do
     Location.find_or_create_by asin: '0958578346',
                                author: 'Alan Moore',
@@ -164,6 +164,34 @@ describe 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
         }
       end
       # rubocop:enable RSpec/NestedGroups
+    end
+  end
+
+  context 'error conditions' do
+    around do |example|
+      original_setting = Rails.application.config.consider_all_requests_local
+      Rails.application.config.consider_all_requests_local = false
+
+      begin
+        example.run
+      ensure
+        Rails.application.config.consider_all_requests_local = original_setting
+      end
+    end
+
+    context 'when a server error occurs' do
+      it do
+        allow(Location).to receive(:all).and_raise(StandardError)
+        visit root_path
+        expect(page.status_code).to eq 500
+      end
+    end
+
+    context "when a Location doesn't exist" do
+      it do
+        visit location_path(:non_existent)
+        wait_for { expect(page).to have_alert "Sorry, that novel location doesn't exist. Why not add it?" }
+      end
     end
   end
 end
