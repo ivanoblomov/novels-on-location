@@ -11,14 +11,11 @@ class ApplicationController < ActionController::Base
   ]
   protect_from_forgery if: proc { |c| c.request.format.json? },
                        with: :null_session
-
-  unless Rails.application.config.consider_all_requests_local
-    rescue_from Mongoid::Errors::DocumentNotFound,
-                with: :error404
-    rescue_from Exception do |exception|
-      @exception = exception
-      NOT_FOUND.match?(@exception.message) ? error404 : error500
-    end
+  rescue_from Mongoid::Errors::DocumentNotFound,
+              with: :error404
+  rescue_from Exception do |exception|
+    @exception = exception
+    NOT_FOUND.match?(@exception.message) ? error404 : error500
   end
 
   def authenticate_user!
