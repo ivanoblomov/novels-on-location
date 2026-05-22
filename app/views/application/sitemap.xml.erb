@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://www.sitemaps.org/schemas/sitemap/0.9 https://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc><%= root_url %></loc>
 <% if l = Location.last_updated %>
@@ -18,16 +18,16 @@
   <% end %>
   </url>
   <url>
-    <loc>http://<%= Rails.application.config.main_host %>/<%= novel_url location %></loc>
+    <loc>https://<%= Rails.application.config.main_host %>/<%= novel_url location %></loc>
   </url>
   <url>
-    <loc>http://<%= Rails.application.config.main_host %>/<%= place_url location %></loc>
+    <loc>https://<%= Rails.application.config.main_host %>/<%= place_url location %></loc>
   </url>
   <url>
-    <loc>http://<%= Rails.application.config.main_host %>/<%= author_url location %></loc>
+    <loc>https://<%= Rails.application.config.main_host %>/<%= author_url location %></loc>
   </url><% if location.user_id %>
   <url>
-    <loc>http://<%= Rails.application.config.main_host %>/<%= reader_url location %></loc>
+    <loc>https://<%= Rails.application.config.main_host %>/<%= reader_url location %></loc>
   </url><% end %>
 <% end %>
 </urlset>
