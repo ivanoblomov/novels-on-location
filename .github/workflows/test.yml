@@ -22,8 +22,8 @@ jobs:
     - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
       if: failure()
       with:
-        name: capybara-screenshots
-        path: tmp/capybara/*.png
+        name: coverage-screenshots
+        path: %w(coverage tmp/capybara/*.png)
         if-no-files-found: ignore
 #     - run: bundle exec inch --pedantic
 #     - uses: aktions/codeclimate-test-reporter@7634aa9ac7883182f583f15ff7b6ff519939dd0a
