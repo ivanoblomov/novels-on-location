@@ -5,7 +5,7 @@ ActionMailer::Base.smtp_settings = {
   port: '587',
   authentication: :plain,
   user_name: ENV.fetch('SENDGRID_USERNAME', nil),
-  password: ENV.fetch('SENDGRID_PASSWORD', nil),
-  domain: 'heroku.com'
+  password: ENV.fetch('SENDGRID_PASSWORD', nil)
+  #   domain: 'heroku.com'
 }
 ActionMailer::Base.delivery_method = :smtp
