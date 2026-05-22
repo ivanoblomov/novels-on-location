@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ClassLength
 # Manages Locations.
 class LocationsController < ApplicationController
   PERMITTED_PARAMS = %i[
@@ -136,4 +135,3 @@ class LocationsController < ApplicationController
     params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
   end
 end
-# rubocop:enable Metrics/ClassLength
