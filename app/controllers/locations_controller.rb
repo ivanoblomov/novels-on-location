@@ -122,12 +122,6 @@ class LocationsController < ApplicationController
     location_params
   end
 
-  def location_query
-    value = params.expect(:_escaped_fragment_).split('-')[1..]
-    strip_parens CGI.unescape(params.expect(:_escaped_fragment_).split('-')[1]) if
-      value.present?
-  end
-
   def locations_json
     inject_writable_flag(@locations).to_json(
       methods: Location::VIRTUAL_ATTRIBUTES
@@ -149,14 +143,6 @@ class LocationsController < ApplicationController
 
   def rename_objective_c_keys(location_params)
     location_params.transform_keys { |k| k == 'latLng' ? k : k.underscore }
-  end
-
-  def scope_for_snapshot
-    if params[:_escaped_fragment_].include? '-'
-      Location.scope_for_kind location_kind, location_query
-    else
-      Location.author params[:_escaped_fragment_]
-    end
   end
 
   def set_user_name
