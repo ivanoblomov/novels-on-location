@@ -9,13 +9,6 @@ class Location
 
   REG_EX_USER_TOKEN =
     /[0-9A-F]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}/
-  SCOPES_BY_KIND = {
-    'author' => :author,
-    'novel' => :title,
-    'place' => :place,
-    'reader' => :user_id,
-    'search' => :search
-  }.freeze
   VIRTUAL_ATTRIBUTES = %i[
     added_at added_at_s id itunes_affiliate_url place slug terms store_url title_for_regex writable
   ].freeze
@@ -115,12 +108,6 @@ class Location
 
   def self.random
     Location.all[Location.count * rand]
-  end
-
-  def self.scope_for_kind(kind, query)
-    return send :all if kind.blank? || !SCOPES_BY_KIND.key?(kind)
-
-    send SCOPES_BY_KIND[kind], query
   end
 
   # Overrides ==================================================================
