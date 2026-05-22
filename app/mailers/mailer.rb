@@ -2,6 +2,8 @@
 
 # Outgoing mail
 class Mailer < ApplicationMailer
+  layout false
+
   def error(request, exception)
     @exception = exception
     @request = request

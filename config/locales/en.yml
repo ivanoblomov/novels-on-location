@@ -1,4 +1,3 @@
 en:
   locations:
-    index:
-      location_not_found: "Sorry, that novel location doesn't exist. Why not add it?"
+    location_not_found: "Sorry, that novel location doesn't exist. Why not add it?"
