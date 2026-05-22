@@ -132,14 +132,6 @@ class LocationsController < ApplicationController
     @user_name = User.name params
   end
 
-  def strip_parens(keywords)
-    if keywords.try(:include?, '(')
-      keywords[0..(keywords.index('(') - 1)]
-    else
-      keywords
-    end
-  end
-
   def user_token
     params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
   end
