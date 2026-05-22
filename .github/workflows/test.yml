@@ -23,7 +23,9 @@ jobs:
       if: failure()
       with:
         name: coverage-screenshots
-        path: %w(coverage tmp/capybara/*.png)
+        path: |
+          coverage/
+          tmp/capybara/*.png
         if-no-files-found: ignore
 #     - run: bundle exec inch --pedantic
 #     - uses: aktions/codeclimate-test-reporter@7634aa9ac7883182f583f15ff7b6ff519939dd0a
