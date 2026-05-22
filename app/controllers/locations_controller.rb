@@ -21,14 +21,6 @@ class LocationsController < ApplicationController
     format_response
   end
 
-  def snapshots
-    @locations = scope_for_snapshot
-    return error404 if @locations.blank?
-
-    set_user_name if reader_link?
-    render layout: false
-  end
-
   def unbookmark
     @location.remove_bookmark current_user.id
     format_response
