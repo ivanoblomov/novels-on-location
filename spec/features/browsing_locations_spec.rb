@@ -185,7 +185,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
       it do
         allow(Location).to receive(:all).and_raise(Exception, 'Mocked error for testing')
         visit root_path
-        expect(page.status_code).to eq 500
+        wait_for { page.to have_content 'Mocked error for testing' }
       end
     end
 
