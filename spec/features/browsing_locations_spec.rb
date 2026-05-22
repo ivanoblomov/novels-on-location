@@ -72,11 +72,13 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
       it('the balloon shows an "All Novels by Author" link') { expect(page).to have_link 'All Novels by Author' }
       it('the balloon shows an "All Pins by Reader" link') { expect(page).to have_link 'All Pins by Reader' }
 
+      # rubocop:disable RSpec/NestedGroups
       context 'when a User clicks Zoom' do
         before { click_link_or_button 'Zoom' }
 
         it('the map zooms in') { expect(evaluate_script('nOL.map.zoom')).to be > 10 }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
 
     context 'when multiple Locations exist' do
@@ -93,6 +95,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
         visit root_path
       end
 
+      # rubocop:disable RSpec/NestedGroups
       context 'when User searches for "hemingway"' do
         before { fill_in 'book-input', with: 'hemingway' }
 
@@ -132,7 +135,6 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
       context 'when "From Hell"\'s balloon is open' do
         before { first('div[role=button]').click }
 
-        # rubocop:disable RSpec/NestedGroups
         context 'when the User clicks the tag "Spitalfields"' do
           before { click_link_or_button 'Spitalfields' }
 
@@ -182,11 +184,13 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
     end
 
     context 'when the error is 500' do
-      it do
+      # rubocop:disable RSpec/NoExpectationExample
+      it 'an alert shows the error' do
         allow(Location).to receive(:all).and_raise(Exception, 'Mocked error for testing')
         visit root_path
         wait_for { page.to have_text 'Mocked error for testing' }
       end
+      # rubocop:enable RSpec/NoExpectationExample
     end
 
     context "when a Location doesn't exist" do
