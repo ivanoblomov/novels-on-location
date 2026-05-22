@@ -53,8 +53,7 @@ module ApplicationHelper
   end
 
   def description_for_search(locations)
-    "A search for \"#{location_query}\" returns " \
-      "#{description_for_setting locations}"
+    "A search for \"#{params}\" returns #{description_for_setting locations}"
   end
 
   def description_for_setting(locations)
@@ -155,7 +154,7 @@ module ApplicationHelper
       "#{@user_name} - Novels: On Location"
       # rubocop:enable Rails/HelperInstanceVariable
     when 'search'
-      "#{location_query} - Novels: On Location"
+      "#{params} - Novels: On Location"
     end
   end
 

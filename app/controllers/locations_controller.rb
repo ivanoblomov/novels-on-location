@@ -12,7 +12,7 @@ class LocationsController < ApplicationController
   ]
   before_action :find_location,
                 only: %i[bookmark destroy show unbookmark update]
-  helper_method :location_kind, :location_query
+  helper_method :location_kind
   respond_to :html, :json
 
   # Custom =====================================================================
@@ -138,7 +138,7 @@ class LocationsController < ApplicationController
   end
 
   def set_user_name
-    @user_name = User.name location_query
+    @user_name = User.name params
   end
 
   def strip_parens(keywords)
