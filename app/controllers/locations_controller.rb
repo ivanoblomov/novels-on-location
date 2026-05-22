@@ -12,7 +12,6 @@ class LocationsController < ApplicationController
   ]
   before_action :find_location,
                 only: %i[bookmark destroy show unbookmark update]
-  helper_method :location_kind
   respond_to :html, :json
 
   # Custom =====================================================================
@@ -30,7 +29,8 @@ class LocationsController < ApplicationController
     @locations = Location.all.to_a
     return error404 if @locations.blank? && Location.exists?
 
-    set_user_name if reader_link?
+    # pending: debug when fb is live
+    #     set_user_name
 
     respond_to do |format|
       # rubocop:disable Lint/EmptyBlock
@@ -99,11 +99,6 @@ class LocationsController < ApplicationController
     end
   end
 
-  def location_kind
-    params.expect(:_escaped_fragment_).split('-')[0] if params[:_escaped_fragment_]
-                                                        .present?
-  end
-
   def location_params
     # rubocop:disable Rails/StrongParametersExpect
     location_params = params.require(:location).permit PERMITTED_PARAMS
@@ -118,10 +113,6 @@ class LocationsController < ApplicationController
     inject_writable_flag(@locations).to_json(
       methods: Location::VIRTUAL_ATTRIBUTES
     )
-  end
-
-  def reader_link?
-    location_kind == 'reader'
   end
 
   def remove_null_user_id(location_params)
