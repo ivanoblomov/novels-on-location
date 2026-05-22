@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset=utf-8 /><%
+    description = description_for_location @locations, location_kind
+    title = title_for_location @locations, location_kind
+    @meta_keywords = @locations.map{ |l| l.tags } * ', '
+    @og_tags = {
+      'og:description' => description,
+      'og:image' => location_kind == 'novel' ? @locations.first.image_url : 'http://a5.sphotos.ak.fbcdn.net/hphotos-ak-ash4/382738_351550844858963_345696682111046_1581971_1450028275_n.jpg',
+      'og:title' => title,
+      'og:type' => 'website',
+      'og:url' => request.url
+    }
+  %>
+  <meta name=description content="<%= description %>"/>
+  <meta name=keywords content="<%= @meta_keywords || 'google maps, mash-up, novels, location, books, settings, map, travel' %>"/><% @og_tags.each do |property, content| %>
+  <meta property="<%= property %>" content="<%= content %>"/><% end if facebook? || Rails.env.development? %>
+  <%= stylesheet_link_tag 'ajax_crawling' %>
+  <title><%= title %></title>
+  </head>
+  <body>
+    <div id=headers>
+      <h1>Novels: On Location</h1>
+      <h2><%= Rails.application.config.main_host %> is a Google Maps & Books mash-up for finding books that take place where you're traveling. Browse or search the map and make your next destination come alive!</h2>
+    </div>
+
+    <ol>
+    <%
+      @locations.each do |l|
+        @location = l
+    %>
+      <li><%= render 'location' %></li>
+    <% end %>
+    </ol>
+  </body>
+</html>

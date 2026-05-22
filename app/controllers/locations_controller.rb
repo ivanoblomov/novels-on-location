@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 # Manages Locations.
 class LocationsController < ApplicationController
   PERMITTED_PARAMS = %i[
@@ -11,12 +12,21 @@ class LocationsController < ApplicationController
   ]
   before_action :find_location,
                 only: %i[bookmark destroy show unbookmark update]
+  helper_method :location_kind, :location_query
   respond_to :html, :json
 
   # Custom =====================================================================
   def bookmark
     @location.add_bookmark current_user.id
     format_response
+  end
+
+  def snapshots
+    @locations = scope_for_snapshot
+    return error404 if @locations.blank?
+
+    set_user_name if reader_link?
+    render layout: false
   end
 
   def unbookmark
@@ -28,8 +38,7 @@ class LocationsController < ApplicationController
     @locations = Location.all.to_a
     return error404 if @locations.blank? && Location.exists?
 
-    # pending: debug when fb is live
-    #     set_user_name
+    set_user_name if reader_link?
 
     respond_to do |format|
       # rubocop:disable Lint/EmptyBlock
@@ -98,6 +107,11 @@ class LocationsController < ApplicationController
     end
   end
 
+  def location_kind
+    params.expect(:_escaped_fragment_).split('-')[0] if params[:_escaped_fragment_]
+                                                        .present?
+  end
+
   def location_params
     # rubocop:disable Rails/StrongParametersExpect
     location_params = params.require(:location).permit PERMITTED_PARAMS
@@ -108,10 +122,20 @@ class LocationsController < ApplicationController
     location_params
   end
 
+  def location_query
+    value = params.expect(:_escaped_fragment_).split('-')[1..]
+    strip_parens CGI.unescape(params.expect(:_escaped_fragment_).split('-')[1]) if
+      value.present?
+  end
+
   def locations_json
     inject_writable_flag(@locations).to_json(
       methods: Location::VIRTUAL_ATTRIBUTES
     )
+  end
+
+  def reader_link?
+    location_kind == 'reader'
   end
 
   def remove_null_user_id(location_params)
@@ -127,11 +151,28 @@ class LocationsController < ApplicationController
     location_params.transform_keys { |k| k == 'latLng' ? k : k.underscore }
   end
 
+  def scope_for_snapshot
+    if params[:_escaped_fragment_].include? '-'
+      Location.scope_for_kind location_kind, location_query
+    else
+      Location.author params[:_escaped_fragment_]
+    end
+  end
+
   def set_user_name
-    @user_name = User.name params
+    @user_name = User.name location_query
+  end
+
+  def strip_parens(keywords)
+    if keywords.try(:include?, '(')
+      keywords[0..(keywords.index('(') - 1)]
+    else
+      keywords
+    end
   end
 
   def user_token
     params[:user_token] == 'null' ? session[:_csrf_token] : params[:user_token]
   end
 end
+# rubocop:enable Metrics/ClassLength
