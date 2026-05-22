@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-describe 'Map-less pages' do
+describe 'Mapless pages' do
   describe '/integration' do
     it do
       get integration_path
