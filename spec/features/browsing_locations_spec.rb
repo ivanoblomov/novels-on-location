@@ -183,7 +183,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
     context 'when the error is 500' do
       it do
-        allow(Location).to receive(:all).and_raise(StandardError)
+        allow(Location).to receive(:all).and_raise(Exception, 'Mocked error for testing')
         visit root_path
         expect(page.status_code).to eq 500
       end
