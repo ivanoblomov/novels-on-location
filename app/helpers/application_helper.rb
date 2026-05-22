@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/ModuleLength
 # General view helpers
 module ApplicationHelper
   include ScaffoldLogic::Helper
@@ -20,59 +19,6 @@ module ApplicationHelper
   def default_title
     "Novels: On Location - #{Location.book_count} Novels/#{Location.count} " \
       'Locations'
-  end
-
-  def description_for_mapped_setting(locations)
-    if locations.size == 1
-      # rubocop:disable Rails/HelperInstanceVariable
-      %(the setting #{location @locations, :address} from the novel "\
-      "#{locations.first.title}" mapped on #{Rails.application.config
-      .main_host}.)
-    else
-      "#{locations.size} settings from the novels " \
-        "#{location @locations, :title} mapped on " \
-        "#{Rails.application.config.main_host}. The locations " \
-        "include #{location @locations, :address}."
-      # rubocop:enable Rails/HelperInstanceVariable
-    end
-  end
-
-  def description_for_location(locations, location_kind)
-    case location_kind
-    when 'author'
-      "#{locations[0].author} has #{description_for_mapped_setting locations}"
-    when 'novel'
-      description_for_novel locations
-    when 'reader'
-      # rubocop:disable Rails/HelperInstanceVariable
-      "#{@user_name} mapped #{description_for_setting locations}"
-      # rubocop:enable Rails/HelperInstanceVariable
-    when 'search'
-      description_for_search locations
-    end
-  end
-
-  def description_for_search(locations)
-    "A search for \"#{location_query}\" returns " \
-      "#{description_for_setting locations}"
-  end
-
-  def description_for_setting(locations)
-    if locations.size == 1
-      # rubocop:disable Rails/HelperInstanceVariable
-      "the setting #{location @locations, :address} from the novel \"#{locations
-      .first.title}\" on #{Rails.application.config.main_host}."
-    else
-      "#{locations.size} settings from the novels " \
-        "#{location @locations, :title} on #{Rails.application.config.main_host}" \
-        ". The locations include #{location @locations, :address}."
-      # rubocop:enable Rails/HelperInstanceVariable
-    end
-  end
-
-  def description_for_novel(locations)
-    "#{phrase_for_novel locations} has " \
-      "#{description_for_mapped_setting locations}"
   end
 
   def facebook_link_to(location)
@@ -118,10 +64,6 @@ module ApplicationHelper
     "#!novel-#{u location.title_for_regex}"
   end
 
-  def phrase_for_novel(locations)
-    %("#{locations.first.title}", a novel by #{locations.first.author},)
-  end
-
   def place_url(location)
     "#!place-#{u location.place}"
   end
@@ -144,21 +86,6 @@ module ApplicationHelper
     request.user_agent =~ /safari/i && !ios?
   end
 
-  def title_for_location(locations, location_kind)
-    case location_kind
-    when 'author'
-      "#{locations.first.author} - Novels: On Location"
-    when 'novel'
-      "#{location locations, :title} - Novels: On Location"
-    when 'reader'
-      # rubocop:disable Rails/HelperInstanceVariable
-      "#{@user_name} - Novels: On Location"
-      # rubocop:enable Rails/HelperInstanceVariable
-    when 'search'
-      "#{location_query} - Novels: On Location"
-    end
-  end
-
   def wikipedia_link_to(link_text, options = {})
     return if link_text.blank?
 
@@ -169,4 +96,3 @@ module ApplicationHelper
             }.merge(options)
   end
 end
-# rubocop:enable Metrics/ModuleLength
