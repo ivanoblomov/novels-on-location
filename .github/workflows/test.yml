@@ -21,11 +21,13 @@ jobs:
     - run: bundle exec rubocop
     - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
       with:
+        name: coverage
         path: coverage/
         if-no-files-found: ignore
     - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
       if: failure()
       with:
+        name: screenshots
         path: tmp/capybara/*.png
         if-no-files-found: ignore
 #     - run: bundle exec inch --pedantic
