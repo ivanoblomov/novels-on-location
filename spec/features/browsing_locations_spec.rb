@@ -173,30 +173,30 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
   context 'when an error occurs' do
     around do |example|
-      original_setting = Rails.application.config.consider_all_requests_local
       Rails.application.config.consider_all_requests_local = false
 
       begin
         example.run
       ensure
-        Rails.application.config.consider_all_requests_local = original_setting
+        Rails.application.config.consider_all_requests_local = true
       end
     end
 
     context 'when the error is 500' do
-      # rubocop:disable RSpec/NoExpectationExample
       it 'an alert shows the error' do
-        allow(Location).to receive(:all).and_raise(Exception, 'Mocked error for testing')
-        visit root_path
-        wait_for { page.to have_text 'Mocked error for testing' }
+        allow(Ability).to receive(:new).and_raise(Exception, 'Mocked error for testing')
+        # rubocop:disable RSpec/MessageChain
+        allow(Mailer).to receive_message_chain(:error, :deliver)
+        # rubocop:enable RSpec/MessageChain
+        message = accept_alert { visit root_path }
+        expect(message).to eq 'Mocked error for testing'
       end
-      # rubocop:enable RSpec/NoExpectationExample
     end
 
     context "when a Location doesn't exist" do
       it "an alert shows the Location wasn't found" do
-        visit location_path(:non_existent)
-        wait_for { expect(page).to have_alert "Sorry, that novel location doesn't exist. Why not add it?" }
+        message = accept_alert { visit location_path(:non_existent) }
+        expect(message).to eq "Sorry, that novel location doesn't exist. Why not add it?"
       end
     end
   end
