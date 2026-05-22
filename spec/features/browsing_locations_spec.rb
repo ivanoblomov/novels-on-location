@@ -4,15 +4,6 @@ require 'rails_helper'
 
 feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :selenium_chrome_headless,
                                     type: :system do
-  let(:from_hell) do
-    Location.find_or_create_by asin: '0958578346',
-                               author: 'Alan Moore',
-                               lat_lng: ['51.519326', '-0.074316'],
-                               tags: 'The Ten Bells, Spitalfields',
-                               title: 'From Hell',
-                               user_id: '666325406'
-  end
-
   context 'when the map loads and a User double-clicks it' do
     let(:original_zoom_level) { evaluate_script('nOL.map.zoom') }
 
@@ -25,7 +16,17 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
     end
   end
 
-  context 'when a Location exists and a User clicks its pin' do
+  context 'when a Location exists' do
+    let(:from_hell) do
+      Location.find_or_create_by asin: '0958578346',
+                                 author: 'Alan Moore',
+                                 lat_lng: ['51.519326', '-0.074316'],
+                                 tags: 'The Ten Bells, Spitalfields',
+                                 title: 'From Hell',
+                                 user_id: '666325406'
+    end
+
+    context 'when a User clicks its pin' do
     before do
       Location.destroy_all
       from_hell
@@ -78,7 +79,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
     end
   end
 
-  context 'when multiple Locations exist' do
+    context 'when multiple Locations exist' do
     let(:sun_also_rises) do
       Location.find_or_create_by author: 'Ernest Hemingway',
                                  title: 'The Sun Also Rises',
@@ -166,8 +167,9 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
       # rubocop:enable RSpec/NestedGroups
     end
   end
+  end
 
-  context 'error conditions' do
+  context 'when an error occurs' do
     around do |example|
       original_setting = Rails.application.config.consider_all_requests_local
       Rails.application.config.consider_all_requests_local = false
@@ -179,7 +181,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
       end
     end
 
-    context 'when a server error occurs' do
+    context 'when the error is 500' do
       it do
         allow(Location).to receive(:all).and_raise(StandardError)
         visit root_path
@@ -188,7 +190,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
     end
 
     context "when a Location doesn't exist" do
-      it do
+      it "an alert shows the Location wasn't found" do
         visit location_path(:non_existent)
         wait_for { expect(page).to have_alert "Sorry, that novel location doesn't exist. Why not add it?" }
       end
