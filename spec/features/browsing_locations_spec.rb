@@ -173,13 +173,12 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
   context 'when an error occurs' do
     around do |example|
-      original_setting = Rails.application.config.consider_all_requests_local
       Rails.application.config.consider_all_requests_local = false
 
       begin
         example.run
       ensure
-        Rails.application.config.consider_all_requests_local = original_setting
+        Rails.application.config.consider_all_requests_local = true
       end
     end
 
