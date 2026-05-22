@@ -64,10 +64,6 @@ module ApplicationHelper
     "#!novel-#{u location.title_for_regex}"
   end
 
-  def phrase_for_novel(locations)
-    %("#{locations.first.title}", a novel by #{locations.first.author},)
-  end
-
   def place_url(location)
     "#!place-#{u location.place}"
   end
