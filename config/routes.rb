@@ -3,7 +3,7 @@
 # Detect incorrect host
 class WrongHost
   def matches?(request)
-    request.host != Rails.application.config.main_host.downcase && request.host.exclude?('herokuapp.com')
+    request.host != Rails.application.config.main_host.downcase
   end
 end
 
