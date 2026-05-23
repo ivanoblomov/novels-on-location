@@ -9,13 +9,6 @@ class Location
 
   REG_EX_USER_TOKEN =
     /[0-9A-F]{8}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{4}-[A-Z0-9]{12}/
-  SCOPES_BY_KIND = {
-    'author' => :author,
-    'novel' => :title,
-    'place' => :place,
-    'reader' => :user_id,
-    'search' => :search
-  }.freeze
   VIRTUAL_ATTRIBUTES = %i[
     added_at added_at_s id itunes_affiliate_url place slug terms store_url title_for_regex writable
   ].freeze
@@ -77,7 +70,7 @@ class Location
   validates :title, presence: true
 
   def self.book_count
-    Location.all.map(&:isbn).uniq.size
+    Location.all.map(&:title).uniq.size
   end
 
   def self.displace_duplicate_coordinates(locations = Location.duplicate_coordinates)
@@ -115,12 +108,6 @@ class Location
 
   def self.random
     Location.all[Location.count * rand]
-  end
-
-  def self.scope_for_kind(kind, query)
-    return send :all if kind.blank? || !SCOPES_BY_KIND.key?(kind)
-
-    send SCOPES_BY_KIND[kind], query
   end
 
   # Overrides ==================================================================
@@ -229,7 +216,7 @@ class Location
   def nol_url
     return if title.blank?
 
-    "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
+    "https://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
   end
 
   def notify

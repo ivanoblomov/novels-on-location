@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/ivanoblomov/novels-on-location/badge.svg?branch=main&kill_cache=1)](https://coveralls.io/github/ivanoblomov/novels-on-location?branch=main)
 -->
 
-*[Novels: On Location](http://NovelsOnLocation.com)* is a Google Maps & Books mash-up for finding novels that take place where you're traveling. Browse or search the map and make your next destination come alive!
+*[Novels: On Location](https://NovelsOnLocation.com)* is a Google Maps & Books mash-up for finding novels that take place where you're traveling. Browse or search the map and make your next destination come alive!
 
 ## Database
 
@@ -24,7 +24,16 @@ mongodump -h ds035735.mlab.com:35735 -d heroku_1gh6pvr9 -u heroku_1gh6pvr9 -p he
 ```
 
 ### Restore DB locally
-
+sh:
+```sh
+mongosh
+```
+mongosh:
+```js
+use novels
+db.dropDatabase()
+```
+sh:
 ```sh
 mongorestore --db novels db/backups/heroku_1gh6pvr9/
 ```

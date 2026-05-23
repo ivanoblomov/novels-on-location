@@ -50,12 +50,15 @@ RSpec.configure do |config|
   # behaviour is considered legacy and will be removed in a future version.
   #
   # To enable this behaviour uncomment the line below.
-  # config.infer_spec_type_from_file_location!
+  config.infer_spec_type_from_file_location!
 
   # Filter lines from Rails gems in backtraces.
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+  config.before(:each, type: :request) do
+    host! Rails.application.config.main_host
+  end
   config.before(:each, type: :system) { driven_by :rack_test }
   config.before(:each, :js, type: :system) do |example|
     driven_by example.metadata[:js]
@@ -67,7 +70,7 @@ end
 Capybara.configure do |config|
   config.default_driver = :selenium
   config.javascript_driver = :selenium
-  config.app_host = 'http://localhost'
+  config.app_host = "http://#{Rails.application.config.main_host}"
 end
 Capybara.always_include_port = true
 Capybara.register_driver :selenium do |app|

@@ -114,8 +114,6 @@ GEM
     date (3.5.1)
     diff-lcs (1.6.2)
     docile (1.4.1)
-    dockerfile-rails (1.7.10)
-      rails (>= 3.0.0)
     domain_name (0.6.20240107)
     drb (2.2.3)
     embiggen (1.10.0)
@@ -185,7 +183,7 @@ GEM
       net-imap
       net-pop
       net-smtp
-    marcel (1.1.0)
+    marcel (1.2.1)
     matrix (0.4.3)
     memoizable (0.5.1)
     method_source (1.1.0)
@@ -194,7 +192,7 @@ GEM
       drb (~> 2.0)
       prism (~> 1.5)
     mize (0.6.1)
-    mongo (2.24.0)
+    mongo (2.24.1)
       base64
       bson (>= 4.14.1, < 6.0.0)
     mongoid (9.1.0)
@@ -352,7 +350,7 @@ GEM
       lint_roller (~> 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.47.1, < 2.0)
-    rubocop-rails (2.35.1)
+    rubocop-rails (2.35.2)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
       rack (>= 1.1)
@@ -411,7 +409,7 @@ GEM
     thor (1.5.0)
     tilt (2.7.0)
     timeout (0.6.1)
-    tins (1.53.0)
+    tins (1.54.0)
       bigdecimal
       mize (~> 0.6)
       readline
@@ -448,7 +446,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yard (0.9.43)
-    zeitwerk (2.7.5)
+    zeitwerk (2.8.1)
 
 PLATFORMS
   aarch64-linux
@@ -468,7 +466,6 @@ DEPENDENCIES
   cancancan
   capybara
   coffee-rails
-  dockerfile-rails
   embiggen
   figaro
   google_maps_geocoder

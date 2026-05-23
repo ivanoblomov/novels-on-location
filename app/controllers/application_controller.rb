@@ -4,23 +4,18 @@
 class ApplicationController < ActionController::Base
   MAPS_ERROR = "Sorry, can't geocode your location. Google Maps only allows us to query their server so many times a " \
                'day. Please try again tomorrow!'
-  NIBBLER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 ' \
-                  '(KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36'
   NOT_FOUND = /Document not found|Missing template|No route|No action/
 
   helper_method %i[
-    current_user facebook? inject_writable_flag nibbler? w3c_validator?
+    current_user facebook? inject_writable_flag w3c_validator?
   ]
   protect_from_forgery if: proc { |c| c.request.format.json? },
                        with: :null_session
-
-  unless Rails.application.config.consider_all_requests_local
-    rescue_from Mongoid::Errors::DocumentNotFound,
-                with: :error404
-    rescue_from Exception do |exception|
-      @exception = exception
-      NOT_FOUND.match?(@exception.message) ? error404 : error500
-    end
+  rescue_from Mongoid::Errors::DocumentNotFound,
+              with: :error404
+  rescue_from Exception do |exception|
+    @exception = exception
+    NOT_FOUND.match?(@exception.message) ? error404 : error500
   end
 
   def authenticate_user!
@@ -65,10 +60,6 @@ class ApplicationController < ActionController::Base
 
   def integration
     render layout: false
-  end
-
-  def nibbler?
-    request.user_agent == NIBBLER_AGENT
   end
 
   def privacy

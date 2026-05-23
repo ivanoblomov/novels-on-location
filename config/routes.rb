@@ -3,23 +3,18 @@
 # Detect incorrect host
 class WrongHost
   def matches?(request)
-    request.host != Rails.application.config.main_host.downcase && request.host.exclude?('herokuapp.com')
+    request.host != Rails.application.config.main_host.downcase
   end
 end
 
 # rubocop:disable Metrics/BlockLength
 NovelsOnLocation::Application.routes.draw do
-  scope constraints: ->(r) { r.query_parameters['_escaped_fragment_'] } do
-    get '/' => 'locations#snapshots'
-    get 'locations' => 'locations#snapshots'
-  end
-
   constraints(WrongHost.new) do
-    get '/', to: redirect("http://#{Rails.application.config.main_host}")
+    get '/', to: redirect("https://#{Rails.application.config.main_host}")
     get(
       '*path',
       to: redirect do |params, _r|
-        "http://#{Rails.application.config.main_host}/#{params[:path]}"
+        "https://#{Rails.application.config.main_host}/#{params[:path]}"
       end
     )
   end
