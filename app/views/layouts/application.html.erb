@@ -71,7 +71,7 @@ a.store{background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/ba
 <input type=button class=map id=pin-display-button title="Click to show only my pins" value="Pins: All"/>
 <%# link_to image_tag('https://r.mzstatic.com/images/web/linkmaker/badge_appstore-sm.gif', :alt => 'App Store'), 'https://itunes.apple.com/us/app/novels-on-location/id625973663?mt=8&uo=4', :class => 'links', :id => 'appstore-link', :target => 'itunes_store' %>
 <%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon'), :encode => 'hex', :class => 'links', :id => 'mail-button', :title => 'Send feedback' %>
-<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon'), 'https://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
+<%= link_to image_tag(asset_path('facebook-1x.png'), alt: 'Facebook Icon', srcset: "#{asset_path('facebook-1x.png')} 1x, #{asset_path('facebook-2x.png')} 2x", width: 18, height: 18), 'https://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
 </div>
 <a class=no-print href="/integration" id=integration-link title="Learn how to integrate Novels: On Location with your site">N:OL Integration Notes</a>
 <div class=no-print id=social-toolbar>
