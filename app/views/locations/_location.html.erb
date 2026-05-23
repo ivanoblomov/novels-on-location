@@ -1,15 +1,15 @@
-<div itemscope itemtype="http://data-vocabulary.org/Product">
+<div itemscope itemtype="https://data-vocabulary.org/Product">
   <h1>
     <a href="<%= @location.store_url %>" target="_blank" title="Check out <%= @location.title %>">
       <%= image_tag @location.image_url, :alt => "Cover of #{@location.title}", :class => 'thumbnail', :height => @location.image_height, :itemprop => 'image', :width => @location.image_width if @location.image_url %><span itemprop=name><%= @location.title %></span>
     </a>
   </h1>
 
-  <h2 itemscope itemtype="http://data-vocabulary.org/Person">by <%= wikipedia_link_to @location.author, :itemprop => 'name' %><span class=microdata itemprop=role>Author</span></h2>
+  <h2 itemscope itemtype="https://data-vocabulary.org/Person">by <%= wikipedia_link_to @location.author, :itemprop => 'name' %><span class=microdata itemprop=role>Author</span></h2>
 
   <h2 itemprop=category>Books</h2>
 
-  <h2 itemprop=address itemscope itemtype="http://data-vocabulary.org/Address">
+  <h2 itemprop=address itemscope itemtype="https://data-vocabulary.org/Address">
     <% if @location.city.present? %><span itemprop=locality><%= @location.city %></span>,<% end %><% if @location.state.present? %>
     <span itemprop=region><%= @location.state %></span><% end %>
     <% if @location.country.present? %><span itemprop=country-name><%= @location.country %></span><% end %>

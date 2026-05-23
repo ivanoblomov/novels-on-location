@@ -216,7 +216,7 @@ class Location
   def nol_url
     return if title.blank?
 
-    "http://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
+    "https://#{Rails.application.config.main_host}#{Rails.application.routes.url_helpers.location_path(self)}"
   end
 
   def notify

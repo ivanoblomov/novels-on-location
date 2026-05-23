@@ -10,11 +10,11 @@ end
 # rubocop:disable Metrics/BlockLength
 NovelsOnLocation::Application.routes.draw do
   constraints(WrongHost.new) do
-    get '/', to: redirect("http://#{Rails.application.config.main_host}")
+    get '/', to: redirect("https://#{Rails.application.config.main_host}")
     get(
       '*path',
       to: redirect do |params, _r|
-        "http://#{Rails.application.config.main_host}/#{params[:path]}"
+        "https://#{Rails.application.config.main_host}/#{params[:path]}"
       end
     )
   end
