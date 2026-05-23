@@ -75,7 +75,6 @@ RSpec.configure do |config|
         warn '--------------------------------------------------------------------------------'
       end
     end
-  rescue StandardError
   end
 
   config.after(:each, type: :system) do |example|
