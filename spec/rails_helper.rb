@@ -69,10 +69,11 @@ RSpec.configure do |config|
 
       if logs.present?
         Rails.root.join('log/capybara_browser.log').open('a') do |f|
-          f.puts "Config.after: logs for #{example.full_description}"
+          f.puts "Config.after: begin logs for #{example.full_description}"
           logs.each do |log|
             f.puts "[#{Time.zone.at(log.timestamp / 1000).strftime('%H:%M:%S.%L')}] [#{log.level}] #{log.message}"
           end
+          f.puts "Config.after: end"
         end
       end
     end
