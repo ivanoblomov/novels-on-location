@@ -77,8 +77,8 @@ RSpec.configure do |config|
     end
   # rubocop:disable Lint/SuppressedException
   rescue StandardError
-  # rubocop:enable Lint/SuppressedException
   end
+  # rubocop:enable Lint/SuppressedException
 
   config.after(:each, type: :system) do |example|
     warn page.driver.browser.logs.get(:browser) if example.exception
