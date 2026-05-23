@@ -68,15 +68,14 @@ RSpec.configure do |config|
       logs = page.driver.browser.logs.get(:browser)
 
       if logs.present?
-        warn "Config.after: begin logs for #{example.full_description}"
+        warn "Config.after: #{example.full_description}"
         logs.each do |log|
           warn "[#{Time.zone.at(log.timestamp / 1000).strftime('%H:%M:%S.%L')}] [#{log.level}] #{log.message}"
         end
-        warn 'Config.after: end'
+        warn '--------------------------------------------------------------------------------'
       end
     end
   rescue StandardError
-    warn "Config.after: Can't capture browser logs! Session may be dead"
   end
 
   config.after(:each, type: :system) do |example|
