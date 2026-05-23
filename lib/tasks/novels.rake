@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-SLUG_REGEX = %r{https://novelsonlocation.com/locations/(.+)}
 TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
 
 # rubocop:disable Metrics/BlockLength
