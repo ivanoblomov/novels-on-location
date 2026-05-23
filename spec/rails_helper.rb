@@ -63,26 +63,25 @@ RSpec.configure do |config|
   config.before(:each, :js, type: :system) do |example|
     driven_by example.metadata[:js]
   end
-  config.after(:each, type: :feature) do |example|
-    puts '--- inside config.after ---'
-    if example.exception
-      puts "--- BROWSER LOGS FOR [#{example.full_description}] ---"
-
-      begin
+  config.after(:each) do |example|
+    begin
+      if page.driver.respond_to?(:browser) && page.driver.browser
         logs = page.driver.browser.logs.get(:browser)
 
         if logs.present?
-          logs.each do |log|
-            puts "[#{Time.zone.at(log.timestamp / 1000).strftime('%H:%M:%S.%L')}] [#{log.level}] #{log.message}"
+          File.open(Rails.root.join('log/capybara_browser.log'), 'a') do |f|
+            f.puts "Config.after: logs for #{example.full_description}"
+            logs.each do |log|
+              f.puts "[#{Time.at(log.timestamp / 1000).strftime('%H:%M:%S.%L')}] [#{log.level}] #{log.message}"
+            end
           end
-        else
-          puts 'No browser logs captured.'
         end
-      rescue StandardError => e
-        puts "Could not capture browser logs: #{e.message}"
       end
+    rescue StandardError => e
+      warn "Config.after: Can't capture browser logs! Session may be dead"
     end
   end
+
   config.after(:each, type: :system) do |example|
     warn page.driver.browser.logs.get(:browser) if example.exception
   end
