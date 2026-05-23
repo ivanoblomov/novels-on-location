@@ -75,7 +75,9 @@ RSpec.configure do |config|
         warn '--------------------------------------------------------------------------------'
       end
     end
+  # rubocop:disable Lint/SuppressedException
   rescue StandardError
+  # rubocop:enable Lint/SuppressedException
   end
 
   config.after(:each, type: :system) do |example|
