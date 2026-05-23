@@ -140,7 +140,6 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
           # rubocop:disable RSpec/ExampleLength
           it('the map hides "The Sun Also Rises"') do
-            warn "facebook_app_id: #{Rails.application.config.facebook_app_id}"
             warn '=== LINE-BY-LINE PAGE SOURCE ==='
             page.source.each_line.with_index(1) do |line, index|
               warn "#{index}: #{line}" if index.between?(75, 90)
