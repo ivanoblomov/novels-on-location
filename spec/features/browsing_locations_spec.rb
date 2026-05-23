@@ -138,9 +138,18 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
         context 'when the User clicks the tag "Spitalfields"' do
           before { click_link_or_button 'Spitalfields' }
 
-          it('the map hides "The Sun Also Rises"') {
+          # rubocop:disable RSpec/ExampleLength
+          it('the map hides "The Sun Also Rises"') do
+            warn "facebook_app_id: #{Rails.application.config.facebook_app_id}"
+            warn '=== LINE-BY-LINE PAGE SOURCE ==='
+            page.source.each_line.with_index(1) do |line, index|
+              warn "#{index}: #{line}" if index.between?(75, 90)
+            end
+            warn '================================'
+
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
-          }
+          end
+          # rubocop:enable RSpec/ExampleLength
         end
 
         context 'when the User clicks "All Locations for Novel"' do
