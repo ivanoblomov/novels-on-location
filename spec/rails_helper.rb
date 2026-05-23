@@ -68,13 +68,11 @@ RSpec.configure do |config|
       logs = page.driver.browser.logs.get(:browser)
 
       if logs.present?
-        Rails.root.join('log/capybara_browser.log').open('a') do |f|
-          f.puts "Config.after: begin logs for #{example.full_description}"
-          logs.each do |log|
-            f.puts "[#{Time.zone.at(log.timestamp / 1000).strftime('%H:%M:%S.%L')}] [#{log.level}] #{log.message}"
-          end
-          f.puts "Config.after: end"
+        warn "Config.after: begin logs for #{example.full_description}"
+        logs.each do |log|
+          warn "[#{Time.zone.at(log.timestamp / 1000).strftime('%H:%M:%S.%L')}] [#{log.level}] #{log.message}"
         end
+        warn 'Config.after: end'
       end
     end
   rescue StandardError
