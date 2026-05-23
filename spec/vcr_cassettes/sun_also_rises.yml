@@ -45,7 +45,7 @@ http_interactions:
   recorded_at: Fri, 10 Apr 2026 21:31:47 GMT
 - request:
     method: get
-    uri: https://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/wa/wsSearch?media=ebook&term=The%20Sun%20Also%20Rises
+    uri: http://ax.itunes.apple.com/WebObjects/MZStoreServices.woa/wa/wsSearch?media=ebook&term=The%20Sun%20Also%20Rises
     body:
       encoding: US-ASCII
       string: ''
