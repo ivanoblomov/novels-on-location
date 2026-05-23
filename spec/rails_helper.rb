@@ -64,22 +64,22 @@ RSpec.configure do |config|
     driven_by example.metadata[:js]
   end
   config.after(:each, type: :feature) do |example|
-    warn '--- inside config.after ---'
+    puts '--- inside config.after ---'
     if example.exception
-      warn "--- BROWSER LOGS FOR [#{example.full_description}] ---"
+      puts "--- BROWSER LOGS FOR [#{example.full_description}] ---"
 
       begin
         logs = page.driver.browser.logs.get(:browser)
 
         if logs.present?
           logs.each do |log|
-            warn "[#{Time.zone.at(log.timestamp / 1000).strftime('%H:%M:%S.%L')}] [#{log.level}] #{log.message}"
+            puts "[#{Time.zone.at(log.timestamp / 1000).strftime('%H:%M:%S.%L')}] [#{log.level}] #{log.message}"
           end
         else
-          warn 'No browser logs captured.'
+          puts 'No browser logs captured.'
         end
       rescue StandardError => e
-        warn "Could not capture browser logs: #{e.message}"
+        puts "Could not capture browser logs: #{e.message}"
       end
     end
   end
