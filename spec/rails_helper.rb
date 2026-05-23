@@ -64,6 +64,7 @@ RSpec.configure do |config|
     driven_by example.metadata[:js]
   end
   config.after(:each, type: :feature) do |example|
+    warn "--- inside config.after ---"
     if example.exception
       warn "--- BROWSER LOGS FOR [#{example.full_description}] ---"
 
