@@ -11,13 +11,25 @@ describe LocationsController do
     allow(Location).to receive(:find).and_return(location)
   end
 
-  it 'PUT bookmark' do
-    put :bookmark, format: :json, params: { id: 1 }
-    expect(location).to have_received(:add_bookmark).with(user.id)
+  # rubocop:disable RSpec/NestedGroups
+  describe 'PUT #bookmark' do
+    context 'with valid params' do
+      before { put :bookmark, format: :json, params: { id: 1 } }
+
+      describe 'Location' do
+        it { expect(location).to have_received(:add_bookmark).with(user.id) }
+      end
+    end
   end
 
-  it 'DELETE unbookmark' do
-    delete :unbookmark, format: :json, params: { id: 1 }
-    expect(location).to have_received(:remove_bookmark).with(user.id)
+  describe 'DELETE #unbookmark' do
+    context 'with valid params' do
+      before { delete :unbookmark, format: :json, params: { id: 1 } }
+
+      describe 'Location' do
+        it { expect(location).to have_received(:remove_bookmark).with(user.id) }
+      end
+    end
   end
+  # rubocop:enable RSpec/NestedGroups
 end
