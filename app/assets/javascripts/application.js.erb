@@ -8,7 +8,6 @@ nOL.bookPrompt = 'Find a mapped book';
 nOL.clickingZooms = true;
 nOL.clickListener;
 nOL.defaultTitle;
-nOL.dpr = window.devicePixelRatio || 1;
 nOL.fb_session;
 nOL.friendIds = [];
 nOL.friends;
@@ -24,7 +23,6 @@ nOL.sharingMessage = 'I%20found%20a%20book%20you%20might%20like%20with%20Novels%
 nOL.twitterAccount = 'NovelsOnLoc%3ANovels%3A%20On%20Location';
 
 nOL.anchorQuery = nOL.anchor.split('-')[1] || nOL.anchorKind;
-nOL.pinUrl = nOL.dpr > 1 ? '<%= asset_path("pin-2x.png") %>' : '<%= asset_path("pin-1x.png") %>';
 
 nOL.init = function(settings) {
   nOL.defaultTitle = settings['defaultTitle'];
@@ -45,7 +43,6 @@ nOL.init = function(settings) {
     mapTypeId: google.maps.MapTypeId.HYBRID,
     minZoom: 2
   });
-  nOL.pinSize = nOL.dpr > 1 ? new google.maps.Size(46, 74) : new google.maps.Size(23, 37);
   nOL.zoomer = new google.maps.MaxZoomService();
   nOL.getLocations(settings['selectedLocationSlug']);
 
@@ -350,9 +347,7 @@ nOL.addPin = function(location) {
       animation: google.maps.Animation.DROP,
       icon: {
         anchor: new google.maps.Point(2, 35),
-        url: '<%= asset_path 'pin-2x.png' %>',
-        scaledSize: new google.maps.Size(23, 37),
-        size: nOL.pinSize,
+        url: '<%= asset_path 'pin.png' %>'
       },
       position: latLng
     });
