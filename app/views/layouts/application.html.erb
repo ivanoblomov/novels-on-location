@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html<%= ' prefix="og: https://ogp.me/ns#"' if facebook? %>>
+<html lang="en"<%= ' prefix="og: https://ogp.me/ns#"' if facebook? %>>
 <head>
 <meta charset=utf-8 /><%
   @meta_description ||= "A Google Maps & Books mash-up for finding books that take place where you're traveling. Search the map and make your next destination come alive!"
@@ -52,13 +52,12 @@ a.store{background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/ba
 #toolbar{position:absolute;right:156px;top:4px}
 #tweet{border:0;width:61px;height:20px}
 </style>
-<link rel="shortcut icon" href="favicon.ico?v=2"/>
+<link rel="shortcut icon" href="/favicon.ico"/>
 <%= stylesheet_link_tag 'default' %>
 <%= stylesheet_link_tag 'safari' if safari_pc? %>
 <%= stylesheet_link_tag 'ie' if ie? %>
 <%= stylesheet_link_tag 'ios' if ios? %>
 <%= stylesheet_link_tag 'print', :media => 'print' %>
-<%= javascript_include_tag 'google_analytics' %>
 </head>
 <body>
 <%= yield %>
@@ -71,16 +70,17 @@ a.store{background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/ba
 <input type=button class=map id=mode-button title="Double-click map to zoom. Click to toggle" value="Mode: Zoom"/>
 <input type=button class=map id=pin-display-button title="Click to show only my pins" value="Pins: All"/>
 <%# link_to image_tag('https://r.mzstatic.com/images/web/linkmaker/badge_appstore-sm.gif', :alt => 'App Store'), 'https://itunes.apple.com/us/app/novels-on-location/id625973663?mt=8&uo=4', :class => 'links', :id => 'appstore-link', :target => 'itunes_store' %>
-<%= mail_to Rails.application.config.admin_email, image_tag('mail.png', :alt => 'Mail Icon'), :encode => 'hex', :class => 'links', :id => 'mail-button', :title => 'Send feedback' %>
-<%= link_to image_tag('facebook.png', :alt => 'Facebook Icon'), 'https://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
+<%= mail_to Rails.application.config.admin_email, image_tag(asset_path('mail-1x.png'), alt: 'Mail Icon', srcset: "#{asset_path('mail-1x.png')} 1x, #{asset_path('mail-2x.png')} 2x", width: 20, height: 12), :encode => 'hex', :class => 'links', :id => 'mail-button', :title => 'Send feedback' %>
+<%= link_to image_tag(asset_path('facebook-1x.png'), alt: 'Facebook Icon', srcset: "#{asset_path('facebook-1x.png')} 1x, #{asset_path('facebook-2x.png')} 2x", width: 18, height: 18), 'https://www.facebook.com/NovelsOnLocation', :class => 'links', :id => 'fb-page', :title => 'Visit our Facebook page' %>
 </div>
 <a class=no-print href="/integration" id=integration-link title="Learn how to integrate Novels: On Location with your site">N:OL Integration Notes</a>
 <div class=no-print id=social-toolbar>
 <% unless w3c_validator? %><div class="fb-login-button" id="login-button" data-max-rows="1" data-size="small" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="true" data-use-continue-as="false"></div><% end %>
 <div class="fb-like" id="fb-like" data-href="<%= @location ? location_url(@location) : Rails.application.config.main_host.downcase %>" data-layout="button_count" data-action="like" data-show-faces="false"></div>
-<iframe<% if ie? %> allowTransparency=true frameBorder=0<% end %> id=tweet src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>"></iframe>
+<iframe<% if ie? %> allowTransparency=true frameBorder=0<% end %> id=tweet src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>" title="Tweet"></iframe>
 <a href="https://twitter.com/novelsonloc" class="twitter-follow-button" data-show-count="false">Follow @novelsonloc</a>
 </div>
+<%= javascript_include_tag 'application' %>
 <script>
   window.bootstrap=function(){
     nOL.init({
@@ -105,6 +105,5 @@ a.store{background:url(https://linkmaker.itunes.apple.com/images/badges/en-us/ba
 <script async src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&loading=async&callback=bootstrap&libraries=marker"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://platform.twitter.com/widgets.js"></script>
-<%= javascript_include_tag 'application' %>
 </body>
 </html>
