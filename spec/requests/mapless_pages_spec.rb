@@ -10,6 +10,13 @@ describe 'Mapless pages' do
       get '/'
       expect(response).to redirect_to "https://#{Rails.application.config.main_host}"
     end
+
+    context 'with params' do
+      it do
+        get '/locations/1'
+        expect(response).to redirect_to "https://#{Rails.application.config.main_host}/locations/1"
+      end
+    end
   end
 
   describe '/integration' do
