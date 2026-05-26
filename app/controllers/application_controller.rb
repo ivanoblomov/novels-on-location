@@ -13,10 +13,12 @@ class ApplicationController < ActionController::Base
                        with: :null_session
   rescue_from Mongoid::Errors::DocumentNotFound,
               with: :error404
-  rescue_from Exception do |exception|
-    @exception = exception
-    NOT_FOUND.match?(@exception.message) ? error404 : error500
-  end unless Rails.application.config.consider_all_requests_local
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception do |exception|
+      @exception = exception
+      NOT_FOUND.match?(@exception.message) ? error404 : error500
+    end
+  end
 
   def authenticate_user!
     redirect_to root_url unless current_user.admin? || Rails.env.development?
