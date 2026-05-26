@@ -4,13 +4,23 @@ describe Location do
   subject(:location) { described_class.new }
 
   describe '.displace_duplicate_coordinates' do
-    let(:location) { instance_spy(Location) }
+    let(:location) { instance_spy(described_class) }
     let(:locations) { [location] }
 
-    before { Location.displace_duplicate_coordinates(locations) }
+    before { described_class.displace_duplicate_coordinates(locations) }
 
     it { expect(location).to have_received(:displace) }
     it { expect(location).to have_received(:save) }
+  end
+
+  describe '.duplicate_coordinates' do
+    let(:location) { instance_spy(described_class, matching_coordinates: nil) }
+    let(:locations) { [location, matching_location] }
+    let(:matching_location) { instance_spy(described_class, matching_coordinates: true) }
+
+    before { allow(described_class).to receive(:all).and_return(locations) }
+
+    it { expect(described_class.duplicate_coordinates).to eq [matching_location] }
   end
 
   describe '#new' do
