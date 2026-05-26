@@ -7,10 +7,14 @@ describe Location do
     let(:location) { instance_spy(described_class) }
     let(:locations) { [location] }
 
-    before { described_class.displace_duplicate_coordinates(locations) }
+    context 'with Locations' do
+      before { described_class.displace_duplicate_coordinates(locations) }
 
-    it { expect(location).to have_received(:displace) }
-    it { expect(location).to have_received(:save) }
+      describe described_class do
+        it { expect(location).to have_received(:displace) }
+        it { expect(location).to have_received(:save) }
+      end
+    end
   end
 
   describe '.duplicate_coordinates' do
