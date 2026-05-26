@@ -72,9 +72,7 @@ class LocationsController < ApplicationController
   private
 
   def find_location
-    return if (@location = Location.find(params.expect(:id)))
-
-    error404
+    @location = Location.find(params.expect(:id))
   end
 
   def format_response
