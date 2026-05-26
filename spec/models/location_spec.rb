@@ -110,4 +110,12 @@ describe Location do
       # rubocop:enable RSpec/MultipleExpectations
     end
   end
+
+  describe '#to_s' do
+    let(:location) do
+      described_class.new(author: 'Ernest Hemingway', city: 'Pamplona', country: 'Spain', title: 'The Sun Also Rises')
+    end
+
+    it { expect(location.to_s).to eq %(Ernest Hemingway's "The Sun Also Rises" set in Pamplona, Spain) }
+  end
 end
