@@ -22,6 +22,10 @@ group :assets do
   gem 'uglifier'
 end
 
+group :development, :test do
+  gem 'letter_opener'
+end
+
 group :rake do
   gem 'embiggen'
   gem 'htmlentities'
