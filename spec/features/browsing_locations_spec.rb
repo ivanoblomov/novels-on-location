@@ -173,12 +173,9 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
   context 'when an error occurs' do
     context 'when the error is 500' do
+      before { Rails.application.config.consider_all_requests_local = false }
       it 'an alert shows the error' do
-        pending 'solving race condition with Rails.application.config.consider_all_requests_local'
         allow(Ability).to receive(:new).and_raise(Exception, 'Mocked error for testing')
-        # rubocop:disable RSpec/MessageChain
-        allow(Mailer).to receive_message_chain(:error, :deliver)
-        # rubocop:enable RSpec/MessageChain
         message = accept_alert { visit root_path }
         expect(message).to eq 'Mocked error for testing'
       end
