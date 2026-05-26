@@ -100,7 +100,7 @@ class Location
 
   def self.look_up_itunes
     Location.missing_itunes.map do |l|
-      l.update_with_google_books
+      l.send :update_with_google_books
       l.save
     end
     Location.missing_itunes.count

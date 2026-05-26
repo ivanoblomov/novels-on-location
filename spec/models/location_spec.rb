@@ -23,6 +23,21 @@ describe Location do
     it { expect(described_class.duplicate_coordinates).to eq [matching_location] }
   end
 
+  describe '.look_up_itunes' do
+    let(:location) { instance_spy(described_class) }
+    let(:locations) { [location] }
+    let(:look_up_itunes) { described_class.look_up_itunes }
+
+    before do
+      allow(described_class).to receive(:missing_itunes).and_return(locations)
+      look_up_itunes
+    end
+
+    it { expect(location).to have_received(:update_with_google_books) }
+    it { expect(location).to have_received(:save) }
+    it { expect(look_up_itunes).to eq 1 }
+  end
+
   describe '#new' do
     context 'with no args' do
       # rubocop:disable RSpec/NestedGroups
