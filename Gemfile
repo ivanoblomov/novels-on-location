@@ -22,7 +22,7 @@ group :assets do
   gem 'uglifier'
 end
 
-group :development do
+group :development, :test do
   gem 'letter_opener'
 end
 
@@ -35,7 +35,6 @@ end
 group :test do
   gem 'capybara'
   gem 'inch'
-  gem 'letter_opener'
   gem 'ostruct'
   gem 'pry'
   gem 'puma'
