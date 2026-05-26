@@ -10,10 +10,12 @@ describe Location do
     context 'with Locations' do
       before { described_class.displace_duplicate_coordinates(locations) }
 
+      # rubocop:disable RSpec/NestedGroups
       describe described_class do
         it { expect(location).to have_received(:displace) }
         it { expect(location).to have_received(:save) }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 
@@ -21,6 +23,7 @@ describe Location do
     let(:location) { instance_spy(described_class, matching_coordinates: nil) }
     let(:locations) { [location, matching_location] }
     let(:matching_location) { instance_spy(described_class, matching_coordinates: true) }
+
     context 'when Location#matching_coordinates.any?' do
       before { allow(described_class).to receive(:all).and_return(locations) }
 
@@ -41,10 +44,12 @@ describe Location do
 
       it { expect(look_up_itunes).to eq 1 }
 
+      # rubocop:disable RSpec/NestedGroups
       describe described_class do
         it { expect(location).to have_received(:update_with_google_books) }
         it { expect(location).to have_received(:save) }
       end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 
@@ -52,12 +57,14 @@ describe Location do
     let(:location) { instance_spy(described_class) }
     let(:locations) { [location] }
 
-    before { allow(Location).to receive(:all).and_return locations }
+    before { allow(described_class).to receive(:all).and_return locations }
 
     describe described_class do
       it do
+        # rubocop:disable RSpec/StubbedMock, RSpec/MessageSpies
         expect(described_class).to receive(:count).and_return 1
-        Location.random
+        # rubocop:enable RSpec/StubbedMock, RSpec/MessageSpies
+        described_class.random
       end
     end
   end
