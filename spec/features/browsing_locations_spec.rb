@@ -173,11 +173,12 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
   context 'when an error occurs' do
     context 'when the error is 500' do
-      before { Rails.application.config.consider_all_requests_local = false }
       it 'an alert shows the error' do
+        Rails.application.config.consider_all_requests_local = false
         allow(Ability).to receive(:new).and_raise(Exception, 'Mocked error for testing')
         message = accept_alert { visit root_path }
         expect(message).to eq 'Mocked error for testing'
+        Rails.application.config.consider_all_requests_local = true
       end
     end
 
