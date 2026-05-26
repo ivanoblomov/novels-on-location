@@ -17,10 +17,11 @@ describe Location do
     let(:location) { instance_spy(described_class, matching_coordinates: nil) }
     let(:locations) { [location, matching_location] }
     let(:matching_location) { instance_spy(described_class, matching_coordinates: true) }
+    context 'when Location#matching_coordinates.any?' do
+      before { allow(described_class).to receive(:all).and_return(locations) }
 
-    before { allow(described_class).to receive(:all).and_return(locations) }
-
-    it { expect(described_class.duplicate_coordinates).to eq [matching_location] }
+      it { expect(described_class.duplicate_coordinates).to eq [matching_location] }
+    end
   end
 
   describe '.look_up_itunes' do
@@ -28,14 +29,19 @@ describe Location do
     let(:locations) { [location] }
     let(:look_up_itunes) { described_class.look_up_itunes }
 
-    before do
-      allow(described_class).to receive(:missing_itunes).and_return(locations)
-      look_up_itunes
-    end
+    context 'when Location.missing_itunes.one?' do
+      before do
+        allow(described_class).to receive(:missing_itunes).and_return(locations)
+        look_up_itunes
+      end
 
-    it { expect(location).to have_received(:update_with_google_books) }
-    it { expect(location).to have_received(:save) }
-    it { expect(look_up_itunes).to eq 1 }
+      it { expect(look_up_itunes).to eq 1 }
+
+      describe described_class do
+        it { expect(location).to have_received(:update_with_google_books) }
+        it { expect(location).to have_received(:save) }
+      end
+    end
   end
 
   describe '#new' do
