@@ -141,7 +141,9 @@ describe Location do
   describe '#duplicate?' do
     let(:many_locations) { [location, location] }
 
+    # rubocop:disable RSpec/SubjectStub
     before { allow(location).to receive(:duplicates).and_return many_locations }
+    # rubocop:enable RSpec/SubjectStub
 
     it { expect(location.duplicate?).to be true }
   end
