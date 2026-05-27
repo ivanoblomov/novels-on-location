@@ -168,10 +168,6 @@ class Location
     @duplicates ||= Location.duplicate(address: address, title: title).sorted
   end
 
-  def from_ios?
-    user_token =~ REG_EX_USER_TOKEN
-  end
-
   def itunes_affiliate_url
     itunes_id ? "#{itunes_url}&at=11lKmH" : nil
   end

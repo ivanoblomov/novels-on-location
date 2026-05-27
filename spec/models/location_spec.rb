@@ -161,19 +161,6 @@ describe Location do
     end
   end
 
-  describe '#from_ios?' do
-    let(:from_ios) { build_stubbed :from_ios }
-    let(:not_from_ios) { build_stubbed :not_from_ios }
-
-    context 'when Location is from iOS' do
-      it { expect(location.from_ios?).to be true }
-    end
-
-    context "when Location isn't from iOS" do
-      it { expect(location.from_ios?).to be false }
-    end
-  end
-
   describe '#remove_bookmark' do
     context 'with a user_id: 1' do
       subject(:location) { described_class.new bookmark_user_ids: [user_id] }
