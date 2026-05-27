@@ -174,6 +174,16 @@ describe Location do
     end
   end
 
+  describe '#nol_url' do
+    context 'when title ="The Sun Also Rises"' do
+      before do
+        location.title = 'The Sun Also Rises'
+        location.build_slug
+      end
+      it { expect(location.nol_url).to eq 'https://localhost/locations/the-sun-also-rises' }
+    end
+  end
+
   describe '#remove_bookmark' do
     context 'with a user_id: 1' do
       subject(:location) { described_class.new bookmark_user_ids: [user_id] }
