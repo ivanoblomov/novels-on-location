@@ -166,6 +166,14 @@ describe Location do
     end
   end
 
+  describe '#longitude=' do
+    context 'with -0.001475' do
+      before { location.longitude = -0.001475 }
+
+      it { expect(location.longitude).to eq '-0.001475' }
+    end
+  end
+
   describe '#remove_bookmark' do
     context 'with a user_id: 1' do
       subject(:location) { described_class.new bookmark_user_ids: [user_id] }
