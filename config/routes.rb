@@ -20,11 +20,7 @@ NovelsOnLocation::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :locations, only: :index do
-      collection do
-        put 'push_random'
-      end
-    end
+    resources :locations, only: :index
   end
 
   get 'admin' => 'admin/locations#index'
