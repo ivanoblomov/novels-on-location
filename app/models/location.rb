@@ -106,10 +106,6 @@ class Location
     Location.missing_itunes.count
   end
 
-  def self.random
-    Location.all[Location.count * rand]
-  end
-
   # Overrides ==================================================================
   def id
     self[:_id].to_s
