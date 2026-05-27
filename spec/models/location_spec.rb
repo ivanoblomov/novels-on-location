@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 describe Location do
-  subject(:location) { described_class.new }
+  subject(:location) { build(:location) }
 
   describe '.displace_duplicate_coordinates' do
     let(:location) { instance_spy(described_class) }
@@ -133,12 +133,9 @@ describe Location do
     context 'with a user_id: 1' do
       let(:user_id) { 1 }
 
-      before do
-        allow(subject).to receive(:save)
-        subject.add_bookmark user_id
-      end
+      before { location.add_bookmark user_id }
 
-      it { expect(subject.bookmark_user_ids).to include user_id }
+      it { expect(location.bookmark_user_ids).to include user_id }
     end
   end
 
@@ -161,12 +158,9 @@ describe Location do
 
       let(:user_id) { 1 }
 
-      before do
-        allow(subject).to receive(:save)
-        subject.remove_bookmark user_id
-      end
+      before { location.remove_bookmark user_id }
 
-      it { expect(subject.bookmark_user_ids.none?).to eq true }
+      it { expect(location.bookmark_user_ids.none?).to be true }
     end
   end
 
