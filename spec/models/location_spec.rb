@@ -152,6 +152,14 @@ describe Location do
     end
   end
 
+  describe '#latitude=' do
+    context 'with 51.477811' do
+      before { location.latitude = 51.477811 }
+
+      it { expect(location.latitude).to eq '51.477811' }
+    end
+  end
+
   describe '#longitude' do
     context 'with lat_lng.present?' do
       it { expect(location.longitude).to eq location.lat_lng[1] }
