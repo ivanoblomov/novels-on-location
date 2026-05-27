@@ -7,16 +7,6 @@ module Admin
     before_action :find_location, only: :push
     layout 'admin'
 
-    def push
-      @location.ios_push
-      redirect_to admin_locations_url
-    end
-
-    def push_random
-      Location.random.ios_push
-      redirect_to admin_locations_url
-    end
-
     # CRUD =====================================================================
     def index
       params[:by] ||= 'created_at'

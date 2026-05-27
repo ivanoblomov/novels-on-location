@@ -212,7 +212,6 @@ class Location
     return unless Rails.env.production? && !test_book?
 
     tweet
-    #     ios_push
   end
 
   def owned?
