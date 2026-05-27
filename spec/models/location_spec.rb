@@ -129,6 +129,19 @@ describe Location do
     end
   end
 
+  describe '#add_bookmark' do
+    context 'with a user_id: 1' do
+      let(:user_id) { 1 }
+
+      before do
+        allow(subject).to receive(:save)
+        subject.add_bookmark user_id
+      end
+
+      it { expect(subject.bookmark_user_ids).to include user_id }
+    end
+  end
+
   describe '#geocode' do
     context 'with "white house"', vcr: { cassette_name: 'white_house' } do
       before { location.send :geocode, 'white house' }
