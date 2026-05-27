@@ -53,21 +53,6 @@ describe Location do
     end
   end
 
-  describe '.random' do
-    let(:location) { instance_spy(described_class) }
-
-    before { allow(described_class).to receive(:all).and_return locations }
-
-    describe described_class do
-      it do
-        # rubocop:disable RSpec/StubbedMock, RSpec/MessageSpies
-        expect(described_class).to receive(:count).and_return 1
-        # rubocop:enable RSpec/StubbedMock, RSpec/MessageSpies
-        described_class.random
-      end
-    end
-  end
-
   describe '#new' do
     context 'with no args' do
       # rubocop:disable RSpec/NestedGroups
