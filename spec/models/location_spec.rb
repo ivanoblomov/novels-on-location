@@ -155,6 +155,21 @@ describe Location do
     end
   end
 
+  describe '#remove_bookmark' do
+    context 'with a user_id: 1' do
+      subject(:location) { described_class.new bookmark_user_ids: [user_id] }
+
+      let(:user_id) { 1 }
+
+      before do
+        allow(subject).to receive(:save)
+        subject.remove_bookmark user_id
+      end
+
+      it { expect(subject.bookmark_user_ids.none?).to eq true }
+    end
+  end
+
   describe '#to_s' do
     let(:location) do
       described_class.new(author: 'Ernest Hemingway', city: 'Pamplona', country: 'Spain', title: 'The Sun Also Rises')
