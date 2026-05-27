@@ -180,6 +180,7 @@ describe Location do
         location.title = 'The Sun Also Rises'
         location.build_slug
       end
+
       it { expect(location.nol_url).to eq 'https://localhost/locations/the-sun-also-rises' }
     end
   end
