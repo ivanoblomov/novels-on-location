@@ -24,9 +24,6 @@ NovelsOnLocation::Application.routes.draw do
       collection do
         put 'push_random'
       end
-      member do
-        put 'push'
-      end
     end
   end
 
