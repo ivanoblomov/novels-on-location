@@ -152,6 +152,12 @@ describe Location do
     end
   end
 
+  describe '#longitude' do
+    context 'with lat_lng.present?' do
+      it { expect(location.longitude).to eq location.lat_lng[1] }
+    end
+  end
+
   describe '#remove_bookmark' do
     context 'with a user_id: 1' do
       subject(:location) { described_class.new bookmark_user_ids: [user_id] }
