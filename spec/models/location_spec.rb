@@ -138,6 +138,14 @@ describe Location do
     end
   end
 
+  describe '#duplicate?' do
+    let(:many_locations) { [location, location] }
+
+    before { allow(location).to receive(:duplicates).and_return many_locations }
+
+    it { expect(location.duplicate?).to be true }
+  end
+
   describe '#geocode' do
     context 'with "white house"', vcr: { cassette_name: 'white_house' } do
       before { location.send :geocode, 'white house' }
