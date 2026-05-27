@@ -7,7 +7,6 @@ class WrongHost
   end
 end
 
-# rubocop:disable Metrics/BlockLength
 NovelsOnLocation::Application.routes.draw do
   constraints(WrongHost.new) do
     get '/', to: redirect("https://#{Rails.application.config.main_host}")
@@ -20,14 +19,7 @@ NovelsOnLocation::Application.routes.draw do
   end
 
   namespace :admin do
-    resources :locations, only: :index do
-      collection do
-        put 'push_random'
-      end
-      member do
-        put 'push'
-      end
-    end
+    resources :locations, only: :index
   end
 
   get 'admin' => 'admin/locations#index'
@@ -44,4 +36,3 @@ NovelsOnLocation::Application.routes.draw do
 
   get '*a', to: 'application#error404'
 end
-# rubocop:enable Metrics/BlockLength
