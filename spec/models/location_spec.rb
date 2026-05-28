@@ -3,18 +3,6 @@
 describe Location do
   subject(:location) { build(:location) }
 
-  describe '.duplicate_coordinates' do
-    let(:location) { instance_spy(described_class, matching_coordinates: nil) }
-    let(:locations) { [location, matching_location] }
-    let(:matching_location) { instance_spy(described_class, matching_coordinates: true) }
-
-    context 'when Location#matching_coordinates.any?' do
-      before { allow(described_class).to receive(:all).and_return(locations) }
-
-      it { expect(described_class.duplicate_coordinates).to eq [matching_location] }
-    end
-  end
-
   describe '.look_up_itunes' do
     let(:location) { instance_spy(described_class) }
     let(:locations) { [location] }

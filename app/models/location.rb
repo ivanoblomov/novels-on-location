@@ -73,10 +73,6 @@ class Location
     Location.all.map(&:title).uniq.size
   end
 
-  def self.duplicate_coordinates
-    Location.all.reject { |l| l.matching_coordinates.blank? }
-  end
-
   def self.search_itunes(title)
     hit = ITunesSearchAPI.search(media: 'ebook', term: title).try :first
     hit['trackId'] if hit
