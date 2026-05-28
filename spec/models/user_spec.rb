@@ -25,17 +25,13 @@ describe User do
       it { expect(user.me?).to be true }
     end
 
-    context "when User doesn't have my ID" do
-      it { expect(user.me?).to be false }
-    end
-
     context 'when User has my token' do
       let(:user_token) { User::ROOT_USER[1] }
 
       it { expect(user.me?).to be true }
     end
 
-    context "when User doesn't have my token" do
+    context "when User doesn't have my ID or token" do
       it { expect(user.me?).to be false }
     end
   end
