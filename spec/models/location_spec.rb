@@ -197,6 +197,16 @@ describe Location do
     end
   end
 
+  describe '#title_for_regex' do
+    subject(:location) { build(:location, title: title) }
+
+    context "when title = 'A Midsummer Night's Dream (Folger Shakespeare Library)'" do
+      let(:title) { "A Midsummer Night's Dream (Folger Shakespeare Library)" }
+
+      it { expect(location.title_for_regex).to eq "A Midsummer Night's Dream" }
+    end
+  end
+
   describe '#to_s' do
     let(:location) do
       described_class.new(author: 'Ernest Hemingway', city: 'Pamplona', country: 'Spain', title: 'The Sun Also Rises')
