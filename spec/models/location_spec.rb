@@ -161,7 +161,7 @@ describe Location do
   describe '#nol_url' do
     context 'when title ="The Sun Also Rises"' do
       before do
-        Location.delete_all
+        described_class.delete_all
         location.title = 'The Sun Also Rises'
         location.build_slug
       end
