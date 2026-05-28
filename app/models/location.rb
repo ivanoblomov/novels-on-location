@@ -106,10 +106,6 @@ class Location
     Location.missing_itunes.count
   end
 
-  def self.random
-    Location.all[Location.count * rand]
-  end
-
   # Overrides ==================================================================
   def id
     self[:_id].to_s
@@ -172,17 +168,6 @@ class Location
     user_token =~ REG_EX_USER_TOKEN
   end
 
-  def ios_push
-    p = Parse::Push.new(
-      'alert' => new_pin_message,
-      'badge' => 'Increment',
-      'sound' => '',
-      'url' => nol_url
-    )
-    p.channel = 'test' if Rails.env.development?
-    p.save
-  end
-
   def itunes_affiliate_url
     itunes_id ? "#{itunes_url}&at=11lKmH" : nil
   end
@@ -223,7 +208,6 @@ class Location
     return unless Rails.env.production? && !test_book?
 
     tweet
-    #     ios_push
   end
 
   def owned?

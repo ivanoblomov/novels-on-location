@@ -4,18 +4,7 @@ module Admin
   # Manage Locations
   class LocationsController < ApplicationController
     before_action :authenticate_user!
-    before_action :find_location, only: :push
     layout 'admin'
-
-    def push
-      @location.ios_push
-      redirect_to admin_locations_url
-    end
-
-    def push_random
-      Location.random.ios_push
-      redirect_to admin_locations_url
-    end
 
     # CRUD =====================================================================
     def index
@@ -25,10 +14,6 @@ module Admin
     end
 
     private
-
-    def find_location
-      @location = Location.find params.expect(:id)
-    end
 
     def find_locations
       if params[:by] == 'duplicate?'
