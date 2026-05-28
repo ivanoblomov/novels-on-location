@@ -123,6 +123,15 @@ describe Location do
     it { expect(location.duplicate?).to be true }
   end
 
+  describe '#duplicates' do
+    subject(:location) { build_stubbed(:location, address: address, title: title) }
+
+    let(:address) { 'Plaza del Castillo, 44B, 31001 Pamplona, Navarre, Spain' }
+    let(:title) { 'The Sun Also Rises' }
+
+    it { expect(location.duplicates).to eq described_class.where({ address: address, title: title }).sorted }
+  end
+
   describe '#geocode' do
     context 'with "white house"', vcr: { cassette_name: 'white_house' } do
       before { location.send :geocode, 'white house' }
