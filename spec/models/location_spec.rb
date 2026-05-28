@@ -188,6 +188,22 @@ describe Location do
     end
   end
 
+  describe '#search_terms' do
+    let(:location) { build_stubbed(:location, author: 'Ernest Hemingway', title: title) }
+
+    context 'when title.present?' do
+      let(:title) { 'The Sun Also Rises' }
+
+      it { expect(location.search_terms).to eq "#{location.title} #{location.author}" }
+    end
+
+    context 'when title.blank?' do
+      let(:title) { nil }
+
+      it { expect(location.search_terms).to eq location.book_keywords }
+    end
+  end
+
   describe '#title_for_regex' do
     subject(:location) { build(:location, title: title) }
 

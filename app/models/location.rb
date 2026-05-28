@@ -202,6 +202,14 @@ class Location
     place.presence || address
   end
 
+  def search_terms
+    @search_terms ||= if title.present?
+                        "#{title} #{author.presence}"
+                      else
+                        book_keywords
+                      end
+  end
+
   def store_url
     url || amazon_url
   end
@@ -271,14 +279,6 @@ class Location
   def random_delta
     delta = rand / 10_000.0
     negate? ? delta : -delta
-  end
-
-  def search_terms
-    @search_terms ||= if title.present?
-                        "#{title} #{author.presence}"
-                      else
-                        book_keywords
-                      end
   end
 
   def displace_or_geocode
