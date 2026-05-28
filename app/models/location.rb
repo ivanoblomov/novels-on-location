@@ -178,7 +178,7 @@ class Location
   def matching_coordinates
     return unless lat_lng
 
-    Location.with_lat_lng(lat_lng) - [self]
+    Location.with_lat_lng(lat_lng).count
   end
 
   def nol_url
