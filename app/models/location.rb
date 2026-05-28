@@ -73,15 +73,6 @@ class Location
     Location.all.map(&:title).uniq.size
   end
 
-  def self.displace_duplicate_coordinates(locations = Location.duplicate_coordinates)
-    return if locations.blank?
-
-    l = locations.last
-    l.send :displace
-    l.save
-    Location.displace_duplicate_coordinates
-  end
-
   def self.duplicate_coordinates
     Location.all.reject { |l| l.matching_coordinates.blank? }
   end

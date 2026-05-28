@@ -3,21 +3,6 @@
 describe Location do
   subject(:location) { build(:location) }
 
-  describe '.displace_duplicate_coordinates' do
-    let(:location) { instance_spy(described_class) }
-
-    context 'with Locations' do
-      before { described_class.displace_duplicate_coordinates(locations) }
-
-      # rubocop:disable RSpec/NestedGroups
-      describe described_class do
-        it { expect(location).to have_received(:displace) }
-        it { expect(location).to have_received(:save) }
-      end
-      # rubocop:enable RSpec/NestedGroups
-    end
-  end
-
   describe '.duplicate_coordinates' do
     let(:location) { instance_spy(described_class, matching_coordinates: nil) }
     let(:locations) { [location, matching_location] }
