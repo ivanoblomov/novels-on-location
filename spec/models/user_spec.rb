@@ -17,4 +17,26 @@ describe User do
       it { expect(user.admin?).to be false }
     end
   end
+
+  describe '#me?' do
+    context 'when User has my ID' do
+      let(:user_id) { User::ROOT_USER[0] }
+
+      it { expect(user.me?).to be true }
+    end
+
+    context "when User doesn't have my ID" do
+      it { expect(user.me?).to be false }
+    end
+
+    context 'when User has my token' do
+      let(:user_token) { User::ROOT_USER[1] }
+
+      it { expect(user.me?).to be true }
+    end
+
+    context "when User doesn't have my token" do
+      it { expect(user.me?).to be false }
+    end
+  end
 end
