@@ -236,10 +236,6 @@ class Location
     Rails.logger.error "Location#tweet: Can't tweet '#{tweet_message}'"
   end
 
-  def tweet_too_long?
-    tweet_message.gsub(nol_url, '').size > (140 - 19)
-  end
-
   def unclaim
     self.user_id = nil
     self.user_token = nil
