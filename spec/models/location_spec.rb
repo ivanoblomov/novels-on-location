@@ -95,6 +95,24 @@ describe Location do
     end
   end
 
+  describe '#displace_or_geocode' do
+    context 'with Locations matching coordinates' do
+      let(:location_matching_coordinates) { build(:location, :location_matching_coordinates) }
+      let(:locations_matching_coordinates) { [location, location_matching_coordinates] }
+
+      before do
+        described_class.delete_all
+        locations_matching_coordinates.map(&:save)
+      end
+
+      # rubocop:disable RSpec/NestedGroups
+      describe 'Location.with_lat_lng' do
+        it { expect(described_class.with_lat_lng(location.lat_lng).count).to eq 1 }
+      end
+      # rubocop:enable RSpec/NestedGroups
+    end
+  end
+
   describe '#duplicate?' do
     let(:many_locations) { [location, location] }
 
