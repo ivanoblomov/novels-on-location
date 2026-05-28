@@ -96,7 +96,7 @@ describe Location do
   end
 
   describe '#displace_or_geocode' do
-    context 'with Locations matching coordinates' do
+    context 'when Locations matching coordinates exist' do
       let(:location_matching_coordinates) { build(:location, :location_matching_coordinates) }
       let(:locations_matching_coordinates) { [location, location_matching_coordinates] }
 
@@ -106,8 +106,8 @@ describe Location do
       end
 
       # rubocop:disable RSpec/NestedGroups
-      describe 'Location.with_lat_lng' do
-        it { expect(described_class.with_lat_lng(location.lat_lng).count).to eq 1 }
+      describe 'Location#matching_coordinates' do
+        it { expect(location_matching_coordinates.matching_coordinates).to eq 1 }
       end
       # rubocop:enable RSpec/NestedGroups
     end
