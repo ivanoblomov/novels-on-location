@@ -204,4 +204,25 @@ describe Location do
 
     it { expect(location.to_s).to eq %(Ernest Hemingway's "The Sun Also Rises" set in Pamplona, Spain) }
   end
+
+  describe '#unclaim' do
+    subject(:location) { build(:location, user_id: user_id, user_token: user_token) }
+
+    context 'when user_id, user_token are present' do
+      let(:user_id) { 1 }
+      let(:user_token) { '6af079a' }
+
+      before { location.unclaim }
+
+      # rubocop:disable RSpec/NestedGroups
+      describe '#user_id' do
+        it { expect(location.user_id).to be_nil }
+      end
+
+      describe '#user_token' do
+        it { expect(location.user_token).to be_nil }
+      end
+      # rubocop:enable RSpec/NestedGroups
+    end
+  end
 end
