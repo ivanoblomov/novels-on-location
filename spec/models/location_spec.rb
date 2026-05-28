@@ -3,8 +3,6 @@
 describe Location do
   subject(:location) { build(:location) }
 
-  let(:locations) { [location] }
-
   describe '.displace_duplicate_coordinates' do
     let(:location) { instance_spy(described_class) }
 
@@ -34,6 +32,7 @@ describe Location do
 
   describe '.look_up_itunes' do
     let(:location) { instance_spy(described_class) }
+    let(:locations) { [location] }
     let(:look_up_itunes) { described_class.look_up_itunes }
 
     context 'when Location.missing_itunes.one?' do
