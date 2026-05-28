@@ -34,6 +34,7 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'database_cleaner-mongoid'
   gem 'inch'
   gem 'ostruct'
   gem 'pry'
