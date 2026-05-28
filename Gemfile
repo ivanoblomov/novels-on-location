@@ -34,6 +34,8 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'factory_bot_rails'
+  gem 'faker'
   gem 'inch'
   gem 'ostruct'
   gem 'pry'
@@ -42,6 +44,7 @@ group :test do
   gem 'rspec-wait'
   gem 'rubocop'
   gem 'rubocop-capybara'
+  gem 'rubocop-factory_bot'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
