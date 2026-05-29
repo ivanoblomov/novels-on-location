@@ -1,0 +1,33 @@
+# frozen_string_literal: true
+
+describe TweetedLocation do
+  subject(:tweeted_location) { build(:tweeted_location) }
+
+  let(:user_id) { Faker::IdNumber }
+
+  describe '.search' do
+    let(:expected_criteria) do
+      described_class.any_of(
+        { place: /#{terms}/i },
+        { slug: /#{terms}/i },
+        { text: /#{terms}/i },
+        title: /#{terms}/i
+      )
+    end
+    let(:terms) { 'The Sun Also Rises' }
+
+    it { expect(described_class.search(terms)).to eq expected_criteria }
+  end
+
+  describe '#to_s' do
+    context 'when it has a Location' do
+      it { expect(tweeted_location.to_s).to eq tweeted_location.location.to_s }
+    end
+
+    context "when it doesn't have a Location'" do
+      before { tweeted_location.location = nil }
+
+      it { expect(tweeted_location.to_s).to eq tweeted_location.text }
+    end
+  end
+end
