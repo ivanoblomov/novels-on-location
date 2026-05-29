@@ -25,6 +25,21 @@ describe Location do
     end
   end
 
+  describe '.search' do
+    let(:expected_criteria) do
+      described_class.any_of(
+        { address: /#{terms}/i },
+        { author: /#{terms}/i },
+        { tags: /#{terms}/i },
+        { title: /#{terms}/i },
+        { user_id: terms }
+      )
+    end
+    let(:terms) { 'The Sun Also Rises' }
+
+    it { expect(described_class.search(terms)).to eq expected_criteria }
+  end
+
   describe '#new' do
     context 'with no args' do
       # rubocop:disable RSpec/NestedGroups
@@ -123,6 +138,15 @@ describe Location do
     it { expect(location.duplicate?).to be true }
   end
 
+  describe '#duplicates' do
+    subject(:location) { build_stubbed(:location, address: address, title: title) }
+
+    let(:address) { 'Plaza del Castillo, 44B, 31001 Pamplona, Navarre, Spain' }
+    let(:title) { 'The Sun Also Rises' }
+
+    it { expect(location.duplicates).to eq described_class.where({ address: address, title: title }).sorted }
+  end
+
   describe '#geocode' do
     context 'with "white house"', vcr: { cassette_name: 'white_house' } do
       before { location.send :geocode, 'white house' }
@@ -185,6 +209,22 @@ describe Location do
       before { location.remove_bookmark user_id }
 
       it { expect(location.bookmark_user_ids.none?).to be true }
+    end
+  end
+
+  describe '#search_terms' do
+    let(:location) { build_stubbed(:location, author: 'Ernest Hemingway', title: title) }
+
+    context 'when title.present?' do
+      let(:title) { 'The Sun Also Rises' }
+
+      it { expect(location.search_terms).to eq "#{location.title} #{location.author}" }
+    end
+
+    context 'when title.blank?' do
+      let(:title) { nil }
+
+      it { expect(location.search_terms).to eq location.book_keywords }
     end
   end
 
