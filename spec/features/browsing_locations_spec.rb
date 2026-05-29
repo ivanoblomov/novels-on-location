@@ -78,6 +78,20 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
         it('the map zooms in') { expect(evaluate_script('nOL.map.zoom')).to be > 10 }
       end
+
+      context 'when a User clicks Reload' do
+        let(:count_visible_pins) do
+          'Object.values(nOL.pins).filter((pin) => pin.map).length;' # count visible pins (where map is defined)
+        end
+        let(:visible_pins) { evaluate_script count_visible_pins }
+
+        before { page.driver.browser.navigate.refresh }
+
+        it 'the map opens its balloon' do
+          expect(page).to have_css 'div.map-balloon' and expect(page).to have_no_css 'h2', text: 'null'
+        end
+        it("the map shows only one Location") { expect(visible_pins).to eq 1 }
+      end
       # rubocop:enable RSpec/NestedGroups
     end
 
