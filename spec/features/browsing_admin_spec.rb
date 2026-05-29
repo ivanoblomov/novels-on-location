@@ -15,8 +15,12 @@ feature 'Browsing Locations in admin', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym 
       visit admin_locations_path
     end
 
-    it do
-      expect(page).to have_text 'Novels: On Location - 2 Novels/2 Locations'
+    it { expect(page).to have_text 'Novels: On Location - 2 Novels/2 Locations' }
+
+    context 'when the User clicks "Created At"' do
+      before { click_link 'Created At' }
+
+      it { expect(page).to have_current_path(admin_locations_path(by: 'created_at', dir: 'asc')) }
     end
   end
 end
