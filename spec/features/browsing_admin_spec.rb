@@ -21,6 +21,12 @@ feature 'Browsing Locations in admin', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym 
       before { click_link 'Duplicate?' }
 
       it { expect(page).to have_current_path(admin_locations_path(by: 'duplicate?', dir: 'asc')) }
+
+      context 'when the User clicks "Duplicate?" again' do
+        before { click_link 'Duplicate?' }
+
+        it { expect(page).to have_current_path(admin_locations_path(by: 'duplicate?', dir: 'desc')) }
+      end
     end
   end
 end
