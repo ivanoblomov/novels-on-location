@@ -25,6 +25,21 @@ describe Location do
     end
   end
 
+  describe '.search' do
+    let(:expected_criteria) do
+      described_class.any_of(
+        { address: /#{terms}/i },
+        { author: /#{terms}/i },
+        { tags: /#{terms}/i },
+        { title: /#{terms}/i },
+        { user_id: terms }
+      )
+    end
+    let(:terms) { 'The Sun Also Rises' }
+
+    it { expect(described_class.search(terms)).to eq expected_criteria }
+  end
+
   describe '#new' do
     context 'with no args' do
       # rubocop:disable RSpec/NestedGroups
