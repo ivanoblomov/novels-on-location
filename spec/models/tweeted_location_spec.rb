@@ -30,4 +30,15 @@ describe TweetedLocation do
       it { expect(tweeted_location.to_s).to eq tweeted_location.text }
     end
   end
+
+  describe '#unique?' do
+    let(:expected_criteria) do
+      described_class.where({
+                              place: tweeted_location.place,
+                              title: tweeted_location.title
+                            })
+    end
+
+    it { expect(tweeted_location.send(:unique?)).to eq expected_criteria.none? }
+  end
 end
