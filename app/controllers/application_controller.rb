@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    redirect_to root_url unless current_user.admin? || Rails.env.development?
+    redirect_to root_url unless current_user.admin? || Rails.application.config.consider_all_requests_local
   end
 
   def current_user
