@@ -50,10 +50,6 @@ module ApplicationHelper
     request.user_agent =~ /ipad|iphone/i
   end
 
-  def location(locations, attribute)
-    locations.map { |l| %("#{l.send attribute}") }.uniq.sort.to_sentence
-  end
-
   def novel_link_to(location)
     link_to "All Locations for #{location.title}",
             novel_url(location),
