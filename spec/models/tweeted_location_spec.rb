@@ -14,9 +14,12 @@ describe TweetedLocation do
         title: /#{terms}/i
       )
     end
-    let(:terms) { 'The Sun Also Rises' }
 
-    it { expect(described_class.search(terms)).to eq expected_criteria }
+    context 'with terms "The Sun Also Rises"' do
+      let(:terms) { 'The Sun Also Rises' }
+
+      it { expect(described_class.search(terms)).to eq expected_criteria }
+    end
   end
 
   describe '#to_s' do
