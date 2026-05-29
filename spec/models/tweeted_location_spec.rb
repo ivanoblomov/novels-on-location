@@ -22,6 +22,18 @@ describe TweetedLocation do
     end
   end
 
+  describe '#save' do
+    before { tweeted_location.save }
+
+    context 'when title is defined' do
+      it { expect(tweeted_location.location.book_keywords).to eq tweeted_location.title }
+    end
+
+    context 'when place is defined' do
+      it { expect(tweeted_location.location.tags).to eq tweeted_location.place }
+    end
+  end
+
   describe '#to_s' do
     context 'when it has a Location' do
       it { expect(tweeted_location.to_s).to eq tweeted_location.location.to_s }
