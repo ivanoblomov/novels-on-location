@@ -11,5 +11,6 @@ NovelsOnLocation::Application.configure do
   config.active_support.deprecation = :stderr
   config.eager_load = false
   # custom
+  config.after_initialize { Mongo::Logger.logger.level = Logger::INFO }
   config.main_host = 'localhost'
 end
