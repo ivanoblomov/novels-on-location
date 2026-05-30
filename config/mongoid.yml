@@ -3,6 +3,7 @@ defaults: &defaults
     raise_not_found_error: true
 
 development:
+  <<: *defaults
   clients:
     default:
       database: novels
@@ -10,6 +11,7 @@ development:
         - <%= Rails.application.config.main_host %>:27017
 
 test:
+  <<: *defaults
   clients:
     default:
       database: novels_on_location_test
@@ -17,6 +19,7 @@ test:
         - <%= Rails.application.config.main_host %>:27017
 
 production:
+  <<: *defaults
   clients:
     default:
       uri: <%= ENV['MONGODB_URI'] %>
