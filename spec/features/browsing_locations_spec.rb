@@ -28,7 +28,6 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
     context 'when a User clicks its pin' do
       before do
-        Location.destroy_all
         from_hell
         visit root_path
         find('div[role=button]').click
@@ -106,7 +105,6 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
       end
 
       before do
-        Location.destroy_all
         from_hell
         sun_also_rises
         visit root_path

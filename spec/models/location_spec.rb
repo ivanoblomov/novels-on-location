@@ -115,10 +115,7 @@ describe Location do
       let(:location_matching_coordinates) { build(:location, :location_matching_coordinates) }
       let(:locations_matching_coordinates) { [location, location_matching_coordinates] }
 
-      before do
-        described_class.delete_all
-        locations_matching_coordinates.map(&:save)
-      end
+      before { locations_matching_coordinates.map(&:save) }
 
       # rubocop:disable RSpec/NestedGroups
       describe 'Location#matching_coordinates' do
@@ -191,7 +188,6 @@ describe Location do
   describe '#nol_url' do
     context 'when title ="The Sun Also Rises"' do
       before do
-        described_class.delete_all
         location.title = 'The Sun Also Rises'
         location.build_slug
       end

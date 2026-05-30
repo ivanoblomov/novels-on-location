@@ -7,7 +7,6 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
   context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
     before do
       visit root_path
-      Location.destroy_all
       click_on 'Mode: Zoom'
       execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -.074316))' # HACK: since double-click fails
       accept_confirm { accept_prompt with: 'from hell alan moore' }
@@ -20,7 +19,6 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
 
   context 'when a User enters a specific place, keywords for the book, and some notes' do
     before do
-      Location.destroy_all
       visit root_path
       fill_in 'place-input', with: "san sebastian\n"
       accept_prompt(with: 'sun also rises')
@@ -45,7 +43,6 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     end
 
     before do
-      Location.destroy_all
       la_concha
       the_ritz
       visit root_path
@@ -63,7 +60,6 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
 
   context 'when a Location exists and its balloon is open' do
     before do
-      Location.destroy_all
       Location.find_or_create_by author: 'Alan Moore',
                                  lat_lng: ['51.519326', '-0.074316'],
                                  title: 'From Hell'

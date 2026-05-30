@@ -9,7 +9,6 @@ feature 'Browsing Locations in admin', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym 
     let(:sun_also_rises) { build(:location, :sun_also_rises) }
 
     before do
-      Location.delete_all
       from_hell.save
       sun_also_rises.save
       visit admin_locations_path
