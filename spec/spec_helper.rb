@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'database_cleaner/mongoid'
 require 'factory_bot_rails'
 require 'simplecov'
 require 'webmock/rspec'
@@ -22,6 +23,7 @@ WebMock.disable_net_connect!
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.around { |example| DatabaseCleaner[:mongoid].cleaning { example.run } }
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
