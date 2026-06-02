@@ -34,6 +34,7 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
   context 'when a Location exists and a User drags its pin to a new place',
           vcr: { cassette_name: 'when_a_location_exists_and_a_user_drags_its_pin_to_a_new_place' } do
     let(:la_concha) do
+      pending 'a working alternative to drag_to'
       Location.find_or_create_by author: 'Ernest Hemingway',
                                  lat_lng: ['43.3186188', '-1.9860118'],
                                  title: 'The Sun Also Rises'
@@ -55,7 +56,6 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     end
 
     it "the Location's new coordinates persist" do
-      pending 'a working alternative to drag_to'
       wait_for { la_concha.reload.lat_lng[0].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[0].to_f) and
         wait_for { la_concha.reload.lat_lng[1].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[1].to_f)
     end
