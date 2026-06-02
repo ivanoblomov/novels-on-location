@@ -1,0 +1,255 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://127.0.0.1:51816/__identify__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '4'
+    body:
+      encoding: UTF-8
+      string: '7504'
+  recorded_at: Tue, 02 Jun 2026 04:46:57 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/status
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Connection:
+      - close
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '243'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"value":{"build":{"version":"148.0.7778.178 (d096af1c9e98c45c3596e59620622b1a049bfecb-refs/branch-heads/7778@{#3196})"},"message":"ChromeDriver
+        ready for new sessions.","os":{"arch":"arm64","name":"Mac OS X","version":"26.5.0"},"ready":true}}'
+  recorded_at: Tue, 02 Jun 2026 04:46:57 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:9515/session
+    body:
+      encoding: UTF-8
+      string: '{"capabilities":{"alwaysMatch":{"browserName":"chrome","goog:chromeOptions":{"args":["--headless=new","--disable-site-isolation-trials"],"binary":"/Applications/Google
+        Chrome.app/Contents/MacOS/Google Chrome"}}}}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Content-Length:
+      - '212'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '925'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"chrome","browserVersion":"148.0.7778.179","chrome":{"chromedriverVersion":"148.0.7778.178
+        (d096af1c9e98c45c3596e59620622b1a049bfecb-refs/branch-heads/7778@{#3196})","userDataDir":"/var/folders/1l/b11sy_9d2716z7ldlvhkqn1m0000gn/T/org.chromium.Chromium.scoped_dir.llzatq"},"fedcm:accounts":true,"goog:chromeOptions":{"debuggerAddress":"localhost:51823"},"goog:processID":79887,"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"mac","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss
+        and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"a8d3527aff8e3771f3f2b6050ba4e998"}}'
+  recorded_at: Tue, 02 Jun 2026 04:46:58 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:9515/session/a8d3527aff8e3771f3f2b6050ba4e998/url
+    body:
+      encoding: UTF-8
+      string: '{"url":"http://localhost:51816/locations/non_existent"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Content-Length:
+      - '55'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '14'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":null}'
+  recorded_at: Tue, 02 Jun 2026 04:46:59 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/a8d3527aff8e3771f3f2b6050ba4e998/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '69'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":"Sorry, that novel location doesn''t exist. Why not add it?"}'
+  recorded_at: Tue, 02 Jun 2026 04:46:59 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/a8d3527aff8e3771f3f2b6050ba4e998/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '69'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":"Sorry, that novel location doesn''t exist. Why not add it?"}'
+  recorded_at: Tue, 02 Jun 2026 04:46:59 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/a8d3527aff8e3771f3f2b6050ba4e998/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '69'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":"Sorry, that novel location doesn''t exist. Why not add it?"}'
+  recorded_at: Tue, 02 Jun 2026 04:46:59 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:9515/session/a8d3527aff8e3771f3f2b6050ba4e998/alert/accept
+    body:
+      encoding: UTF-8
+      string: "{}"
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Content-Length:
+      - '2'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '14'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":null}'
+  recorded_at: Tue, 02 Jun 2026 04:46:59 GMT
+recorded_with: VCR 6.4.0

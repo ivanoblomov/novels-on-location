@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: https://maps.googleapis.com/maps/api/geocode/json?address=51.519376063697386,%20-0.07432342790806311&key=<GOOGLE_MAPS_API_KEY>
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=51.519326,%20-0.074316&key=<GOOGLE_MAPS_API_KEY>
     body:
       encoding: US-ASCII
       string: ''
@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 02 Jun 2026 04:39:23 GMT
+      - Tue, 02 Jun 2026 05:40:17 GMT
       Pragma:
       - no-cache
       Expires:
@@ -41,28 +41,29 @@ http_interactions:
       Server:
       - mafe
       Content-Length:
-      - '34166'
+      - '34378'
       X-Xss-Protection:
       - '0'
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=169
+      - gfet4t7; dur=177
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
       string: "{\n   \"results\" : \n   [\n      {\n         \"address_components\"
-        : \n         [\n            {\n               \"long_name\" : \"10\",\n               \"short_name\"
-        : \"10\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        : \n         [\n            {\n               \"long_name\" : \"84\",\n               \"short_name\"
+        : \"84\",\n               \"types\" : \n               [\n                  \"street_number\"\n
         \              ]\n            },\n            {\n               \"long_name\"
-        : \"Puma Court\",\n               \"short_name\" : \"Puma Ct\",\n               \"types\"
-        : \n               [\n                  \"route\"\n               ]\n            },\n
-        \           {\n               \"long_name\" : \"London\",\n               \"short_name\"
-        : \"London\",\n               \"types\" : \n               [\n                  \"postal_town\"\n
+        : \"Commercial Street\",\n               \"short_name\" : \"Commercial St\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
         \              ]\n            },\n            {\n               \"long_name\"
-        : \"Greater London\",\n               \"short_name\" : \"Greater London\",\n
-        \              \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        : \"London\",\n               \"short_name\" : \"London\",\n               \"types\"
+        : \n               [\n                  \"postal_town\"\n               ]\n
+        \           },\n            {\n               \"long_name\" : \"Greater London\",\n
+        \              \"short_name\" : \"Greater London\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
         \                 \"political\"\n               ]\n            },\n            {\n
         \              \"long_name\" : \"England\",\n               \"short_name\"
         : \"England\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
@@ -70,25 +71,27 @@ http_interactions:
         \              \"long_name\" : \"United Kingdom\",\n               \"short_name\"
         : \"GB\",\n               \"types\" : \n               [\n                  \"country\",\n
         \                 \"political\"\n               ]\n            },\n            {\n
-        \              \"long_name\" : \"E1 6QG\",\n               \"short_name\"
-        : \"E1 6QG\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              \"long_name\" : \"E1 6LY\",\n               \"short_name\"
+        : \"E1 6LY\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
         \              ]\n            }\n         ],\n         \"formatted_address\"
-        : \"10 Puma Ct, London E1 6QG, UK\",\n         \"geometry\" : \n         {\n
-        \           \"location\" : \n            {\n               \"lat\" : 51.5193472,\n
-        \              \"lng\" : -0.07431649999999999\n            },\n            \"location_type\"
+        : \"84 Commercial St, London E1 6LY, UK\",\n         \"geometry\" : \n         {\n
+        \           \"location\" : \n            {\n               \"lat\" : 51.5193521,\n
+        \              \"lng\" : -0.07428770000000001\n            },\n            \"location_type\"
         : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
-        : \n               {\n                  \"lat\" : 51.52069618029149,\n                  \"lng\"
-        : -0.07296751970849796\n               },\n               \"southwest\" :
-        \n               {\n                  \"lat\" : 51.5179982197085,\n                  \"lng\"
-        : -0.07566548029150202\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n               {\n                  \"lat\" : 51.5207010802915,\n                  \"lng\"
+        : -0.07293871970849798\n               },\n               \"southwest\" :
+        \n               {\n                  \"lat\" : 51.5180031197085,\n                  \"lng\"
+        : -0.07563668029150206\n               }\n            }\n         },\n         \"navigation_points\"
         : \n         [\n            {\n               \"location\" : \n               {\n
-        \                 \"latitude\" : 51.5193291,\n                  \"longitude\"
-        : -0.07431409999999999\n               }\n            }\n         ],\n         \"place_id\"
-        : \"ChIJV6o8q1UddkgRjZgCkE773Fw\",\n         \"types\" : \n         [\n            \"establishment\",\n
-        \           \"general_contractor\",\n            \"plumber\",\n            \"point_of_interest\"\n
-        \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
-        \           {\n               \"long_name\" : \"84\",\n               \"short_name\"
-        : \"84\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \                 \"latitude\" : 51.5192873,\n                  \"longitude\"
+        : -0.0743466\n               }\n            },\n            {\n               \"location\"
+        : \n               {\n                  \"latitude\" : 51.5193992,\n                  \"longitude\"
+        : -0.0744503\n               }\n            }\n         ],\n         \"place_id\"
+        : \"ChIJS36lO7QcdkgRrM1pXUYLS4g\",\n         \"types\" : \n         [\n            \"bar\",\n
+        \           \"establishment\",\n            \"point_of_interest\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"84\",\n               \"short_name\" : \"84\",\n
+        \              \"types\" : \n               [\n                  \"street_number\"\n
         \              ]\n            },\n            {\n               \"long_name\"
         : \"Commercial Street\",\n               \"short_name\" : \"Commercial St\",\n
         \              \"types\" : \n               [\n                  \"route\"\n
@@ -188,16 +191,17 @@ http_interactions:
         : -0.0743674\n               }\n            }\n         ],\n         \"place_id\"
         : \"ChIJt03AOrQcdkgRszyLE_1KO6A\",\n         \"types\" : \n         [\n            \"street_address\"\n
         \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
-        \           {\n               \"long_name\" : \"84\",\n               \"short_name\"
-        : \"84\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \           {\n               \"long_name\" : \"1\",\n               \"short_name\"
+        : \"1\",\n               \"types\" : \n               [\n                  \"street_number\"\n
         \              ]\n            },\n            {\n               \"long_name\"
-        : \"A1202\",\n               \"short_name\" : \"A1202\",\n               \"types\"
-        : \n               [\n                  \"route\"\n               ]\n            },\n
-        \           {\n               \"long_name\" : \"London\",\n               \"short_name\"
-        : \"London\",\n               \"types\" : \n               [\n                  \"postal_town\"\n
+        : \"Fournier Street\",\n               \"short_name\" : \"Fournier St\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
         \              ]\n            },\n            {\n               \"long_name\"
-        : \"Greater London\",\n               \"short_name\" : \"Greater London\",\n
-        \              \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        : \"London\",\n               \"short_name\" : \"London\",\n               \"types\"
+        : \n               [\n                  \"postal_town\"\n               ]\n
+        \           },\n            {\n               \"long_name\" : \"Greater London\",\n
+        \              \"short_name\" : \"Greater London\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
         \                 \"political\"\n               ]\n            },\n            {\n
         \              \"long_name\" : \"England\",\n               \"short_name\"
         : \"England\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
@@ -205,18 +209,19 @@ http_interactions:
         \              \"long_name\" : \"United Kingdom\",\n               \"short_name\"
         : \"GB\",\n               \"types\" : \n               [\n                  \"country\",\n
         \                 \"political\"\n               ]\n            },\n            {\n
-        \              \"long_name\" : \"E1 6LY\",\n               \"short_name\"
-        : \"E1 6LY\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
-        \              ]\n            }\n         ],\n         \"formatted_address\"
-        : \"84 A1202, London E1 6LY, UK\",\n         \"geometry\" : \n         {\n
-        \           \"location\" : \n            {\n               \"lat\" : 51.5193984,\n
-        \              \"lng\" : -0.0744879\n            },\n            \"location_type\"
-        : \"RANGE_INTERPOLATED\",\n            \"viewport\" : \n            {\n               \"northeast\"
-        : \n               {\n                  \"lat\" : 51.5207473802915,\n                  \"lng\"
-        : -0.07313891970849797\n               },\n               \"southwest\" :
-        \n               {\n                  \"lat\" : 51.5180494197085,\n                  \"lng\"
-        : -0.07583688029150203\n               }\n            }\n         },\n         \"place_id\"
-        : \"EhQ4NCBBMTIwMiwgTG9uZG9uLCBVSyIaEhgKFAoSCT0erT60HHZIEY1HQ56CFfYREFQ\",\n
+        \              \"long_name\" : \"E1\",\n               \"short_name\" : \"E1\",\n
+        \              \"types\" : \n               [\n                  \"postal_code\",\n
+        \                 \"postal_code_prefix\"\n               ]\n            }\n
+        \        ],\n         \"formatted_address\" : \"1 Fournier St, London E1,
+        UK\",\n         \"geometry\" : \n         {\n            \"location\" : \n
+        \           {\n               \"lat\" : 51.5192726,\n               \"lng\"
+        : -0.07418229999999999\n            },\n            \"location_type\" : \"RANGE_INTERPOLATED\",\n
+        \           \"viewport\" : \n            {\n               \"northeast\" :
+        \n               {\n                  \"lat\" : 51.5206215802915,\n                  \"lng\"
+        : -0.07283331970849796\n               },\n               \"southwest\" :
+        \n               {\n                  \"lat\" : 51.5179236197085,\n                  \"lng\"
+        : -0.07553128029150202\n               }\n            }\n         },\n         \"place_id\"
+        : \"EhkxIEZvdXJuaWVyIFN0LCBMb25kb24sIFVLIhoSGAoUChIJR80zMbQcdkgRhmvyshND0OQQAQ\",\n
         \        \"types\" : \n         [\n            \"street_address\"\n         ]\n
         \     },\n      {\n         \"address_components\" : \n         [\n            {\n
         \              \"long_name\" : \"1-5\",\n               \"short_name\" : \"1-5\",\n
@@ -491,10 +496,10 @@ http_interactions:
         \              }\n            }\n         },\n         \"place_id\" : \"ChIJqZHHQhE7WgIReiWIMkOg-MQ\",\n
         \        \"types\" : \n         [\n            \"country\",\n            \"political\"\n
         \        ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
-  recorded_at: Tue, 02 Jun 2026 04:39:23 GMT
+  recorded_at: Tue, 02 Jun 2026 05:40:17 GMT
 - request:
     method: get
-    uri: https://maps.googleapis.com/maps/api/geocode/json?address=42.81733442949502,%20-1.6432522705491217&key=<GOOGLE_MAPS_API_KEY>
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=42.817422,%20-1.64325&key=<GOOGLE_MAPS_API_KEY>
     body:
       encoding: US-ASCII
       string: ''
@@ -513,7 +518,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 02 Jun 2026 04:39:23 GMT
+      - Tue, 02 Jun 2026 05:40:18 GMT
       Pragma:
       - no-cache
       Expires:
@@ -533,59 +538,20 @@ http_interactions:
       Server:
       - mafe
       Content-Length:
-      - '30660'
+      - '33963'
       X-Xss-Protection:
       - '0'
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=140
+      - gfet4t7; dur=142
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
       encoding: UTF-8
       string: "{\n   \"results\" : \n   [\n      {\n         \"address_components\"
-        : \n         [\n            {\n               \"long_name\" : \"44c\",\n               \"short_name\"
-        : \"44c\",\n               \"types\" : \n               [\n                  \"street_number\"\n
-        \              ]\n            },\n            {\n               \"long_name\"
-        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
-        \              \"types\" : \n               [\n                  \"route\"\n
-        \              ]\n            },\n            {\n               \"long_name\"
-        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
-        : \n               [\n                  \"locality\",\n                  \"political\"\n
-        \              ]\n            },\n            {\n               \"long_name\"
-        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
-        : \n               [\n                  \"administrative_area_level_2\",\n
-        \                 \"political\"\n               ]\n            },\n            {\n
-        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
-        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
-        \                 \"political\"\n               ]\n            },\n            {\n
-        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
-        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
-        \                 \"political\"\n               ]\n            },\n            {\n
-        \              \"long_name\" : \"31002\",\n               \"short_name\" :
-        \"31002\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
-        \              ]\n            }\n         ],\n         \"formatted_address\"
-        : \"Pl. del Castillo, 44c, 31002 Pamplona, Navarra, Spain\",\n         \"geometry\"
-        : \n         {\n            \"location\" : \n            {\n               \"lat\"
-        : 42.8173189,\n               \"lng\" : -1.6431582\n            },\n            \"location_type\"
-        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
-        : \n               {\n                  \"lat\" : 42.81866788029149,\n                  \"lng\"
-        : -1.641809219708498\n               },\n               \"southwest\" : \n
-        \              {\n                  \"lat\" : 42.81596991970849,\n                  \"lng\"
-        : -1.644507180291502\n               }\n            }\n         },\n         \"navigation_points\"
-        : \n         [\n            {\n               \"location\" : \n               {\n
-        \                 \"latitude\" : 42.8172932,\n                  \"longitude\"
-        : -1.6431466\n               },\n               \"restricted_travel_modes\"
-        : \n               [\n                  \"DRIVE\"\n               ]\n            },\n
-        \           {\n               \"location\" : \n               {\n                  \"latitude\"
-        : 42.8160078,\n                  \"longitude\" : -1.6434201\n               },\n
-        \              \"restricted_travel_modes\" : \n               [\n                  \"WALK\"\n
-        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJd08sXfmSUA0RJnxv9hLt9H0\",\n
-        \        \"types\" : \n         [\n            \"street_address\"\n         ]\n
-        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
-        \              \"long_name\" : \"44\",\n               \"short_name\" : \"44\",\n
-        \              \"types\" : \n               [\n                  \"street_number\"\n
+        : \n         [\n            {\n               \"long_name\" : \"44\",\n               \"short_name\"
+        : \"44\",\n               \"types\" : \n               [\n                  \"street_number\"\n
         \              ]\n            },\n            {\n               \"long_name\"
         : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
         \              \"types\" : \n               [\n                  \"route\"\n
@@ -607,24 +573,23 @@ http_interactions:
         \              ]\n            }\n         ],\n         \"formatted_address\"
         : \"Pl. del Castillo, 44, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
         : \n         {\n            \"location\" : \n            {\n               \"lat\"
-        : 42.8174311,\n               \"lng\" : -1.643297\n            },\n            \"location_type\"
+        : 42.8174451,\n               \"lng\" : -1.6432725\n            },\n            \"location_type\"
         : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
-        : \n               {\n                  \"lat\" : 42.8187800802915,\n                  \"lng\"
-        : -1.641948019708498\n               },\n               \"southwest\" : \n
-        \              {\n                  \"lat\" : 42.8160821197085,\n                  \"lng\"
-        : -1.644645980291502\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n               {\n                  \"lat\" : 42.8187940802915,\n                  \"lng\"
+        : -1.641923519708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.8160961197085,\n                  \"lng\"
+        : -1.644621480291502\n               }\n            }\n         },\n         \"navigation_points\"
         : \n         [\n            {\n               \"location\" : \n               {\n
-        \                 \"latitude\" : 42.8174129,\n                  \"longitude\"
-        : -1.6431997\n               },\n               \"restricted_travel_modes\"
+        \                 \"latitude\" : 42.8174002,\n                  \"longitude\"
+        : -1.6432524\n               },\n               \"restricted_travel_modes\"
         : \n               [\n                  \"DRIVE\"\n               ]\n            },\n
         \           {\n               \"location\" : \n               {\n                  \"latitude\"
         : 42.8160078,\n                  \"longitude\" : -1.6434201\n               },\n
         \              \"restricted_travel_modes\" : \n               [\n                  \"WALK\"\n
-        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJAQxuXfmSUA0RYOkf1Muo0hQ\",\n
-        \        \"types\" : \n         [\n            \"cafe\",\n            \"establishment\",\n
-        \           \"food\",\n            \"point_of_interest\",\n            \"restaurant\",\n
-        \           \"store\"\n         ]\n      },\n      {\n         \"address_components\"
-        : \n         [\n            {\n               \"long_name\" : \"44\",\n               \"short_name\"
+        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJoZsybvmTUA0RMmQuGOrY_Aw\",\n
+        \        \"types\" : \n         [\n            \"establishment\",\n            \"point_of_interest\"\n
+        \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
+        \           {\n               \"long_name\" : \"44\",\n               \"short_name\"
         : \"44\",\n               \"types\" : \n               [\n                  \"street_number\"\n
         \              ]\n            },\n            {\n               \"long_name\"
         : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
@@ -663,8 +628,91 @@ http_interactions:
         \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJy-2GZ_mSUA0Ruvz32cL1ESM\",\n
         \        \"types\" : \n         [\n            \"street_address\",\n            \"subpremise\"\n
         \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
-        \           {\n               \"long_name\" : \"5\",\n               \"short_name\"
-        : \"5\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \           {\n               \"long_name\" : \"44c\",\n               \"short_name\"
+        : \"44c\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31002\",\n               \"short_name\" :
+        \"31002\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 44c, 31002 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8173189,\n               \"lng\" : -1.6431582\n            },\n            \"location_type\"
+        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.81866788029149,\n                  \"lng\"
+        : -1.641809219708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.81596991970849,\n                  \"lng\"
+        : -1.644507180291502\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n         [\n            {\n               \"location\" : \n               {\n
+        \                 \"latitude\" : 42.8172932,\n                  \"longitude\"
+        : -1.6431466\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"DRIVE\"\n               ]\n            },\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 42.8160078,\n                  \"longitude\" : -1.6434201\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"WALK\"\n
+        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJd08sXfmSUA0RJnxv9hLt9H0\",\n
+        \        \"types\" : \n         [\n            \"street_address\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"24\",\n               \"short_name\" : \"24\",\n
+        \              \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Calle de la Chapitela\",\n               \"short_name\" : \"C. de la Chapitela\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"C. de la Chapitela, 24, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.817692,\n                  \"lng\"
+        : -1.6429237\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.8175706,\n                  \"lng\" : -1.6431411\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.8176313,\n               \"lng\" : -1.6430324\n
+        \           },\n            \"location_type\" : \"ROOFTOP\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8189802802915,\n                  \"lng\" : -1.641683419708498\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.8162823197085,\n                  \"lng\" : -1.644381380291502\n               }\n
+        \           }\n         },\n         \"navigation_points\" : \n         [\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 42.8176535,\n                  \"longitude\" : -1.6429818\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"DRIVE\"\n
+        \              ]\n            },\n            {\n               \"location\"
+        : \n               {\n                  \"latitude\" : 42.8178236,\n                  \"longitude\"
+        : -1.6441157\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"WALK\"\n               ]\n            }\n
+        \        ],\n         \"place_id\" : \"ChIJv_-nXvmSUA0RqOUKGfoY1HI\",\n         \"types\"
+        : \n         [\n            \"premise\",\n            \"street_address\"\n
+        \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
+        \           {\n               \"long_name\" : \"45\",\n               \"short_name\"
+        : \"45\",\n               \"types\" : \n               [\n                  \"street_number\"\n
         \              ]\n            },\n            {\n               \"long_name\"
         : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
         \              \"types\" : \n               [\n                  \"route\"\n
@@ -684,7 +732,7 @@ http_interactions:
         \              \"long_name\" : \"31001\",\n               \"short_name\" :
         \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
         \              ]\n            }\n         ],\n         \"formatted_address\"
-        : \"Pl. del Castillo, 5, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \"Pl. del Castillo, 45, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
         : \n         {\n            \"location\" : \n            {\n               \"lat\"
         : 42.8173361,\n               \"lng\" : -1.6432434\n            },\n            \"location_type\"
         : \"RANGE_INTERPOLATED\",\n            \"viewport\" : \n            {\n               \"northeast\"
@@ -692,11 +740,11 @@ http_interactions:
         : -1.641894419708498\n               },\n               \"southwest\" : \n
         \              {\n                  \"lat\" : 42.8159871197085,\n                  \"lng\"
         : -1.644592380291502\n               }\n            }\n         },\n         \"place_id\"
-        : \"EjNQbC4gZGVsIENhc3RpbGxvLCA1LCAzMTAwMSBQYW1wbG9uYSwgTmF2YXJyYSwgU3BhaW4iGhIYChQKEgnVFJ5c-ZJQDREbD2RbQiTYjRAF\",\n
+        : \"EjRQbC4gZGVsIENhc3RpbGxvLCA0NSwgMzEwMDEgUGFtcGxvbmEsIE5hdmFycmEsIFNwYWluIhoSGAoUChIJ9_wmXfmSUA0R6DRnsjTVRzgQLQ\",\n
         \        \"types\" : \n         [\n            \"street_address\"\n         ]\n
         \     },\n      {\n         \"address_components\" : \n         [\n            {\n
-        \              \"long_name\" : \"45-42\",\n               \"short_name\" :
-        \"45-42\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              \"long_name\" : \"47-46\",\n               \"short_name\" :
+        \"47-46\",\n               \"types\" : \n               [\n                  \"street_number\"\n
         \              ]\n            },\n            {\n               \"long_name\"
         : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
         \              \"types\" : \n               [\n                  \"route\"\n
@@ -716,19 +764,19 @@ http_interactions:
         \              \"long_name\" : \"31001\",\n               \"short_name\" :
         \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
         \              ]\n            }\n         ],\n         \"formatted_address\"
-        : \"Pl. del Castillo, 45-42, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \"Pl. del Castillo, 47-46, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
         : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
-        : \n               {\n                  \"lat\" : 42.8173361,\n                  \"lng\"
-        : -1.6432434\n               },\n               \"southwest\" : \n               {\n
-        \                 \"lat\" : 42.8172483,\n                  \"lng\" : -1.643558\n
+        : \n               {\n                  \"lat\" : 42.8173906,\n                  \"lng\"
+        : -1.6430177\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.8173361,\n                  \"lng\" : -1.6432434\n
         \              }\n            },\n            \"location\" : \n            {\n
-        \              \"lat\" : 42.8172972,\n               \"lng\" : -1.6434045\n
+        \              \"lat\" : 42.8173634,\n               \"lng\" : -1.6431306\n
         \           },\n            \"location_type\" : \"GEOMETRIC_CENTER\",\n            \"viewport\"
         : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
-        : 42.81864118029149,\n                  \"lng\" : -1.642051719708498\n               },\n
+        : 42.8187123302915,\n                  \"lng\" : -1.641781569708498\n               },\n
         \              \"southwest\" : \n               {\n                  \"lat\"
-        : 42.81594321970849,\n                  \"lng\" : -1.644749680291502\n               }\n
-        \           }\n         },\n         \"place_id\" : \"ChIJ9_wmXfmSUA0R6DRnsjTVRzg\",\n
+        : 42.8160143697085,\n                  \"lng\" : -1.644479530291502\n               }\n
+        \           }\n         },\n         \"place_id\" : \"ChIJ1RSeXPmSUA0RGg9kW0Ik2I0\",\n
         \        \"types\" : \n         [\n            \"route\"\n         ]\n      },\n
         \     {\n         \"address_components\" : \n         [\n            {\n               \"long_name\"
         : \"31001\",\n               \"short_name\" : \"31001\",\n               \"types\"
@@ -941,315 +989,5 @@ http_interactions:
         \              }\n            }\n         },\n         \"place_id\" : \"ChIJi7xhMnjjQgwR7KNoB5Qs7KY\",\n
         \        \"types\" : \n         [\n            \"country\",\n            \"political\"\n
         \        ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
-  recorded_at: Tue, 02 Jun 2026 04:39:23 GMT
-- request:
-    method: post
-    uri: http://127.0.0.1:9515/session/4154b0ee95a96536b5344b1dbd0d5a5a/url
-    body:
-      encoding: UTF-8
-      string: '{"url":"http://localhost:51667/"}'
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json; charset=UTF-8
-      User-Agent:
-      - selenium/4.44.0 (ruby macosx)
-      Content-Length:
-      - '33'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Length:
-      - '14'
-      Content-Type:
-      - application/json; charset=utf-8
-      Cache-Control:
-      - no-cache
-    body:
-      encoding: UTF-8
-      string: '{"value":null}'
-  recorded_at: Tue, 02 Jun 2026 04:39:30 GMT
-- request:
-    method: post
-    uri: http://127.0.0.1:9515/session/4154b0ee95a96536b5344b1dbd0d5a5a/elements
-    body:
-      encoding: UTF-8
-      string: '{"using":"xpath","value":"./descendant::*[self::input | self::textarea][not(((((((./@type
-        = ''submit'') or (./@type = ''image'')) or (./@type = ''radio'')) or (./@type
-        = ''checkbox'')) or (./@type = ''hidden'')) or (./@type = ''file'')))][((((./@id
-        = ''book-input'') or (./@name = ''book-input'')) or (./@placeholder = ''book-input''))
-        or (./@id = //label[(normalize-space(string(.)) = ''book-input'')]/@for))]
-        | .//label[(normalize-space(string(.)) = ''book-input'')]//./descendant::*[self::input
-        | self::textarea][not(((((((./@type = ''submit'') or (./@type = ''image''))
-        or (./@type = ''radio'')) or (./@type = ''checkbox'')) or (./@type = ''hidden''))
-        or (./@type = ''file'')))]"}'
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json; charset=UTF-8
-      User-Agent:
-      - selenium/4.44.0 (ruby macosx)
-      Content-Length:
-      - '650'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Length:
-      - '129'
-      Content-Type:
-      - application/json; charset=utf-8
-      Cache-Control:
-      - no-cache
-    body:
-      encoding: UTF-8
-      string: '{"value":[{"element-6066-11e4-a52e-4f735466cecf":"f.E4EF26352807DFE9FF11886D0FCE031A.d.4C9DE5B9600FD93BD40ECA14F9A378B3.e.124"}]}'
-  recorded_at: Tue, 02 Jun 2026 04:39:30 GMT
-- request:
-    method: post
-    uri: http://127.0.0.1:9515/session/4154b0ee95a96536b5344b1dbd0d5a5a/execute/sync
-    body:
-      encoding: UTF-8
-      string: '{"script":"/* isDisplayed */return ((function(){function d(t,e,n){function
-        r(t){var e=x(t);if(0<e.height&&0<e.width)return!0;if(\"PATH\"==t.tagName.toUpperCase()&&(0<e.height||0<e.width)){var
-        n=window.getComputedStyle(t)[\"stroke-width\"];return!!n&&0<parseInt(n,10)}return\"hidden\"!=window.getComputedStyle(t).overflow&&Array.prototype.slice.call(t.childNodes).some(function(t){return
-        t.nodeType==Node.TEXT_NODE||t.nodeType==Node.ELEMENT_NODE&&r(t)})}function
-        i(t){return C(t)==T.HIDDEN&&Array.prototype.slice.call(t.childNodes).every(function(t){return
-        t.nodeType!=Node.ELEMENT_NODE||i(t)||!r(t)})}var o=t.tagName.toUpperCase();if(\"BODY\"==o)return!0;if(\"OPTION\"==o||\"OPTGROUP\"==o){var
-        a=c(t,function(t){return\"SELECT\"==t.tagName.toUpperCase()});return!!a&&d(a,!0,n)}var
-        u=s(t);if(u)return!!u.image&&0<u.rect.width&&0<u.rect.height&&d(u.image,e,n);if(\"INPUT\"==o&&\"hidden\"==t.type.toLowerCase())return!1;if(\"NOSCRIPT\"==o)return!1;var
-        l=window.getComputedStyle(t).visibility;return\"collapse\"!=l&&\"hidden\"!=l&&(!!n(t)&&(!(!e&&0==f(t))&&(!!r(t)&&!i(t))))}function
-        E(t){var e=x(t);return{left:e.left,right:e.left+e.width,top:e.top,bottom:e.top+e.height}}function
-        D(t){return t.parentElement}function C(t){function e(t){function e(t){if(t==u)return!0;var
-        e=window.getComputedStyle(t),n=e.display;return 0!=n.indexOf(\"inline\")&&\"contents\"!=n&&(\"absolute\"!=r||\"static\"!=e.position)}var
-        r=window.getComputedStyle(t).position;if(\"fixed\"==r)return i=!0,t==u?null:u;for(var
-        n=D(t);n&&!e(n);)n=D(n);return n}function n(t){var e=t;if(\"visible\"==d)if(t==u&&l)e=l;else
-        if(t==l)return{x:\"visible\",y:\"visible\"};var n=window.getComputedStyle(e),r={x:n[\"overflow-x\"],y:n[\"overflow-y\"]};return
-        t==u&&(r.x=\"visible\"==r.x?\"auto\":r.x,r.y=\"visible\"==r.y?\"auto\":r.y),r}function
-        r(t){return t==u?{x:window.scrollX,y:window.scrollY}:{x:t.scrollLeft,y:t.scrollTop}}for(var
-        i,o=E(t),a=t.ownerDocument,u=a.documentElement,l=a.body,d=window.getComputedStyle(u).overflow,f=e(t);f;f=e(f)){var
-        h=n(f);if(\"visible\"!=h.x||\"visible\"!=h.y){var s=x(f);if(0==s.width||0==s.height)return
-        T.HIDDEN;var p=o.right<s.left,c=o.bottom<s.top;if(p&&\"hidden\"==h.x||c&&\"hidden\"==h.y)return
-        T.HIDDEN;if(p&&\"visible\"!=h.x||c&&\"visible\"!=h.y){var v=r(f),g=o.right<s.left-v.x,w=o.bottom<s.top-v.y;return
-        g&&\"visible\"!=h.x||w&&\"visible\"!=h.x?T.HIDDEN:C(f)==T.HIDDEN?T.HIDDEN:T.SCROLL}var
-        N=o.left>=s.left+s.width,m=o.top>=s.top+s.height;if(N&&\"hidden\"==h.x||m&&\"hidden\"==h.y)return
-        T.HIDDEN;if(N&&\"visible\"!=h.x||m&&\"visible\"!=h.y){if(i){var y=r(f);if(o.left>=u.scrollWidth-y.x||o.right>=u.scrollHeight-y.y)return
-        T.HIDDEN}return C(f)==T.HIDDEN?T.HIDDEN:T.SCROLL}}}return T.NONE}function
-        o(t){var e=t.document.documentElement;return{width:e.clientWidth,height:e.clientHeight}}function
-        p(t,e,n,r){return{left:t,top:e,width:n,height:r}}function x(t){var e,n=s(t);if(n)return
-        n.rect;if(\"HTML\"==t.tagName.toUpperCase()){t.ownerDocument;var r=o(window);return
-        p(0,0,r.width,r.height)}try{e=t.getBoundingClientRect()}catch(i){return p(0,0,0,0)}return
-        p(e.left,e.top,e.right-e.left,e.bottom-e.top)}function f(t){var e=1,n=window.getComputedStyle(t).opacity;n&&(e=Number(n));var
-        r=D(t);return r&&r.nodeType==Node.ELEMENT_NODE&&(e*=f(r)),e}function h(t){var
-        e=t.shape.toLowerCase(),n=t.coords.split(\",\");if(\"rect\"==e&&4==n.length){var
-        r=n[0],i=n[1];return p(r,i,n[2]-r,n[3]-i)}if(\"circle\"==e&&3==n.length){var
-        o=n[0],a=n[1],u=n[2];return p(o-u,a-u,2*u,2*u)}if(\"poly\"==e&&2<n.length){for(var
-        l=n[0],d=n[1],f=l,h=d,s=2;s+1<n.length;s+=2)l=Math.min(l,n[s]),f=Math.max(f,n[s]),d=Math.min(d,n[s+1]),h=Math.max(h,n[s+1]);return
-        p(l,d,f-l,h-d)}return p(0,0,0,0)}function s(t){var e=t.tagName.toUpperCase(),n=\"MAP\"==e;if(!n&&\"AREA\"!=e)return
-        null;var r=n?t:\"MAP\"==D(t).tagName.toUpperCase()?D(t):null,i=null,o=null;if(r&&r.name&&((i=r.ownerDocument.querySelector(\"*[usemap=''#\"+r.name+\"'']\"))&&(o=x(i),!n&&\"default\"!=t.shape.toLowerCase()))){var
-        a=h(t),u=Math.min(Math.max(a.left,0),o.width),l=Math.min(Math.max(a.top,0),o.height),d=Math.min(a.width,o.width-u),f=Math.min(a.height,o.height-l);o=p(u+o.left,l+o.top,d,f)}return{image:i,rect:o||p(0,0,0,0)}}function
-        c(t,e){for(t&&(t=D(t));t;){if(e(t))return t;t=D(t)}return null}function r(t){var
-        e=t.parentNode;if(e&&e.shadowRoot&&t.assignedSlot!==undefined)return t.assignedSlot?t.assignedSlot.parentNode:null;if(t.getDestinationInsertionPoints){var
-        n=t.getDestinationInsertionPoints();if(0<n.length)return n[n.length-1]}return
-        e}var T={NONE:\"none\",HIDDEN:\"hidden\",SCROLL:\"scroll\"};return function
-        i(t,e){function n(t){if(\"none\"==window.getComputedStyle(t).display)return!1;var
-        e=r(t);if(\"function\"==typeof ShadowRoot&&e instanceof ShadowRoot){if(e.host.shadowRoot!==e)return!1;e=e.host}return!(!e||e.nodeType!=Node.DOCUMENT_NODE&&e.nodeType!=Node.DOCUMENT_FRAGMENT_NODE)||!(e&&e.tagName&&\"DETAILS\"==e.tagName.toUpperCase()&&!e.open&&\"SUMMARY\"!=t.tagName)&&(e&&n(e))}return
-        d(t,!!e,n)}})()).apply(null, arguments)","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.E4EF26352807DFE9FF11886D0FCE031A.d.4C9DE5B9600FD93BD40ECA14F9A378B3.e.124"}]}'
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json; charset=UTF-8
-      User-Agent:
-      - selenium/4.44.0 (ruby macosx)
-      Content-Length:
-      - '5123'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Length:
-      - '14'
-      Content-Type:
-      - application/json; charset=utf-8
-      Cache-Control:
-      - no-cache
-    body:
-      encoding: UTF-8
-      string: '{"value":true}'
-  recorded_at: Tue, 02 Jun 2026 04:39:30 GMT
-- request:
-    method: post
-    uri: http://127.0.0.1:9515/session/4154b0ee95a96536b5344b1dbd0d5a5a/execute/sync
-    body:
-      encoding: UTF-8
-      string: '{"script":"return arguments[0].matches('':disabled, select:disabled
-        *'')","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.E4EF26352807DFE9FF11886D0FCE031A.d.4C9DE5B9600FD93BD40ECA14F9A378B3.e.124"}]}'
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json; charset=UTF-8
-      User-Agent:
-      - selenium/4.44.0 (ruby macosx)
-      Content-Length:
-      - '199'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Length:
-      - '15'
-      Content-Type:
-      - application/json; charset=utf-8
-      Cache-Control:
-      - no-cache
-    body:
-      encoding: UTF-8
-      string: '{"value":false}'
-  recorded_at: Tue, 02 Jun 2026 04:39:30 GMT
-- request:
-    method: post
-    uri: http://127.0.0.1:9515/session/4154b0ee95a96536b5344b1dbd0d5a5a/execute/sync
-    body:
-      encoding: UTF-8
-      string: '{"script":"return (function(el, names){\n  return names.map(function(name){\n    return
-        el[name]\n  });\n})(arguments[0], arguments[1]);\n","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.E4EF26352807DFE9FF11886D0FCE031A.d.4C9DE5B9600FD93BD40ECA14F9A378B3.e.124"},["tagName","type"]]}'
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json; charset=UTF-8
-      User-Agent:
-      - selenium/4.44.0 (ruby macosx)
-      Content-Length:
-      - '286'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Length:
-      - '28'
-      Content-Type:
-      - application/json; charset=utf-8
-      Cache-Control:
-      - no-cache
-    body:
-      encoding: UTF-8
-      string: '{"value":["INPUT","search"]}'
-  recorded_at: Tue, 02 Jun 2026 04:39:30 GMT
-- request:
-    method: post
-    uri: http://127.0.0.1:9515/session/4154b0ee95a96536b5344b1dbd0d5a5a/execute/sync
-    body:
-      encoding: UTF-8
-      string: '{"script":"arguments[0].select()","args":[{"element-6066-11e4-a52e-4f735466cecf":"f.E4EF26352807DFE9FF11886D0FCE031A.d.4C9DE5B9600FD93BD40ECA14F9A378B3.e.124"}]}'
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json; charset=UTF-8
-      User-Agent:
-      - selenium/4.44.0 (ruby macosx)
-      Content-Length:
-      - '161'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Length:
-      - '14'
-      Content-Type:
-      - application/json; charset=utf-8
-      Cache-Control:
-      - no-cache
-    body:
-      encoding: UTF-8
-      string: '{"value":null}'
-  recorded_at: Tue, 02 Jun 2026 04:39:30 GMT
-- request:
-    method: post
-    uri: http://127.0.0.1:9515/session/4154b0ee95a96536b5344b1dbd0d5a5a/element/f.E4EF26352807DFE9FF11886D0FCE031A.d.4C9DE5B9600FD93BD40ECA14F9A378B3.e.124/value
-    body:
-      encoding: UTF-8
-      string: '{"value":["t","e","n"," ","b","e","l","l","s"],"text":"ten bells"}'
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json; charset=UTF-8
-      User-Agent:
-      - selenium/4.44.0 (ruby macosx)
-      Content-Length:
-      - '66'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Length:
-      - '14'
-      Content-Type:
-      - application/json; charset=utf-8
-      Cache-Control:
-      - no-cache
-    body:
-      encoding: UTF-8
-      string: '{"value":null}'
-  recorded_at: Tue, 02 Jun 2026 04:39:30 GMT
-- request:
-    method: post
-    uri: http://127.0.0.1:9515/session/4154b0ee95a96536b5344b1dbd0d5a5a/execute/sync
-    body:
-      encoding: UTF-8
-      string: '{"script":"return nOL.pins[''6a1e5e7bbedf227d6918e49d''].map","args":[]}'
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json; charset=UTF-8
-      User-Agent:
-      - selenium/4.44.0 (ruby macosx)
-      Content-Length:
-      - '70'
-      Accept-Encoding:
-      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
-  response:
-    status:
-      code: 200
-      message: OK
-    headers:
-      Content-Length:
-      - '14'
-      Content-Type:
-      - application/json; charset=utf-8
-      Cache-Control:
-      - no-cache
-    body:
-      encoding: UTF-8
-      string: '{"value":null}'
-  recorded_at: Tue, 02 Jun 2026 04:39:30 GMT
+  recorded_at: Tue, 02 Jun 2026 05:40:18 GMT
 recorded_with: VCR 6.4.0

@@ -198,8 +198,9 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
       end
     end
 
-    context "when a Location doesn't exist", vcr: { cassette_name: 'when_a_location_doesnt_exist' } do
-      it "an alert shows the Location wasn't found" do
+    context "when a Location doesn't exist" do
+      it "an alert shows the Location wasn't found",
+         vcr: { cassette_name: 'an_alert_shows_the_location_wasnt_found' } do
         message = accept_alert { visit location_path(:non_existent) }
         expect(message).to eq "Sorry, that novel location doesn't exist. Why not add it?"
       end
