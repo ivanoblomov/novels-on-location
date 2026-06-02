@@ -1,0 +1,947 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=42.817466863494666,%20-1.6433493129083157&key=<GOOGLE_MAPS_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 02 Jun 2026 04:17:47 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:257:0
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=msaifdggmnwc:257:0
+      Report-To:
+      - '{"group":"msaifdggmnwc:257:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:257:0"}],}'
+      Server:
+      - mafe
+      Content-Length:
+      - '34045'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=169
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "{\n   \"results\" : \n   [\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"44\",\n               \"short_name\"
+        : \"44\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 44, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8174311,\n               \"lng\" : -1.643297\n            },\n            \"location_type\"
+        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8187800802915,\n                  \"lng\"
+        : -1.641948019708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.8160821197085,\n                  \"lng\"
+        : -1.644645980291502\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n         [\n            {\n               \"location\" : \n               {\n
+        \                 \"latitude\" : 42.8174129,\n                  \"longitude\"
+        : -1.6431997\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"DRIVE\"\n               ]\n            },\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 42.8160078,\n                  \"longitude\" : -1.6434201\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"WALK\"\n
+        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJAQxuXfmSUA0RYOkf1Muo0hQ\",\n
+        \        \"types\" : \n         [\n            \"cafe\",\n            \"establishment\",\n
+        \           \"food\",\n            \"point_of_interest\",\n            \"restaurant\",\n
+        \           \"store\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"44\",\n               \"short_name\"
+        : \"44\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 44, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8174836,\n               \"lng\" : -1.643255\n            },\n            \"location_type\"
+        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8188325802915,\n                  \"lng\"
+        : -1.641906019708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.8161346197085,\n                  \"lng\"
+        : -1.644603980291502\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n         [\n            {\n               \"location\" : \n               {\n
+        \                 \"latitude\" : 42.8174078,\n                  \"longitude\"
+        : -1.643221\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"DRIVE\"\n               ]\n            },\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 42.8160078,\n                  \"longitude\" : -1.6434201\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"WALK\"\n
+        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJy-2GZ_mSUA0Ruvz32cL1ESM\",\n
+        \        \"types\" : \n         [\n            \"street_address\",\n            \"subpremise\"\n
+        \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
+        \           {\n               \"long_name\" : \"44c\",\n               \"short_name\"
+        : \"44c\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31002\",\n               \"short_name\" :
+        \"31002\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 44c, 31002 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8173189,\n               \"lng\" : -1.6431582\n            },\n            \"location_type\"
+        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.81866788029149,\n                  \"lng\"
+        : -1.641809219708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.81596991970849,\n                  \"lng\"
+        : -1.644507180291502\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n         [\n            {\n               \"location\" : \n               {\n
+        \                 \"latitude\" : 42.8172932,\n                  \"longitude\"
+        : -1.6431466\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"DRIVE\"\n               ]\n            },\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 42.8160078,\n                  \"longitude\" : -1.6434201\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"WALK\"\n
+        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJd08sXfmSUA0RJnxv9hLt9H0\",\n
+        \        \"types\" : \n         [\n            \"street_address\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"24\",\n               \"short_name\" : \"24\",\n
+        \              \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Calle de la Chapitela\",\n               \"short_name\" : \"C. de la Chapitela\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"C. de la Chapitela, 24, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.817692,\n                  \"lng\"
+        : -1.6429237\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.8175706,\n                  \"lng\" : -1.6431411\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.8176313,\n               \"lng\" : -1.6430324\n
+        \           },\n            \"location_type\" : \"ROOFTOP\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8189802802915,\n                  \"lng\" : -1.641683419708498\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.8162823197085,\n                  \"lng\" : -1.644381380291502\n               }\n
+        \           }\n         },\n         \"navigation_points\" : \n         [\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 42.8176535,\n                  \"longitude\" : -1.6429818\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"DRIVE\"\n
+        \              ]\n            },\n            {\n               \"location\"
+        : \n               {\n                  \"latitude\" : 42.8178236,\n                  \"longitude\"
+        : -1.6441157\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"WALK\"\n               ]\n            }\n
+        \        ],\n         \"place_id\" : \"ChIJv_-nXvmSUA0RqOUKGfoY1HI\",\n         \"types\"
+        : \n         [\n            \"premise\",\n            \"street_address\"\n
+        \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
+        \           {\n               \"long_name\" : \"5\",\n               \"short_name\"
+        : \"5\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 5, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8173361,\n               \"lng\" : -1.6432434\n            },\n            \"location_type\"
+        : \"RANGE_INTERPOLATED\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8186850802915,\n                  \"lng\"
+        : -1.641894419708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.8159871197085,\n                  \"lng\"
+        : -1.644592380291502\n               }\n            }\n         },\n         \"place_id\"
+        : \"EjNQbC4gZGVsIENhc3RpbGxvLCA1LCAzMTAwMSBQYW1wbG9uYSwgTmF2YXJyYSwgU3BhaW4iGhIYChQKEgnVFJ5c-ZJQDREbD2RbQiTYjRAF\",\n
+        \        \"types\" : \n         [\n            \"street_address\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"45-42\",\n               \"short_name\" :
+        \"45-42\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 45-42, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8173361,\n                  \"lng\"
+        : -1.6432434\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.8172483,\n                  \"lng\" : -1.643558\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.8172972,\n               \"lng\" : -1.6434045\n
+        \           },\n            \"location_type\" : \"GEOMETRIC_CENTER\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.81864118029149,\n                  \"lng\" : -1.642051719708498\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.81594321970849,\n                  \"lng\" : -1.644749680291502\n               }\n
+        \           }\n         },\n         \"place_id\" : \"ChIJ9_wmXfmSUA0R6DRnsjTVRzg\",\n
+        \        \"types\" : \n         [\n            \"route\"\n         ]\n      },\n
+        \     {\n         \"address_components\" : \n         [\n            {\n               \"long_name\"
+        : \"31001\",\n               \"short_name\" : \"31001\",\n               \"types\"
+        : \n               [\n                  \"postal_code\"\n               ]\n
+        \           },\n            {\n               \"long_name\" : \"Pamplona\",\n
+        \              \"short_name\" : \"Pamplona\",\n               \"types\" :
+        \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarre\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"31001 Pamplona, Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8228058,\n                  \"lng\"
+        : -1.637744\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.8147527,\n                  \"lng\" : -1.6509247\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.81913309999999,\n               \"lng\" : -1.6432837\n
+        \           },\n            \"location_type\" : \"APPROXIMATE\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8228058,\n                  \"lng\" : -1.637744\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.8147527,\n                  \"lng\" : -1.6509247\n               }\n
+        \           }\n         },\n         \"place_id\" : \"ChIJFyCe3fuSUA0RIKJxYWiMARw\",\n
+        \        \"types\" : \n         [\n            \"postal_code\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"Casco Viejo\",\n               \"short_name\"
+        : \"Casco Viejo\",\n               \"types\" : \n               [\n                  \"neighborhood\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Pamplona\",\n               \"short_name\"
+        : \"Pamplona\",\n               \"types\" : \n               [\n                  \"locality\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NA\",\n               \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Casco Viejo, Pamplona, Navarre, Spain\",\n
+        \        \"geometry\" : \n         {\n            \"bounds\" : \n            {\n
+        \              \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8226455,\n                  \"lng\" : -1.6377602\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.8146195,\n                  \"lng\" : -1.6511792\n               }\n
+        \           },\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8188217,\n               \"lng\" : -1.6427149\n            },\n            \"location_type\"
+        : \"APPROXIMATE\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8226455,\n                  \"lng\"
+        : -1.6377602\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.8146195,\n                  \"lng\" : -1.6511792\n
+        \              }\n            }\n         },\n         \"place_id\" : \"ChIJb9tfAPuSUA0RizNxqCsnc9k\",\n
+        \        \"types\" : \n         [\n            \"neighborhood\",\n            \"political\"\n
+        \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
+        \           {\n               \"long_name\" : \"Pamplona\",\n               \"short_name\"
+        : \"Pamplona\",\n               \"types\" : \n               [\n                  \"locality\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NA\",\n               \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Pamplona, Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8381176,\n                  \"lng\"
+        : -1.6046592\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.7934144,\n                  \"lng\" : -1.695384\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.812526,\n               \"lng\" : -1.6457745\n
+        \           },\n            \"location_type\" : \"APPROXIMATE\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8381176,\n                  \"lng\" : -1.6046592\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.7934144,\n                  \"lng\" : -1.695384\n               }\n            }\n
+        \        },\n         \"place_id\" : \"ChIJx2UZo4uSUA0RkC7LMjaQbk4\",\n         \"types\"
+        : \n         [\n            \"locality\",\n            \"political\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"Pamplona\",\n               \"short_name\"
+        : \"Pamplona\",\n               \"types\" : \n               [\n                  \"administrative_area_level_4\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NA\",\n               \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Pamplona, Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8427094,\n                  \"lng\"
+        : -1.6044823\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.7888393,\n                  \"lng\" : -1.6950077\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.8126332,\n               \"lng\" : -1.6459961\n
+        \           },\n            \"location_type\" : \"APPROXIMATE\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8427094,\n                  \"lng\" : -1.6044823\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.7888393,\n                  \"lng\" : -1.6950077\n               }\n
+        \           }\n         },\n         \"place_id\" : \"ChIJEdQQ_PaSUA0R8PfOCGWMAQQ\",\n
+        \        \"types\" : \n         [\n            \"administrative_area_level_4\",\n
+        \           \"political\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"Cuenca de
+        Pamplona\",\n               \"short_name\" : \"Cuenca de Pamplona\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_3\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NA\",\n               \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Cuenca de Pamplona, Navarre, Spain\",\n
+        \        \"geometry\" : \n         {\n            \"bounds\" : \n            {\n
+        \              \"northeast\" : \n               {\n                  \"lat\"
+        : 42.9443032,\n                  \"lng\" : -1.474441\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.6487867,\n                  \"lng\" : -1.9525409\n               }\n
+        \           },\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8125246,\n               \"lng\" : -1.6457859\n            },\n            \"location_type\"
+        : \"APPROXIMATE\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.9443032,\n                  \"lng\"
+        : -1.474441\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.6487867,\n                  \"lng\" : -1.9525409\n
+        \              }\n            }\n         },\n         \"place_id\" : \"ChIJNULHlrSNUA0R5Gj1e_1we3o\",\n
+        \        \"types\" : \n         [\n            \"administrative_area_level_3\",\n
+        \           \"political\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"Navarre\",\n
+        \              \"short_name\" : \"NA\",\n               \"types\" : \n               [\n
+        \                 \"administrative_area_level_2\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarre\",\n               \"short_name\" : \"NC\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 43.3148112,\n                  \"lng\"
+        : -0.7240793000000001\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 41.9098937,\n                  \"lng\"
+        : -2.5000827\n               }\n            },\n            \"location\" :
+        \n            {\n               \"lat\" : 42.6953909,\n               \"lng\"
+        : -1.6760691\n            },\n            \"location_type\" : \"APPROXIMATE\",\n
+        \           \"viewport\" : \n            {\n               \"northeast\" :
+        \n               {\n                  \"lat\" : 43.3148112,\n                  \"lng\"
+        : -0.7240793000000001\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 41.9098937,\n                  \"lng\"
+        : -2.5000827\n               }\n            }\n         },\n         \"place_id\"
+        : \"ChIJrRg4rg6cUA0RIMvNCGWMAQM\",\n         \"types\" : \n         [\n            \"administrative_area_level_2\",\n
+        \           \"political\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"Navarre\",\n
+        \              \"short_name\" : \"NC\",\n               \"types\" : \n               [\n
+        \                 \"administrative_area_level_1\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarre\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 43.3148112,\n                  \"lng\"
+        : -0.7240793000000001\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 41.9098937,\n                  \"lng\"
+        : -2.5000827\n               }\n            },\n            \"location\" :
+        \n            {\n               \"lat\" : 42.6953909,\n               \"lng\"
+        : -1.6760691\n            },\n            \"location_type\" : \"APPROXIMATE\",\n
+        \           \"viewport\" : \n            {\n               \"northeast\" :
+        \n               {\n                  \"lat\" : 43.3148112,\n                  \"lng\"
+        : -0.7240793000000001\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 41.9098937,\n                  \"lng\"
+        : -2.5000827\n               }\n            }\n         },\n         \"place_id\"
+        : \"ChIJhVbJl_eSUA0RDop817cZqx0\",\n         \"types\" : \n         [\n            \"administrative_area_level_1\",\n
+        \           \"political\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"Spain\",\n
+        \              \"short_name\" : \"ES\",\n               \"types\" : \n               [\n
+        \                 \"country\",\n                  \"political\"\n               ]\n
+        \           }\n         ],\n         \"formatted_address\" : \"Spain\",\n
+        \        \"geometry\" : \n         {\n            \"bounds\" : \n            {\n
+        \              \"northeast\" : \n               {\n                  \"lat\"
+        : 43.8504,\n                  \"lng\" : 4.6362\n               },\n               \"southwest\"
+        : \n               {\n                  \"lat\" : 27.4985,\n                  \"lng\"
+        : -18.2648001\n               }\n            },\n            \"location\"
+        : \n            {\n               \"lat\" : 40.46366700000001,\n               \"lng\"
+        : -3.74922\n            },\n            \"location_type\" : \"APPROXIMATE\",\n
+        \           \"viewport\" : \n            {\n               \"northeast\" :
+        \n               {\n                  \"lat\" : 43.8504,\n                  \"lng\"
+        : 4.6362\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 27.4985,\n                  \"lng\" : -18.2648001\n
+        \              }\n            }\n         },\n         \"place_id\" : \"ChIJi7xhMnjjQgwR7KNoB5Qs7KY\",\n
+        \        \"types\" : \n         [\n            \"country\",\n            \"political\"\n
+        \        ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
+  recorded_at: Tue, 02 Jun 2026 04:17:47 GMT
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=42.81734267146107,%20-1.6432598002995171&key=<GOOGLE_MAPS_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Tue, 02 Jun 2026 04:17:47 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:257:0
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=msaifdggmnwc:257:0
+      Report-To:
+      - '{"group":"msaifdggmnwc:257:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:257:0"}],}'
+      Server:
+      - mafe
+      Content-Length:
+      - '30660'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=132
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "{\n   \"results\" : \n   [\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"44c\",\n               \"short_name\"
+        : \"44c\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31002\",\n               \"short_name\" :
+        \"31002\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 44c, 31002 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8173189,\n               \"lng\" : -1.6431582\n            },\n            \"location_type\"
+        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.81866788029149,\n                  \"lng\"
+        : -1.641809219708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.81596991970849,\n                  \"lng\"
+        : -1.644507180291502\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n         [\n            {\n               \"location\" : \n               {\n
+        \                 \"latitude\" : 42.8172932,\n                  \"longitude\"
+        : -1.6431466\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"DRIVE\"\n               ]\n            },\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 42.8160078,\n                  \"longitude\" : -1.6434201\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"WALK\"\n
+        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJd08sXfmSUA0RJnxv9hLt9H0\",\n
+        \        \"types\" : \n         [\n            \"street_address\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"44\",\n               \"short_name\" : \"44\",\n
+        \              \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 44, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8174311,\n               \"lng\" : -1.643297\n            },\n            \"location_type\"
+        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8187800802915,\n                  \"lng\"
+        : -1.641948019708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.8160821197085,\n                  \"lng\"
+        : -1.644645980291502\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n         [\n            {\n               \"location\" : \n               {\n
+        \                 \"latitude\" : 42.8174129,\n                  \"longitude\"
+        : -1.6431997\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"DRIVE\"\n               ]\n            },\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 42.8160078,\n                  \"longitude\" : -1.6434201\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"WALK\"\n
+        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJAQxuXfmSUA0RYOkf1Muo0hQ\",\n
+        \        \"types\" : \n         [\n            \"cafe\",\n            \"establishment\",\n
+        \           \"food\",\n            \"point_of_interest\",\n            \"restaurant\",\n
+        \           \"store\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"44\",\n               \"short_name\"
+        : \"44\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 44, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8174836,\n               \"lng\" : -1.643255\n            },\n            \"location_type\"
+        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8188325802915,\n                  \"lng\"
+        : -1.641906019708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.8161346197085,\n                  \"lng\"
+        : -1.644603980291502\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n         [\n            {\n               \"location\" : \n               {\n
+        \                 \"latitude\" : 42.8174078,\n                  \"longitude\"
+        : -1.643221\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"DRIVE\"\n               ]\n            },\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 42.8160078,\n                  \"longitude\" : -1.6434201\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"WALK\"\n
+        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJy-2GZ_mSUA0Ruvz32cL1ESM\",\n
+        \        \"types\" : \n         [\n            \"street_address\",\n            \"subpremise\"\n
+        \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
+        \           {\n               \"long_name\" : \"5\",\n               \"short_name\"
+        : \"5\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 5, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8173361,\n               \"lng\" : -1.6432434\n            },\n            \"location_type\"
+        : \"RANGE_INTERPOLATED\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8186850802915,\n                  \"lng\"
+        : -1.641894419708498\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 42.8159871197085,\n                  \"lng\"
+        : -1.644592380291502\n               }\n            }\n         },\n         \"place_id\"
+        : \"EjNQbC4gZGVsIENhc3RpbGxvLCA1LCAzMTAwMSBQYW1wbG9uYSwgTmF2YXJyYSwgU3BhaW4iGhIYChQKEgnVFJ5c-ZJQDREbD2RbQiTYjRAF\",\n
+        \        \"types\" : \n         [\n            \"street_address\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"45-42\",\n               \"short_name\" :
+        \"45-42\",\n               \"types\" : \n               [\n                  \"street_number\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Plaza del Castillo\",\n               \"short_name\" : \"Pl. del Castillo\",\n
+        \              \"types\" : \n               [\n                  \"route\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Pamplona\",\n               \"short_name\" : \"Pamplona\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarra\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarra\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"31001\",\n               \"short_name\" :
+        \"31001\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"Pl. del Castillo, 45-42, 31001 Pamplona, Navarra, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8173361,\n                  \"lng\"
+        : -1.6432434\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.8172483,\n                  \"lng\" : -1.643558\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.8172972,\n               \"lng\" : -1.6434045\n
+        \           },\n            \"location_type\" : \"GEOMETRIC_CENTER\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.81864118029149,\n                  \"lng\" : -1.642051719708498\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.81594321970849,\n                  \"lng\" : -1.644749680291502\n               }\n
+        \           }\n         },\n         \"place_id\" : \"ChIJ9_wmXfmSUA0R6DRnsjTVRzg\",\n
+        \        \"types\" : \n         [\n            \"route\"\n         ]\n      },\n
+        \     {\n         \"address_components\" : \n         [\n            {\n               \"long_name\"
+        : \"31001\",\n               \"short_name\" : \"31001\",\n               \"types\"
+        : \n               [\n                  \"postal_code\"\n               ]\n
+        \           },\n            {\n               \"long_name\" : \"Pamplona\",\n
+        \              \"short_name\" : \"Pamplona\",\n               \"types\" :
+        \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarre\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"31001 Pamplona, Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8228058,\n                  \"lng\"
+        : -1.637744\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.8147527,\n                  \"lng\" : -1.6509247\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.81913309999999,\n               \"lng\" : -1.6432837\n
+        \           },\n            \"location_type\" : \"APPROXIMATE\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8228058,\n                  \"lng\" : -1.637744\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.8147527,\n                  \"lng\" : -1.6509247\n               }\n
+        \           }\n         },\n         \"place_id\" : \"ChIJFyCe3fuSUA0RIKJxYWiMARw\",\n
+        \        \"types\" : \n         [\n            \"postal_code\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"Casco Viejo\",\n               \"short_name\"
+        : \"Casco Viejo\",\n               \"types\" : \n               [\n                  \"neighborhood\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Pamplona\",\n               \"short_name\"
+        : \"Pamplona\",\n               \"types\" : \n               [\n                  \"locality\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NA\",\n               \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Casco Viejo, Pamplona, Navarre, Spain\",\n
+        \        \"geometry\" : \n         {\n            \"bounds\" : \n            {\n
+        \              \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8226455,\n                  \"lng\" : -1.6377602\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.8146195,\n                  \"lng\" : -1.6511792\n               }\n
+        \           },\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8188217,\n               \"lng\" : -1.6427149\n            },\n            \"location_type\"
+        : \"APPROXIMATE\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8226455,\n                  \"lng\"
+        : -1.6377602\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.8146195,\n                  \"lng\" : -1.6511792\n
+        \              }\n            }\n         },\n         \"place_id\" : \"ChIJb9tfAPuSUA0RizNxqCsnc9k\",\n
+        \        \"types\" : \n         [\n            \"neighborhood\",\n            \"political\"\n
+        \        ]\n      },\n      {\n         \"address_components\" : \n         [\n
+        \           {\n               \"long_name\" : \"Pamplona\",\n               \"short_name\"
+        : \"Pamplona\",\n               \"types\" : \n               [\n                  \"locality\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NA\",\n               \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Pamplona, Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8381176,\n                  \"lng\"
+        : -1.6046592\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.7934144,\n                  \"lng\" : -1.695384\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.812526,\n               \"lng\" : -1.6457745\n
+        \           },\n            \"location_type\" : \"APPROXIMATE\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8381176,\n                  \"lng\" : -1.6046592\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.7934144,\n                  \"lng\" : -1.695384\n               }\n            }\n
+        \        },\n         \"place_id\" : \"ChIJx2UZo4uSUA0RkC7LMjaQbk4\",\n         \"types\"
+        : \n         [\n            \"locality\",\n            \"political\"\n         ]\n
+        \     },\n      {\n         \"address_components\" : \n         [\n            {\n
+        \              \"long_name\" : \"Pamplona\",\n               \"short_name\"
+        : \"Pamplona\",\n               \"types\" : \n               [\n                  \"administrative_area_level_4\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NA\",\n               \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Pamplona, Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.8427094,\n                  \"lng\"
+        : -1.6044823\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.7888393,\n                  \"lng\" : -1.6950077\n
+        \              }\n            },\n            \"location\" : \n            {\n
+        \              \"lat\" : 42.8126332,\n               \"lng\" : -1.6459961\n
+        \           },\n            \"location_type\" : \"APPROXIMATE\",\n            \"viewport\"
+        : \n            {\n               \"northeast\" : \n               {\n                  \"lat\"
+        : 42.8427094,\n                  \"lng\" : -1.6044823\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.7888393,\n                  \"lng\" : -1.6950077\n               }\n
+        \           }\n         },\n         \"place_id\" : \"ChIJEdQQ_PaSUA0R8PfOCGWMAQQ\",\n
+        \        \"types\" : \n         [\n            \"administrative_area_level_4\",\n
+        \           \"political\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"Cuenca de
+        Pamplona\",\n               \"short_name\" : \"Cuenca de Pamplona\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_3\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NA\",\n               \"types\" : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Navarre\",\n               \"short_name\"
+        : \"NC\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Cuenca de Pamplona, Navarre, Spain\",\n
+        \        \"geometry\" : \n         {\n            \"bounds\" : \n            {\n
+        \              \"northeast\" : \n               {\n                  \"lat\"
+        : 42.9443032,\n                  \"lng\" : -1.474441\n               },\n
+        \              \"southwest\" : \n               {\n                  \"lat\"
+        : 42.6487867,\n                  \"lng\" : -1.9525409\n               }\n
+        \           },\n            \"location\" : \n            {\n               \"lat\"
+        : 42.8125246,\n               \"lng\" : -1.6457859\n            },\n            \"location_type\"
+        : \"APPROXIMATE\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 42.9443032,\n                  \"lng\"
+        : -1.474441\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 42.6487867,\n                  \"lng\" : -1.9525409\n
+        \              }\n            }\n         },\n         \"place_id\" : \"ChIJNULHlrSNUA0R5Gj1e_1we3o\",\n
+        \        \"types\" : \n         [\n            \"administrative_area_level_3\",\n
+        \           \"political\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"Navarre\",\n
+        \              \"short_name\" : \"NA\",\n               \"types\" : \n               [\n
+        \                 \"administrative_area_level_2\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarre\",\n               \"short_name\" : \"NC\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 43.3148112,\n                  \"lng\"
+        : -0.7240793000000001\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 41.9098937,\n                  \"lng\"
+        : -2.5000827\n               }\n            },\n            \"location\" :
+        \n            {\n               \"lat\" : 42.6953909,\n               \"lng\"
+        : -1.6760691\n            },\n            \"location_type\" : \"APPROXIMATE\",\n
+        \           \"viewport\" : \n            {\n               \"northeast\" :
+        \n               {\n                  \"lat\" : 43.3148112,\n                  \"lng\"
+        : -0.7240793000000001\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 41.9098937,\n                  \"lng\"
+        : -2.5000827\n               }\n            }\n         },\n         \"place_id\"
+        : \"ChIJrRg4rg6cUA0RIMvNCGWMAQM\",\n         \"types\" : \n         [\n            \"administrative_area_level_2\",\n
+        \           \"political\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"Navarre\",\n
+        \              \"short_name\" : \"NC\",\n               \"types\" : \n               [\n
+        \                 \"administrative_area_level_1\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"Navarre\",\n               \"short_name\" : \"NA\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_2\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Spain\",\n               \"short_name\" :
+        \"ES\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            }\n         ],\n
+        \        \"formatted_address\" : \"Navarre, Spain\",\n         \"geometry\"
+        : \n         {\n            \"bounds\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 43.3148112,\n                  \"lng\"
+        : -0.7240793000000001\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 41.9098937,\n                  \"lng\"
+        : -2.5000827\n               }\n            },\n            \"location\" :
+        \n            {\n               \"lat\" : 42.6953909,\n               \"lng\"
+        : -1.6760691\n            },\n            \"location_type\" : \"APPROXIMATE\",\n
+        \           \"viewport\" : \n            {\n               \"northeast\" :
+        \n               {\n                  \"lat\" : 43.3148112,\n                  \"lng\"
+        : -0.7240793000000001\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 41.9098937,\n                  \"lng\"
+        : -2.5000827\n               }\n            }\n         },\n         \"place_id\"
+        : \"ChIJhVbJl_eSUA0RDop817cZqx0\",\n         \"types\" : \n         [\n            \"administrative_area_level_1\",\n
+        \           \"political\"\n         ]\n      },\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"Spain\",\n
+        \              \"short_name\" : \"ES\",\n               \"types\" : \n               [\n
+        \                 \"country\",\n                  \"political\"\n               ]\n
+        \           }\n         ],\n         \"formatted_address\" : \"Spain\",\n
+        \        \"geometry\" : \n         {\n            \"bounds\" : \n            {\n
+        \              \"northeast\" : \n               {\n                  \"lat\"
+        : 43.8504,\n                  \"lng\" : 4.6362\n               },\n               \"southwest\"
+        : \n               {\n                  \"lat\" : 27.4985,\n                  \"lng\"
+        : -18.2648001\n               }\n            },\n            \"location\"
+        : \n            {\n               \"lat\" : 40.46366700000001,\n               \"lng\"
+        : -3.74922\n            },\n            \"location_type\" : \"APPROXIMATE\",\n
+        \           \"viewport\" : \n            {\n               \"northeast\" :
+        \n               {\n                  \"lat\" : 43.8504,\n                  \"lng\"
+        : 4.6362\n               },\n               \"southwest\" : \n               {\n
+        \                 \"lat\" : 27.4985,\n                  \"lng\" : -18.2648001\n
+        \              }\n            }\n         },\n         \"place_id\" : \"ChIJi7xhMnjjQgwR7KNoB5Qs7KY\",\n
+        \        \"types\" : \n         [\n            \"country\",\n            \"political\"\n
+        \        ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
+  recorded_at: Tue, 02 Jun 2026 04:17:47 GMT
+recorded_with: VCR 6.4.0
