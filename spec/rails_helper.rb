@@ -63,6 +63,11 @@ RSpec.configure do |config|
   config.before(:each, :js, type: :system) do |example|
     driven_by example.metadata[:js]
   end
+  config.around(:each, :skip_vcr) do |example|
+    WebMock.allow_net_connect! if defined?(WebMock)
+    VCR.turned_off(ignore_cassettes: true) { example.run }
+    WebMock.disable_net_connect! if defined?(WebMock)
+  end
   config.after(:each, type: :system) do |example|
     warn page.driver.browser.logs.get(:browser) if example.exception
   end
