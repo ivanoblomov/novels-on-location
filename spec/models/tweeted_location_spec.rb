@@ -22,7 +22,7 @@ describe TweetedLocation do
     end
   end
 
-  describe '#save' do
+  describe '#save', vcr: { cassette_name: 'tweeted_location_save' } do
     before { tweeted_location.save }
 
     context 'when title is defined' do

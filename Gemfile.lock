@@ -113,6 +113,10 @@ GEM
       rexml
     crass (1.0.6)
     csv (3.3.5)
+    database_cleaner-core (2.0.1)
+    database_cleaner-mongoid (2.0.1)
+      database_cleaner-core (~> 2.0.0)
+      mongoid
     date (3.5.1)
     diff-lcs (1.6.2)
     docile (1.4.1)
@@ -484,6 +488,7 @@ DEPENDENCIES
   cancancan
   capybara
   coffee-rails
+  database_cleaner-mongoid
   embiggen
   factory_bot_rails
   faker

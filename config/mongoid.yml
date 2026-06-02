@@ -1,29 +1,25 @@
+defaults: &defaults
+  options:
+    raise_not_found_error: true
+
 development:
+  <<: *defaults
   clients:
     default:
       database: novels
       hosts:
         - <%= Rails.application.config.main_host %>:27017
-  options:
-    raise_not_found_error: false
 
 test:
+  <<: *defaults
   clients:
     default:
       database: novels_on_location_test
       hosts:
         - <%= Rails.application.config.main_host %>:27017
-      options:
-        consistency: :strong
-        # In the test environment we lower the retries and retry interval to
-        # low amounts for fast failures.
-        max_retries: 1
-        raise_not_found_error: false
-        retry_interval: 0
 
 production:
+  <<: *defaults
   clients:
     default:
       uri: <%= ENV['MONGODB_URI'] %>
-  options:
-    raise_not_found_error: false
