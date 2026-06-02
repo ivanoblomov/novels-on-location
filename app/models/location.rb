@@ -282,7 +282,7 @@ class Location
   end
 
   def displace_or_geocode
-    displace if matching_coordinates.present?
+    displace if matching_coordinates.positive?
     return if place.present?
 
     geocode lat_lng ? lat_lng * ', ' : tags
