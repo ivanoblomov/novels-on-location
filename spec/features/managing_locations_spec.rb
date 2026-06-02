@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :selenium_chrome_headless,
                                      type: :system do
-  context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
+  context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords',
+          vcr: { cassette_name: 'when_the_map_is_in_add_pins_mode_and_a_user_double_clicks_it_and_enters_keywords' } do
     before do
       visit root_path
       click_on 'Mode: Zoom'
@@ -29,7 +30,8 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     it('the Location is created') { expect(Location.count).to eq 1 }
   end
 
-  context 'when a Location exists and a User drags its pin to a new place' do
+  context 'when a Location exists and a User drags its pin to a new place',
+          vcr: { cassette_name: 'when_a_location_exists_and_a_user_drags_its_pin_to_a_new_place' } do
     let(:la_concha) do
       Location.find_or_create_by author: 'Ernest Hemingway',
                                  lat_lng: ['43.3186188', '-1.9860118'],
@@ -58,7 +60,8 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     end
   end
 
-  context 'when a Location exists and its balloon is open' do
+  context 'when a Location exists and its balloon is open',
+          vcr: { cassette_name: 'when_a_location_exists_and_its_balloon_is_open' } do
     before do
       Location.find_or_create_by author: 'Alan Moore',
                                  lat_lng: ['51.519326', '-0.074316'],
