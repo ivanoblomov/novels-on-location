@@ -111,7 +111,7 @@ describe Location do
   end
 
   describe '#displace_or_geocode' do
-    context 'when Locations matching coordinates exist', skip_vcr: true do
+    context 'when Locations matching coordinates exist', :skip_vcr do
       let(:location_matching_coordinates) { build(:location, :location_matching_coordinates) }
       let(:locations_matching_coordinates) { [location, location_matching_coordinates] }
 

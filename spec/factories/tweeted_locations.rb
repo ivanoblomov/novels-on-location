@@ -4,7 +4,10 @@ FactoryBot.define do
   factory :tweeted_location do
     location
     place { 'Pennsylvania Station' }
-    text { 'Conquering Gotham explores the vision and challenges faced by the Pennsylvania Railroad in constructing a monumental transit hub.' }
+    text do
+      'Conquering Gotham explores the vision and challenges faced by the Pennsylvania Railroad in constructing a ' \
+        'monumental transit hub.'
+    end
     title { 'Conquering Gotham' }
   end
 end

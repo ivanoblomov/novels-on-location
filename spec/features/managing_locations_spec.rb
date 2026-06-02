@@ -55,10 +55,12 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
       accept_confirm { source.drag_to target }
     end
 
+    # rubocop:disable RSpec/NoExpectationExample
     it "the Location's new coordinates persist" do
       wait_for { la_concha.reload.lat_lng[0].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[0].to_f) and
         wait_for { la_concha.reload.lat_lng[1].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[1].to_f)
     end
+    # rubocop:enable RSpec/NoExpectationExample
   end
 
   context 'when a Location exists and its balloon is open',
