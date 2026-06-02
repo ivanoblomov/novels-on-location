@@ -26,7 +26,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
                                  user_id: '666325406'
     end
 
-    context 'when a User clicks its pin', vcr: { cassette_name: 'when_a_user_clicks_its_pin' } do
+    context 'when a User clicks its pin' do
       before do
         from_hell
         visit root_path
