@@ -101,7 +101,7 @@ describe Location do
   end
 
   describe '#add_bookmark' do
-    context 'with a user_id: 1', vcr: { cassette_name: 'with_a_user_id' } do
+    context 'with a user_id: 1', :skip_vcr do
       let(:user_id) { 1 }
 
       before { location.add_bookmark user_id }
@@ -111,8 +111,7 @@ describe Location do
   end
 
   describe '#displace_or_geocode' do
-    context 'when Locations matching coordinates exist',
-            vcr: { cassette_name: 'when_locations_matching_coordinates_exist' } do
+    context 'when Locations matching coordinates exist', skip_vcr: true do
       let(:location_matching_coordinates) { build(:location, :location_matching_coordinates) }
       let(:locations_matching_coordinates) { [location, location_matching_coordinates] }
 
