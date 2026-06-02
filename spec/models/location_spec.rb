@@ -101,7 +101,7 @@ describe Location do
   end
 
   describe '#add_bookmark' do
-    context 'with a user_id: 1', :skip_vcr do
+    context 'with a user_id: 1', vcr: { cassette_name: 'add_bookmark' } do
       let(:user_id) { 1 }
 
       before { location.add_bookmark user_id }
