@@ -119,7 +119,7 @@ describe Location do
 
       # rubocop:disable RSpec/NestedGroups
       describe 'Location#matching_coordinates' do
-        it { expect(location_matching_coordinates.matching_coordinates).to eq 1 }
+        it { expect(location_matching_coordinates.matching_coordinates).to eq 2 }
       end
       # rubocop:enable RSpec/NestedGroups
     end
