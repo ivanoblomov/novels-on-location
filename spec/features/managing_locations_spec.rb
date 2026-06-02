@@ -18,7 +18,8 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     # rubocop:enable RSpec/NoExpectationExample
   end
 
-  context 'when a User enters a specific place, keywords for the book, and some notes' do
+  context 'when a User enters a specific place, keywords for the book, and some notes',
+          vcr: { cassette_name: 'when_a_user_enters_a_specific_place_keywords_for_the_book_and_some_notes' } do
     before do
       visit root_path
       fill_in 'place-input', with: "san sebastian\n"
