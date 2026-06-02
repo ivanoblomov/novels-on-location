@@ -71,24 +71,8 @@ class LocationsController < ApplicationController
 
   private
 
-  def canonical_location_url
-    location_url @location, canonical_url: location_url(@location)
-  end
-
   def find_location
-    @location = find_location_by_id ||
-                Location.find(Moped::BSON::ObjectId(params.expect(:id)))
-  rescue StandardError
-    if Location.exists?(id: params[:id])
-      @location = find_location_by_id
-      redirect_to canonical_location_url, status: :moved_permanently
-    else
-      error404
-    end
-  end
-
-  def find_location_by_id
-    Location.find params.expect(:id)
+    @location = Location.find(params.expect(:id))
   end
 
   def format_response

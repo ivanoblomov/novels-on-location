@@ -73,19 +73,6 @@ class Location
     Location.all.map(&:title).uniq.size
   end
 
-  def self.displace_duplicate_coordinates(locations = Location.duplicate_coordinates)
-    return if locations.blank?
-
-    l = locations.last
-    l.send :displace
-    l.save
-    Location.displace_duplicate_coordinates
-  end
-
-  def self.duplicate_coordinates
-    Location.all.reject { |l| l.matching_coordinates.blank? }
-  end
-
   def self.search_itunes(title)
     hit = ITunesSearchAPI.search(media: 'ebook', term: title).try :first
     hit['trackId'] if hit
@@ -100,14 +87,10 @@ class Location
 
   def self.look_up_itunes
     Location.missing_itunes.map do |l|
-      l.update_with_google_books
+      l.send :update_with_google_books
       l.save
     end
     Location.missing_itunes.count
-  end
-
-  def self.random
-    Location.all[Location.count * rand]
   end
 
   # Overrides ==================================================================
@@ -168,21 +151,6 @@ class Location
     @duplicates ||= Location.duplicate(address: address, title: title).sorted
   end
 
-  def from_ios?
-    user_token =~ REG_EX_USER_TOKEN
-  end
-
-  def ios_push
-    p = Parse::Push.new(
-      'alert' => new_pin_message,
-      'badge' => 'Increment',
-      'sound' => '',
-      'url' => nol_url
-    )
-    p.channel = 'test' if Rails.env.development?
-    p.save
-  end
-
   def itunes_affiliate_url
     itunes_id ? "#{itunes_url}&at=11lKmH" : nil
   end
@@ -210,7 +178,7 @@ class Location
   def matching_coordinates
     return unless lat_lng
 
-    Location.with_lat_lng(lat_lng) - [self]
+    Location.with_lat_lng(lat_lng).count
   end
 
   def nol_url
@@ -223,7 +191,6 @@ class Location
     return unless Rails.env.production? && !test_book?
 
     tweet
-    #     ios_push
   end
 
   def owned?
@@ -233,6 +200,14 @@ class Location
   def place
     place = (usa? ? [city, state] : [city, country]).compact * ', '
     place.presence || address
+  end
+
+  def search_terms
+    @search_terms ||= if title.present?
+                        "#{title} #{author.presence}"
+                      else
+                        book_keywords
+                      end
   end
 
   def store_url
@@ -254,10 +229,6 @@ class Location
     TWITTER_CLIENT.update tweet_message
   rescue RuntimeError
     Rails.logger.error "Location#tweet: Can't tweet '#{tweet_message}'"
-  end
-
-  def tweet_too_long?
-    tweet_message.gsub(nol_url, '').size > (140 - 19)
   end
 
   def unclaim
@@ -310,16 +281,8 @@ class Location
     negate? ? delta : -delta
   end
 
-  def search_terms
-    @search_terms ||= if title.present?
-                        "#{title} #{author.presence}"
-                      else
-                        book_keywords
-                      end
-  end
-
   def displace_or_geocode
-    send :displace if matching_coordinates.present?
+    displace if matching_coordinates&.positive?
     return if place.present?
 
     geocode lat_lng ? lat_lng * ', ' : tags

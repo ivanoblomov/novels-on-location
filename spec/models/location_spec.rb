@@ -1,7 +1,44 @@
 # frozen_string_literal: true
 
 describe Location do
-  subject(:location) { described_class.new }
+  subject(:location) { build(:location) }
+
+  describe '.look_up_itunes' do
+    let(:location) { instance_spy(described_class) }
+    let(:locations) { [location] }
+    let(:look_up_itunes) { described_class.look_up_itunes }
+
+    context 'when Location.missing_itunes.one?' do
+      before do
+        allow(described_class).to receive(:missing_itunes).and_return(locations)
+        look_up_itunes
+      end
+
+      it { expect(look_up_itunes).to eq 1 }
+
+      # rubocop:disable RSpec/NestedGroups
+      describe described_class do
+        it { expect(location).to have_received(:update_with_google_books) }
+        it { expect(location).to have_received(:save) }
+      end
+      # rubocop:enable RSpec/NestedGroups
+    end
+  end
+
+  describe '.search' do
+    let(:expected_criteria) do
+      described_class.any_of(
+        { address: /#{terms}/i },
+        { author: /#{terms}/i },
+        { tags: /#{terms}/i },
+        { title: /#{terms}/i },
+        { user_id: terms }
+      )
+    end
+    let(:terms) { 'The Sun Also Rises' }
+
+    it { expect(described_class.search(terms)).to eq expected_criteria }
+  end
 
   describe '#new' do
     context 'with no args' do
@@ -63,6 +100,50 @@ describe Location do
     end
   end
 
+  describe '#add_bookmark' do
+    context 'with a user_id: 1', vcr: { cassette_name: 'add_bookmark' } do
+      let(:user_id) { 1 }
+
+      before { location.add_bookmark user_id }
+
+      it { expect(location.bookmark_user_ids).to include user_id }
+    end
+  end
+
+  describe '#displace_or_geocode' do
+    context 'when Locations matching coordinates exist', :skip_vcr do
+      let(:location_matching_coordinates) { build(:location, :location_matching_coordinates) }
+      let(:locations_matching_coordinates) { [location, location_matching_coordinates] }
+
+      before { locations_matching_coordinates.map(&:save) }
+
+      # rubocop:disable RSpec/NestedGroups
+      describe 'Location#matching_coordinates' do
+        it { expect(location_matching_coordinates.matching_coordinates).to eq 2 }
+      end
+      # rubocop:enable RSpec/NestedGroups
+    end
+  end
+
+  describe '#duplicate?' do
+    let(:many_locations) { [location, location] }
+
+    # rubocop:disable RSpec/SubjectStub
+    before { allow(location).to receive(:duplicates).and_return many_locations }
+    # rubocop:enable RSpec/SubjectStub
+
+    it { expect(location.duplicate?).to be true }
+  end
+
+  describe '#duplicates' do
+    subject(:location) { build_stubbed(:location, address: address, title: title) }
+
+    let(:address) { 'Plaza del Castillo, 44B, 31001 Pamplona, Navarre, Spain' }
+    let(:title) { 'The Sun Also Rises' }
+
+    it { expect(location.duplicates).to eq described_class.where({ address: address, title: title }).sorted }
+  end
+
   describe '#geocode' do
     context 'with "white house"', vcr: { cassette_name: 'white_house' } do
       before { location.send :geocode, 'white house' }
@@ -73,6 +154,112 @@ describe Location do
         expect(lat).to be_within(0.005).of(38.8976633) and expect(lng).to be_within(0.005).of(-77.0365739)
       end
       # rubocop:enable RSpec/MultipleExpectations
+    end
+  end
+
+  describe '#latitude' do
+    context 'with lat_lng.present?' do
+      it { expect(location.latitude).to eq location.lat_lng[0] }
+    end
+  end
+
+  describe '#latitude=' do
+    context 'with 51.477811' do
+      before { location.latitude = 51.477811 }
+
+      it { expect(location.latitude).to eq '51.477811' }
+    end
+  end
+
+  describe '#longitude' do
+    context 'with lat_lng.present?' do
+      it { expect(location.longitude).to eq location.lat_lng[1] }
+    end
+  end
+
+  describe '#longitude=' do
+    context 'with -0.001475' do
+      before { location.longitude = -0.001475 }
+
+      it { expect(location.longitude).to eq '-0.001475' }
+    end
+  end
+
+  describe '#nol_url' do
+    context 'when title ="The Sun Also Rises"' do
+      before do
+        location.title = 'The Sun Also Rises'
+        location.build_slug
+      end
+
+      it { expect(location.nol_url).to eq 'https://localhost/locations/the-sun-also-rises' }
+    end
+  end
+
+  describe '#remove_bookmark' do
+    context 'with a user_id: 1' do
+      subject(:location) { described_class.new bookmark_user_ids: [user_id] }
+
+      let(:user_id) { 1 }
+
+      before { location.remove_bookmark user_id }
+
+      it { expect(location.bookmark_user_ids.none?).to be true }
+    end
+  end
+
+  describe '#search_terms' do
+    let(:location) { build_stubbed(:location, author: 'Ernest Hemingway', title: title) }
+
+    context 'when title.present?' do
+      let(:title) { 'The Sun Also Rises' }
+
+      it { expect(location.search_terms).to eq "#{location.title} #{location.author}" }
+    end
+
+    context 'when title.blank?' do
+      let(:title) { nil }
+
+      it { expect(location.search_terms).to eq location.book_keywords }
+    end
+  end
+
+  describe '#title_for_regex' do
+    subject(:location) { build(:location, title: title) }
+
+    context "when title = 'A Midsummer Night's Dream (Folger Shakespeare Library)'" do
+      let(:title) { "A Midsummer Night's Dream (Folger Shakespeare Library)" }
+
+      it { expect(location.title_for_regex).to eq "A Midsummer Night's Dream" }
+    end
+  end
+
+  describe '#to_s' do
+    let(:location) do
+      described_class.new(author: 'Ernest Hemingway', city: 'Pamplona', country: 'Spain', title: 'The Sun Also Rises')
+    end
+
+    it { expect(location.to_s).to eq %(Ernest Hemingway's "The Sun Also Rises" set in Pamplona, Spain) }
+  end
+
+  describe '#unclaim' do
+    subject(:location) { build(:location, user_id: user_id, user_token: user_token) }
+
+    context 'when user_id, user_token are present' do
+      let(:user_id) { 1 }
+      let(:user_token) { '6af079a' }
+
+      before { location.unclaim }
+
+      # rubocop:disable RSpec/NestedGroups
+      describe '#user_id' do
+        it { expect(location.user_id).to be_nil }
+      end
+
+      describe '#user_token' do
+        it { expect(location.user_token).to be_nil }
+      end
+      # rubocop:enable RSpec/NestedGroups
     end
   end
 end
