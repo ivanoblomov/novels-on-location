@@ -16,7 +16,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
     end
   end
 
-  context 'when a Location exists' do
+  context 'when a Location exists', vcr: { cassette_name: 'when_a_location_exists' } do
     let(:from_hell) do
       Location.find_or_create_by asin: '0958578346',
                                  author: 'Alan Moore',
@@ -198,7 +198,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
       end
     end
 
-    context "when a Location doesn't exist" do
+    context "when a Location doesn't exist", vcr: { cassette_name: 'when_a_location_doesnt_exist' } do
       it "an alert shows the Location wasn't found" do
         message = accept_alert { visit location_path(:non_existent) }
         expect(message).to eq "Sorry, that novel location doesn't exist. Why not add it?"
