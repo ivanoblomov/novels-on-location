@@ -89,6 +89,7 @@ VCR.configure do |config|
   config.cassette_library_dir = 'spec/vcr_cassettes'
   config.configure_rspec_metadata!
   config.hook_into :webmock
+  config.ignore_hosts 'ax.itunes.apple.com'
   config.ignore_localhost = true
 
   # Crucial: Don't leak your keys in the cassettes!
