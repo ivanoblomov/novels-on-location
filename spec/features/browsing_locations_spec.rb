@@ -26,7 +26,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
                                  user_id: '666325406'
     end
 
-    context 'when a User clicks its pin' do
+    context 'when a User clicks its pin', vcr: { cassette_name: 'when_a_user_clicks_its_pin' } do
       before do
         from_hell
         visit root_path
@@ -190,7 +190,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
     context 'when the error is 500' do
       before { allow(Rails.application.config).to receive(:consider_all_requests_local).and_return(false) }
 
-      it 'an alert shows the error' do
+      it 'an alert shows the error', vcr: { cassette_name: 'an_alert_shows_the_error' } do
         pending 'a solution for a complete run (since this passes in isolation)'
         allow(Ability).to receive(:new).and_raise(StandardError, 'Mocked error for testing')
         message = accept_alert { visit root_path }
