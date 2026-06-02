@@ -1,0 +1,617 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://127.0.0.1:51515/__identify__
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '4'
+    body:
+      encoding: UTF-8
+      string: '9024'
+  recorded_at: Tue, 02 Jun 2026 04:17:48 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/status
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Connection:
+      - close
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '243'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+      Connection:
+      - close
+    body:
+      encoding: UTF-8
+      string: '{"value":{"build":{"version":"148.0.7778.178 (d096af1c9e98c45c3596e59620622b1a049bfecb-refs/branch-heads/7778@{#3196})"},"message":"ChromeDriver
+        ready for new sessions.","os":{"arch":"arm64","name":"Mac OS X","version":"26.5.0"},"ready":true}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:53 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:9515/session
+    body:
+      encoding: UTF-8
+      string: '{"capabilities":{"alwaysMatch":{"browserName":"chrome","goog:chromeOptions":{"args":["--headless=new","--disable-site-isolation-trials"],"binary":"/Applications/Google
+        Chrome.app/Contents/MacOS/Google Chrome"}}}}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Content-Length:
+      - '212'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '925'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"capabilities":{"acceptInsecureCerts":false,"browserName":"chrome","browserVersion":"148.0.7778.179","chrome":{"chromedriverVersion":"148.0.7778.178
+        (d096af1c9e98c45c3596e59620622b1a049bfecb-refs/branch-heads/7778@{#3196})","userDataDir":"/var/folders/1l/b11sy_9d2716z7ldlvhkqn1m0000gn/T/org.chromium.Chromium.scoped_dir.sXkB3l"},"fedcm:accounts":true,"goog:chromeOptions":{"debuggerAddress":"localhost:51523"},"goog:processID":78606,"networkConnectionEnabled":false,"pageLoadStrategy":"normal","platformName":"mac","proxy":{},"setWindowRect":true,"strictFileInteractability":false,"timeouts":{"implicit":0,"pageLoad":300000,"script":30000},"unhandledPromptBehavior":"dismiss
+        and notify","webauthn:extension:credBlob":true,"webauthn:extension:largeBlob":true,"webauthn:extension:minPinLength":true,"webauthn:extension:prf":true,"webauthn:virtualAuthenticators":true},"sessionId":"2be9557bdbf74ae41ef70864869bfa41"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:54 GMT
+- request:
+    method: post
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/url
+    body:
+      encoding: UTF-8
+      string: '{"url":"http://localhost:51515/"}'
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Content-Length:
+      - '33'
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Length:
+      - '14'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":null}'
+  recorded_at: Tue, 02 Jun 2026 04:17:54 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:54 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:55 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:55 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:55 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:55 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:55 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:56 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:56 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:56 GMT
+- request:
+    method: get
+    uri: http://127.0.0.1:9515/session/2be9557bdbf74ae41ef70864869bfa41/alert/text
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json; charset=UTF-8
+      User-Agent:
+      - selenium/4.44.0 (ruby macosx)
+      Cache-Control:
+      - no-cache
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Length:
+      - '1705'
+      Content-Type:
+      - application/json; charset=utf-8
+      Cache-Control:
+      - no-cache
+    body:
+      encoding: UTF-8
+      string: '{"value":{"error":"no such alert","message":"no such alert\n  (Session
+        info: chrome=148.0.7778.179)","stacktrace":"0   chromedriver                        0x000000010111cc40
+        cxxbridge1$str$ptr + 3221216\n1   chromedriver                        0x0000000101114b1c
+        cxxbridge1$str$ptr + 3188156\n2   chromedriver                        0x0000000100bd76f8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 74644\n3   chromedriver                        0x0000000100bfbad8
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 223092\n4   chromedriver                        0x0000000100bfb964
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 222720\n5   chromedriver                        0x0000000100c159c0
+        _RNvCsiKAbIcglKMQ_7___rustc35___rust_no_alloc_shim_is_unstable_v2 + 329308\n6   chromedriver                        0x00000001010dab70
+        cxxbridge1$str$ptr + 2950672\n7   chromedriver                        0x00000001010de2c8
+        cxxbridge1$str$ptr + 2964840\n8   chromedriver                        0x00000001010bf8a8
+        cxxbridge1$str$ptr + 2839368\n9   chromedriver                        0x00000001010deb48
+        cxxbridge1$str$ptr + 2967016\n10  chromedriver                        0x00000001010b03d4
+        cxxbridge1$str$ptr + 2776692\n11  chromedriver                        0x00000001011037ac
+        cxxbridge1$str$ptr + 3117644\n12  chromedriver                        0x000000010110390c
+        cxxbridge1$str$ptr + 3117996\n13  chromedriver                        0x0000000101114774
+        cxxbridge1$str$ptr + 3187220\n14  libsystem_pthread.dylib             0x000000018de59c58
+        _pthread_start + 136\n15  libsystem_pthread.dylib             0x000000018de54c1c
+        thread_start + 8\n"}}'
+  recorded_at: Tue, 02 Jun 2026 04:17:56 GMT
+recorded_with: VCR 6.4.0

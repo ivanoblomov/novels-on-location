@@ -63,6 +63,11 @@ RSpec.configure do |config|
   config.before(:each, :js, type: :system) do |example|
     driven_by example.metadata[:js]
   end
+  config.around(:each, :skip_vcr) do |example|
+    WebMock.allow_net_connect! if defined?(WebMock)
+    VCR.turned_off(ignore_cassettes: true) { example.run }
+    WebMock.disable_net_connect! if defined?(WebMock)
+  end
   config.after(:each, type: :system) do |example|
     warn page.driver.browser.logs.get(:browser) if example.exception
   end
@@ -80,10 +85,12 @@ Capybara.register_driver :selenium do |app|
                                  options: options)
 end
 VCR.configure do |config|
-  config.allow_http_connections_when_no_cassette = true
+  config.allow_http_connections_when_no_cassette = false
   config.cassette_library_dir = 'spec/vcr_cassettes'
   config.configure_rspec_metadata!
   config.hook_into :webmock
+  config.ignore_hosts 'ax.itunes.apple.com'
+  config.ignore_localhost = true
 
   # Crucial: Don't leak your keys in the cassettes!
   config.filter_sensitive_data('<FACEBOOK_APP_ID>') { ENV.fetch('FACEBOOK_APP_ID', nil) }

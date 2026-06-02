@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :selenium_chrome_headless,
                                      type: :system do
-  context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords' do
+  context 'when the map is in "Add Pins" mode and a User double-clicks it and enters keywords',
+          vcr: { cassette_name: 'when_the_map_is_in_add_pins_mode_and_a_user_double_clicks_it_and_enters_keywords' } do
     before do
       visit root_path
       click_on 'Mode: Zoom'
@@ -13,11 +14,16 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     end
 
     # rubocop:disable RSpec/NoExpectationExample
-    it('the Location is created') { wait_for { Location.count }.to eq 1 }
+    it('the Location is created', vcr: { cassette_name: 'the_location_is_created' }) {
+      wait_for do
+        Location.count
+      end.to eq 1
+    }
     # rubocop:enable RSpec/NoExpectationExample
   end
 
-  context 'when a User enters a specific place, keywords for the book, and some notes' do
+  context 'when a User enters a specific place, keywords for the book, and some notes',
+          vcr: { cassette_name: 'when_a_user_enters_a_specific_place_keywords_for_the_book_and_some_notes' } do
     before do
       visit root_path
       fill_in 'place-input', with: "san sebastian\n"
@@ -29,8 +35,10 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     it('the Location is created') { expect(Location.count).to eq 1 }
   end
 
-  context 'when a Location exists and a User drags its pin to a new place' do
+  context 'when a Location exists and a User drags its pin to a new place',
+          vcr: { cassette_name: 'when_a_location_exists_and_a_user_drags_its_pin_to_a_new_place' } do
     let(:la_concha) do
+      pending 'a working alternative to drag_to'
       Location.find_or_create_by author: 'Ernest Hemingway',
                                  lat_lng: ['43.3186188', '-1.9860118'],
                                  title: 'The Sun Also Rises'
@@ -51,14 +59,16 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
       accept_confirm { source.drag_to target }
     end
 
+    # rubocop:disable RSpec/NoExpectationExample
     it "the Location's new coordinates persist" do
-      pending 'a working alternative to drag_to'
       wait_for { la_concha.reload.lat_lng[0].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[0].to_f) and
         wait_for { la_concha.reload.lat_lng[1].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[1].to_f)
     end
+    # rubocop:enable RSpec/NoExpectationExample
   end
 
-  context 'when a Location exists and its balloon is open' do
+  context 'when a Location exists and its balloon is open',
+          vcr: { cassette_name: 'when_a_location_exists_and_its_balloon_is_open' } do
     before do
       Location.find_or_create_by author: 'Alan Moore',
                                  lat_lng: ['51.519326', '-0.074316'],

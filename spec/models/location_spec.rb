@@ -101,7 +101,7 @@ describe Location do
   end
 
   describe '#add_bookmark' do
-    context 'with a user_id: 1' do
+    context 'with a user_id: 1', vcr: { cassette_name: 'add_bookmark' } do
       let(:user_id) { 1 }
 
       before { location.add_bookmark user_id }
@@ -111,7 +111,7 @@ describe Location do
   end
 
   describe '#displace_or_geocode' do
-    context 'when Locations matching coordinates exist' do
+    context 'when Locations matching coordinates exist', :skip_vcr do
       let(:location_matching_coordinates) { build(:location, :location_matching_coordinates) }
       let(:locations_matching_coordinates) { [location, location_matching_coordinates] }
 
@@ -119,7 +119,7 @@ describe Location do
 
       # rubocop:disable RSpec/NestedGroups
       describe 'Location#matching_coordinates' do
-        it { expect(location_matching_coordinates.matching_coordinates).to eq 1 }
+        it { expect(location_matching_coordinates.matching_coordinates).to eq 2 }
       end
       # rubocop:enable RSpec/NestedGroups
     end

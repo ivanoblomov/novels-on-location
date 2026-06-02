@@ -4,7 +4,7 @@ require 'rails_helper'
 
 feature 'Browsing Locations in admin', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :selenium_chrome_headless,
                                        type: :system do
-  context 'when Locations exist' do
+  context 'when Locations exist', vcr: { cassette_name: 'when_locations_exist' } do
     let(:from_hell) { build(:location, :from_hell) }
     let(:sun_also_rises) { build(:location, :sun_also_rises) }
 

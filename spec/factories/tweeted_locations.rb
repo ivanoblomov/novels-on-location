@@ -3,8 +3,11 @@
 FactoryBot.define do
   factory :tweeted_location do
     location
-    place { Faker::Travel::TrainStation.name }
-    text { Faker::Lorem.sentence }
-    title { Faker::Book.title }
+    place { 'Pennsylvania Station' }
+    text do
+      'Conquering Gotham explores the vision and challenges faced by the Pennsylvania Railroad in constructing a ' \
+        'monumental transit hub.'
+    end
+    title { 'Conquering Gotham' }
   end
 end
