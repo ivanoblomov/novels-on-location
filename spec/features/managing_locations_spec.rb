@@ -14,7 +14,7 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     end
 
     # rubocop:disable RSpec/NoExpectationExample
-    it('the Location is created') { wait_for { Location.count }.to eq 1 }
+    it('the Location is created', vcr: { cassette_name: 'the_location_is_created' }) { wait_for { Location.count }.to eq 1 }
     # rubocop:enable RSpec/NoExpectationExample
   end
 
