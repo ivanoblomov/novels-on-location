@@ -190,7 +190,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
     context 'when the error is 500' do
       before { allow(Rails.application.config).to receive(:consider_all_requests_local).and_return(false) }
 
-      it 'an alert shows the error', vcr: { cassette_name: 'an_alert_shows_the_error' } do
+      it 'an alert shows the error' do
         pending 'a solution for a complete run (since this passes in isolation)'
         allow(Ability).to receive(:new).and_raise(StandardError, 'Mocked error for testing')
         message = accept_alert { visit root_path }
@@ -199,8 +199,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
     end
 
     context "when a Location doesn't exist" do
-      it "an alert shows the Location wasn't found",
-         vcr: { cassette_name: 'an_alert_shows_the_location_wasnt_found' } do
+      it "an alert shows the Location wasn't found" do
         message = accept_alert { visit location_path(:non_existent) }
         expect(message).to eq "Sorry, that novel location doesn't exist. Why not add it?"
       end
