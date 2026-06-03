@@ -1,0 +1,102 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://maps.googleapis.com/maps/api/geocode/json?address=white%20house&key=<GOOGLE_MAPS_API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json; charset=UTF-8
+      Date:
+      - Wed, 03 Jun 2026 05:40:51 GMT
+      Pragma:
+      - no-cache
+      Expires:
+      - Fri, 01 Jan 1990 00:00:00 GMT
+      Cache-Control:
+      - no-cache, must-revalidate
+      Vary:
+      - Accept-Language
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Goog-Maps-Metro-Area:
+      - Washington, DC
+      Content-Security-Policy-Report-Only:
+      - script-src 'none'; form-action 'none'; frame-src 'none'; report-uri https://csp.withgoogle.com/csp/scaffolding/msaifdggmnwc:257:0
+      Cross-Origin-Opener-Policy-Report-Only:
+      - same-origin; report-to=msaifdggmnwc:257:0
+      Report-To:
+      - '{"group":"msaifdggmnwc:257:0","max_age":2592000,"endpoints":[{"url":"https://csp.withgoogle.com/csp/report-to/scaffolding/msaifdggmnwc:257:0"}],}'
+      Server:
+      - mafe
+      Content-Length:
+      - '3352'
+      X-Xss-Protection:
+      - '0'
+      X-Frame-Options:
+      - SAMEORIGIN
+      Server-Timing:
+      - gfet4t7; dur=85
+      Alt-Svc:
+      - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
+    body:
+      encoding: UTF-8
+      string: "{\n   \"results\" : \n   [\n      {\n         \"address_components\"
+        : \n         [\n            {\n               \"long_name\" : \"1600\",\n
+        \              \"short_name\" : \"1600\",\n               \"types\" : \n               [\n
+        \                 \"street_number\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Pennsylvania Avenue Northwest\",\n               \"short_name\"
+        : \"Pennsylvania Ave NW\",\n               \"types\" : \n               [\n
+        \                 \"route\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"Northwest Washington\",\n               \"short_name\"
+        : \"Northwest Washington\",\n               \"types\" : \n               [\n
+        \                 \"neighborhood\",\n                  \"political\"\n               ]\n
+        \           },\n            {\n               \"long_name\" : \"Washington\",\n
+        \              \"short_name\" : \"Washington\",\n               \"types\"
+        : \n               [\n                  \"locality\",\n                  \"political\"\n
+        \              ]\n            },\n            {\n               \"long_name\"
+        : \"District of Columbia\",\n               \"short_name\" : \"DC\",\n               \"types\"
+        : \n               [\n                  \"administrative_area_level_1\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"United States\",\n               \"short_name\"
+        : \"US\",\n               \"types\" : \n               [\n                  \"country\",\n
+        \                 \"political\"\n               ]\n            },\n            {\n
+        \              \"long_name\" : \"20500\",\n               \"short_name\" :
+        \"20500\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
+        \              ]\n            }\n         ],\n         \"formatted_address\"
+        : \"1600 Pennsylvania Ave NW, Washington, DC 20500, USA\",\n         \"geometry\"
+        : \n         {\n            \"location\" : \n            {\n               \"lat\"
+        : 38.8976763,\n               \"lng\" : -77.0365298\n            },\n            \"location_type\"
+        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
+        : \n               {\n                  \"lat\" : 38.90029588029149,\n                  \"lng\"
+        : -77.03520251970851\n               },\n               \"southwest\" : \n
+        \              {\n                  \"lat\" : 38.8975979197085,\n                  \"lng\"
+        : -77.03790048029151\n               }\n            }\n         },\n         \"navigation_points\"
+        : \n         [\n            {\n               \"location\" : \n               {\n
+        \                 \"latitude\" : 38.9001305,\n                  \"longitude\"
+        : -77.03657320000001\n               },\n               \"restricted_travel_modes\"
+        : \n               [\n                  \"WALK\"\n               ]\n            },\n
+        \           {\n               \"location\" : \n               {\n                  \"latitude\"
+        : 38.8985201,\n                  \"longitude\" : -77.0365352\n               },\n
+        \              \"restricted_travel_modes\" : \n               [\n                  \"DRIVE\"\n
+        \              ]\n            }\n         ],\n         \"place_id\" : \"ChIJ37HL3ry3t4kRv3YLbdhpWXE\",\n
+        \        \"plus_code\" : \n         {\n            \"compound_code\" : \"VXX7+39
+        Washington, DC\",\n            \"global_code\" : \"87C4VXX7+39\"\n         },\n
+        \        \"types\" : \n         [\n            \"establishment\",\n            \"point_of_interest\",\n
+        \           \"tourist_attraction\"\n         ]\n      }\n   ],\n   \"status\"
+        : \"OK\"\n}"
+  recorded_at: Wed, 03 Jun 2026 05:40:51 GMT
+recorded_with: VCR 6.4.0
