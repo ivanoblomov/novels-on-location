@@ -2,8 +2,6 @@
 
 # General view helpers
 module ApplicationHelper
-  include ScaffoldLogic::Helper
-
   def author_link_to(location)
     return if location.author.blank?
 
