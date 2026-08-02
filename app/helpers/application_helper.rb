@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 # General view helpers
+# rubocop:disable Metrics/ModuleLength
 module ApplicationHelper
   def author_link_to(location)
     return if location.author.blank?
@@ -91,33 +92,14 @@ module ApplicationHelper
   # You can override the link's label by adding a labels hash to your params in the controller:
   #   params[:labels] = {'user_id' => 'User'}
   def sort_link(model, field, params, html_options = {})
-    if (field.to_sym == params[:by] || field == params[:by]) && params[:dir] == 'asc'
-      classname = 'arrow-asc'
-      dir = 'desc'
-    elsif field.to_sym == params[:by] || field == params[:by]
-      classname = 'arrow-desc'
-      dir = 'asc'
-    else
-      dir = 'asc'
-    end
+    sort_args = sort_args(field, params)
+    sort_url_params = sort_url_params(field, sort_args[:dir], html_options)
+    html_options[:class] = [sort_args[:classname], html_options[:class]].compact * ' ' if sort_args[:classname]
 
-    options = {
-      anchor: html_options[:anchor],
-      by: field,
-      dir: dir,
-      search: params[:search],
-      category: params[:category],
-      show: params[:show]
-    }
+    sort_field = sort_field(field)
+    html_options[:title] ||= "Sort by #{sort_field}"
 
-    options[:show] = params[:show] unless params[:show].blank? || params[:show] == 'all'
-    html_options[:class] = [classname, html_options[:class]].compact * ' ' if classname
-
-    field_name = params[:labels] && params[:labels][field] ? params[:labels][field] : field.titleize
-    html_options[:title] ||= "Sort by #{field_name}"
-
-    _link = model.is_a?(Symbol) ? eval("#{model}_url(options)") : "/#{model}?#{options.to_params}"
-    link_to(field_name, _link, html_options)
+    link_to(sort_field, sort_url(model, sort_url_params), html_options)
   end
 
   def wikipedia_link_to(link_text, options = {})
@@ -129,4 +111,40 @@ module ApplicationHelper
               target: '_blank', title: "Read about #{link_text} on Wikipedia"
             }.merge(options)
   end
+
+  private
+
+  def sort_args(field, params)
+    sort_args = { dir: 'asc' }
+    if (field.to_sym == params[:by] || field == params[:by]) && params[:dir] == 'asc'
+      sort_args[:classname] = 'arrow-asc'
+      sort_args[:dir] = 'desc'
+    elsif field.to_sym == params[:by] || field == params[:by]
+      sort_args[:classname] = 'arrow-desc'
+      sort_args[:dir] = 'asc'
+    end
+    sort_args
+  end
+
+  def sort_field(field)
+    params[:labels] && params[:labels][field] ? params[:labels][field] : field.titleize
+  end
+
+  def sort_url(model, url_params)
+    model.is_a?(Symbol) ? public_send("#{model}_url", url_params) : "/#{model}?#{url_params.to_params}"
+  end
+
+  def sort_url_params(field, dir, html_options)
+    url_params = {
+      anchor: html_options[:anchor],
+      by: field,
+      dir: dir,
+      search: params[:search],
+      category: params[:category],
+      show: params[:show]
+    }
+    url_params[:show] = params[:show] unless params[:show].blank? || params[:show] == 'all'
+    url_params
+  end
 end
+# rubocop:enable Metrics/ModuleLength
