@@ -14,7 +14,6 @@ gem 'mongoid-slug'
 gem 'rack-rewrite'
 gem 'rails'
 gem 'responders'
-gem 'scaffold_logic'
 
 group :assets do
   gem 'coffee-rails'
