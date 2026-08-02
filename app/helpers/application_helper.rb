@@ -131,7 +131,7 @@ module ApplicationHelper
   end
 
   def sort_url(model, url_params)
-    model.is_a?(Symbol) ? public_send("#{model}_url", url_params) : "/#{model}?#{url_params.to_params}"
+    model.is_a?(Symbol) ? public_send("#{model}_url", url_params) : "/#{model}?#{url_params.compact.to_query}"
   end
 
   def sort_url_params(field, dir, html_options)
