@@ -80,6 +80,46 @@ module ApplicationHelper
     request.user_agent =~ /safari/i && !ios?
   end
 
+  # Returns a link_to tag with sorting parameters that can be used with ActiveRecord.order_by.
+  #
+  # To use standard resources, specify the resources as a plural symbol:
+  #   sort_link(:users, 'email', params)
+  #
+  # To use resources aliased with :as (in routes.rb), specify the aliased route as a string.
+  #   sort_link('users_admin', 'email', params)
+  #
+  # You can override the link's label by adding a labels hash to your params in the controller:
+  #   params[:labels] = {'user_id' => 'User'}
+  def sort_link(model, field, params, html_options = {})
+    if (field.to_sym == params[:by] || field == params[:by]) && params[:dir] == 'asc'
+      classname = 'arrow-asc'
+      dir = 'desc'
+    elsif field.to_sym == params[:by] || field == params[:by]
+      classname = 'arrow-desc'
+      dir = 'asc'
+    else
+      dir = 'asc'
+    end
+
+    options = {
+      anchor: html_options[:anchor],
+      by: field,
+      dir: dir,
+      search: params[:search],
+      category: params[:category],
+      show: params[:show]
+    }
+
+    options[:show] = params[:show] unless params[:show].blank? || params[:show] == 'all'
+    html_options[:class] = [classname, html_options[:class]].compact * ' ' if classname
+
+    field_name = params[:labels] && params[:labels][field] ? params[:labels][field] : field.titleize
+    html_options[:title] ||= "Sort by #{field_name}"
+
+    _link = model.is_a?(Symbol) ? eval("#{model}_url(options)") : "/#{model}?#{options.to_params}"
+    link_to(field_name, _link, html_options)
+  end
+
   def wikipedia_link_to(link_text, options = {})
     return if link_text.blank?
 
