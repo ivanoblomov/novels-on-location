@@ -528,10 +528,10 @@ nOL.showPins = function(keyword, path) {
   else {
     nOL.hidePins();
     nOL.bounds = new google.maps.LatLngBounds();
+    const cleanKeywords = unescape(keyword).split(/,/).map(s => s.trim());
     for (const location of nOL.locations) {
-      const cleanKeywords = unescape(keyword).split(/,/);
-      for (const keyword of cleanKeywords) {
-        const regex = new RegExp(keyword.trim(), 'i');
+      for (const cleanKeyword of cleanKeywords) {
+        const regex = new RegExp(cleanKeyword, 'i');
         if (regex.test(location.terms))
           nOL.showPin(location.id);
       }
