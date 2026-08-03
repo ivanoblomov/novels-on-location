@@ -30,11 +30,12 @@ jobs:
         name: screenshots
         path: tmp/capybara/*.png
         if-no-files-found: ignore
-#     - run: bundle exec inch --pedantic
-#     - uses: aktions/codeclimate-test-reporter@7634aa9ac7883182f583f15ff7b6ff519939dd0a
-#       with:
-#         codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
-#         command: after-build --coverage-input-type lcov
-#     - uses: coverallsapp/github-action@cfd0633edbd2411b532b808ba7a8b5e04f76d2c8
-#       with:
-#         github-token: ${{ secrets.GITHUB_TOKEN }}
+    - run: bundle exec inch --pedantic
+    - uses: qltysh/qlty-action/coverage@08a0a862c159eae9b9003081da6663d96efef637 # v2.3.0
+      with:
+        codeclimate-test-reporter-id: ${{ secrets.CC_TEST_REPORTER_ID }}
+        oidc: true
+        files: coverage/lcov.info
+    - uses: coverallsapp/github-action@5cbfd81b66ca5d10c19b062c04de0199c215fb6e
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
