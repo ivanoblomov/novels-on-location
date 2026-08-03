@@ -21,7 +21,7 @@ http_interactions:
       Content-Type:
       - application/json; charset=UTF-8
       Date:
-      - Tue, 02 Jun 2026 06:29:08 GMT
+      - Wed, 03 Jun 2026 05:41:09 GMT
       Pragma:
       - no-cache
       Expires:
@@ -41,13 +41,13 @@ http_interactions:
       Server:
       - mafe
       Content-Length:
-      - '34378'
+      - '31729'
       X-Xss-Protection:
       - '0'
       X-Frame-Options:
       - SAMEORIGIN
       Server-Timing:
-      - gfet4t7; dur=177
+      - gfet4t7; dur=48
       Alt-Svc:
       - h3=":443"; ma=2592000,h3-29=":443"; ma=2592000
     body:
@@ -122,41 +122,7 @@ http_interactions:
         : \n         [\n            {\n               \"location\" : \n               {\n
         \                 \"latitude\" : 51.5193239,\n                  \"longitude\"
         : -0.0741811\n               }\n            }\n         ],\n         \"place_id\"
-        : \"ChIJbcU3OrQcdkgR9vtUmXXLJwE\",\n         \"types\" : \n         [\n            \"premise\",\n
-        \           \"street_address\"\n         ]\n      },\n      {\n         \"address_components\"
-        : \n         [\n            {\n               \"long_name\" : \"1\",\n               \"short_name\"
-        : \"1\",\n               \"types\" : \n               [\n                  \"street_number\"\n
-        \              ]\n            },\n            {\n               \"long_name\"
-        : \"Fournier Street\",\n               \"short_name\" : \"Fournier St\",\n
-        \              \"types\" : \n               [\n                  \"route\"\n
-        \              ]\n            },\n            {\n               \"long_name\"
-        : \"London\",\n               \"short_name\" : \"London\",\n               \"types\"
-        : \n               [\n                  \"postal_town\"\n               ]\n
-        \           },\n            {\n               \"long_name\" : \"Greater London\",\n
-        \              \"short_name\" : \"Greater London\",\n               \"types\"
-        : \n               [\n                  \"administrative_area_level_2\",\n
-        \                 \"political\"\n               ]\n            },\n            {\n
-        \              \"long_name\" : \"England\",\n               \"short_name\"
-        : \"England\",\n               \"types\" : \n               [\n                  \"administrative_area_level_1\",\n
-        \                 \"political\"\n               ]\n            },\n            {\n
-        \              \"long_name\" : \"United Kingdom\",\n               \"short_name\"
-        : \"GB\",\n               \"types\" : \n               [\n                  \"country\",\n
-        \                 \"political\"\n               ]\n            },\n            {\n
-        \              \"long_name\" : \"E1 6QE\",\n               \"short_name\"
-        : \"E1 6QE\",\n               \"types\" : \n               [\n                  \"postal_code\"\n
-        \              ]\n            }\n         ],\n         \"formatted_address\"
-        : \"1 Fournier St, London E1 6QE, UK\",\n         \"geometry\" : \n         {\n
-        \           \"location\" : \n            {\n               \"lat\" : 51.5193598,\n
-        \              \"lng\" : -0.07419310000000001\n            },\n            \"location_type\"
-        : \"ROOFTOP\",\n            \"viewport\" : \n            {\n               \"northeast\"
-        : \n               {\n                  \"lat\" : 51.52070878029151,\n                  \"lng\"
-        : -0.07284411970849798\n               },\n               \"southwest\" :
-        \n               {\n                  \"lat\" : 51.51801081970851,\n                  \"lng\"
-        : -0.07554208029150206\n               }\n            }\n         },\n         \"navigation_points\"
-        : \n         [\n            {\n               \"location\" : \n               {\n
-        \                 \"latitude\" : 51.5193354,\n                  \"longitude\"
-        : -0.0741906\n               }\n            }\n         ],\n         \"place_id\"
-        : \"ChIJyXtpOrQcdkgRNMJ10HFxndE\",\n         \"types\" : \n         [\n            \"street_address\",\n
+        : \"ChIJbcU3OrQcdkgR9vtUmXXLJwE\",\n         \"types\" : \n         [\n            \"street_address\",\n
         \           \"subpremise\"\n         ]\n      },\n      {\n         \"address_components\"
         : \n         [\n            {\n               \"long_name\" : \"86\",\n               \"short_name\"
         : \"86\",\n               \"types\" : \n               [\n                  \"street_number\"\n
@@ -496,5 +462,5 @@ http_interactions:
         \              }\n            }\n         },\n         \"place_id\" : \"ChIJqZHHQhE7WgIReiWIMkOg-MQ\",\n
         \        \"types\" : \n         [\n            \"country\",\n            \"political\"\n
         \        ]\n      }\n   ],\n   \"status\" : \"OK\"\n}"
-  recorded_at: Tue, 02 Jun 2026 06:29:08 GMT
+  recorded_at: Wed, 03 Jun 2026 05:41:09 GMT
 recorded_with: VCR 6.4.0
