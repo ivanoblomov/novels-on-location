@@ -76,6 +76,7 @@ nOL.init = function(settings) {
   });
   $('#book-input').keyup( function() {
     var keyword = $('#book-input')[0].value;
+    nOL.anchorKind = unescape(window.location.hash.substring(2)).split('-')[0];
     nOL.showPins(keyword, '#!search-' + escape(keyword));
   });
   $('#mode-button').click(nOL.toggleMapMode);
