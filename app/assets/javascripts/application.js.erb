@@ -528,9 +528,13 @@ nOL.showPins = function(keyword, path) {
   else {
     nOL.hidePins();
     nOL.bounds = new google.maps.LatLngBounds();
-    for (var i = 0; i < nOL.locations.length; i++) {
-      if (nOL.locations[i].terms.toLowerCase().indexOf(unescape(keyword).toLowerCase()) > -1)
-        nOL.showPin(nOL.locations[i].id);
+    const cleanKeywords = unescape(keyword).split(/,/).map(s => s.trim());
+    for (const location of nOL.locations) {
+      for (const cleanKeyword of cleanKeywords) {
+        const regex = new RegExp(cleanKeyword, 'i');
+        if (regex.test(location.terms))
+          nOL.showPin(location.id);
+      }
     }
     nOL.map.fitBounds(nOL.bounds);
     nOL.setTitleAndPath(keyword + ' - Novels: On Location', path || ('#!search-' + escape(keyword)));
