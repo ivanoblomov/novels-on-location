@@ -122,7 +122,7 @@ nOL.checkOrientation = function() {
 }
 
 nOL.getFacebookName = function(location) {
-  if (location.user_name == undefined) {
+  if (location.user_name == undefined && location.user_id) {
     FB.api('/' + location.user_id, function(response) {
       $('#' + location.user_id).text(response.name);
       location.user_name = response.name;
