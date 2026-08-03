@@ -1,6 +1,13 @@
 //= require jquery_ujs
 //= require shortcut
 //= require_tree .
+const anchorKindToLocationProperty = {
+  'author' : 'author',
+  'novel': 'title',
+  'place': 'place',
+  'reader': 'user_id',
+  'search': 'terms'
+};
 var nOL = {};
 nOL.anchor = unescape(window.location.hash.substring(2));
 nOL.anchorKind = nOL.anchor.split('-')[0];
@@ -528,13 +535,10 @@ nOL.showPins = function(keyword, path) {
   else {
     nOL.hidePins();
     nOL.bounds = new google.maps.LatLngBounds();
-    const cleanKeywords = unescape(keyword).split(/,/).map(s => s.trim());
     for (const location of nOL.locations) {
-      for (const cleanKeyword of cleanKeywords) {
-        const regex = new RegExp(cleanKeyword, 'i');
-        if (regex.test(location.terms))
-          nOL.showPin(location.id);
-      }
+      const regex = new RegExp(unescape(keyword).trim(), 'i');
+      if (regex.test(Reflect.get(location, anchorKindToLocationProperty[nOL.anchorKind])))
+        nOL.showPin(location.id);
     }
     nOL.map.fitBounds(nOL.bounds);
     nOL.setTitleAndPath(keyword + ' - Novels: On Location', path || ('#!search-' + escape(keyword)));
