@@ -42,7 +42,7 @@ iframe#sample-novels {
 }
 @media only screen and (min-device-width: 320px) and (
 		max-device-width: 667px
-	) and (-webkit-min-device-pixel-ratio: 2) {
+	) and (min-resolution: 2dppx) {
 	html {
 		background-size: 64px 64px;
 	}
@@ -53,7 +53,7 @@ iframe#sample-novels {
 }
 @media only screen and (min-device-width: 768px) and (
 		max-device-width: 1600px
-	) and (-webkit-min-device-pixel-ratio: 1) {
+	) and (min-resolution: 1dppx) {
 	body#blog {
 		border-left: 200px #3b5998 solid;
 		margin: 0;
