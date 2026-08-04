@@ -177,7 +177,7 @@ nOL.listenFor = function (event, args) {
 	nOL.clickListener = google.maps.event.addListener(
 		nOL.map,
 		event,
-		(e) => {
+		() => {
 			eval(args);
 		},
 	);
