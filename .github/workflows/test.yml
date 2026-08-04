@@ -2,7 +2,7 @@ name: Test
 on:
   push:
 permissions:
-  read-all
+  contents: read
   id-token: write
 jobs:
   test:
