@@ -559,7 +559,7 @@ nOL.showPins = function (keyword, path) {
 		nOL.hidePins();
 		nOL.bounds = new google.maps.LatLngBounds();
 		const regex = new RegExp(unescape(keyword).trim(), "i");
-		for (let location of nOL.locations) {
+		for (const location of nOL.locations) {
 			if (
 				regex.test(
 					Reflect.get(location, anchorKindToLocationProperty[nOL.anchorKind]),
