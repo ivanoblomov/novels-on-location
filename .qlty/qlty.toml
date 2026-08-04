@@ -54,7 +54,7 @@ test_patterns = [
 
 [[include]]
 file_patterns = [
-  "app/assets/javascripts/**/*.*"
+  "app/assets/javascripts/**"
 ]
 
 [smells]
