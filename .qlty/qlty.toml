@@ -1,0 +1,15 @@
+[[plugin]]
+name = "eslint"
+
+[[plugin]]
+name = "semgrep"
+
+[[plugin]]
+name = "smells"
+
+[[exclude]]
+plugins = ["eslint", "semgrep, ""smells"]
+file_patterns = [
+  "**/*.min.js",
+  "vendor/**"
+]
