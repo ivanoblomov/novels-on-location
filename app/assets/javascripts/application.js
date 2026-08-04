@@ -980,7 +980,7 @@ jQuery.cookie = function (name, value, options) {
 			value = "";
 			options.expires = -1;
 		}
-		const expires = "";
+		let expires = "";
 		if (
 			options.expires &&
 			(typeof options.expires === "number" || options.expires.toUTCString)
