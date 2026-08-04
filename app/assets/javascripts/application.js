@@ -368,7 +368,7 @@ nOL.togglePinDisplay = function () {
 };
 
 nOL.addPin = (location) => {
-	if (location && location.lat_lng) {
+	if (location?.lat_lng) {
 		const latLng = nOL.toLatLng(location.lat_lng);
 		const pin = new google.maps.Marker({
 			draggable: location.writable,
