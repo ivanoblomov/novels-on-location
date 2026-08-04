@@ -34,13 +34,11 @@ nOL.anchorQuery = nOL.anchor.split('-')[1] || nOL.anchorKind;
 nOL.init = function(settings) {
   nOL.defaultTitle = settings['defaultTitle'];
   nOL.host = settings['host'];
-<% unless Rails.env.test? %>
   FB.init({appId:settings['fbAppId'],cookie:true,status:true,version:'v2.11',xfbml:true});
   FB.getLoginStatus(function(response){
     nOL.statusChangeCallback(response);
   });
 
-<% end %>
   nOL.bounds = new google.maps.LatLngBounds();
   nOL.geocoder = new google.maps.Geocoder();
   nOL.map = new google.maps.Map($('#map-canvas')[0], {
@@ -115,9 +113,7 @@ nOL.initSession = function(session) {
   nOL.fb_session = session;
   $.cookie('fb_id', nOL.fb_session.userID);
   nOL.setPinDisplayPrompt();
-<% unless Rails.env.test? %>
   nOL.getFriends();
-<% end %>
 }
 
 nOL.checkOrientation = function() {
@@ -581,10 +577,8 @@ nOL.closeBalloon = function() {
 }
 
 nOL.openBalloon = function(location) {
-<% unless Rails.env.test? %>
   if (location.user_name == null)
     nOL.getFacebookName(location);
-<% end %>
   nOL.closeBalloon();
   html = '<div class="map-balloon">';
   if (location.user_id == null && location.user_token == null) html += '<input onClick="nOL.claimPin(\'' + location.id + '\')" type="button" value="Claim" title="Claim this pin"/>';
