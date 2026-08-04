@@ -33,10 +33,10 @@ nOL.twitterAccount = "NovelsOnLoc%3ANovels%3A%20On%20Location";
 nOL.anchorQuery = nOL.anchor.split("-")[1] || nOL.anchorKind;
 
 nOL.init = function (settings) {
-	nOL.defaultTitle = settings["defaultTitle"];
-	nOL.host = settings["host"];
+	nOL.defaultTitle = settings.defaultTitle;
+	nOL.host = settings.host;
 	FB.init({
-		appId: settings["fbAppId"],
+		appId: settings.fbAppId,
 		cookie: true,
 		status: true,
 		version: "v2.11",
@@ -56,7 +56,7 @@ nOL.init = function (settings) {
 		minZoom: 2,
 	});
 	nOL.zoomer = new google.maps.MaxZoomService();
-	nOL.getLocations(settings["selectedLocationSlug"]);
+	nOL.getLocations(settings.selectedLocationSlug);
 
 	// Set prompts
 	$("#book-input")[0].value = nOL.bookPrompt;
@@ -103,7 +103,7 @@ nOL.init = function (settings) {
 	nOL.listenForShortcuts();
 	applesearch.init();
 
-	if (settings["error"]) alert(settings["error"]);
+	if (settings.error) alert(settings.error);
 };
 
 nOL.statusChangeCallback = function (response) {
