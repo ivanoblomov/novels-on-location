@@ -686,7 +686,7 @@ nOL.openBalloon = (location) => {
 		location.author +
 		"</a></h2>";
 	if (location.address) html += `<h2>${location.address}</h2>`;
-	if (location.review) html += `<p class=\"clear\">${location.review}</p>`;
+	if (location.review) html += `<p class="clear">${location.review}</p>`;
 	else html += "<p><em>No reviews found.</em></p>";
 	if (location.notes)
 		html += `<h3>Reader Notes</h3><p>${location.notes}</p>`;
