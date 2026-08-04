@@ -122,10 +122,8 @@ nOL.initSession = (session) => {
 };
 
 nOL.checkOrientation = function () {
-	const portrait = false;
-
-	if (window.orientation != null) portrait = Math.abs(orientation) != 90;
-
+	let portrait = false;
+	if (window.orientation !== null) portrait = Math.abs(orientation) !== 90;
 	return portrait;
 };
 
@@ -175,7 +173,7 @@ nOL.updateTweetButton = function () {
 };
 
 nOL.listenFor = function (event, args) {
-	if (nOL.clickListener != undefined)
+	if (nOL.clickListener !== undefined)
 		google.maps.event.removeListener(nOL.clickListener);
 	nOL.clickListener = google.maps.event.addListener(
 		nOL.map,
@@ -315,7 +313,7 @@ nOL.toggleMapMode = function () {
 	nOL.clickingZooms = !nOL.clickingZooms;
 
 	if (nOL.clickingZooms) {
-		if (nOL.clickListener != undefined)
+		if (nOL.clickListener !== undefined)
 			google.maps.event.removeListener(nOL.clickListener);
 		$("#mode-button")[0].title = "Double-click map to zoom. Click to toggle";
 		$("#mode-button")[0].value = "Mode: Zoom";
@@ -449,12 +447,12 @@ nOL.hidePins = function () {
 nOL.myBookmark = (location) => {
 	return (
 		location.bookmark_user_ids &&
-		location.bookmark_user_ids.indexOf(nOL.fb_session.userID) != -1
+		location.bookmark_user_ids.indexOf(nOL.fb_session.userID) !== -1
 	);
 };
 
 nOL.myFriendsLocation = (location) => {
-	return $.inArray(location.user_id, nOL.friendIds) != -1;
+	return $.inArray(location.user_id, nOL.friendIds) !== -1;
 };
 
 nOL.myLocation = (location) => {
@@ -594,7 +592,7 @@ nOL.zoomIn = (gLatLng) => {
 	nOL.zoomer.getMaxZoomAtLatLng(gLatLng, (response) => {
 		nOL.map.setCenter(gLatLng);
 
-		if (response.status != google.maps.MaxZoomStatus.OK) {
+		if (response.status !== google.maps.MaxZoomStatus.OK) {
 			alert("Couldn't zoom!");
 			nOL.map.setZoom(8);
 			return;
@@ -612,7 +610,7 @@ nOL.zoomOut = function () {
 };
 
 nOL.closeBalloon = function () {
-	if (nOL.openWindow != undefined) nOL.openWindow.close();
+	if (nOL.openWindow !== undefined) nOL.openWindow.close();
 };
 
 nOL.openBalloon = (location) => {
@@ -976,7 +974,7 @@ applesearch.clearBtnClick = function () {
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
 jQuery.cookie = function (name, value, options) {
-	if (typeof value != "undefined") {
+	if (typeof value !== "undefined") {
 		// name and value given, set cookie
 		options = options || {};
 		if (value === null) {
@@ -1015,7 +1013,7 @@ jQuery.cookie = function (name, value, options) {
 	} else {
 		// only name given, get cookie
 		let cookieValue = null;
-		if (document.cookie && document.cookie != "") {
+		if (document.cookie && document.cookie !== "") {
 			const cookies = document.cookie.split(";");
 			for (let i = 0; i < cookies.length; i++) {
 				const cookie = jQuery.trim(cookies[i]);
