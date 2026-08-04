@@ -174,13 +174,9 @@ nOL.updateTweetButton = function () {
 nOL.listenFor = function (event, args) {
 	if (nOL.clickListener !== undefined)
 		google.maps.event.removeListener(nOL.clickListener);
-	nOL.clickListener = google.maps.event.addListener(
-		nOL.map,
-		event,
-		() => {
-			eval(args);
-		},
-	);
+	nOL.clickListener = google.maps.event.addListener(nOL.map, event, () => {
+		eval(args);
+	});
 };
 
 nOL.listenForLogin = function () {
@@ -570,7 +566,7 @@ nOL.showPins = function (keyword, path) {
 		nOL.map.fitBounds(nOL.bounds);
 		nOL.setTitleAndPath(
 			`${keyword} - Novels: On Location`,
-			path || `#!search-${escape(keyword)}`
+			path || `#!search-${escape(keyword)}`,
 		);
 	}
 };
@@ -688,8 +684,7 @@ nOL.openBalloon = (location) => {
 	if (location.address) html += `<h2>${location.address}</h2>`;
 	if (location.review) html += `<p class="clear">${location.review}</p>`;
 	else html += "<p><em>No reviews found.</em></p>";
-	if (location.notes)
-		html += `<h3>Reader Notes</h3><p>${location.notes}</p>`;
+	if (location.notes) html += `<h3>Reader Notes</h3><p>${location.notes}</p>`;
 	if (location.itunes_id)
 		html +=
 			'<a class=store href="' +
@@ -774,7 +769,7 @@ nOL.claimPin = (id) => {
 		url: `/locations/${id}`,
 		data: {
 			caller: "claim",
-			"location[user_id]": (nOL?.fb_session.userID) || null,
+			"location[user_id]": nOL?.fb_session.userID || null,
 			"location[user_token]": $.cookie("user_token"),
 		},
 	});
@@ -786,7 +781,7 @@ nOL.createPin = function (latLng, place, address, keywords) {
 		"location[book_keywords]": keywords,
 		"location[latLng]": nOL.toLatLng(latLng).toUrlValue(),
 		"location[tags]": place,
-		"location[user_id]": (nOL?.fb_session.userID) || null,
+		"location[user_id]": nOL?.fb_session.userID || null,
 		"location[user_token]": $.cookie("user_token"),
 	});
 };
