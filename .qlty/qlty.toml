@@ -52,6 +52,11 @@ test_patterns = [
   "**/spec_*.*",
 ]
 
+[[include]]
+file_patterns = [
+  "app/assets/javascripts/**/*.*"
+]
+
 [smells]
 mode = "comment"
 
