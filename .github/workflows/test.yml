@@ -1,7 +1,9 @@
 name: Test
 on:
   push:
-permissions: read-all
+permissions:
+  read-all
+  id-token: write
 jobs:
   test:
     environment: staging
