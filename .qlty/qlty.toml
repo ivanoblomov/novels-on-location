@@ -19,7 +19,6 @@ exclude_patterns = [
   "*.min.*",
   "**/.yarn/**",
   "**/*.d.ts",
-  "**/assets/**",
   "**/bower_components/**",
   "**/build/**",
   "**/cache/**",
