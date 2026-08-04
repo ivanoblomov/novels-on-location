@@ -619,7 +619,7 @@ nOL.openBalloon = (location) => {
 	}
 	if (location.writable)
 		html += `<input onClick="nOL.promptForNotes('${location.id}', '${escape(location.notes || "")}')" type="button" value="Annotate" title="Annotate pin"/>`;
-	html += `<input onClick="nOL.zoomIn(nOL.toLatLng(['${location.lat_lng}']))" type="button" value="Zoom" title="Zoom to pin"/>`;
+	html += `<input onClick="nOL.zoomIn(nOL.toLatLng([${location.lat_lng}]))" type="button" value="Zoom" title="Zoom to pin"/>`;
 	if (location.image_url)
 		html += `<h1><a href="${location.store_url}" target="_blank"><img src="${location.image_url}" alt="Cover of ${location.title}" class="thumbnail" height=${location.image_height} width="${location.image_width}">${location.title}</a></h1>`;
 	else
