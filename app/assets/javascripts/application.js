@@ -81,7 +81,7 @@ nOL.init = (settings) => {
 	$("#book-input").keyup(function () {
 		const keyword = $("#book-input")[0].value;
 		nOL.anchorKind = unescape(window.location.hash.substring(2)).split("-")[0];
-		nOL.showPins(keyword, "#!search-" + escape(keyword));
+		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
 	});
 	$("#mode-button").click(nOL.toggleMapMode);
 	$("#pin-display-button").click(nOL.togglePinDisplay);
@@ -131,8 +131,8 @@ nOL.checkOrientation = function () {
 
 nOL.getFacebookName = (location) => {
 	if (location.user_name === undefined && location.user_id) {
-		FB.api("/" + location.user_id, (response) => {
-			$("#" + location.user_id).text(response.name);
+		FB.api(`/${location.user_id}`, (response) => {
+			$(`#${location.user_id}`).text(response.name);
 			location.user_name = response.name;
 		});
 	}
@@ -387,8 +387,8 @@ nOL.addPin = (location) => {
 
 		google.maps.event.addListener(pin, "click", function () {
 			nOL.setTitleAndPath(
-				location.title + " - Novels: On Location",
-				"/locations/" + location.slug,
+				`${location.title} - Novels: On Location`,
+				`/locations/${location.slug}`,
 			);
 			nOL.openBalloon(location);
 		});
@@ -473,7 +473,7 @@ nOL.remapPin = function (id, place) {
 			if (nOL.shouldAddPin(r)) {
 				$.ajax({
 					type: "PUT",
-					url: "/locations/" + id,
+					url: `/locations/${id}`,
 					data: {
 						"location[address]": r.formatted_address,
 						"location[latLng]": r.geometry.location.toUrlValue(),
@@ -481,7 +481,7 @@ nOL.remapPin = function (id, place) {
 					},
 				});
 			}
-		} else alert("Couldn't geocode! The error was " + status);
+		} else alert(`Couldn't geocode! The error was ${status}`);
 	});
 };
 
@@ -572,8 +572,8 @@ nOL.showPins = function (keyword, path) {
 		}
 		nOL.map.fitBounds(nOL.bounds);
 		nOL.setTitleAndPath(
-			keyword + " - Novels: On Location",
-			path || "#!search-" + escape(keyword),
+			`${keyword} - Novels: On Location`,
+			path || `#!search-${escape(keyword)}`
 		);
 	}
 };
@@ -586,7 +586,7 @@ nOL.codePlace = (input) => {
 
 			if (nOL.shouldAddPin(r))
 				nOL.promptForBook(r.geometry.location, input, r.formatted_address);
-		} else alert("Couldn't geocode! The error was " + status);
+		} else alert(`Couldn't geocode! The error was ${status}`);
 	});
 };
 
@@ -688,11 +688,11 @@ nOL.openBalloon = (location) => {
 		'" target="_blank">' +
 		location.author +
 		"</a></h2>";
-	if (location.address) html += "<h2>" + location.address + "</h2>";
-	if (location.review) html += '<p class="clear">' + location.review + "</p>";
+	if (location.address) html += `<h2>${location.address}</h2>`;
+	if (location.review) html += `<p class=\"clear\">${location.review}</p>`;
 	else html += "<p><em>No reviews found.</em></p>";
 	if (location.notes)
-		html += "<h3>Reader Notes</h3><p>" + location.notes + "</p>";
+		html += `<h3>Reader Notes</h3><p>${location.notes}</p>`;
 	if (location.itunes_id)
 		html +=
 			'<a class=store href="' +
@@ -710,10 +710,10 @@ nOL.openBalloon = (location) => {
 			"</a> on " +
 			location.added_at_s;
 	} else {
-		html += "Added on " + location.added_at_s;
+		html += `Added on ${location.added_at_s}`;
 	}
-	const authorPath = "/#!author-" + escape(location.author);
-	const novelPath = "/#!novel-" + escape(location.title_for_regex);
+	const authorPath = `/#!author-${escape(location.author)}`;
+	const novelPath = `/#!novel-${escape(location.title_for_regex)}`;
 	html +=
 		'<br/><div class=search-links><a href="' +
 		novelPath +
@@ -733,7 +733,7 @@ nOL.openBalloon = (location) => {
 		location.author +
 		'">All Novels by Author</a>';
 	if (location.user_id) {
-		const readerPath = "/#!reader-" + location.user_id;
+		const readerPath = `/#!reader-${location.user_id}`;
 		html +=
 			'<span class=bullet>|</span><a href="' +
 			readerPath +
@@ -744,7 +744,7 @@ nOL.openBalloon = (location) => {
 			'\')" title="Show all pins added by this reader">All Pins by Reader</a>';
 	}
 	html += "</div>";
-	if (location.tags) html += "Tags: " + nOL.tagLinks(location);
+	if (location.tags) html += `Tags: ${nOL.tagLinks(location)}`;
 	html += "</p></div>";
 	nOL.openWindow = new google.maps.InfoWindow({ content: html });
 	nOL.openWindow.open(nOL.map, nOL.pins[location.id]);
@@ -757,7 +757,7 @@ nOL.openBalloon = (location) => {
 nOL.annotatePin = function (id, notes) {
 	$.ajax({
 		type: "PUT",
-		url: "/locations/" + id,
+		url: `/locations/${id}`,
 		data: {
 			"location[notes]": notes,
 		},
@@ -767,14 +767,14 @@ nOL.annotatePin = function (id, notes) {
 nOL.bookmarkPin = (id) => {
 	$.ajax({
 		type: "PUT",
-		url: "/locations/" + id + "/bookmark",
+		url: `/locations/${id}/bookmark`,
 	});
 };
 
 nOL.claimPin = (id) => {
 	$.ajax({
 		type: "PUT",
-		url: "/locations/" + id,
+		url: `/locations/${id}`,
 		data: {
 			caller: "claim",
 			"location[user_id]": (nOL.fb_session && nOL.fb_session.userID) || null,
@@ -798,7 +798,7 @@ nOL.deletePin = (id) => {
 	if (confirm("Are you sure? This action cannot be undone.")) {
 		$.ajax({
 			type: "DELETE",
-			url: "/locations/" + id,
+			url: `/locations/${id}`,
 		});
 	}
 };
@@ -826,7 +826,7 @@ nOL.getLocations = (selectedLocationSlug) => {
 nOL.movePin = function (id, gLatLng) {
 	$.ajax({
 		type: "PUT",
-		url: "/locations/" + id,
+		url: `/locations/${id}`,
 		data: {
 			"location[latLng]": gLatLng.toUrlValue(),
 		},
@@ -836,7 +836,7 @@ nOL.movePin = function (id, gLatLng) {
 nOL.tagLinks = (location) => {
 	const tags = $.map(location.tags.split(","), function (tag, i) {
 		tag = $.trim(tag);
-		const tagPath = "/#!search-" + escape(tag);
+		const tagPath = `/#!search-${escape(tag)}`;
 		const link =
 			'<a href="' +
 			tagPath +
@@ -857,7 +857,7 @@ nOL.tagLinks = (location) => {
 nOL.tagPin = function (id, tags) {
 	$.ajax({
 		type: "PUT",
-		url: "/locations/" + id,
+		url: `/locations/${id}`,
 		data: {
 			"location[tags]": tags,
 		},
@@ -871,7 +871,7 @@ nOL.toLatLng = (latLng) => {
 nOL.unBookmarkPin = (id) => {
 	$.ajax({
 		type: "DELETE",
-		url: "/locations/" + id + "/unbookmark",
+		url: `/locations/${id}/unbookmark`,
 	});
 };
 
@@ -995,7 +995,7 @@ jQuery.cookie = function (name, value, options) {
 			} else {
 				date = options.expires;
 			}
-			expires = "; expires=" + date.toUTCString(); // use expires attribute, max-age is not supported by IE
+			expires = `; expires=${date.toUTCString()}`; // use expires attribute, max-age is not supported by IE
 		}
 		// CAUTION: Needed to parenthesize options.path and options.domain
 		// in the following expressions, otherwise they evaluate to undefined
