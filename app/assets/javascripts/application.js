@@ -812,7 +812,7 @@ nOL.findBook = function (gLatLng, place, address, keywords) {
 nOL.getLocations = (selectedLocationSlug) => {
 	$.get(
 		"/locations.json",
-		{ t: new Date().getTime(), user_token: $.cookie("user_token") },
+		{ t: Date.now(), user_token: $.cookie("user_token") },
 		(data) => {
 			nOL.locations = data;
 			nOL.addPins(selectedLocationSlug);
