@@ -608,17 +608,17 @@ nOL.openBalloon = (location) => {
 	nOL.closeBalloon();
 	html = '<div class="map-balloon">';
 	if (location.user_id === null && location.user_token === null)
-		html += `<input onClick=\"nOL.claimPin('${location.id}')" type="button" value="Claim" title="Claim this pin"/>`;
+		html += `<input onClick="nOL.claimPin('${location.id}')" type="button" value="Claim" title="Claim this pin"/>`;
 	if (location.writable)
-		html += `<input onClick=\"nOL.deletePin('#{location.id}')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag('#{location.id}', '${escape(location.tags)}')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForRemap('${location.id}', '${escape(location.address)}')" type="button" value="Remap" title="Remap pin"/>`;
+		html += `<input onClick="nOL.deletePin('#{location.id}')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag('#{location.id}', '${escape(location.tags)}')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForRemap('${location.id}', '${escape(location.address)}')" type="button" value="Remap" title="Remap pin"/>`;
 	if (nOL.fb_session) {
 		if (nOL.myBookmark(location))
-			html += `<input onClick=\"nOL.unBookmarkPin('${location.id}')" type="button" value="Un-Bookmark" title="Un-bookmark this pin"/>`;
+			html += `<input onClick="nOL.unBookmarkPin('${location.id}')" type="button" value="Un-Bookmark" title="Un-bookmark this pin"/>`;
 		else
-			html += `<input onClick=\"nOL.bookmarkPin('${location.id}')" type="button" value="Bookmark" title="Bookmark this pin"/>`;
+			html += `<input onClick="nOL.bookmarkPin('${location.id}')" type="button" value="Bookmark" title="Bookmark this pin"/>`;
 	}
 	if (location.writable)
-		html += `<input onClick=\"nOL.promptForNotes('${location.id}', '${escape(location.notes || "")}')" type="button" value="Annotate" title="Annotate pin"/>`;
+		html += `<input onClick="nOL.promptForNotes('${location.id}', '${escape(location.notes || "")}')" type="button" value="Annotate" title="Annotate pin"/>`;
 	html += `<input onClick="nOL.zoomIn(nOL.toLatLng(['${location.lat_lng}']))" type="button" value="Zoom" title="Zoom to pin"/>`;
 	if (location.image_url)
 		html += `<h1><a href="${location.store_url}" target="_blank"><img src="${location.image_url}" alt="Cover of ${location.title}" class="thumbnail" height=${location.image_height} width="${location.image_width}">${location.title}</a></h1>`;
