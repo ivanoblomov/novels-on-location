@@ -1,5 +1,5 @@
 [[plugin]]
-name = "eslint"
+name = "biome"
 
 [[plugin]]
 name = "semgrep"
