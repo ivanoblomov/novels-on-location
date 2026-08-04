@@ -215,7 +215,7 @@ nOL.logIn = function () {
 
 nOL.logOut = function () {
 	console.log("logOut");
-	FB.logout(function (response) {
+	FB.logout(function () {
 		$.cookie("fb_id", null);
 		nOL.listenForLogin();
 	});
@@ -826,7 +826,7 @@ nOL.movePin = function (id, gLatLng) {
 };
 
 nOL.tagLinks = (location) => {
-	const tags = $.map(location.tags.split(","), function (tag, i) {
+	const tags = $.map(location.tags.split(","), function (tag) {
 		tag = $.trim(tag);
 		const tagPath = `/#!search-${escape(tag)}`;
 		const link =
