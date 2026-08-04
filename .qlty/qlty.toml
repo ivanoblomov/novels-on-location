@@ -8,7 +8,7 @@ name = "semgrep"
 name = "smells"
 
 [[exclude]]
-plugins = ["eslint", "semgrep, ""smells"]
+plugins = ["eslint", "semgrep", "smells"]
 file_patterns = [
   "**/*.min.js",
   "vendor/**"
