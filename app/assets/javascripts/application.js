@@ -8,7 +8,7 @@ const anchorKindToLocationProperty = {
 	reader: "user_id",
 	search: "terms",
 };
-let nOL = {};
+const nOL = {};
 nOL.anchor = unescape(window.location.hash.substring(2));
 nOL.anchorKind = nOL.anchor.split("-")[0];
 nOL.bookPrompt = "Find a mapped book";
