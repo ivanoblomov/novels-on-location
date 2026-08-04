@@ -12,7 +12,9 @@ jobs:
     - uses: supercharge/mongodb-github-action@5a87bd81f88e2a8b195f8b7b656f5cda1350815a
       with:
         mongodb-version: 8.0
-    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+    - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+      with:
+        persist-credentials: false
     - uses: ruby/setup-ruby@c4e5b1316158f92e3d49443a9d58b31d25ac0f8f
       with:
         ruby-version: 4.0.3
