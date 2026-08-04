@@ -8,7 +8,7 @@ const anchorKindToLocationProperty = {
 	reader: "user_id",
 	search: "terms",
 };
-var nOL = {};
+let nOL = {};
 nOL.anchor = unescape(window.location.hash.substring(2));
 nOL.anchorKind = nOL.anchor.split("-")[0];
 nOL.bookPrompt = "Find a mapped book";
@@ -79,7 +79,7 @@ nOL.init = function (settings) {
 		nOL.dontListenForShortcuts();
 	});
 	$("#book-input").keyup(function () {
-		var keyword = $("#book-input")[0].value;
+		const keyword = $("#book-input")[0].value;
 		nOL.anchorKind = unescape(window.location.hash.substring(2)).split("-")[0];
 		nOL.showPins(keyword, "#!search-" + escape(keyword));
 	});
@@ -122,7 +122,7 @@ nOL.initSession = function (session) {
 };
 
 nOL.checkOrientation = function () {
-	var portrait = false;
+	const portrait = false;
 
 	if (window.orientation != null) portrait = Math.abs(orientation) != 90;
 
@@ -139,7 +139,7 @@ nOL.getFacebookName = function (location) {
 };
 
 nOL.getFriendIds = function () {
-	for (var i = 0; i < nOL.friends.length; i++) {
+	for (let i = 0; i < nOL.friends.length; i++) {
 		nOL.friendIds[i] = nOL.friends[i].id;
 	}
 };
@@ -152,7 +152,7 @@ nOL.getFriends = function () {
 };
 
 nOL.updateFacebookLikeButton = function () {
-	var likeButton = $("#fb-like")[0];
+	let likeButton = $("#fb-like")[0];
 	likeButton.dataset["href"] = document.URL;
 };
 
@@ -162,7 +162,7 @@ nOL.updateShareButtons = function () {
 };
 
 nOL.updateTweetButton = function () {
-	var iframe = $("#tweet")[0];
+	const iframe = $("#tweet")[0];
 	iframe.src = iframe.src.replace(
 		/\?.+/,
 		"?related=" +
@@ -277,12 +277,12 @@ nOL.processAnchorQuery = function () {
 };
 
 nOL.promptForRemap = function (id, address) {
-	var value = prompt("Update address to remap this pin.", unescape(address));
+	const value = prompt("Update address to remap this pin.", unescape(address));
 	if (value) nOL.remapPin(id, value);
 };
 
 nOL.promptForTag = function (id, tags) {
-	var value = prompt(
+	const value = prompt(
 		"Enter some descriptive words. These will be linked to a Google search.",
 		unescape(tags),
 	);
@@ -290,7 +290,7 @@ nOL.promptForTag = function (id, tags) {
 };
 
 nOL.promptForNotes = function (id, notes) {
-	var value = prompt(
+	const value = prompt(
 		"Add anything noteworthy. Write about the climactic scene that took place here, for example, or the real-life landmark a setting from the story was modeled on.",
 		unescape(notes || ""),
 	);
@@ -298,7 +298,7 @@ nOL.promptForNotes = function (id, notes) {
 };
 
 nOL.promptForBook = function (gLatLng, place, address) {
-	var keywords = prompt(
+	const keywords = prompt(
 		"Add a novel to the map. Our only requirement: that it be evocative of the place.\n\nEnter keywords describing the book: title, author, etc.",
 		"",
 	);
@@ -372,8 +372,8 @@ nOL.togglePinDisplay = function () {
 
 nOL.addPin = function (location) {
 	if (location && location.lat_lng) {
-		var latLng = nOL.toLatLng(location.lat_lng);
-		var pin = new google.maps.Marker({
+		const latLng = nOL.toLatLng(location.lat_lng);
+		const pin = new google.maps.Marker({
 			draggable: location.writable,
 			animation: google.maps.Animation.DROP,
 			icon: {
@@ -402,8 +402,8 @@ nOL.addPin = function (location) {
 };
 
 nOL.addPins = function (selectedLocationSlug) {
-	for (var i = 0; i < nOL.locations.length; i++) {
-		var location = nOL.locations[i];
+	for (let i = 0; i < nOL.locations.length; i++) {
+		const location = nOL.locations[i];
 		nOL.addPin(location);
 
 		// is the pin writable but missing an fb id?
@@ -426,10 +426,10 @@ nOL.addPins = function (selectedLocationSlug) {
 };
 
 nOL.shouldAddPin = function (googleResults) {
-	var types = googleResults.types;
-	var typesToPin = ["establishment", "point_of_interest", "street_address"];
+	const types = googleResults.types;
+	const typesToPin = ["establishment", "point_of_interest", "street_address"];
 
-	for (var i = 0; i < typesToPin.length; i++) {
+	for (let i = 0; i < typesToPin.length; i++) {
 		if ($.inArray(typesToPin[i], types)) return true;
 	}
 
@@ -441,7 +441,7 @@ nOL.hidePin = function (id) {
 };
 
 nOL.hidePins = function () {
-	for (var i = 0; i < nOL.locations.length; i++) {
+	for (let i = 0; i < nOL.locations.length; i++) {
 		nOL.hidePin(nOL.locations[i].id);
 	}
 };
@@ -500,7 +500,7 @@ nOL.replacePin = function (location) {
 
 nOL.showAllPins = function () {
 	nOL.bounds = new google.maps.LatLngBounds();
-	for (var i = 0; i < nOL.locations.length; i++) {
+	for (let i = 0; i < nOL.locations.length; i++) {
 		nOL.showPin(nOL.locations[i].id);
 	}
 	nOL.map.fitBounds(nOL.bounds);
@@ -513,8 +513,8 @@ nOL.showAllPinsAndUpdatePath = function () {
 
 nOL.showBookmarks = function () {
 	nOL.bounds = new google.maps.LatLngBounds();
-	for (var i = 0; i < nOL.locations.length; i++) {
-		var location = nOL.locations[i];
+	for (let i = 0; i < nOL.locations.length; i++) {
+		const location = nOL.locations[i];
 
 		if (nOL.myBookmark(location)) nOL.showPin(location.id);
 		else nOL.hidePin(location.id);
@@ -525,8 +525,8 @@ nOL.showBookmarks = function () {
 
 nOL.showFriendsPins = function () {
 	nOL.bounds = new google.maps.LatLngBounds();
-	for (var i = 0; i < nOL.locations.length; i++) {
-		var location = nOL.locations[i];
+	for (let i = 0; i < nOL.locations.length; i++) {
+		const location = nOL.locations[i];
 
 		if (nOL.myFriendsLocation(location)) nOL.showPin(location.id);
 		else nOL.hidePin(location.id);
@@ -538,8 +538,8 @@ nOL.showFriendsPins = function () {
 
 nOL.showMyPins = function () {
 	nOL.bounds = new google.maps.LatLngBounds();
-	for (var i = 0; i < nOL.locations.length; i++) {
-		var location = nOL.locations[i];
+	for (let i = 0; i < nOL.locations.length; i++) {
+		const location = nOL.locations[i];
 
 		if (nOL.myLocation(location)) nOL.showPin(location.id);
 		else nOL.hidePin(location.id);
@@ -562,7 +562,7 @@ nOL.showPins = function (keyword, path) {
 		nOL.hidePins();
 		nOL.bounds = new google.maps.LatLngBounds();
 		const regex = new RegExp(unescape(keyword).trim(), "i");
-		for (const location of nOL.locations) {
+		for (let location of nOL.locations) {
 			if (
 				regex.test(
 					Reflect.get(location, anchorKindToLocationProperty[nOL.anchorKind]),
@@ -712,8 +712,8 @@ nOL.openBalloon = function (location) {
 	} else {
 		html += "Added on " + location.added_at_s;
 	}
-	var authorPath = "/#!author-" + escape(location.author);
-	var novelPath = "/#!novel-" + escape(location.title_for_regex);
+	const authorPath = "/#!author-" + escape(location.author);
+	const novelPath = "/#!novel-" + escape(location.title_for_regex);
 	html +=
 		'<br/><div class=search-links><a href="' +
 		novelPath +
@@ -733,7 +733,7 @@ nOL.openBalloon = function (location) {
 		location.author +
 		'">All Novels by Author</a>';
 	if (location.user_id) {
-		var readerPath = "/#!reader-" + location.user_id;
+		const readerPath = "/#!reader-" + location.user_id;
 		html +=
 			'<span class=bullet>|</span><a href="' +
 			readerPath +
@@ -834,10 +834,10 @@ nOL.movePin = function (id, gLatLng) {
 };
 
 nOL.tagLinks = function (location) {
-	var tags = $.map(location.tags.split(","), function (tag, i) {
-		var tag = $.trim(tag);
-		var tagPath = "/#!search-" + escape(tag);
-		var link =
+	const tags = $.map(location.tags.split(","), function (tag, i) {
+		tag = $.trim(tag);
+		const tagPath = "/#!search-" + escape(tag);
+		const link =
 			'<a href="' +
 			tagPath +
 			'" onClick="nOL.showPins(\'' +
@@ -876,7 +876,7 @@ nOL.unBookmarkPin = function (id) {
 };
 
 // Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html
-var applesearch;
+let applesearch;
 if (!applesearch) applesearch = {};
 
 applesearch.init = function () {
@@ -892,8 +892,8 @@ applesearch.init = function () {
 // called when on user input - toggles clear fld btn
 applesearch.onChange = function (fldID, btnID) {
 	// check whether to show delete button
-	var fld = document.getElementById(fldID);
-	var btn = document.getElementById(btnID);
+	const fld = document.getElementById(fldID);
+	const btn = document.getElementById(btnID);
 	if (fld.value.length > 0 && !this.clearBtn) {
 		btn.fldID = fldID; // btn remembers it's field
 		btn.onclick = this.clearBtnClick;
@@ -906,7 +906,7 @@ applesearch.onChange = function (fldID, btnID) {
 
 // clears field
 applesearch.clearFld = function (fldID, btnID) {
-	var fld = document.getElementById(fldID);
+	const fld = document.getElementById(fldID);
 	fld.value = "";
 	this.onChange(fldID, btnID);
 
@@ -983,12 +983,12 @@ jQuery.cookie = function (name, value, options) {
 			value = "";
 			options.expires = -1;
 		}
-		var expires = "";
+		const expires = "";
 		if (
 			options.expires &&
 			(typeof options.expires === "number" || options.expires.toUTCString)
 		) {
-			var date;
+			let date;
 			if (typeof options.expires === "number") {
 				date = new Date();
 				date.setTime(date.getTime() + options.expires * 24 * 60 * 60 * 1000);
@@ -1000,9 +1000,9 @@ jQuery.cookie = function (name, value, options) {
 		// CAUTION: Needed to parenthesize options.path and options.domain
 		// in the following expressions, otherwise they evaluate to undefined
 		// in the packed version for some reason...
-		var path = options.path ? "; path=" + options.path : "";
-		var domain = options.domain ? "; domain=" + options.domain : "";
-		var secure = options.secure ? "; secure" : "";
+		const path = options.path ? "; path=" + options.path : "";
+		const domain = options.domain ? "; domain=" + options.domain : "";
+		const secure = options.secure ? "; secure" : "";
 		document.cookie = [
 			name,
 			"=",
@@ -1014,11 +1014,11 @@ jQuery.cookie = function (name, value, options) {
 		].join("");
 	} else {
 		// only name given, get cookie
-		var cookieValue = null;
+		let cookieValue = null;
 		if (document.cookie && document.cookie != "") {
-			var cookies = document.cookie.split(";");
-			for (var i = 0; i < cookies.length; i++) {
-				var cookie = jQuery.trim(cookies[i]);
+			const cookies = document.cookie.split(";");
+			for (let i = 0; i < cookies.length; i++) {
+				const cookie = jQuery.trim(cookies[i]);
 				// Does this cookie string begin with the name we want?
 				if (cookie.substring(0, name.length + 1) === name + "=") {
 					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
