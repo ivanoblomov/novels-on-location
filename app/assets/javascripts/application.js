@@ -32,7 +32,7 @@ nOL.twitterAccount = "NovelsOnLoc%3ANovels%3A%20On%20Location";
 
 nOL.anchorQuery = nOL.anchor.split("-")[1] || nOL.anchorKind;
 
-nOL.init = function (settings) {
+nOL.init = (settings) => {
 	nOL.defaultTitle = settings.defaultTitle;
 	nOL.host = settings.host;
 	FB.init({
@@ -95,7 +95,7 @@ nOL.init = function (settings) {
 		$(this).css("color", "black");
 		nOL.dontListenForShortcuts();
 	});
-	$("#place-input").keypress(function (e) {
+	$("#place-input").keypress((e) => {
 		if ((e.keyCode || e.which) === 13) nOL.codePlace($(this).val());
 	});
 
@@ -106,7 +106,7 @@ nOL.init = function (settings) {
 	if (settings.error) alert(settings.error);
 };
 
-nOL.statusChangeCallback = function (response) {
+nOL.statusChangeCallback = (response) => {
 	if (response.status === "connected") {
 		nOL.initSession(response.authResponse);
 	} else {
@@ -114,7 +114,7 @@ nOL.statusChangeCallback = function (response) {
 	}
 };
 
-nOL.initSession = function (session) {
+nOL.initSession = (session) => {
 	nOL.fb_session = session;
 	$.cookie("fb_id", nOL.fb_session.userID);
 	nOL.setPinDisplayPrompt();
@@ -129,9 +129,9 @@ nOL.checkOrientation = function () {
 	return portrait;
 };
 
-nOL.getFacebookName = function (location) {
+nOL.getFacebookName = (location) => {
 	if (location.user_name === undefined && location.user_id) {
-		FB.api("/" + location.user_id, function (response) {
+		FB.api("/" + location.user_id, (response) => {
 			$("#" + location.user_id).text(response.name);
 			location.user_name = response.name;
 		});
@@ -145,7 +145,7 @@ nOL.getFriendIds = function () {
 };
 
 nOL.getFriends = function () {
-	FB.api("/me/friends", function (response) {
+	FB.api("/me/friends", (response) => {
 		nOL.friends = response.data;
 		nOL.getFriendIds();
 	});
@@ -180,7 +180,7 @@ nOL.listenFor = function (event, args) {
 	nOL.clickListener = google.maps.event.addListener(
 		nOL.map,
 		event,
-		function (e) {
+		(e) => {
 			eval(args);
 		},
 	);
@@ -209,7 +209,7 @@ nOL.loggedIn = function () {
 };
 
 nOL.logIn = function () {
-	FB.login(function (response) {
+	FB.login((response) => {
 		console.log(response);
 		if (response.authResponse) {
 			nOL.initSession(response.authResponse);
@@ -370,7 +370,7 @@ nOL.togglePinDisplay = function () {
 	nOL.setPinDisplayPrompt();
 };
 
-nOL.addPin = function (location) {
+nOL.addPin = (location) => {
 	if (location && location.lat_lng) {
 		const latLng = nOL.toLatLng(location.lat_lng);
 		const pin = new google.maps.Marker({
@@ -401,7 +401,7 @@ nOL.addPin = function (location) {
 	}
 };
 
-nOL.addPins = function (selectedLocationSlug) {
+nOL.addPins = (selectedLocationSlug) => {
 	for (let i = 0; i < nOL.locations.length; i++) {
 		const location = nOL.locations[i];
 		nOL.addPin(location);
@@ -425,7 +425,7 @@ nOL.addPins = function (selectedLocationSlug) {
 	else nOL.showAllPins();
 };
 
-nOL.shouldAddPin = function (googleResults) {
+nOL.shouldAddPin = (googleResults) => {
 	const types = googleResults.types;
 	const typesToPin = ["establishment", "point_of_interest", "street_address"];
 
@@ -436,7 +436,7 @@ nOL.shouldAddPin = function (googleResults) {
 	return false;
 };
 
-nOL.hidePin = function (id) {
+nOL.hidePin = (id) => {
 	if (nOL.pins[id]) nOL.pins[id].setMap(null);
 };
 
@@ -446,18 +446,18 @@ nOL.hidePins = function () {
 	}
 };
 
-nOL.myBookmark = function (location) {
+nOL.myBookmark = (location) => {
 	return (
 		location.bookmark_user_ids &&
 		location.bookmark_user_ids.indexOf(nOL.fb_session.userID) != -1
 	);
 };
 
-nOL.myFriendsLocation = function (location) {
+nOL.myFriendsLocation = (location) => {
 	return $.inArray(location.user_id, nOL.friendIds) != -1;
 };
 
-nOL.myLocation = function (location) {
+nOL.myLocation = (location) => {
 	return (
 		$.cookie("user_token") === location.user_token ||
 		(nOL.loggedIn() && location.user_id === nOL.fb_session.userID)
@@ -485,12 +485,12 @@ nOL.remapPin = function (id, place) {
 	});
 };
 
-nOL.removePin = function (id) {
+nOL.removePin = (id) => {
 	nOL.hidePin(id);
 	delete nOL.pins[id];
 };
 
-nOL.replacePin = function (location) {
+nOL.replacePin = (location) => {
 	nOL.removePin(location.id);
 	nOL.locations.splice(nOL.locations.indexOf(location), 1);
 	nOL.locations.push(location);
@@ -548,7 +548,7 @@ nOL.showMyPins = function () {
 	nOL.setTitleAndPath("My Pins - Novels: On Location", "/#!my");
 };
 
-nOL.showPin = function (id) {
+nOL.showPin = (id) => {
 	if (nOL.pins[id]) {
 		nOL.pins[id].setMap(nOL.map);
 		nOL.bounds.extend(nOL.pins[id].getPosition());
@@ -578,7 +578,7 @@ nOL.showPins = function (keyword, path) {
 	}
 };
 
-nOL.codePlace = function (input) {
+nOL.codePlace = (input) => {
 	nOL.geocoder.geocode({ address: input }, function (results, status) {
 		if (status === google.maps.GeocoderStatus.OK) {
 			r = results[0];
@@ -590,8 +590,8 @@ nOL.codePlace = function (input) {
 	});
 };
 
-nOL.zoomIn = function (gLatLng) {
-	nOL.zoomer.getMaxZoomAtLatLng(gLatLng, function (response) {
+nOL.zoomIn = (gLatLng) => {
+	nOL.zoomer.getMaxZoomAtLatLng(gLatLng, (response) => {
 		nOL.map.setCenter(gLatLng);
 
 		if (response.status != google.maps.MaxZoomStatus.OK) {
@@ -615,7 +615,7 @@ nOL.closeBalloon = function () {
 	if (nOL.openWindow != undefined) nOL.openWindow.close();
 };
 
-nOL.openBalloon = function (location) {
+nOL.openBalloon = (location) => {
 	if (location.user_name === null) nOL.getFacebookName(location);
 	nOL.closeBalloon();
 	html = '<div class="map-balloon">';
@@ -764,14 +764,14 @@ nOL.annotatePin = function (id, notes) {
 	});
 };
 
-nOL.bookmarkPin = function (id) {
+nOL.bookmarkPin = (id) => {
 	$.ajax({
 		type: "PUT",
 		url: "/locations/" + id + "/bookmark",
 	});
 };
 
-nOL.claimPin = function (id) {
+nOL.claimPin = (id) => {
 	$.ajax({
 		type: "PUT",
 		url: "/locations/" + id,
@@ -794,7 +794,7 @@ nOL.createPin = function (latLng, place, address, keywords) {
 	});
 };
 
-nOL.deletePin = function (id) {
+nOL.deletePin = (id) => {
 	if (confirm("Are you sure? This action cannot be undone.")) {
 		$.ajax({
 			type: "DELETE",
@@ -812,11 +812,11 @@ nOL.findBook = function (gLatLng, place, address, keywords) {
 	});
 };
 
-nOL.getLocations = function (selectedLocationSlug) {
+nOL.getLocations = (selectedLocationSlug) => {
 	$.get(
 		"/locations.json",
 		{ t: new Date().getTime(), user_token: $.cookie("user_token") },
-		function (data) {
+		(data) => {
 			nOL.locations = data;
 			nOL.addPins(selectedLocationSlug);
 		},
@@ -833,7 +833,7 @@ nOL.movePin = function (id, gLatLng) {
 	});
 };
 
-nOL.tagLinks = function (location) {
+nOL.tagLinks = (location) => {
 	const tags = $.map(location.tags.split(","), function (tag, i) {
 		tag = $.trim(tag);
 		const tagPath = "/#!search-" + escape(tag);
@@ -864,11 +864,11 @@ nOL.tagPin = function (id, tags) {
 	});
 };
 
-nOL.toLatLng = function (latLng) {
+nOL.toLatLng = (latLng) => {
 	return new google.maps.LatLng(latLng[0], latLng[1]);
 };
 
-nOL.unBookmarkPin = function (id) {
+nOL.unBookmarkPin = (id) => {
 	$.ajax({
 		type: "DELETE",
 		url: "/locations/" + id + "/unbookmark",
