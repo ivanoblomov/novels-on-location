@@ -774,7 +774,7 @@ nOL.claimPin = (id) => {
 		url: `/locations/${id}`,
 		data: {
 			caller: "claim",
-			"location[user_id]": (nOL.fb_session && nOL.fb_session.userID) || null,
+			"location[user_id]": (nOL?.fb_session.userID) || null,
 			"location[user_token]": $.cookie("user_token"),
 		},
 	});
@@ -786,7 +786,7 @@ nOL.createPin = function (latLng, place, address, keywords) {
 		"location[book_keywords]": keywords,
 		"location[latLng]": nOL.toLatLng(latLng).toUrlValue(),
 		"location[tags]": place,
-		"location[user_id]": (nOL.fb_session && nOL.fb_session.userID) || null,
+		"location[user_id]": (nOL?.fb_session.userID) || null,
 		"location[user_token]": $.cookie("user_token"),
 	});
 };
