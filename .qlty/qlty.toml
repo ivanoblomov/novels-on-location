@@ -82,3 +82,6 @@ name = "trufflehog"
 
 [[plugin]]
 name = "zizmor"
+
+[[plugin]]
+name = "biome"
