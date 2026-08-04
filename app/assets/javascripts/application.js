@@ -630,7 +630,7 @@ nOL.openBalloon = (location) => {
 	else html += "<p><em>No reviews found.</em></p>";
 	if (location.notes) html += `<h3>Reader Notes</h3><p>${location.notes}</p>`;
 	if (location.itunes_id)
-		html +=	`<a class=store href="${location.itunes_affiliate_url}" target=_blank><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/app-icon-books/standard/en-us" alt="Apple Books app icon" /></a>`;
+		html += `<a class=store href="${location.itunes_affiliate_url}" target=_blank><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/app-icon-books/standard/en-us" alt="Apple Books app icon" /></a>`;
 	html += "<br/>";
 	if (location.user_id) {
 		html += `Added by <a href="https://www.facebook.com/profile.php?id=#{location.user_id}" id="${location.user_id}" target="_blank">${location.user_name || "(loading...)"}</a> on ${location.added_at_s}`;
