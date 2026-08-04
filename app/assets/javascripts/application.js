@@ -150,8 +150,7 @@ nOL.getFriends = function () {
 };
 
 nOL.updateFacebookLikeButton = function () {
-	let likeButton = $("#fb-like")[0];
-	likeButton.dataset["href"] = document.URL;
+	$("#fb-like")[0].dataset["href"] = document.URL;
 };
 
 nOL.updateShareButtons = function () {
