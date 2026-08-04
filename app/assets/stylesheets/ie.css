@@ -1,2 +1,6 @@
-input[type="button"]{font-size:8pt}
-.map-balloon input[type="button"]{padding:3px}
+input[type="button"] {
+	font-size: 8pt;
+}
+.map-balloon input[type="button"] {
+	padding: 3px;
+}

@@ -1,6 +1,22 @@
-#applesearch .sbox_l{background:none;width:0;height:0}
-#applesearch .sbox_r{background:none;width:0;height:0}
-#book-input{width:153px}
-#mode-button{width:96px}
-#place-input{width:210px}
-#toolbar{top:6px}
+#applesearch .sbox_l {
+	background: none;
+	width: 0;
+	height: 0;
+}
+#applesearch .sbox_r {
+	background: none;
+	width: 0;
+	height: 0;
+}
+#book-input {
+	width: 153px;
+}
+#mode-button {
+	width: 96px;
+}
+#place-input {
+	width: 210px;
+}
+#toolbar {
+	top: 6px;
+}

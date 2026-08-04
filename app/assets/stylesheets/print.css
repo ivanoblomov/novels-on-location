@@ -1,3 +1,9 @@
-@page{size:landscape}
-.no-print{display:none}
-#headers{z-index:1}
+@page {
+	size: landscape;
+}
+.no-print {
+	display: none;
+}
+#headers {
+	z-index: 1;
+}
