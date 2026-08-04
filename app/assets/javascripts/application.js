@@ -66,7 +66,7 @@ nOL.init = function (settings) {
 
 	// Register event listeners
 	$("#book-input").blur(function () {
-		if ($(this).val() == "") {
+		if ($(this).val() === "") {
 			$(this).val(nOL.bookPrompt);
 			nOL.showAllPinsAndUpdatePath();
 		}
@@ -74,7 +74,7 @@ nOL.init = function (settings) {
 		nOL.listenForShortcuts();
 	});
 	$("#book-input").focus(function () {
-		if ($(this).val() == nOL.bookPrompt) $(this).val("");
+		if ($(this).val() === nOL.bookPrompt) $(this).val("");
 		$(this).css("color", "black");
 		nOL.dontListenForShortcuts();
 	});
@@ -96,7 +96,7 @@ nOL.init = function (settings) {
 		nOL.dontListenForShortcuts();
 	});
 	$("#place-input").keypress(function (e) {
-		if ((e.keyCode || e.which) == 13) nOL.codePlace($(this).val());
+		if ((e.keyCode || e.which) === 13) nOL.codePlace($(this).val());
 	});
 
 	nOL.listenForLogin();
@@ -130,7 +130,7 @@ nOL.checkOrientation = function () {
 };
 
 nOL.getFacebookName = function (location) {
-	if (location.user_name == undefined && location.user_id) {
+	if (location.user_name === undefined && location.user_id) {
 		FB.api("/" + location.user_id, function (response) {
 			$("#" + location.user_id).text(response.name);
 			location.user_name = response.name;
@@ -338,12 +338,12 @@ nOL.toggleMapMode = function () {
 nOL.setPinDisplayPrompt = function () {
 	$("#pin-display-button")[0].title = "Click to change pins displayed";
 
-	if (nOL.pinType == 0) $("#pin-display-button")[0].value = "Pins: All";
-	else if (nOL.pinType == 1)
+	if (nOL.pinType === 0) $("#pin-display-button")[0].value = "Pins: All";
+	else if (nOL.pinType === 1)
 		$("#pin-display-button")[0].value = "Pins: My Pins";
-	else if (nOL.pinType == 2)
+	else if (nOL.pinType === 2)
 		$("#pin-display-button")[0].value = "Pins: Bookmarks";
-	else if (nOL.pinType == 3)
+	else if (nOL.pinType === 3)
 		$("#pin-display-button")[0].value = "Pins: Friends";
 };
 
@@ -362,10 +362,10 @@ nOL.togglePinDisplay = function () {
 	)
 		nOL.pinType = 0;
 
-	if (nOL.pinType == 0) nOL.showAllPinsAndUpdatePath();
-	else if (nOL.pinType == 1) nOL.showMyPins();
-	else if (nOL.pinType == 2) nOL.showBookmarks();
-	else if (nOL.pinType == 3) nOL.showFriendsPins();
+	if (nOL.pinType === 0) nOL.showAllPinsAndUpdatePath();
+	else if (nOL.pinType === 1) nOL.showMyPins();
+	else if (nOL.pinType === 2) nOL.showBookmarks();
+	else if (nOL.pinType === 3) nOL.showFriendsPins();
 
 	nOL.setPinDisplayPrompt();
 };
@@ -410,13 +410,13 @@ nOL.addPins = function (selectedLocationSlug) {
 		if (
 			nOL.fb_session &&
 			location.writable &&
-			location.user_id == undefined &&
+			location.user_id === undefined &&
 			nOL.myLocation(location)
 		) {
 			nOL.claimPin(location.id);
 		}
 
-		if (selectedLocationSlug && location.slug == selectedLocationSlug) {
+		if (selectedLocationSlug && location.slug === selectedLocationSlug) {
 			nOL.openBalloon(location);
 			nOL.zoomIn(nOL.toLatLng(location.lat_lng));
 		}
@@ -459,14 +459,14 @@ nOL.myFriendsLocation = function (location) {
 
 nOL.myLocation = function (location) {
 	return (
-		$.cookie("user_token") == location.user_token ||
-		(nOL.loggedIn() && location.user_id == nOL.fb_session.userID)
+		$.cookie("user_token") === location.user_token ||
+		(nOL.loggedIn() && location.user_id === nOL.fb_session.userID)
 	);
 };
 
 nOL.remapPin = function (id, place) {
 	nOL.geocoder.geocode({ address: place }, function (results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
+		if (status === google.maps.GeocoderStatus.OK) {
 			r = results[0];
 			nOL.zoomIn(r.geometry.location);
 
@@ -557,7 +557,7 @@ nOL.showPin = function (id) {
 
 nOL.showPins = function (keyword, path) {
 	nOL.closeBalloon();
-	if (keyword == "") nOL.showAllPinsAndUpdatePath();
+	if (keyword === "") nOL.showAllPinsAndUpdatePath();
 	else {
 		nOL.hidePins();
 		nOL.bounds = new google.maps.LatLngBounds();
@@ -580,7 +580,7 @@ nOL.showPins = function (keyword, path) {
 
 nOL.codePlace = function (input) {
 	nOL.geocoder.geocode({ address: input }, function (results, status) {
-		if (status == google.maps.GeocoderStatus.OK) {
+		if (status === google.maps.GeocoderStatus.OK) {
 			r = results[0];
 			nOL.zoomIn(r.geometry.location);
 
@@ -600,7 +600,7 @@ nOL.zoomIn = function (gLatLng) {
 			return;
 		} else
 			nOL.map.setZoom(
-				nOL.map.getZoom() == response.zoom - 5
+				nOL.map.getZoom() === response.zoom - 5
 					? response.zoom - 3
 					: response.zoom - 5,
 			);
@@ -616,10 +616,10 @@ nOL.closeBalloon = function () {
 };
 
 nOL.openBalloon = function (location) {
-	if (location.user_name == null) nOL.getFacebookName(location);
+	if (location.user_name === null) nOL.getFacebookName(location);
 	nOL.closeBalloon();
 	html = '<div class="map-balloon">';
-	if (location.user_id == null && location.user_token == null)
+	if (location.user_id === null && location.user_token === null)
 		html +=
 			"<input onClick=\"nOL.claimPin('" +
 			location.id +
@@ -898,7 +898,7 @@ applesearch.onChange = function (fldID, btnID) {
 		btn.fldID = fldID; // btn remembers it's field
 		btn.onclick = this.clearBtnClick;
 		this.clearBtn = true;
-	} else if (fld.value.length == 0 && this.clearBtn) {
+	} else if (fld.value.length === 0 && this.clearBtn) {
 		btn.onclick = null;
 		this.clearBtn = false;
 	}
@@ -910,7 +910,7 @@ applesearch.clearFld = function (fldID, btnID) {
 	fld.value = "";
 	this.onChange(fldID, btnID);
 
-	if (fldID == "book-input") {
+	if (fldID === "book-input") {
 		nOL.showPins($("#book-input")[0].value, true);
 	}
 };
@@ -986,10 +986,10 @@ jQuery.cookie = function (name, value, options) {
 		var expires = "";
 		if (
 			options.expires &&
-			(typeof options.expires == "number" || options.expires.toUTCString)
+			(typeof options.expires === "number" || options.expires.toUTCString)
 		) {
 			var date;
-			if (typeof options.expires == "number") {
+			if (typeof options.expires === "number") {
 				date = new Date();
 				date.setTime(date.getTime() + options.expires * 24 * 60 * 60 * 1000);
 			} else {
@@ -1020,7 +1020,7 @@ jQuery.cookie = function (name, value, options) {
 			for (var i = 0; i < cookies.length; i++) {
 				var cookie = jQuery.trim(cookies[i]);
 				// Does this cookie string begin with the name we want?
-				if (cookie.substring(0, name.length + 1) == name + "=") {
+				if (cookie.substring(0, name.length + 1) === name + "=") {
 					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
 					break;
 				}
