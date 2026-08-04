@@ -997,8 +997,8 @@ jQuery.cookie = function (name, value, options) {
 		// CAUTION: Needed to parenthesize options.path and options.domain
 		// in the following expressions, otherwise they evaluate to undefined
 		// in the packed version for some reason...
-		const path = options.path ? "; path=" + options.path : "";
-		const domain = options.domain ? "; domain=" + options.domain : "";
+		const path = options.path ? `; path=${options.path}` : "";
+		const domain = options.domain ? `; domain=${options.domain}` : "";
 		const secure = options.secure ? "; secure" : "";
 		document.cookie = [
 			name,
