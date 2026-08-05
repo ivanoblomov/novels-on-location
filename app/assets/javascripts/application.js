@@ -616,7 +616,7 @@ nOL.openBalloon = (location) => {
 	if (location.user_id === null && location.user_token === null)
 		html += `<input onClick="nOL.claimPin('${location.id}')" type="button" value="Claim" title="Claim this pin"/>`;
 	if (location.writable)
-		html += `<input onClick="nOL.deletePin('#{location.id}')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag('#{location.id}', '${escape(location.tags)}')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForRemap('${location.id}', '${escape(location.address)}')" type="button" value="Remap" title="Remap pin"/>`;
+		html += `<input onClick="nOL.deletePin('${location.id}')" type="button" value="Delete" title="Delete this pin"/><input onClick="nOL.promptForTag('${location.id}', '${escape(location.tags)}')" type="button" value="Tag" title="Tag pin"/><input onClick="nOL.promptForRemap('${location.id}', '${escape(location.address)}')" type="button" value="Remap" title="Remap pin"/>`;
 	if (nOL.fb_session) {
 		if (nOL.myBookmark(location))
 			html += `<input onClick="nOL.unBookmarkPin('${location.id}')" type="button" value="Un-Bookmark" title="Un-bookmark this pin"/>`;
@@ -639,13 +639,13 @@ nOL.openBalloon = (location) => {
 		html += `<a class=store href="${location.itunes_affiliate_url}" target=_blank><img src="https://toolbox.marketingtools.apple.com/api/v2/badges/app-icon-books/standard/en-us" alt="Apple Books app icon" /></a>`;
 	html += "<br/>";
 	if (location.user_id) {
-		html += `Added by <a href="https://www.facebook.com/profile.php?id=#{location.user_id}" id="${location.user_id}" target="_blank">${location.user_name || "(loading...)"}</a> on ${location.added_at_s}`;
+		html += `Added by <a href="https://www.facebook.com/profile.php?id=${location.user_id}" id="${location.user_id}" target="_blank">${location.user_name || "(loading...)"}</a> on ${location.added_at_s}`;
 	} else {
 		html += `Added on ${location.added_at_s}`;
 	}
 	const authorPath = `/#!author-${escape(location.author)}`;
 	const novelPath = `/#!novel-${escape(location.title_for_regex)}`;
-	html += `<br/><div class=search-links><a href="${novelPath}" onClick="nOL.showPins('${location.title_for_regex}', '${novelPath}')" title="Show all locations for the novel #{location.title}">All Locations for Novel</a><span class=bullet>|</span><a href="${authorPath}" onClick="nOL.showPins('${location.author}', '${authorPath}')" title="Show all novels by the author ${location.author}">All Novels by Author</a>`;
+	html += `<br/><div class=search-links><a href="${novelPath}" onClick="nOL.showPins('${location.title_for_regex}', '${novelPath}')" title="Show all locations for the novel ${location.title}">All Locations for Novel</a><span class=bullet>|</span><a href="${authorPath}" onClick="nOL.showPins('${location.author}', '${authorPath}')" title="Show all novels by the author ${location.author}">All Novels by Author</a>`;
 	if (location.user_id) {
 		const readerPath = `/#!reader-${location.user_id}`;
 		html += `<span class=bullet>|</span><a href="${readerPath}" id=reader-link onClick="nOL.showPins('${location.user_id}', '${readerPath}')" title="Show all pins added by this reader">All Pins by Reader</a>`;
