@@ -35,16 +35,18 @@ nOL.anchorQuery = nOL.anchor.split("-")[1] || nOL.anchorKind;
 nOL.init = (settings) => {
 	nOL.defaultTitle = settings.defaultTitle;
 	nOL.host = settings.host;
-	typeof FB !== 'undefined' && FB.init({
-		appId: settings.fbAppId,
-		cookie: true,
-		status: true,
-		version: "v2.11",
-		xfbml: true,
-	});
-	typeof FB !== 'undefined' && FB.getLoginStatus(function (response) {
-		nOL.statusChangeCallback(response);
-	});
+	typeof FB !== "undefined" &&
+		FB.init({
+			appId: settings.fbAppId,
+			cookie: true,
+			status: true,
+			version: "v2.11",
+			xfbml: true,
+		});
+	typeof FB !== "undefined" &&
+		FB.getLoginStatus(function (response) {
+			nOL.statusChangeCallback(response);
+		});
 
 	nOL.bounds = new google.maps.LatLngBounds();
 	nOL.geocoder = new google.maps.Geocoder();
@@ -129,10 +131,11 @@ nOL.checkOrientation = function () {
 
 nOL.getFacebookName = (location) => {
 	if (location.user_name === undefined && location.user_id) {
-		typeof FB !== 'undefined' && FB.api(`/${location.user_id}`, (response) => {
-			$(`#${location.user_id}`).text(response.name);
-			location.user_name = response.name;
-		});
+		typeof FB !== "undefined" &&
+			FB.api(`/${location.user_id}`, (response) => {
+				$(`#${location.user_id}`).text(response.name);
+				location.user_name = response.name;
+			});
 	}
 };
 
@@ -143,10 +146,11 @@ nOL.getFriendIds = function () {
 };
 
 nOL.getFriends = function () {
-	typeof FB !== 'undefined' && FB.api("/me/friends", (response) => {
-		nOL.friends = response.data;
-		nOL.getFriendIds();
-	});
+	typeof FB !== "undefined" &&
+		FB.api("/me/friends", (response) => {
+			nOL.friends = response.data;
+			nOL.getFriendIds();
+		});
 };
 
 nOL.updateFacebookLikeButton = function () {
@@ -197,23 +201,25 @@ nOL.loggedIn = function () {
 };
 
 nOL.logIn = function () {
-	typeof FB !== 'undefined' && FB.login((response) => {
-		console.log(response);
-		if (response.authResponse) {
-			nOL.initSession(response.authResponse);
-			document.location.reload();
-		} else {
-			console.log("193");
-		}
-	});
+	typeof FB !== "undefined" &&
+		FB.login((response) => {
+			console.log(response);
+			if (response.authResponse) {
+				nOL.initSession(response.authResponse);
+				document.location.reload();
+			} else {
+				console.log("193");
+			}
+		});
 };
 
 nOL.logOut = function () {
 	console.log("logOut");
-	typeof FB !== 'undefined' && FB.logout(function () {
-		$.cookie("fb_id", null);
-		nOL.listenForLogin();
-	});
+	typeof FB !== "undefined" &&
+		FB.logout(function () {
+			$.cookie("fb_id", null);
+			nOL.listenForLogin();
+		});
 	console.log($.cookie("fb_id"));
 	console.log("end");
 };
