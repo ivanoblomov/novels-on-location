@@ -98,7 +98,7 @@ nOL.init = (settings) => {
 		nOL.dontListenForShortcuts();
 	});
 	$("#place-input").keypress((e) => {
-		if ((e.keyCode || e.which) === 13) nOL.codePlace($(this).val());
+		if ((e.keyCode || e.which) === 13) nOL.codePlace($("#place-input").val());
 	});
 
 	nOL.listenForLogin();
