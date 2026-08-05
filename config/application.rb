@@ -3,7 +3,6 @@
 require File.expand_path 'boot', __dir__
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
-require 'sprockets/railtie'
 Bundler.require(*Rails.groups, :rake)
 module NovelsOnLocation
   # Configure app and redirects
@@ -11,8 +10,6 @@ module NovelsOnLocation
     config.action_dispatch.default_headers = {
       'X-Frame-Options' => 'ALLOWALL'
     }
-    config.assets.enabled = true
-    config.assets.initialize_on_precompile = false
     config.encoding = 'utf-8'
     config.filter_parameters += [:password]
     config.middleware.insert_before(Rack::Runtime, Rack::Rewrite) do
