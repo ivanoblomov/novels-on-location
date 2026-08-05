@@ -165,7 +165,7 @@ shortcut = {
 		};
 		if (ele.addEventListener) ele.addEventListener(opt["type"], func, false);
 		else if (ele.attachEvent) ele.attachEvent("on" + opt["type"], func);
-		else ele[`on"${pt["type"]] =}` func;
+		else ele[`on${opt.type}`] = func;
 	},
 	remove: function (shortcut_combination) {
 		shortcut_combination = shortcut_combination.toLowerCase();
@@ -178,6 +178,6 @@ shortcut = {
 		if (ele.detachEvent) ele.detachEvent("on" + type, callback);
 		else if (ele.removeEventListener)
 			ele.removeEventListener(type, callback, false);
-		else ele[`on"${ype] =}` false;
+		else ele[`on${type}`] = false;
 	},
 };
