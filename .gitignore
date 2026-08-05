@@ -5,3 +5,6 @@ git.rake
 config/application.yml
 log/*.log
 tmp/
+
+/app/assets/builds/*
+!/app/assets/builds/.keep
