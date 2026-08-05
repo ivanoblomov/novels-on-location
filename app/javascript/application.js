@@ -176,7 +176,7 @@ nOL.listenFor = (event, args) => {
 	});
 };
 
-nOL.listenForLogin = function () {
+nOL.listenForLogin = () => {
 	$("#login-button").click(() => {
 		nOL.toggleLogin();
 	});
@@ -196,7 +196,7 @@ nOL.listenForShortcuts = () => {
 
 nOL.loggedIn = () => !!$.cookie("fb_id");
 
-nOL.logIn = function () {
+nOL.logIn = () => {
 	typeof FB !== "undefined" &&
 		FB.login((response) => {
 			console.log(response);
@@ -209,7 +209,7 @@ nOL.logIn = function () {
 		});
 };
 
-nOL.logOut = function () {
+nOL.logOut = () => {
 	console.log("logOut");
 	typeof FB !== "undefined" &&
 		FB.logout(() => {
@@ -454,7 +454,7 @@ nOL.myLocation = (location) => {
 	);
 };
 
-nOL.remapPin = function (id, place) {
+nOL.remapPin = (id, place) => {
 	nOL.geocoder.geocode({ address: place }, (results, status) => {
 		if (status === google.maps.GeocoderStatus.OK) {
 			r = results[0];

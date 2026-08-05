@@ -10,31 +10,31 @@ shortcut = {
 		};
 		if (!opt) opt = default_options;
 		else {
-			for (var dfo in default_options) {
+			for (const dfo in default_options) {
 				if (typeof opt[dfo] === "undefined") opt[dfo] = default_options[dfo];
 			}
 		}
-		var ele = opt.target;
+		let ele = opt.target;
 		if (typeof opt.target === "string")
 			ele = document.getElementById(opt.target);
-		var ths = this;
 		shortcut_combination = shortcut_combination.toLowerCase();
-		var func = function (e) {
+		const func = (e) => {
 			e = e || window.event;
 			if (opt.disable_in_input) {
-				var element;
+				let element;
 				if (e.target) element = e.target;
 				else if (e.srcElement) element = e.srcElement;
 				if (element.nodeType === 3) element = element.parentNode;
-				if (element.tagName == "INPUT" || element.tagName == "TEXTAREA") return;
+				if (element.tagName === "INPUT" || element.tagName === "TEXTAREA")
+					return;
 			}
 			if (e.keyCode) code = e.keyCode;
 			else if (e.which) code = e.which;
-			var character = String.fromCharCode(code).toLowerCase();
+			let character = String.fromCharCode(code).toLowerCase();
 			if (code === 188) character = ",";
-			if (code == 190) character = ".";
-			var keys = shortcut_combination.split("+");
-			var kp = 0;
+			if (code === 190) character = ".";
+			const keys = shortcut_combination.split("+");
+			let kp = 0;
 			const shift_nums = {
 				"`": "~",
 				1: "!",
@@ -112,23 +112,23 @@ shortcut = {
 			if (e.shiftKey) modifiers.shift.pressed = true;
 			if (e.altKey) modifiers.alt.pressed = true;
 			if (e.metaKey) modifiers.meta.pressed = true;
-			for (var i = 0; (k = keys[i]), i < keys.length; i++) {
-				if (k === "ctrl" || k == "control") {
+			for (let i = 0; (k = keys[i]), i < keys.length; i++) {
+				if (k === "ctrl" || k === "control") {
 					kp++;
 					modifiers.ctrl.wanted = true;
-				} else if (k == "shift") {
+				} else if (k === "shift") {
 					kp++;
 					modifiers.shift.wanted = true;
 				} else if (k === "alt") {
 					kp++;
 					modifiers.alt.wanted = true;
-				} else if (k == "meta") {
+				} else if (k === "meta") {
 					kp++;
 					modifiers.meta.wanted = true;
 				} else if (k.length > 1) {
 					if (special_keys[k] === code) kp++;
-				} else if (opt["keycode"]) {
-					if (opt["keycode"] == code) kp++;
+				} else if (opt.keycode) {
+					if (opt.keycode === code) kp++;
 				} else {
 					if (character === k) kp++;
 					else {
@@ -141,13 +141,13 @@ shortcut = {
 			}
 			if (
 				kp === keys.length &&
-				modifiers.ctrl.pressed == modifiers.ctrl.wanted &&
-				modifiers.shift.pressed == modifiers.shift.wanted &&
-				modifiers.alt.pressed == modifiers.alt.wanted &&
+				modifiers.ctrl.pressed === modifiers.ctrl.wanted &&
+				modifiers.shift.pressed === modifiers.shift.wanted &&
+				modifiers.alt.pressed === modifiers.alt.wanted &&
 				modifiers.meta.pressed === modifiers.meta.wanted
 			) {
 				callback(e);
-				if (!opt["propagate"]) {
+				if (!opt.propagate) {
 					e.cancelBubble = true;
 					e.returnValue = false;
 					if (e.stopPropagation) {
@@ -163,19 +163,19 @@ shortcut = {
 			target: ele,
 			event: opt.type,
 		};
-		if (ele.addEventListener) ele.addEventListener(opt["type"], func, false);
-		else if (ele.attachEvent) ele.attachEvent("on" + opt["type"], func);
+		if (ele.addEventListener) ele.addEventListener(opt.type, func, false);
+		else if (ele.attachEvent) ele.attachEvent(`on"${pt.type, f}`unc);
 		else ele[`on${opt.type}`] = func;
 	},
 	remove: function (shortcut_combination) {
 		shortcut_combination = shortcut_combination.toLowerCase();
-		var binding = this.all_shortcuts[shortcut_combination];
+		const binding = this.all_shortcuts[shortcut_combination];
 		delete this.all_shortcuts[shortcut_combination];
 		if (!binding) return;
-		var type = binding.event;
-		var ele = binding["target"];
-		var callback = binding["callback"];
-		if (ele.detachEvent) ele.detachEvent("on" + type, callback);
+		const type = binding.event;
+		const ele = binding.target;
+		const callback = binding.callback;
+		if (ele.detachEvent) ele.detachEvent(`on"${ype, c}`allback);
 		else if (ele.removeEventListener)
 			ele.removeEventListener(type, callback, false);
 		else ele[`on${type}`] = false;
