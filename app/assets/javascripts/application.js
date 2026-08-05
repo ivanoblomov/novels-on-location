@@ -736,9 +736,9 @@ nOL.movePin = function (id, gLatLng) {
 
 nOL.tagLinks = (location) => {
 	const tags = $.map(location.tags.split(","), function (tag) {
-		tag = $.trim(tag);
-		const tagPath = `/#!search-${escape(tag)}`;
-		const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(tag)}', '${tagPath}')" title="Show all locations with the tag ${escape(tag)}">${tag}</a>`;
+		const trimmedTag = $.trim(tag);
+		const tagPath = `/#!search-${escape(trimmedTag)}`;
+		const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(trimmedTag)}', '${tagPath}')" title="Show all locations with the tag ${trimmedTag}">${trimmedTag}</a>`;
 		return link;
 	});
 	return tags.join(", ");
