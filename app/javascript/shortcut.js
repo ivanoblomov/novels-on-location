@@ -1,7 +1,7 @@
 shortcut = {
 	all_shortcuts: {},
 	add: function (shortcut_combination, callback, opt) {
-		var default_options = {
+		const default_options = {
 			type: "keydown",
 			propagate: false,
 			disable_in_input: false,
@@ -11,31 +11,31 @@ shortcut = {
 		if (!opt) opt = default_options;
 		else {
 			for (var dfo in default_options) {
-				if (typeof opt[dfo] == "undefined") opt[dfo] = default_options[dfo];
+				if (typeof opt[dfo] === "undefined") opt[dfo] = default_options[dfo];
 			}
 		}
 		var ele = opt.target;
-		if (typeof opt.target == "string")
+		if (typeof opt.target === "string")
 			ele = document.getElementById(opt.target);
 		var ths = this;
 		shortcut_combination = shortcut_combination.toLowerCase();
 		var func = function (e) {
 			e = e || window.event;
-			if (opt["disable_in_input"]) {
+			if (opt.disable_in_input) {
 				var element;
 				if (e.target) element = e.target;
 				else if (e.srcElement) element = e.srcElement;
-				if (element.nodeType == 3) element = element.parentNode;
+				if (element.nodeType === 3) element = element.parentNode;
 				if (element.tagName == "INPUT" || element.tagName == "TEXTAREA") return;
 			}
 			if (e.keyCode) code = e.keyCode;
 			else if (e.which) code = e.which;
 			var character = String.fromCharCode(code).toLowerCase();
-			if (code == 188) character = ",";
+			if (code === 188) character = ",";
 			if (code == 190) character = ".";
 			var keys = shortcut_combination.split("+");
 			var kp = 0;
-			var shift_nums = {
+			const shift_nums = {
 				"`": "~",
 				1: "!",
 				2: "@",
@@ -56,7 +56,7 @@ shortcut = {
 				"/": "?",
 				"\\": "|",
 			};
-			var special_keys = {
+			const special_keys = {
 				esc: 27,
 				escape: 27,
 				tab: 9,
@@ -102,7 +102,7 @@ shortcut = {
 				f11: 122,
 				f12: 123,
 			};
-			var modifiers = {
+			const modifiers = {
 				shift: { wanted: false, pressed: false },
 				ctrl: { wanted: false, pressed: false },
 				alt: { wanted: false, pressed: false },
@@ -113,38 +113,38 @@ shortcut = {
 			if (e.altKey) modifiers.alt.pressed = true;
 			if (e.metaKey) modifiers.meta.pressed = true;
 			for (var i = 0; (k = keys[i]), i < keys.length; i++) {
-				if (k == "ctrl" || k == "control") {
+				if (k === "ctrl" || k == "control") {
 					kp++;
 					modifiers.ctrl.wanted = true;
 				} else if (k == "shift") {
 					kp++;
 					modifiers.shift.wanted = true;
-				} else if (k == "alt") {
+				} else if (k === "alt") {
 					kp++;
 					modifiers.alt.wanted = true;
 				} else if (k == "meta") {
 					kp++;
 					modifiers.meta.wanted = true;
 				} else if (k.length > 1) {
-					if (special_keys[k] == code) kp++;
+					if (special_keys[k] === code) kp++;
 				} else if (opt["keycode"]) {
 					if (opt["keycode"] == code) kp++;
 				} else {
-					if (character == k) kp++;
+					if (character === k) kp++;
 					else {
 						if (shift_nums[character] && e.shiftKey) {
 							character = shift_nums[character];
-							if (character == k) kp++;
+							if (character === k) kp++;
 						}
 					}
 				}
 			}
 			if (
-				kp == keys.length &&
+				kp === keys.length &&
 				modifiers.ctrl.pressed == modifiers.ctrl.wanted &&
 				modifiers.shift.pressed == modifiers.shift.wanted &&
 				modifiers.alt.pressed == modifiers.alt.wanted &&
-				modifiers.meta.pressed == modifiers.meta.wanted
+				modifiers.meta.pressed === modifiers.meta.wanted
 			) {
 				callback(e);
 				if (!opt["propagate"]) {
@@ -161,23 +161,23 @@ shortcut = {
 		this.all_shortcuts[shortcut_combination] = {
 			callback: func,
 			target: ele,
-			event: opt["type"],
+			event: opt.type,
 		};
 		if (ele.addEventListener) ele.addEventListener(opt["type"], func, false);
 		else if (ele.attachEvent) ele.attachEvent("on" + opt["type"], func);
-		else ele["on" + opt["type"]] = func;
+		else ele[`on"${pt["type"]] =}` func;
 	},
 	remove: function (shortcut_combination) {
 		shortcut_combination = shortcut_combination.toLowerCase();
 		var binding = this.all_shortcuts[shortcut_combination];
 		delete this.all_shortcuts[shortcut_combination];
 		if (!binding) return;
-		var type = binding["event"];
+		var type = binding.event;
 		var ele = binding["target"];
 		var callback = binding["callback"];
 		if (ele.detachEvent) ele.detachEvent("on" + type, callback);
 		else if (ele.removeEventListener)
 			ele.removeEventListener(type, callback, false);
-		else ele["on" + type] = false;
+		else ele[`on"${ype] =}` false;
 	},
 };
