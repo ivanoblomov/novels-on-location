@@ -35,14 +35,14 @@ nOL.anchorQuery = nOL.anchor.split("-")[1] || nOL.anchorKind;
 nOL.init = (settings) => {
 	nOL.defaultTitle = settings.defaultTitle;
 	nOL.host = settings.host;
-	FB?.init({
+	typeof FB !== 'undefined' && FB.init({
 		appId: settings.fbAppId,
 		cookie: true,
 		status: true,
 		version: "v2.11",
 		xfbml: true,
 	});
-	FB?.getLoginStatus(function (response) {
+	typeof FB !== 'undefined' && FB.getLoginStatus(function (response) {
 		nOL.statusChangeCallback(response);
 	});
 
@@ -116,7 +116,7 @@ nOL.statusChangeCallback = (response) => {
 
 nOL.initSession = (session) => {
 	nOL.fb_session = session;
-	$.cookie("fb_id", nOL.fb_session.userID);
+	$.cookie("fb_id", nOL.fb_session?.userID);
 	nOL.setPinDisplayPrompt();
 	nOL.getFriends();
 };
@@ -129,7 +129,7 @@ nOL.checkOrientation = function () {
 
 nOL.getFacebookName = (location) => {
 	if (location.user_name === undefined && location.user_id) {
-		FB?.api(`/${location.user_id}`, (response) => {
+		typeof FB !== 'undefined' && FB.api(`/${location.user_id}`, (response) => {
 			$(`#${location.user_id}`).text(response.name);
 			location.user_name = response.name;
 		});
@@ -143,7 +143,7 @@ nOL.getFriendIds = function () {
 };
 
 nOL.getFriends = function () {
-	FB?.api("/me/friends", (response) => {
+	typeof FB !== 'undefined' && FB.api("/me/friends", (response) => {
 		nOL.friends = response.data;
 		nOL.getFriendIds();
 	});
@@ -197,7 +197,7 @@ nOL.loggedIn = function () {
 };
 
 nOL.logIn = function () {
-	FB?.login((response) => {
+	typeof FB !== 'undefined' && FB.login((response) => {
 		console.log(response);
 		if (response.authResponse) {
 			nOL.initSession(response.authResponse);
@@ -210,7 +210,7 @@ nOL.logIn = function () {
 
 nOL.logOut = function () {
 	console.log("logOut");
-	FB?.logout(function () {
+	typeof FB !== 'undefined' && FB.logout(function () {
 		$.cookie("fb_id", null);
 		nOL.listenForLogin();
 	});
@@ -437,7 +437,7 @@ nOL.hidePins = function () {
 nOL.myBookmark = (location) => {
 	return (
 		location.bookmark_user_ids &&
-		location.bookmark_user_ids.indexOf(nOL.fb_session.userID) !== -1
+		location.bookmark_user_ids.indexOf(nOL.fb_session?.userID) !== -1
 	);
 };
 
@@ -448,7 +448,7 @@ nOL.myFriendsLocation = (location) => {
 nOL.myLocation = (location) => {
 	return (
 		$.cookie("user_token") === location.user_token ||
-		(nOL.loggedIn() && location.user_id === nOL.fb_session.userID)
+		(nOL.loggedIn() && location.user_id === nOL.fb_session?.userID)
 	);
 };
 
@@ -678,7 +678,7 @@ nOL.claimPin = (id) => {
 		url: `/locations/${id}`,
 		data: {
 			caller: "claim",
-			"location[user_id]": nOL?.fb_session.userID || null,
+			"location[user_id]": nOL?.fb_session?.userID || null,
 			"location[user_token]": $.cookie("user_token"),
 		},
 	});
@@ -690,7 +690,7 @@ nOL.createPin = function (latLng, place, address, keywords) {
 		"location[book_keywords]": keywords,
 		"location[latLng]": nOL.toLatLng(latLng).toUrlValue(),
 		"location[tags]": place,
-		"location[user_id]": nOL?.fb_session.userID || null,
+		"location[user_id]": nOL?.fb_session?.userID || null,
 		"location[user_token]": $.cookie("user_token"),
 	});
 };
