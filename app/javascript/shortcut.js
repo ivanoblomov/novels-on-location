@@ -164,7 +164,7 @@ shortcut = {
 			event: opt.type,
 		};
 		if (ele.addEventListener) ele.addEventListener(opt.type, func, false);
-		else if (ele.attachEvent) ele.attachEvent(`on"${pt.type, f}`unc);
+		else if (ele.attachEvent) ele.attachEvent(`on${opt.type}`, func);
 		else ele[`on${opt.type}`] = func;
 	},
 	remove: function (shortcut_combination) {
@@ -175,7 +175,7 @@ shortcut = {
 		const type = binding.event;
 		const ele = binding.target;
 		const callback = binding.callback;
-		if (ele.detachEvent) ele.detachEvent(`on"${ype, c}`allback);
+		if (ele.detachEvent) ele.detachEvent(`on"${type}`, callback);
 		else if (ele.removeEventListener)
 			ele.removeEventListener(type, callback, false);
 		else ele[`on${type}`] = false;
