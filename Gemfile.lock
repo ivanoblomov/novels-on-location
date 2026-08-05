@@ -99,13 +99,6 @@ GEM
     childprocess (5.1.0)
       logger (~> 1.5)
     coderay (1.1.3)
-    coffee-rails (5.0.0)
-      coffee-script (>= 2.2.0)
-      railties (>= 5.2.0)
-    coffee-script (2.4.1)
-      coffee-script-source
-      execjs
-    coffee-script-source (1.12.2)
     concurrent-ruby (1.3.8)
     connection_pool (3.0.2)
     crack (1.0.1)
@@ -113,6 +106,9 @@ GEM
       rexml
     crass (1.0.7)
     csv (3.3.6)
+    dartsass-rails (0.5.1)
+      railties (>= 6.0.0)
+      sass-embedded (~> 1.63)
     database_cleaner-core (2.0.1)
     database_cleaner-mongoid (2.0.1)
       database_cleaner-core (~> 2.0.0)
@@ -127,7 +123,6 @@ GEM
     equalizer (1.0.0)
     erb (6.0.6)
     erubi (1.13.1)
-    execjs (2.10.1)
     factory_bot (6.6.0)
       activesupport (>= 6.1.0)
     factory_bot_rails (6.5.1)
@@ -135,18 +130,31 @@ GEM
       railties (>= 6.1.0)
     faker (3.8.0)
       i18n (>= 1.8.11, < 2)
-    ffi (1.17.4-aarch64-linux-gnu)
-    ffi (1.17.4-aarch64-linux-musl)
-    ffi (1.17.4-arm-linux-gnu)
-    ffi (1.17.4-arm-linux-musl)
-    ffi (1.17.4-arm64-darwin)
-    ffi (1.17.4-x86_64-darwin)
-    ffi (1.17.4-x86_64-linux-gnu)
-    ffi (1.17.4-x86_64-linux-musl)
     figaro (1.3.0)
       thor (>= 0.14.0, < 2)
     globalid (1.4.0)
       activesupport (>= 6.1)
+    google-protobuf (4.35.1)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.35.1-aarch64-linux-gnu)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.35.1-aarch64-linux-musl)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.35.1-arm64-darwin)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.35.1-x86_64-darwin)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.35.1-x86_64-linux-gnu)
+      bigdecimal
+      rake (~> 13.3)
+    google-protobuf (4.35.1-x86_64-linux-musl)
+      bigdecimal
+      rake (~> 13.3)
     google_maps_geocoder (1.1)
       rack
     googlebooks (0.0.9)
@@ -164,6 +172,10 @@ GEM
       multi_xml (>= 0.5.2)
     i18n (1.15.2)
       concurrent-ruby (~> 1.0)
+    importmap-rails (2.2.3)
+      actionpack (>= 6.0.0)
+      activesupport (>= 6.0.0)
+      railties (>= 6.0.0)
     inch (0.8.0)
       pry
       sparkr (>= 0.2.0)
@@ -259,6 +271,10 @@ GEM
       prettyprint
     prettyprint (0.2.0)
     prism (1.9.0)
+    propshaft (1.3.2)
+      actionpack (>= 7.0.0)
+      activesupport (>= 7.0.0)
+      rack
     pry (0.16.0)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -389,16 +405,22 @@ GEM
       rubocop-rspec (~> 3.5)
     ruby-progressbar (1.13.0)
     rubyzip (3.4.1)
-    sass-rails (6.0.0)
-      sassc-rails (~> 2.1, >= 2.1.1)
-    sassc (2.4.0)
-      ffi (~> 1.9)
-    sassc-rails (2.1.2)
-      railties (>= 4.0.0)
-      sassc (>= 2.0)
-      sprockets (> 3.0)
-      sprockets-rails
-      tilt
+    sass-embedded (1.102.0-aarch64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.102.0-aarch64-linux-musl)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.102.0-arm-linux-gnueabihf)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.102.0-arm-linux-musleabihf)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.102.0-arm64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.102.0-x86_64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.102.0-x86_64-linux-gnu)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.102.0-x86_64-linux-musl)
+      google-protobuf (~> 4.31)
     securerandom (0.4.1)
     selenium-webdriver (4.46.0)
       base64 (~> 0.2)
@@ -411,20 +433,11 @@ GEM
       cgi
     simplecov (1.0.3)
     sparkr (0.4.1)
-    sprockets (4.2.2)
-      concurrent-ruby (~> 1.0)
-      logger
-      rack (>= 2.2.4, < 4)
-    sprockets-rails (3.5.2)
-      actionpack (>= 6.1)
-      activesupport (>= 6.1)
-      sprockets (>= 3.0.0)
     stringex (2.8.6)
     sync (0.5.0)
     term-ansicolor (1.11.3)
       tins (~> 1)
     thor (1.5.0)
-    tilt (2.8.0)
     timeout (0.6.1)
     tins (1.56.0)
       bigdecimal
@@ -444,8 +457,6 @@ GEM
       uri (~> 1.1)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
-    uglifier (4.2.1)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (3.2.0)
       unicode-emoji (~> 4.1)
     unicode-emoji (4.2.0)
@@ -483,7 +494,7 @@ DEPENDENCIES
   actionview-encoded_mail_to
   cancancan
   capybara
-  coffee-rails
+  dartsass-rails
   database_cleaner-mongoid
   embiggen
   factory_bot_rails
@@ -492,12 +503,14 @@ DEPENDENCIES
   google_maps_geocoder
   googlebooks
   htmlentities
+  importmap-rails
   inch
   itunes-search-api
   jquery-rails
   letter_opener
   mongoid-slug
   ostruct
+  propshaft
   pry
   puma
   rack-rewrite
@@ -512,11 +525,9 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   rubocop-rspec_rails
-  sass-rails
   selenium-webdriver
   simplecov
   twitter
-  uglifier
   vcr
   webmock
 

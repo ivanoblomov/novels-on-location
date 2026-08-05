@@ -5,21 +5,18 @@ ruby '4.0.3'
 
 gem 'actionview-encoded_mail_to'
 gem 'cancancan'
+gem 'dartsass-rails'
 gem 'figaro'
 gem 'googlebooks'
 gem 'google_maps_geocoder'
+gem 'importmap-rails'
 gem 'itunes-search-api'
 gem 'jquery-rails'
 gem 'mongoid-slug'
+gem 'propshaft'
 gem 'rack-rewrite'
 gem 'rails'
 gem 'responders'
-
-group :assets do
-  gem 'coffee-rails'
-  gem 'sass-rails'
-  gem 'uglifier'
-end
 
 group :development, :test do
   gem 'letter_opener'
