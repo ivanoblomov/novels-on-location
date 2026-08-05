@@ -35,14 +35,14 @@ nOL.anchorQuery = nOL.anchor.split("-")[1] || nOL.anchorKind;
 nOL.init = (settings) => {
 	nOL.defaultTitle = settings.defaultTitle;
 	nOL.host = settings.host;
-	FB.init({
+	FB?.init({
 		appId: settings.fbAppId,
 		cookie: true,
 		status: true,
 		version: "v2.11",
 		xfbml: true,
 	});
-	FB.getLoginStatus(function (response) {
+	FB?.getLoginStatus(function (response) {
 		nOL.statusChangeCallback(response);
 	});
 
@@ -129,7 +129,7 @@ nOL.checkOrientation = function () {
 
 nOL.getFacebookName = (location) => {
 	if (location.user_name === undefined && location.user_id) {
-		FB.api(`/${location.user_id}`, (response) => {
+		FB?.api(`/${location.user_id}`, (response) => {
 			$(`#${location.user_id}`).text(response.name);
 			location.user_name = response.name;
 		});
@@ -143,7 +143,7 @@ nOL.getFriendIds = function () {
 };
 
 nOL.getFriends = function () {
-	FB.api("/me/friends", (response) => {
+	FB?.api("/me/friends", (response) => {
 		nOL.friends = response.data;
 		nOL.getFriendIds();
 	});
@@ -197,7 +197,7 @@ nOL.loggedIn = function () {
 };
 
 nOL.logIn = function () {
-	FB.login((response) => {
+	FB?.login((response) => {
 		console.log(response);
 		if (response.authResponse) {
 			nOL.initSession(response.authResponse);
@@ -210,7 +210,7 @@ nOL.logIn = function () {
 
 nOL.logOut = function () {
 	console.log("logOut");
-	FB.logout(function () {
+	FB?.logout(function () {
 		$.cookie("fb_id", null);
 		nOL.listenForLogin();
 	});
