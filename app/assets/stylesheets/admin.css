@@ -2,7 +2,7 @@ a{font-weight:bold;padding:0;text-decoration:none}
 a:hover{text-decoration:underline}
 h1{margin:5px 0 0 5px}
 h2,h3{font-size:1.1rem}
-html{background:#f7f5f5 url(<%= asset_path 'paper.jpg' %>) repeat;font:11px helvetica,sans-serif}
+html{background:#f7f5f5 url('paper.jpg') repeat;font:11px helvetica,sans-serif}
 p{margin:10px 0}
 ul{display:inline;list-style-type:none;margin:0;padding:0}
 ul li{display:inline;margin:0 10px}
