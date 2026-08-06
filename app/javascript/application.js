@@ -1,6 +1,5 @@
-//= require jquery_ujs
-//= require shortcut
-//= require_tree .
+// Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+// qlty-ignore: qlty:file-complexity
 const anchorKindToLocationProperty = {
 	author: "author",
 	novel: "title",
@@ -44,7 +43,7 @@ nOL.init = (settings) => {
 			xfbml: true,
 		});
 	typeof FB !== "undefined" &&
-		FB.getLoginStatus(function (response) {
+		FB.getLoginStatus((response) => {
 			nOL.statusChangeCallback(response);
 		});
 
@@ -80,7 +79,7 @@ nOL.init = (settings) => {
 		$(this).css("color", "black");
 		nOL.dontListenForShortcuts();
 	});
-	$("#book-input").keyup(function () {
+	$("#book-input").keyup(() => {
 		const keyword = $("#book-input")[0].value;
 		nOL.anchorKind = unescape(window.location.hash.substring(2)).split("-")[0];
 		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
@@ -123,7 +122,7 @@ nOL.initSession = (session) => {
 	nOL.getFriends();
 };
 
-nOL.checkOrientation = function () {
+nOL.checkOrientation = () => {
 	let portrait = false;
 	if (window.orientation !== null) portrait = Math.abs(orientation) !== 90;
 	return portrait;
@@ -139,13 +138,13 @@ nOL.getFacebookName = (location) => {
 	}
 };
 
-nOL.getFriendIds = function () {
+nOL.getFriendIds = () => {
 	for (let i = 0; i < nOL.friends.length; i++) {
 		nOL.friendIds[i] = nOL.friends[i].id;
 	}
 };
 
-nOL.getFriends = function () {
+nOL.getFriends = () => {
 	typeof FB !== "undefined" &&
 		FB.api("/me/friends", (response) => {
 			nOL.friends = response.data;
@@ -153,16 +152,16 @@ nOL.getFriends = function () {
 		});
 };
 
-nOL.updateFacebookLikeButton = function () {
+nOL.updateFacebookLikeButton = () => {
 	$("#fb-like")[0].dataset.href = document.URL;
 };
 
-nOL.updateShareButtons = function () {
+nOL.updateShareButtons = () => {
 	nOL.updateFacebookLikeButton();
 	nOL.updateTweetButton();
 };
 
-nOL.updateTweetButton = function () {
+nOL.updateTweetButton = () => {
 	const iframe = $("#tweet")[0];
 	iframe.src = iframe.src.replace(
 		/\?.+/,
@@ -170,37 +169,36 @@ nOL.updateTweetButton = function () {
 	);
 };
 
-nOL.listenFor = function (event, args) {
+nOL.listenFor = (event, args) => {
 	if (nOL.clickListener !== undefined)
 		google.maps.event.removeListener(nOL.clickListener);
 	nOL.clickListener = google.maps.event.addListener(nOL.map, event, () => {
+		// qlty-ignore: biome:lint/security/noGlobalEval
 		eval(args);
 	});
 };
 
-nOL.listenForLogin = function () {
-	$("#login-button").click(function () {
+nOL.listenForLogin = () => {
+	$("#login-button").click(() => {
 		nOL.toggleLogin();
 	});
 };
 
-nOL.dontListenForShortcuts = function () {
+nOL.dontListenForShortcuts = () => {
 	shortcut.remove("l");
 	shortcut.remove("m");
 	shortcut.remove("p");
 };
 
-nOL.listenForShortcuts = function () {
+nOL.listenForShortcuts = () => {
 	shortcut.add("l", nOL.toggleLogin);
 	shortcut.add("m", nOL.toggleMapMode);
 	shortcut.add("p", nOL.togglePinDisplay);
 };
 
-nOL.loggedIn = function () {
-	return !!$.cookie("fb_id");
-};
+nOL.loggedIn = () => !!$.cookie("fb_id");
 
-nOL.logIn = function () {
+nOL.logIn = () => {
 	typeof FB !== "undefined" &&
 		FB.login((response) => {
 			console.log(response);
@@ -213,10 +211,10 @@ nOL.logIn = function () {
 		});
 };
 
-nOL.logOut = function () {
+nOL.logOut = () => {
 	console.log("logOut");
 	typeof FB !== "undefined" &&
-		FB.logout(function () {
+		FB.logout(() => {
 			$.cookie("fb_id", null);
 			nOL.listenForLogin();
 		});
@@ -224,11 +222,11 @@ nOL.logOut = function () {
 	console.log("end");
 };
 
-nOL.toggleLogin = function () {
+nOL.toggleLogin = () => {
 	nOL.loggedIn() ? nOL.logOut() : nOL.logIn();
 };
 
-nOL.processAnchorQuery = function () {
+nOL.processAnchorQuery = () => {
 	switch (nOL.anchorKind) {
 		case "author":
 			nOL.pinType = 0;
@@ -270,12 +268,12 @@ nOL.processAnchorQuery = function () {
 	nOL.setPinDisplayPrompt();
 };
 
-nOL.promptForRemap = function (id, address) {
+nOL.promptForRemap = (id, address) => {
 	const value = prompt("Update address to remap this pin.", unescape(address));
 	if (value) nOL.remapPin(id, value);
 };
 
-nOL.promptForTag = function (id, tags) {
+nOL.promptForTag = (id, tags) => {
 	const value = prompt(
 		"Enter some descriptive words. These will be linked to a Google search.",
 		unescape(tags),
@@ -283,7 +281,7 @@ nOL.promptForTag = function (id, tags) {
 	if (value) nOL.tagPin(id, value);
 };
 
-nOL.promptForNotes = function (id, notes) {
+nOL.promptForNotes = (id, notes) => {
 	const value = prompt(
 		"Add anything noteworthy. Write about the climactic scene that took place here, for example, or the real-life landmark a setting from the story was modeled on.",
 		unescape(notes || ""),
@@ -291,7 +289,7 @@ nOL.promptForNotes = function (id, notes) {
 	if (value) nOL.annotatePin(id, value);
 };
 
-nOL.promptForBook = function (gLatLng, place, address) {
+nOL.promptForBook = (gLatLng, place, address) => {
 	const keywords = prompt(
 		"Add a novel to the map. Our only requirement: that it be evocative of the place.\n\nEnter keywords describing the book: title, author, etc.",
 		"",
@@ -299,13 +297,13 @@ nOL.promptForBook = function (gLatLng, place, address) {
 	if (keywords) nOL.findBook(gLatLng, place || "", address, keywords);
 };
 
-nOL.listenForDoubleClick = function () {
+nOL.listenForDoubleClick = () => {
 	nOL.clickingZooms = !nOL.clickingZooms; // negate effect of toggle
 	nOL.toggleMapMode();
 	nOL.setTitleAndPath(nOL.defaultTitle, "/");
 };
 
-nOL.toggleMapMode = function () {
+nOL.toggleMapMode = () => {
 	nOL.clickingZooms = !nOL.clickingZooms;
 
 	if (nOL.clickingZooms) {
@@ -329,7 +327,7 @@ nOL.toggleMapMode = function () {
 	}
 };
 
-nOL.setPinDisplayPrompt = function () {
+nOL.setPinDisplayPrompt = () => {
 	$("#pin-display-button")[0].title = "Click to change pins displayed";
 
 	if (nOL.pinType === 0) $("#pin-display-button")[0].value = "Pins: All";
@@ -341,13 +339,13 @@ nOL.setPinDisplayPrompt = function () {
 		$("#pin-display-button")[0].value = "Pins: Friends";
 };
 
-nOL.setTitleAndPath = function (title, path) {
+nOL.setTitleAndPath = (title, path) => {
 	document.title = title;
 	if (history.pushState) history.pushState(null, title, path);
 	nOL.updateShareButtons();
 };
 
-nOL.togglePinDisplay = function () {
+nOL.togglePinDisplay = () => {
 	nOL.pinType += 1;
 
 	if (
@@ -379,7 +377,7 @@ nOL.addPin = (location) => {
 
 		nOL.pins[location.id] = pin;
 
-		google.maps.event.addListener(pin, "click", function () {
+		google.maps.event.addListener(pin, "click", () => {
 			nOL.setTitleAndPath(
 				`${location.title} - Novels: On Location`,
 				`/locations/${location.slug}`,
@@ -387,7 +385,7 @@ nOL.addPin = (location) => {
 			nOL.openBalloon(location);
 		});
 
-		google.maps.event.addListener(pin, "dragend", function () {
+		google.maps.event.addListener(pin, "dragend", () => {
 			if (confirm("Move this pin?"))
 				nOL.movePin(location.id, pin.getPosition());
 			else pin.setPosition(latLng);
@@ -434,7 +432,7 @@ nOL.hidePin = (id) => {
 	if (nOL.pins[id]) nOL.pins[id].setMap(null);
 };
 
-nOL.hidePins = function () {
+nOL.hidePins = () => {
 	for (let i = 0; i < nOL.locations.length; i++) {
 		nOL.hidePin(nOL.locations[i].id);
 	}
@@ -458,8 +456,8 @@ nOL.myLocation = (location) => {
 	);
 };
 
-nOL.remapPin = function (id, place) {
-	nOL.geocoder.geocode({ address: place }, function (results, status) {
+nOL.remapPin = (id, place) => {
+	nOL.geocoder.geocode({ address: place }, (results, status) => {
 		if (status === google.maps.GeocoderStatus.OK) {
 			r = results[0];
 			nOL.zoomIn(r.geometry.location);
@@ -492,7 +490,7 @@ nOL.replacePin = (location) => {
 	nOL.showPin(location.id);
 };
 
-nOL.showAllPins = function () {
+nOL.showAllPins = () => {
 	nOL.bounds = new google.maps.LatLngBounds();
 	for (let i = 0; i < nOL.locations.length; i++) {
 		nOL.showPin(nOL.locations[i].id);
@@ -500,12 +498,12 @@ nOL.showAllPins = function () {
 	nOL.map.fitBounds(nOL.bounds);
 };
 
-nOL.showAllPinsAndUpdatePath = function () {
+nOL.showAllPinsAndUpdatePath = () => {
 	nOL.showAllPins();
 	nOL.setTitleAndPath(nOL.defaultTitle, "/");
 };
 
-nOL.showBookmarks = function () {
+nOL.showBookmarks = () => {
 	nOL.bounds = new google.maps.LatLngBounds();
 	for (let i = 0; i < nOL.locations.length; i++) {
 		const location = nOL.locations[i];
@@ -517,7 +515,7 @@ nOL.showBookmarks = function () {
 	nOL.setTitleAndPath("Bookmarks - Novels: On Location", "/#!bookmarks");
 };
 
-nOL.showFriendsPins = function () {
+nOL.showFriendsPins = () => {
 	nOL.bounds = new google.maps.LatLngBounds();
 	for (let i = 0; i < nOL.locations.length; i++) {
 		const location = nOL.locations[i];
@@ -530,7 +528,7 @@ nOL.showFriendsPins = function () {
 		nOL.setTitleAndPath("Friends - Novels: On Location", "/#!friends");
 };
 
-nOL.showMyPins = function () {
+nOL.showMyPins = () => {
 	nOL.bounds = new google.maps.LatLngBounds();
 	for (let i = 0; i < nOL.locations.length; i++) {
 		const location = nOL.locations[i];
@@ -549,7 +547,7 @@ nOL.showPin = (id) => {
 	}
 };
 
-nOL.showPins = function (keyword, path) {
+nOL.showPins = (keyword, path) => {
 	nOL.closeBalloon();
 	if (keyword === "") nOL.showAllPinsAndUpdatePath();
 	else {
@@ -573,7 +571,7 @@ nOL.showPins = function (keyword, path) {
 };
 
 nOL.codePlace = (input) => {
-	nOL.geocoder.geocode({ address: input }, function (results, status) {
+	nOL.geocoder.geocode({ address: input }, (results, status) => {
 		if (status === google.maps.GeocoderStatus.OK) {
 			r = results[0];
 			nOL.zoomIn(r.geometry.location);
@@ -592,23 +590,24 @@ nOL.zoomIn = (gLatLng) => {
 			alert("Couldn't zoom!");
 			nOL.map.setZoom(8);
 			return;
-		} else
-			nOL.map.setZoom(
-				nOL.map.getZoom() === response.zoom - 5
-					? response.zoom - 3
-					: response.zoom - 5,
-			);
+		}
+		nOL.map.setZoom(
+			nOL.map.getZoom() === response.zoom - 5
+				? response.zoom - 3
+				: response.zoom - 5,
+		);
 	});
 };
 
-nOL.zoomOut = function () {
+nOL.zoomOut = () => {
 	nOL.map.setZoom(nOL.checkOrientation() ? 3 : 2);
 };
 
-nOL.closeBalloon = function () {
+nOL.closeBalloon = () => {
 	if (nOL.openWindow !== undefined) nOL.openWindow.close();
 };
 
+// qlty-ignore: qlty:function-complexity
 nOL.openBalloon = (location) => {
 	if (location.user_name === null) nOL.getFacebookName(location);
 	nOL.closeBalloon();
@@ -655,13 +654,13 @@ nOL.openBalloon = (location) => {
 	html += "</p></div>";
 	nOL.openWindow = new google.maps.InfoWindow({ content: html });
 	nOL.openWindow.open(nOL.map, nOL.pins[location.id]);
-	google.maps.event.addListener(nOL.openWindow, "closeclick", function () {
+	google.maps.event.addListener(nOL.openWindow, "closeclick", () => {
 		nOL.listenForDoubleClick();
 	});
 	nOL.listenFor("click", "nOL.closeBalloon(); nOL.listenForDoubleClick()");
 };
 
-nOL.annotatePin = function (id, notes) {
+nOL.annotatePin = (id, notes) => {
 	$.ajax({
 		type: "PUT",
 		url: `/locations/${id}`,
@@ -690,7 +689,7 @@ nOL.claimPin = (id) => {
 	});
 };
 
-nOL.createPin = function (latLng, place, address, keywords) {
+nOL.createPin = (latLng, place, address, keywords) => {
 	$.post("/locations", {
 		"location[address]": address || "",
 		"location[book_keywords]": keywords,
@@ -710,7 +709,7 @@ nOL.deletePin = (id) => {
 	}
 };
 
-nOL.findBook = function (gLatLng, place, address, keywords) {
+nOL.findBook = (gLatLng, place, address, keywords) => {
 	$.get("/locations/new", {
 		"location[address]": address || "",
 		"location[tags]": place,
@@ -730,7 +729,7 @@ nOL.getLocations = (selectedLocationSlug) => {
 	);
 };
 
-nOL.movePin = function (id, gLatLng) {
+nOL.movePin = (id, gLatLng) => {
 	$.ajax({
 		type: "PUT",
 		url: `/locations/${id}`,
@@ -741,7 +740,7 @@ nOL.movePin = function (id, gLatLng) {
 };
 
 nOL.tagLinks = (location) => {
-	const tags = $.map(location.tags.split(","), function (tag) {
+	const tags = $.map(location.tags.split(","), (tag) => {
 		const trimmedTag = $.trim(tag);
 		const tagPath = `/#!search-${escape(trimmedTag)}`;
 		const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(trimmedTag)}', '${tagPath}')" title="Show all locations with the tag ${trimmedTag}">${trimmedTag}</a>`;
@@ -750,7 +749,7 @@ nOL.tagLinks = (location) => {
 	return tags.join(", ");
 };
 
-nOL.tagPin = function (id, tags) {
+nOL.tagPin = (id, tags) => {
 	$.ajax({
 		type: "PUT",
 		url: `/locations/${id}`,
@@ -871,7 +870,8 @@ applesearch.clearBtnClick = function () {
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
-jQuery.cookie = function (name, value, options) {
+// qlty-ignore: qlty:function-complexity
+jQuery.cookie = (name, value, options) => {
 	if (typeof value !== "undefined") {
 		// name and value given, set cookie
 		options = options || {};
@@ -899,6 +899,7 @@ jQuery.cookie = function (name, value, options) {
 		const path = options.path ? `; path=${options.path}` : "";
 		const domain = options.domain ? `; domain=${options.domain}` : "";
 		const secure = options.secure ? "; secure" : "";
+		// qlty-ignore: biome:lint/suspicious/noDocumentCookie
 		document.cookie = [
 			name,
 			"=",

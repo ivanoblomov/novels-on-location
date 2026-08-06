@@ -13,4 +13,8 @@ NovelsOnLocation::Application.configure do
   # custom
   config.after_initialize { Mongo::Logger.logger.level = Logger::INFO }
   config.main_host = 'localhost'
+  config.public_file_server.enabled = true
+  config.public_file_server.headers = {
+    'Cache-Control' => 'public, max-age=3600'
+  }
 end
