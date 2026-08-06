@@ -153,6 +153,10 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
         context 'when the User clicks the tag "Spitalfields"' do
           before { click_link_or_button 'Spitalfields' }
 
+          it('the map still shows "From Hell"') {
+            expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_present
+          }
+
           it('the map hides "The Sun Also Rises"') {
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
           }
@@ -160,6 +164,10 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
         context 'when the User clicks "All Locations for Novel"' do
           before { click_link_or_button 'All Locations for Novel' }
+
+          it('the map still shows "From Hell"') {
+            expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_present
+          }
 
           it('the map hides "The Sun Also Rises"') {
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
@@ -169,6 +177,10 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
         context 'when the User clicks "All Novels by Author"' do
           before { click_link_or_button 'All Novels by Author' }
 
+          it('the map still shows "From Hell"') {
+            expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_present
+          }
+
           it('the map hides "The Sun Also Rises"') {
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
           }
@@ -176,6 +188,10 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
         context 'when the User clicks "All Pins by Reader"' do
           before { click_link_or_button 'All Pins by Reader' }
+
+          it('the map still shows "From Hell"') {
+            expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_present
+          }
 
           it('the map hides "The Sun Also Rises"') {
             expect(evaluate_script("nOL.pins['#{sun_also_rises.id}'].map")).to be_nil
