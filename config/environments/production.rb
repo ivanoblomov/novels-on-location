@@ -19,4 +19,7 @@ NovelsOnLocation::Application.configure do
   config.static_cache_control = 'public, max-age=31556926'
   # custom
   config.main_host = 'novelsonlocation.com'
+  config.public_file_server.headers = {
+    'Cache-Control' => 'public, max-age=31536000, immutable'
+  }
 end
