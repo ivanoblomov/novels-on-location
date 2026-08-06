@@ -28,14 +28,14 @@ nOL.sharingMessage =
 nOL.twitterAccount = "NovelsOnLoc%3ANovels%3A%20On%20Location";
 
 nOL.searchQuery = () => {
-  return unescape(window.location.hash.substring(2));
-}
+	return unescape(window.location.hash.substring(2));
+};
 nOL.searchTerm = () => {
-  return nOL.searchQuery().split("-")[0];
-}
+	return nOL.searchQuery().split("-")[0];
+};
 nOL.searchValue = () => {
-  return nOL.searchQuery().split("-")[1] || nOL.searchTerm();
-}
+	return nOL.searchQuery().split("-")[1] || nOL.searchTerm();
+};
 
 nOL.init = (settings) => {
 	nOL.defaultTitle = settings.defaultTitle;
