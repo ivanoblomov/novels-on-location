@@ -1,7 +1,5 @@
-config/cucumber.yml
 config/environments/development.rb
 config/environments/test.rb
 doc
 features
-lib/tasks/cucumber.rake
 spec
