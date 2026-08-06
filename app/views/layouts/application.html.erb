@@ -60,7 +60,7 @@ a.store img{width:25px;height:25px;margin:0}
 <%= stylesheet_link_tag 'ios', as: 'style', data: { turbo_track: "reload" }, onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' if ios? %>
 <%= stylesheet_link_tag 'print', as: 'style', data: { turbo_track: "reload" }, media: 'print', onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' %>
 <%= javascript_importmap_tags %>
-<%= javascript_include_tag "shortcut", "data-turbo-track": "reload" %>
+<%= javascript_include_tag "shortcut", "data-turbo-track": "reload", defer: true %>
 </head>
 <body data-pin-url="<%= asset_path('pin.png') %>">
 <%= yield %>
@@ -84,7 +84,7 @@ a.store img{width:25px;height:25px;margin:0}
 <a href="https://twitter.com/novelsonloc" class="twitter-follow-button" data-show-count="false">Follow @novelsonloc</a>
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'application', defer: true %>
 <script>
   window.bootstrap=function(){
     nOL.init({
