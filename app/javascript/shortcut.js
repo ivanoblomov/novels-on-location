@@ -1,7 +1,7 @@
 // qlty-ignore: qlty:file-complexity
 shortcut = {
 	all_shortcuts: {},
-  // qlty-ignore: qlty:function-complexity
+	// qlty-ignore: qlty:function-complexity
 	add: function (shortcut_combination, callback, opt) {
 		const default_options = {
 			type: "keydown",
@@ -20,7 +20,7 @@ shortcut = {
 		if (typeof opt.target === "string")
 			ele = document.getElementById(opt.target);
 		shortcut_combination = shortcut_combination.toLowerCase();
-    // qlty-ignore: qlty:function-complexity
+		// qlty-ignore: qlty:function-complexity
 		const func = (e) => {
 			e = e || window.event;
 			if (opt.disable_in_input) {
@@ -115,7 +115,7 @@ shortcut = {
 			if (e.shiftKey) modifiers.shift.pressed = true;
 			if (e.altKey) modifiers.alt.pressed = true;
 			if (e.metaKey) modifiers.meta.pressed = true;
-      // qlty-ignore: biome:lint/suspicious/noAssignInExpressions, biome:lint/complexity/noCommaOperator
+			// qlty-ignore: biome:lint/suspicious/noAssignInExpressions, biome:lint/complexity/noCommaOperator
 			for (let i = 0; (k = keys[i]), i < keys.length; i++) {
 				if (k === "ctrl" || k === "control") {
 					kp++;
@@ -134,7 +134,7 @@ shortcut = {
 				} else if (opt.keycode) {
 					if (opt.keycode === code) kp++;
 				} else {
-          // qlty-ignore: qlty:nested-control-flow
+					// qlty-ignore: qlty:nested-control-flow
 					if (character === k) kp++;
 					else {
 						if (shift_nums[character] && e.shiftKey) {
@@ -145,7 +145,7 @@ shortcut = {
 				}
 			}
 			if (
-        // qlty-ignore: qlty:boolean-logic
+				// qlty-ignore: qlty:boolean-logic
 				kp === keys.length &&
 				modifiers.ctrl.pressed === modifiers.ctrl.wanted &&
 				modifiers.shift.pressed === modifiers.shift.wanted &&

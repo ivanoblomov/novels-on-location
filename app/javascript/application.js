@@ -173,7 +173,7 @@ nOL.listenFor = (event, args) => {
 	if (nOL.clickListener !== undefined)
 		google.maps.event.removeListener(nOL.clickListener);
 	nOL.clickListener = google.maps.event.addListener(nOL.map, event, () => {
-	  // qlty-ignore: biome:lint/security/noGlobalEval
+		// qlty-ignore: biome:lint/security/noGlobalEval
 		eval(args);
 	});
 };
@@ -899,7 +899,7 @@ jQuery.cookie = (name, value, options) => {
 		const path = options.path ? `; path=${options.path}` : "";
 		const domain = options.domain ? `; domain=${options.domain}` : "";
 		const secure = options.secure ? "; secure" : "";
-    // qlty-ignore: biome:lint/suspicious/noDocumentCookie
+		// qlty-ignore: biome:lint/suspicious/noDocumentCookie
 		document.cookie = [
 			name,
 			"=",
