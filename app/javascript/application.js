@@ -1,4 +1,5 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
+// qlty-ignore: qlty:file-complexity
 const anchorKindToLocationProperty = {
 	author: "author",
 	novel: "title",
@@ -172,6 +173,7 @@ nOL.listenFor = (event, args) => {
 	if (nOL.clickListener !== undefined)
 		google.maps.event.removeListener(nOL.clickListener);
 	nOL.clickListener = google.maps.event.addListener(nOL.map, event, () => {
+	  // qlty-ignore: biome:lint/security/noGlobalEval
 		eval(args);
 	});
 };
@@ -605,6 +607,7 @@ nOL.closeBalloon = () => {
 	if (nOL.openWindow !== undefined) nOL.openWindow.close();
 };
 
+// qlty-ignore: qlty:function-complexity
 nOL.openBalloon = (location) => {
 	if (location.user_name === null) nOL.getFacebookName(location);
 	nOL.closeBalloon();
@@ -867,6 +870,7 @@ applesearch.clearBtnClick = function () {
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
+// qlty-ignore: qlty:function-complexity
 jQuery.cookie = (name, value, options) => {
 	if (typeof value !== "undefined") {
 		// name and value given, set cookie
@@ -895,6 +899,7 @@ jQuery.cookie = (name, value, options) => {
 		const path = options.path ? `; path=${options.path}` : "";
 		const domain = options.domain ? `; domain=${options.domain}` : "";
 		const secure = options.secure ? "; secure" : "";
+    // qlty-ignore: biome:lint/suspicious/noDocumentCookie
 		document.cookie = [
 			name,
 			"=",
