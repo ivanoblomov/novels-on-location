@@ -58,7 +58,7 @@ a.store img{width:25px;height:25px;margin:0}
 <%= stylesheet_link_tag 'ios' if ios? %>
 <%= stylesheet_link_tag 'print', :media => 'print' %>
 </head>
-<body>
+<body data-pin-url="<%= asset_path('pin.png') %>">
 <%= yield %>
 <div id=map-canvas></div>
 <div class=no-print id=toolbar>
