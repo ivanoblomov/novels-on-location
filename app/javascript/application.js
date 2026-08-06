@@ -876,7 +876,7 @@ applesearch.clearBtnClick = function () {
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
 // qlty-ignore: qlty:function-complexity
-jQuery.cookie = (name, value, options) => {
+typeof jQuery !== "undefined" && (jQuery.cookie = (name, value, options) => {
 	if (typeof value !== "undefined") {
 		// name and value given, set cookie
 		options = options || {};
@@ -930,4 +930,4 @@ jQuery.cookie = (name, value, options) => {
 		}
 		return cookieValue;
 	}
-};
+})
