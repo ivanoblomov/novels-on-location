@@ -1,6 +1,6 @@
 // Configure your import map in config/importmap.rb. Read more: https://github.com/rails/importmap-rails
 // qlty-ignore: qlty:file-complexity
-const anchorKindToLocationProperty = {
+const searchTermToLocationProperty = {
 	author: "author",
 	novel: "title",
 	place: "place",
@@ -8,8 +8,6 @@ const anchorKindToLocationProperty = {
 	search: "terms",
 };
 const nOL = {};
-nOL.anchor = unescape(window.location.hash.substring(2));
-nOL.anchorKind = nOL.anchor.split("-")[0];
 nOL.bookPrompt = "Find a mapped book";
 nOL.clickingZooms = true;
 nOL.clickListener;
@@ -29,7 +27,15 @@ nOL.sharingMessage =
 	"I%20found%20a%20book%20you%20might%20like%20with%20Novels%3A%20On%20Location,%20now%20available%20at%20the%20App%20Store%20http://AppStore.com/NovelsOnLocation";
 nOL.twitterAccount = "NovelsOnLoc%3ANovels%3A%20On%20Location";
 
-nOL.anchorQuery = nOL.anchor.split("-")[1] || nOL.anchorKind;
+nOL.searchQuery = () => {
+	return unescape(window.location.hash.substring(2));
+};
+nOL.searchTerm = () => {
+	return nOL.searchQuery().split("-")[0];
+};
+nOL.searchValue = () => {
+	return nOL.searchQuery().split("-")[1] || nOL.searchTerm();
+};
 
 nOL.init = (settings) => {
 	nOL.defaultTitle = settings.defaultTitle;
@@ -81,7 +87,6 @@ nOL.init = (settings) => {
 	});
 	$("#book-input").keyup(() => {
 		const keyword = $("#book-input")[0].value;
-		nOL.anchorKind = unescape(window.location.hash.substring(2)).split("-")[0];
 		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
 	});
 	$("#mode-button").click(nOL.toggleMapMode);
@@ -227,10 +232,10 @@ nOL.toggleLogin = () => {
 };
 
 nOL.processAnchorQuery = () => {
-	switch (nOL.anchorKind) {
+	switch (nOL.searchTerm()) {
 		case "author":
 			nOL.pinType = 0;
-			nOL.showPins(nOL.anchorQuery, window.location.hash);
+			nOL.showPins(nOL.searchValue(), window.location.hash);
 			break;
 		case "bookmarks":
 			nOL.pinType = 2;
@@ -246,19 +251,19 @@ nOL.processAnchorQuery = () => {
 			break;
 		case "novel":
 			nOL.pinType = 0;
-			nOL.showPins(nOL.anchorQuery, window.location.hash);
+			nOL.showPins(nOL.searchValue(), window.location.hash);
 			break;
 		case "place":
 			nOL.pinType = 0;
-			nOL.showPins(nOL.anchorQuery, window.location.hash);
+			nOL.showPins(nOL.searchValue(), window.location.hash);
 			break;
 		case "reader":
 			nOL.pinType = 0;
-			nOL.showPins(nOL.anchorQuery, window.location.hash);
+			nOL.showPins(nOL.searchValue(), window.location.hash);
 			break;
 		case "search":
 			nOL.pinType = 0;
-			nOL.showPins(nOL.anchorQuery, window.location.hash);
+			nOL.showPins(nOL.searchValue(), window.location.hash);
 			break;
 		default:
 			nOL.pinType = 0;
@@ -413,7 +418,7 @@ nOL.addPins = (selectedLocationSlug) => {
 			nOL.zoomIn(nOL.toLatLng(location.lat_lng));
 		}
 	}
-	if (nOL.anchorQuery) nOL.processAnchorQuery();
+	if (nOL.searchValue()) nOL.processAnchorQuery();
 	else nOL.showAllPins();
 };
 
@@ -551,22 +556,22 @@ nOL.showPins = (keyword, path) => {
 	nOL.closeBalloon();
 	if (keyword === "") nOL.showAllPinsAndUpdatePath();
 	else {
+		nOL.setTitleAndPath(
+			`${keyword} - Novels: On Location`,
+			path || `#!search-${escape(keyword)}`,
+		);
 		nOL.hidePins();
 		nOL.bounds = new google.maps.LatLngBounds();
 		const regex = new RegExp(unescape(keyword).trim(), "i");
 		for (const location of nOL.locations) {
 			if (
 				regex.test(
-					Reflect.get(location, anchorKindToLocationProperty[nOL.anchorKind]),
+					Reflect.get(location, searchTermToLocationProperty[nOL.searchTerm()]),
 				)
 			)
 				nOL.showPin(location.id);
 		}
 		nOL.map.fitBounds(nOL.bounds);
-		nOL.setTitleAndPath(
-			`${keyword} - Novels: On Location`,
-			path || `#!search-${escape(keyword)}`,
-		);
 	}
 };
 
