@@ -12,6 +12,8 @@
   }.merge(@og_tags)
   @title ||= default_title
 %>
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin="" />
+<link rel="preconnect" href="https://maps.gstatic.com" crossorigin="" />
 <title><%= @title %></title>
 <meta name=apple-itunes-app content="app-id=625973663<%= ",app-argument=https://#{Rails.application.config.main_host}/locations/#{@location.slug}" if @location %>"/>
 <meta name=mobile-web-app-capable content="yes"/>
@@ -52,13 +54,13 @@ a.store img{width:25px;height:25px;margin:0}
 #tweet{border:0;width:61px;height:20px}
 </style>
 <link rel="shortcut icon" href="/favicon.ico"/>
-<%= stylesheet_link_tag 'default', 'data-turbo-track': 'reload' %>
-<%= stylesheet_link_tag 'safari', 'data-turbo-track': 'reload' if safari_pc? %>
-<%= stylesheet_link_tag 'ie', 'data-turbo-track': 'reload' if ie? %>
-<%= stylesheet_link_tag 'ios', 'data-turbo-track': 'reload' if ios? %>
-<%= stylesheet_link_tag 'print', 'data-turbo-track': 'reload', media: 'print' %>
+<%= stylesheet_link_tag 'default', as: 'style', data: { turbo_track: "reload" }, onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' %>
+<%= stylesheet_link_tag 'safari', as: 'style', data: { turbo_track: "reload" }, onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' if safari_pc? %>
+<%= stylesheet_link_tag 'ie', as: 'style', data: { turbo_track: "reload" }, onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' if ie? %>
+<%= stylesheet_link_tag 'ios', as: 'style', data: { turbo_track: "reload" }, onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' if ios? %>
+<%= stylesheet_link_tag 'print', as: 'style', data: { turbo_track: "reload" }, media: 'print', onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' %>
 <%= javascript_importmap_tags %>
-<%= javascript_include_tag "shortcut", "data-turbo-track": "reload" %>
+<%= javascript_include_tag "shortcut", "data-turbo-track": "reload", defer: true %>
 </head>
 <body data-pin-url="<%= asset_path('pin.png') %>">
 <%= yield %>
@@ -81,8 +83,8 @@ a.store img{width:25px;height:25px;margin:0}
 <iframe<% if ie? %> allowTransparency=true frameBorder=0<% end %> id=tweet src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>" title="Tweet"></iframe>
 <a href="https://twitter.com/novelsonloc" class="twitter-follow-button" data-show-count="false">Follow @novelsonloc</a>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-<%= javascript_include_tag 'application' %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
+<%= javascript_include_tag 'application', defer: true %>
 <script>
   window.bootstrap=function(){
     nOL.init({
@@ -105,6 +107,6 @@ a.store img{width:25px;height:25px;margin:0}
   }(document));
 </script>
 <script async src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&loading=async&callback=bootstrap"></script>
-<script src="https://platform.twitter.com/widgets.js"></script>
+<script src="https://platform.twitter.com/widgets.js" defer></script>
 </body>
 </html>
