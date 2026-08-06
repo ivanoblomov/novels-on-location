@@ -12,6 +12,8 @@
   }.merge(@og_tags)
   @title ||= default_title
 %>
+<link rel="preconnect" href="https://connect.facebook.net" crossorigin="" />
+<link rel="preconnect" href="https://maps.gstatic.com" crossorigin="" />
 <title><%= @title %></title>
 <meta name=apple-itunes-app content="app-id=625973663<%= ",app-argument=https://#{Rails.application.config.main_host}/locations/#{@location.slug}" if @location %>"/>
 <meta name=mobile-web-app-capable content="yes"/>
