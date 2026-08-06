@@ -154,7 +154,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
           before { click_link_or_button 'Spitalfields' }
 
           it('the map still shows "From Hell"') {
-            expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_present
+            expect(evaluate_script("!!nOL.pins['#{from_hell.id}'].map")).to be true
           }
 
           it('the map hides "The Sun Also Rises"') {
@@ -166,7 +166,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
           before { click_link_or_button 'All Locations for Novel' }
 
           it('the map still shows "From Hell"') {
-            expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_present
+            expect(evaluate_script("!!nOL.pins['#{from_hell.id}'].map")).to be true
           }
 
           it('the map hides "The Sun Also Rises"') {
@@ -178,7 +178,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
           before { click_link_or_button 'All Novels by Author' }
 
           it('the map still shows "From Hell"') {
-            expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_present
+            expect(evaluate_script("!!nOL.pins['#{from_hell.id}'].map")).to be true
           }
 
           it('the map hides "The Sun Also Rises"') {
@@ -190,7 +190,7 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
           before { click_link_or_button 'All Pins by Reader' }
 
           it('the map still shows "From Hell"') {
-            expect(evaluate_script("nOL.pins['#{from_hell.id}'].map")).to be_present
+            expect(evaluate_script("!!nOL.pins['#{from_hell.id}'].map")).to be true
           }
 
           it('the map hides "The Sun Also Rises"') {
