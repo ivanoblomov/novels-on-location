@@ -83,7 +83,7 @@ a.store img{width:25px;height:25px;margin:0}
 <iframe<% if ie? %> allowTransparency=true frameBorder=0<% end %> id=tweet src="//platform.twitter.com/widgets/tweet_button.html?url=<%= request.url %>" title="Tweet"></iframe>
 <a href="https://twitter.com/novelsonloc" class="twitter-follow-button" data-show-count="false">Follow @novelsonloc</a>
 </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js" defer></script>
 <%= javascript_include_tag 'application', defer: true %>
 <script>
   window.bootstrap=function(){
@@ -107,6 +107,6 @@ a.store img{width:25px;height:25px;margin:0}
   }(document));
 </script>
 <script async src="https://maps.googleapis.com/maps/api/js?key=<%= ENV['GOOGLE_MAPS_API_KEY'] %>&loading=async&callback=bootstrap"></script>
-<script src="https://platform.twitter.com/widgets.js"></script>
+<script src="https://platform.twitter.com/widgets.js" defer></script>
 </body>
 </html>
