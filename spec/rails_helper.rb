@@ -63,13 +63,13 @@ RSpec.configure do |config|
   config.before(:each, :js, type: :system) do |example|
     driven_by example.metadata[:js]
   end
-  config.before(:suite) do
-    if Rails.env.test? && Rails.root.glob('public/assets/.manifest*').empty?
-      $stdout.puts "\nPrecompiling assets for RSpec system tests..."
-      Rails.application.load_tasks
-      Rake::Task['assets:precompile'].invoke
-    end
-  end
+#   config.before(:suite) do
+#     if Rails.env.test? && Rails.root.glob('public/assets/.manifest*').empty?
+#       $stdout.puts "\nPrecompiling assets for RSpec system tests..."
+#       Rails.application.load_tasks
+#       Rake::Task['assets:precompile'].invoke
+#     end
+#   end
   config.around(:each, :skip_vcr) do |example|
     WebMock.allow_net_connect! if defined?(WebMock)
     VCR.turned_off(ignore_cassettes: true) { example.run }
