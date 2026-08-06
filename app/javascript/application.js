@@ -877,6 +877,7 @@ applesearch.clearBtnClick = function () {
  */
 // qlty-ignore: qlty:function-complexity
 typeof jQuery !== "undefined" &&
+	// qlty-ignore: biome:lint/suspicious/noAssignInExpressions
 	(jQuery.cookie = (name, value, options) => {
 		if (typeof value !== "undefined") {
 			// name and value given, set cookie
