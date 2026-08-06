@@ -12,9 +12,10 @@ NovelsOnLocation::Application.configure do
   config.i18n.fallbacks = true
   config.log_level = :info
   config.serve_static_files = true
-  config.static_cache_control = 'public, max-age=31556926'
+  config.static_cache_control = 'public, max-age=31536000, immutable'
   # custom
   config.main_host = 'novelsonlocation.com'
+  config.public_file_server.enabled = true
   config.public_file_server.headers = {
     'Cache-Control' => 'public, max-age=31536000, immutable'
   }
