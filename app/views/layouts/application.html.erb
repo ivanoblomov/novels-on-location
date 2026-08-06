@@ -54,11 +54,11 @@ a.store img{width:25px;height:25px;margin:0}
 #tweet{border:0;width:61px;height:20px}
 </style>
 <link rel="shortcut icon" href="/favicon.ico"/>
-<%= stylesheet_link_tag 'default', 'data-turbo-track': 'reload' %>
-<%= stylesheet_link_tag 'safari', 'data-turbo-track': 'reload' if safari_pc? %>
-<%= stylesheet_link_tag 'ie', 'data-turbo-track': 'reload' if ie? %>
-<%= stylesheet_link_tag 'ios', 'data-turbo-track': 'reload' if ios? %>
-<%= stylesheet_link_tag 'print', 'data-turbo-track': 'reload', media: 'print' %>
+<%= stylesheet_link_tag 'default', as: 'style', data: { turbo_track: "reload" }, onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' %>
+<%= stylesheet_link_tag 'safari', as: 'style', data: { turbo_track: "reload" }, onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' if safari_pc? %>
+<%= stylesheet_link_tag 'ie', as: 'style', data: { turbo_track: "reload" }, onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' if ie? %>
+<%= stylesheet_link_tag 'ios', as: 'style', data: { turbo_track: "reload" }, onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' if ios? %>
+<%= stylesheet_link_tag 'print', as: 'style', data: { turbo_track: "reload" }, media: 'print', onload: "this.onload=null;this.rel='stylesheet'", rel: 'preload' %>
 <%= javascript_importmap_tags %>
 <%= javascript_include_tag "shortcut", "data-turbo-track": "reload" %>
 </head>
