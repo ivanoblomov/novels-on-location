@@ -551,6 +551,10 @@ nOL.showPins = (keyword, path) => {
 	nOL.closeBalloon();
 	if (keyword === "") nOL.showAllPinsAndUpdatePath();
 	else {
+		nOL.setTitleAndPath(
+			`${keyword} - Novels: On Location`,
+			path || `#!search-${escape(keyword)}`,
+		);
 		nOL.hidePins();
 		nOL.bounds = new google.maps.LatLngBounds();
 		const regex = new RegExp(unescape(keyword).trim(), "i");
@@ -563,10 +567,6 @@ nOL.showPins = (keyword, path) => {
 				nOL.showPin(location.id);
 		}
 		nOL.map.fitBounds(nOL.bounds);
-		nOL.setTitleAndPath(
-			`${keyword} - Novels: On Location`,
-			path || `#!search-${escape(keyword)}`,
-		);
 	}
 };
 
