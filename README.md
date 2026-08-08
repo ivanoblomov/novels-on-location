@@ -5,6 +5,20 @@
 
 *[Novels: On Location](https://NovelsOnLocation.com)* is a Google Maps & Books mash-up for finding novels that take place where you're traveling. Browse or search the map and make your next destination come alive!
 
+## Running locally
+
+### Restart web server
+
+```sh
+puma-dev -stop
+```
+
+### Tail log and watch assets for edits
+
+```sh
+bin/dev
+```
+
 ## Database
 
 ### Start MongoDB
@@ -39,10 +53,4 @@ db.dropDatabase()
 sh:
 ```sh
 mongorestore --db novels db/backups/heroku_1gh6pvr9/
-```
-
-## Restart web server
-
-```sh
-puma-dev -stop
 ```
