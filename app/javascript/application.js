@@ -482,15 +482,16 @@ nOL.remapPin = (id, place) => {
 			nOL.zoomIn(r.geometry.location);
 
 			if (nOL.shouldAddPin(r)) {
-				$.ajax({
-					type: "PUT",
-					url: `/locations/${id}`,
-					data: {
+				fetch(`/locations/${id}`, {
+				  headers: { 'Content-Type': 'application/json' },
+					method: "PUT",
+					body: JSON.stingify({
 						"location[address]": r.formatted_address,
 						"location[latLng]": r.geometry.location.toUrlValue(),
 						"location[tags]": place,
-					},
-				});
+					})
+				}).then(response => response.json())
+        .catch(error => { console.error('Error: ', error) });
 			}
 		} else alert(`Couldn't geocode! The error was ${status}`);
 	});
@@ -680,32 +681,35 @@ nOL.openBalloon = (location) => {
 };
 
 nOL.annotatePin = (id, notes) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}`,
-		data: {
-			"location[notes]": notes,
-		},
-	});
+	fetch(`/locations/${id}`, {
+		method: "PUT",
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ "location[notes]": notes })
+    })
+    .then(response => response.json())
+    .catch(error => {
+        console.error('Error:', error)
+    })
 };
 
 nOL.bookmarkPin = (id) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}/bookmark`,
-	});
+	fetch(`/locations/${id}/bookmark`, { type: "PUT" });
 };
 
 nOL.claimPin = (id) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}`,
-		data: {
+	fetch(`/locations/${id}`, {
+  	method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
 			caller: "claim",
 			"location[user_id]": nOL?.fb_session?.userID || null,
-			"location[user_token]": nOL.cookie("user_token"),
-		},
-	});
+			"location[user_token]": nOL.cookie("user_token")
+    }),
+	})
+  .then(response => response.json())
+  .catch(error => {
+      console.error('Error:', error)
+  })
 };
 
 nOL.createPin = (latLng, place, address, keywords) => {
