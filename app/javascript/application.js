@@ -477,9 +477,11 @@ nOL.remapPin = (id, place) => {
 					method: "PUT",
 					headers: { "Content-Type": "application/json" },
 					body: JSON.stringify({
-						"location[address]": r.formatted_address,
-						"location[latLng]": r.geometry.location.toUrlValue(),
-						"location[tags]": place,
+						location: {
+							address: r.formatted_address,
+							latLng: r.geometry.location.toUrlValue(),
+							tags: place,
+						},
 					}),
 				})
 					.then((response) => {
@@ -493,6 +495,7 @@ nOL.remapPin = (id, place) => {
 		}
 	});
 };
+
 nOL.removePin = (id) => {
 	nOL.hidePin(id);
 	delete nOL.pins[id];
@@ -839,12 +842,23 @@ nOL.getLocations = async (selectedLocationSlug) => {
 nOL.movePin = (id, gLatLng) => {
 	fetch(`/locations/${id}`, {
 		method: "PUT",
-		headers: { "Content-Type": "application/json" },
+		headers: { "Content-Type": "application/json", 			Accept: "text/javascript" },
 		body: JSON.stringify({
-			"location[latLng]": gLatLng.toUrlValue(),
-		}),
+			"location": {
+			  "latLng": gLatLng.toUrlValue()
+			}
+		})
 	})
-		.then((response) => response.json())
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text(); // Read response as plain text/javascript
+		})
+		.then((scriptText) => {
+			// Execute the returned JavaScript response
+			eval(scriptText);
+		})
 		.catch((error) => {
 			console.error("Error:", error);
 		});
