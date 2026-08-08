@@ -127,13 +127,13 @@ nOL.statusChangeCallback = (response) => {
 	if (response.status === "connected") {
 		nOL.initSession(response.authResponse);
 	} else {
-		$.cookie("fb_id", null);
+		nOL.cookie("fb_id", null);
 	}
 };
 
 nOL.initSession = (session) => {
 	nOL.fb_session = session;
-	$.cookie("fb_id", nOL.fb_session?.userID);
+	nOL.cookie("fb_id", nOL.fb_session?.userID);
 	nOL.setPinDisplayPrompt();
 	nOL.getFriends();
 };
@@ -212,7 +212,7 @@ nOL.listenForShortcuts = () => {
 	shortcut.add("p", nOL.togglePinDisplay);
 };
 
-nOL.loggedIn = () => !!$.cookie("fb_id");
+nOL.loggedIn = () => !!nOL.cookie("fb_id");
 
 nOL.logIn = () => {
 	typeof FB !== "undefined" &&
@@ -231,10 +231,10 @@ nOL.logOut = () => {
 	console.log("logOut");
 	typeof FB !== "undefined" &&
 		FB.logout(() => {
-			$.cookie("fb_id", null);
+			nOL.cookie("fb_id", null);
 			nOL.listenForLogin();
 		});
-	console.log($.cookie("fb_id"));
+	console.log(nOL.cookie("fb_id"));
 	console.log("end");
 };
 
@@ -470,7 +470,7 @@ nOL.myFriendsLocation = (location) => {
 
 nOL.myLocation = (location) => {
 	return (
-		$.cookie("user_token") === location.user_token ||
+		nOL.cookie("user_token") === location.user_token ||
 		(nOL.loggedIn() && location.user_id === nOL.fb_session?.userID)
 	);
 };
@@ -703,7 +703,7 @@ nOL.claimPin = (id) => {
 		data: {
 			caller: "claim",
 			"location[user_id]": nOL?.fb_session?.userID || null,
-			"location[user_token]": $.cookie("user_token"),
+			"location[user_token]": nOL.cookie("user_token"),
 		},
 	});
 };
@@ -715,7 +715,7 @@ nOL.createPin = (latLng, place, address, keywords) => {
 		"location[latLng]": nOL.toLatLng(latLng).toUrlValue(),
 		"location[tags]": place,
 		"location[user_id]": nOL?.fb_session?.userID || null,
-		"location[user_token]": $.cookie("user_token"),
+		"location[user_token]": nOL.cookie("user_token"),
 	});
 };
 
@@ -740,7 +740,7 @@ nOL.findBook = (gLatLng, place, address, keywords) => {
 nOL.getLocations = (selectedLocationSlug) => {
 	$.get(
 		"/locations.json",
-		{ t: Date.now(), user_token: $.cookie("user_token") },
+		{ t: Date.now(), user_token: nOL.cookie("user_token") },
 		(data) => {
 			nOL.locations = data;
 			nOL.addPins(selectedLocationSlug);
@@ -847,13 +847,13 @@ applesearch.clearBtnClick = function () {
 /**
  * Create a cookie with the given name and value and other optional parameters.
  *
- * @example $.cookie('the_cookie', 'the_value');
+ * @example nOL.cookie('the_cookie', 'the_value');
  * @desc Set the value of a cookie.
- * @example $.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
+ * @example nOL.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
  * @desc Create a cookie with all available options.
- * @example $.cookie('the_cookie', 'the_value');
+ * @example nOL.cookie('the_cookie', 'the_value');
  * @desc Create a session cookie.
- * @example $.cookie('the_cookie', null);
+ * @example nOL.cookie('the_cookie', null);
  * @desc Delete a cookie by passing null as value. Keep in mind that you have to use the same path and domain
  *       used when the cookie was set.
  *
@@ -870,7 +870,7 @@ applesearch.clearBtnClick = function () {
  *                        require a secure protocol (like HTTPS).
  * @type undefined
  *
- * @name $.cookie
+ * @name nOL.cookie
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
@@ -878,21 +878,20 @@ applesearch.clearBtnClick = function () {
 /**
  * Get the value of a cookie with the given name.
  *
- * @example $.cookie('the_cookie');
+ * @example nOL.cookie('the_cookie');
  * @desc Get the value of a cookie.
  *
  * @param String name The name of the cookie.
  * @return The value of the cookie.
  * @type String
  *
- * @name $.cookie
+ * @name nOL.cookie
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
 // qlty-ignore: qlty:function-complexity
-typeof jQuery !== "undefined" &&
 	// qlty-ignore: biome:lint/suspicious/noAssignInExpressions
-	(jQuery.cookie = (name, value, options) => {
+	nOL.cookie = (name, value, options) => {
 		if (typeof value !== "undefined") {
 			// name and value given, set cookie
 			options = options || {};
@@ -936,7 +935,7 @@ typeof jQuery !== "undefined" &&
 			if (document.cookie && document.cookie !== "") {
 				const cookies = document.cookie.split(";");
 				for (let i = 0; i < cookies.length; i++) {
-					const cookie = jQuery.trim(cookies[i]);
+					const cookie = String.prototype.trim(cookies[i]);
 					// Does this cookie string begin with the name we want?
 					if (cookie.substring(0, name.length + 1) === `${name}=`) {
 						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
@@ -946,4 +945,4 @@ typeof jQuery !== "undefined" &&
 			}
 			return cookieValue;
 		}
-	});
+	}
