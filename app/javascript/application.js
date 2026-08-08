@@ -55,7 +55,7 @@ nOL.init = (settings) => {
 
 	nOL.bounds = new google.maps.LatLngBounds();
 	nOL.geocoder = new google.maps.Geocoder();
-	nOL.map = new google.maps.Map(document.querySelector("#map-canvas")[0], {
+	nOL.map = new google.maps.Map(document.querySelector("#map-canvas"), {
 		backgroundColor: "white",
 		center: new google.maps.LatLng(0, 0),
 		draggableCursor: "default",
@@ -66,8 +66,8 @@ nOL.init = (settings) => {
 	nOL.getLocations(settings.selectedLocationSlug);
 
 	// Set prompts
-	document.querySelector("#book-input")[0].value = nOL.bookPrompt;
-	document.querySelector("#place-input")[0].value = nOL.placePrompt;
+	document.querySelector("#book-input").value = nOL.bookPrompt;
+	document.querySelector("#place-input").value = nOL.placePrompt;
 
 	nOL.updateShareButtons();
 
@@ -88,11 +88,11 @@ nOL.init = (settings) => {
 		nOL.dontListenForShortcuts();
 	});
 	document.querySelector("#book-input").addEventListener("keyup", (e) => {
-		const keyword = document.querySelector("#book-input")[0].value;
+		const keyword = document.querySelector("#book-input").value;
 		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
 	});
-	document.querySelector("#mode-button").addEventListener("click", () => {(nOL.toggleMapMode)};
-	document.querySelector("#pin-display-button").addEventListener("click", () => {(nOL.togglePinDisplay)};
+	document.querySelector("#mode-button").addEventListener("click", () => {(nOL.toggleMapMode)});
+	document.querySelector("#pin-display-button").addEventListener("click", () => {(nOL.togglePinDisplay)});
 	document.querySelector("#place-input").addEventListener("blur", (e) => {
 	  const input = e.target;
 		input.value = nOL.placePrompt;
@@ -105,7 +105,7 @@ nOL.init = (settings) => {
 		input.style.color = "black";
 		nOL.dontListenForShortcuts();
 	});
-	document.querySelector("#place-input")..addEventListener("keypress", (e) => {
+	document.querySelector("#place-input").addEventListener("keypress", (e) => {
 		if ((e.keyCode || e.which) === 13) nOL.codePlace(document.querySelector("#place-input").value);
 	});
 
@@ -162,7 +162,7 @@ nOL.getFriends = () => {
 };
 
 nOL.updateFacebookLikeButton = () => {
-	document.querySelector("#fb-like")[0].dataset.href = document.URL;
+	document.querySelector("#fb-like").dataset.href = document.URL;
 };
 
 nOL.updateShareButtons = () => {
@@ -171,7 +171,7 @@ nOL.updateShareButtons = () => {
 };
 
 nOL.updateTweetButton = () => {
-	const iframe = document.querySelector("#tweet")[0];
+	const iframe = document.querySelector("#tweet");
 	iframe.src = iframe.src.replace(
 		/\?.+/,
 		`?related=${nOL.twitterAccount}&text=${nOL.sharingMessage}&url=${document.URL}`,
@@ -318,17 +318,17 @@ nOL.toggleMapMode = () => {
 	if (nOL.clickingZooms) {
 		if (nOL.clickListener !== undefined)
 			google.maps.event.removeListener(nOL.clickListener);
-		document.querySelector("#mode-button")[0].title = "Double-click map to zoom. Click to toggle";
-		document.querySelector("#mode-button")[0].value = "Mode: Zoom";
+		document.querySelector("#mode-button").title = "Double-click map to zoom. Click to toggle";
+		document.querySelector("#mode-button").value = "Mode: Zoom";
 		nOL.map.setOptions({
 			draggableCursor: "default",
 			disableDoubleClickZoom: false,
 		});
 	} else {
 		nOL.listenFor("dblclick", "nOL.promptForBook(e.latLng)");
-		document.querySelector("#mode-button")[0].title =
+		document.querySelector("#mode-button").title =
 			"Double-click map to add pins. Click to toggle";
-		document.querySelector("#mode-button")[0].value = "Mode: Add Pins";
+		document.querySelector("#mode-button").value = "Mode: Add Pins";
 		nOL.map.setOptions({
 			draggableCursor: "crosshair",
 			disableDoubleClickZoom: true,
@@ -337,15 +337,15 @@ nOL.toggleMapMode = () => {
 };
 
 nOL.setPinDisplayPrompt = () => {
-	document.querySelector("#pin-display-button")[0].title = "Click to change pins displayed";
+	document.querySelector("#pin-display-button").title = "Click to change pins displayed";
 
-	if (nOL.pinType === 0) document.querySelector("#pin-display-button")[0].value = "Pins: All";
+	if (nOL.pinType === 0) document.querySelector("#pin-display-button").value = "Pins: All";
 	else if (nOL.pinType === 1)
-		document.querySelector("#pin-display-button")[0].value = "Pins: My Pins";
+		document.querySelector("#pin-display-button").value = "Pins: My Pins";
 	else if (nOL.pinType === 2)
-		document.querySelector("#pin-display-button")[0].value = "Pins: Bookmarks";
+		document.querySelector("#pin-display-button").value = "Pins: Bookmarks";
 	else if (nOL.pinType === 3)
-		document.querySelector("#pin-display-button")[0].value = "Pins: Friends";
+		document.querySelector("#pin-display-button").value = "Pins: Friends";
 };
 
 nOL.setTitleAndPath = (title, path) => {
@@ -815,7 +815,7 @@ applesearch.clearFld = function (fldID, btnID) {
 	this.onChange(fldID, btnID);
 
 	if (fldID === "book-input") {
-		nOL.showPins(document.querySelector("#book-input")[0].value, true);
+		nOL.showPins(document.querySelector("#book-input").value, true);
 	}
 };
 
