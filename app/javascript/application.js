@@ -842,12 +842,12 @@ nOL.getLocations = async (selectedLocationSlug) => {
 nOL.movePin = (id, gLatLng) => {
 	fetch(`/locations/${id}`, {
 		method: "PUT",
-		headers: { "Content-Type": "application/json", 			Accept: "text/javascript" },
+		headers: { "Content-Type": "application/json", Accept: "text/javascript" },
 		body: JSON.stringify({
-			"location": {
-			  "latLng": gLatLng.toUrlValue()
-			}
-		})
+			location: {
+				latLng: gLatLng.toUrlValue(),
+			},
+		}),
 	})
 		.then((response) => {
 			if (!response.ok) {
