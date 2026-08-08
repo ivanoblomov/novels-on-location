@@ -73,7 +73,7 @@ nOL.init = (settings) => {
 
 	// Register event listeners
 	document.querySelector("#book-input").addEventListener("blur", (e) => {
-	  const input = e.target;
+		const input = e.target;
 		if (input.value === "") {
 			input.value = nOL.bookPrompt;
 			nOL.showAllPinsAndUpdatePath();
@@ -82,7 +82,7 @@ nOL.init = (settings) => {
 		nOL.listenForShortcuts();
 	});
 	document.querySelector("#book-input").addEventListener("focus", (e) => {
-	  const input = e.target;
+		const input = e.target;
 		if (input === nOL.bookPrompt) input.value = "";
 		input.style.color = "black";
 		nOL.dontListenForShortcuts();
@@ -91,22 +91,29 @@ nOL.init = (settings) => {
 		const keyword = document.querySelector("#book-input").value;
 		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
 	});
-	document.querySelector("#mode-button").addEventListener("click", () => {(nOL.toggleMapMode)});
-	document.querySelector("#pin-display-button").addEventListener("click", () => {(nOL.togglePinDisplay)});
+	document.querySelector("#mode-button").addEventListener("click", () => {
+		nOL.toggleMapMode;
+	});
+	document
+		.querySelector("#pin-display-button")
+		.addEventListener("click", () => {
+			nOL.togglePinDisplay;
+		});
 	document.querySelector("#place-input").addEventListener("blur", (e) => {
-	  const input = e.target;
+		const input = e.target;
 		input.value = nOL.placePrompt;
 		input.style.color = "#777";
 		nOL.listenForShortcuts();
 	});
 	document.querySelector("#place-input").addEventListener("focus", (e) => {
-	  const input = e.target;
+		const input = e.target;
 		input.value = "";
 		input.style.color = "black";
 		nOL.dontListenForShortcuts();
 	});
 	document.querySelector("#place-input").addEventListener("keypress", (e) => {
-		if ((e.keyCode || e.which) === 13) nOL.codePlace(document.querySelector("#place-input").value);
+		if ((e.keyCode || e.which) === 13)
+			nOL.codePlace(document.querySelector("#place-input").value);
 	});
 
 	nOL.listenForLogin();
@@ -318,7 +325,8 @@ nOL.toggleMapMode = () => {
 	if (nOL.clickingZooms) {
 		if (nOL.clickListener !== undefined)
 			google.maps.event.removeListener(nOL.clickListener);
-		document.querySelector("#mode-button").title = "Double-click map to zoom. Click to toggle";
+		document.querySelector("#mode-button").title =
+			"Double-click map to zoom. Click to toggle";
 		document.querySelector("#mode-button").value = "Mode: Zoom";
 		nOL.map.setOptions({
 			draggableCursor: "default",
@@ -337,9 +345,11 @@ nOL.toggleMapMode = () => {
 };
 
 nOL.setPinDisplayPrompt = () => {
-	document.querySelector("#pin-display-button").title = "Click to change pins displayed";
+	document.querySelector("#pin-display-button").title =
+		"Click to change pins displayed";
 
-	if (nOL.pinType === 0) document.querySelector("#pin-display-button").value = "Pins: All";
+	if (nOL.pinType === 0)
+		document.querySelector("#pin-display-button").value = "Pins: All";
 	else if (nOL.pinType === 1)
 		document.querySelector("#pin-display-button").value = "Pins: My Pins";
 	else if (nOL.pinType === 2)
