@@ -683,7 +683,11 @@ nOL.annotatePin = (id, notes) => {
 			"Content-Type": "application/json",
 			Accept: "text/javascript",
 		},
-		body: JSON.stringify({ "location[notes]": notes }),
+		body: JSON.stringify({
+			location: {
+				notes: notes,
+			},
+		}),
 	})
 		.then((response) => {
 			if (!response.ok) {
