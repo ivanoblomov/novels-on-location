@@ -137,7 +137,7 @@ nOL.getFacebookName = (location) => {
 	if (location.user_name === undefined && location.user_id) {
 		typeof FB !== "undefined" &&
 			FB.api(`/${location.user_id}`, (response) => {
-				$(`#${location.user_id}`).text(response.name);
+				document.querySelector(`#${location.user_id}`).text(response.name);
 				location.user_name = response.name;
 			});
 	}
