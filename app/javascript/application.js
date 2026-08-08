@@ -55,7 +55,7 @@ nOL.init = (settings) => {
 
 	nOL.bounds = new google.maps.LatLngBounds();
 	nOL.geocoder = new google.maps.Geocoder();
-	nOL.map = new google.maps.Map($("#map-canvas")[0], {
+	nOL.map = new google.maps.Map(document.querySelector("#map-canvas")[0], {
 		backgroundColor: "white",
 		center: new google.maps.LatLng(0, 0),
 		draggableCursor: "default",
@@ -66,13 +66,13 @@ nOL.init = (settings) => {
 	nOL.getLocations(settings.selectedLocationSlug);
 
 	// Set prompts
-	$("#book-input")[0].value = nOL.bookPrompt;
-	$("#place-input")[0].value = nOL.placePrompt;
+	document.querySelector("#book-input")[0].value = nOL.bookPrompt;
+	document.querySelector("#place-input")[0].value = nOL.placePrompt;
 
 	nOL.updateShareButtons();
 
 	// Register event listeners
-	$("#book-input").blur(function () {
+	document.querySelector("#book-input").blur(function () {
 		if ($(this).val() === "") {
 			$(this).val(nOL.bookPrompt);
 			nOL.showAllPinsAndUpdatePath();
@@ -80,29 +80,29 @@ nOL.init = (settings) => {
 		$(this).css("color", "#777");
 		nOL.listenForShortcuts();
 	});
-	$("#book-input").focus(function () {
+	document.querySelector("#book-input").focus(function () {
 		if ($(this).val() === nOL.bookPrompt) $(this).val("");
 		$(this).css("color", "black");
 		nOL.dontListenForShortcuts();
 	});
-	$("#book-input").keyup(() => {
-		const keyword = $("#book-input")[0].value;
+	document.querySelector("#book-input").keyup(() => {
+		const keyword = document.querySelector("#book-input")[0].value;
 		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
 	});
-	$("#mode-button").click(nOL.toggleMapMode);
-	$("#pin-display-button").click(nOL.togglePinDisplay);
-	$("#place-input").blur(function () {
+	document.querySelector("#mode-button").click(nOL.toggleMapMode);
+	document.querySelector("#pin-display-button").click(nOL.togglePinDisplay);
+	document.querySelector("#place-input").blur(function () {
 		$(this).val(nOL.placePrompt);
 		$(this).css("color", "#777");
 		nOL.listenForShortcuts();
 	});
-	$("#place-input").focus(function () {
+	document.querySelector("#place-input").focus(function () {
 		$(this).val("");
 		$(this).css("color", "black");
 		nOL.dontListenForShortcuts();
 	});
-	$("#place-input").keypress((e) => {
-		if ((e.keyCode || e.which) === 13) nOL.codePlace($("#place-input").val());
+	document.querySelector("#place-input").keypress((e) => {
+		if ((e.keyCode || e.which) === 13) nOL.codePlace(document.querySelector("#place-input").val());
 	});
 
 	nOL.listenForLogin();
@@ -158,7 +158,7 @@ nOL.getFriends = () => {
 };
 
 nOL.updateFacebookLikeButton = () => {
-	$("#fb-like")[0].dataset.href = document.URL;
+	document.querySelector("#fb-like")[0].dataset.href = document.URL;
 };
 
 nOL.updateShareButtons = () => {
@@ -167,7 +167,7 @@ nOL.updateShareButtons = () => {
 };
 
 nOL.updateTweetButton = () => {
-	const iframe = $("#tweet")[0];
+	const iframe = document.querySelector("#tweet")[0];
 	iframe.src = iframe.src.replace(
 		/\?.+/,
 		`?related=${nOL.twitterAccount}&text=${nOL.sharingMessage}&url=${document.URL}`,
@@ -184,7 +184,7 @@ nOL.listenFor = (event, args) => {
 };
 
 nOL.listenForLogin = () => {
-	$("#login-button").click(() => {
+	document.querySelector("#login-button").click(() => {
 		nOL.toggleLogin();
 	});
 };
@@ -314,17 +314,17 @@ nOL.toggleMapMode = () => {
 	if (nOL.clickingZooms) {
 		if (nOL.clickListener !== undefined)
 			google.maps.event.removeListener(nOL.clickListener);
-		$("#mode-button")[0].title = "Double-click map to zoom. Click to toggle";
-		$("#mode-button")[0].value = "Mode: Zoom";
+		document.querySelector("#mode-button")[0].title = "Double-click map to zoom. Click to toggle";
+		document.querySelector("#mode-button")[0].value = "Mode: Zoom";
 		nOL.map.setOptions({
 			draggableCursor: "default",
 			disableDoubleClickZoom: false,
 		});
 	} else {
 		nOL.listenFor("dblclick", "nOL.promptForBook(e.latLng)");
-		$("#mode-button")[0].title =
+		document.querySelector("#mode-button")[0].title =
 			"Double-click map to add pins. Click to toggle";
-		$("#mode-button")[0].value = "Mode: Add Pins";
+		document.querySelector("#mode-button")[0].value = "Mode: Add Pins";
 		nOL.map.setOptions({
 			draggableCursor: "crosshair",
 			disableDoubleClickZoom: true,
@@ -333,15 +333,15 @@ nOL.toggleMapMode = () => {
 };
 
 nOL.setPinDisplayPrompt = () => {
-	$("#pin-display-button")[0].title = "Click to change pins displayed";
+	document.querySelector("#pin-display-button")[0].title = "Click to change pins displayed";
 
-	if (nOL.pinType === 0) $("#pin-display-button")[0].value = "Pins: All";
+	if (nOL.pinType === 0) document.querySelector("#pin-display-button")[0].value = "Pins: All";
 	else if (nOL.pinType === 1)
-		$("#pin-display-button")[0].value = "Pins: My Pins";
+		document.querySelector("#pin-display-button")[0].value = "Pins: My Pins";
 	else if (nOL.pinType === 2)
-		$("#pin-display-button")[0].value = "Pins: Bookmarks";
+		document.querySelector("#pin-display-button")[0].value = "Pins: Bookmarks";
 	else if (nOL.pinType === 3)
-		$("#pin-display-button")[0].value = "Pins: Friends";
+		document.querySelector("#pin-display-button")[0].value = "Pins: Friends";
 };
 
 nOL.setTitleAndPath = (title, path) => {
@@ -811,7 +811,7 @@ applesearch.clearFld = function (fldID, btnID) {
 	this.onChange(fldID, btnID);
 
 	if (fldID === "book-input") {
-		nOL.showPins($("#book-input")[0].value, true);
+		nOL.showPins(document.querySelector("#book-input")[0].value, true);
 	}
 };
 
