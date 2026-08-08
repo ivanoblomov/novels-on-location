@@ -764,7 +764,7 @@ nOL.movePin = (id, gLatLng) => {
 
 nOL.tagLinks = (location) => {
 	const tags = $.map(location.tags.split(","), (tag) => {
-		const trimmedTag = $.trim(tag);
+		const trimmedTag = String.prototype.trim(tag);
 		const tagPath = `/#!search-${escape(trimmedTag)}`;
 		const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(trimmedTag)}', '${tagPath}')" title="Show all locations with the tag ${trimmedTag}">${trimmedTag}</a>`;
 		return link;
