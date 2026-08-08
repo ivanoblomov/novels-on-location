@@ -97,7 +97,7 @@ nOL.init = (settings) => {
 	document
 		.querySelector("#pin-display-button")
 		.addEventListener("click", () => {
-			nOL.togglePinDisplay;
+			nOL.togglePinDisplay();
 		});
 	document.querySelector("#place-input").addEventListener("blur", (e) => {
 		const input = e.target;
