@@ -683,24 +683,24 @@ nOL.annotatePin = (id, notes) => {
 	fetch(`/locations/${id}`, {
 		method: "PUT",
 		headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'text/javascript'
+			"Content-Type": "application/json",
+			Accept: "text/javascript",
 		},
-		body: JSON.stringify({ "location[notes]": notes })
+		body: JSON.stringify({ "location[notes]": notes }),
 	})
-	.then(response => {
-		if (!response.ok) {
-			throw new Error(`Server returned status ${response.status}`);
-		}
-		return response.text();
-	})
-	.then(scriptText => {
-		// Execute the returned JavaScript response
-		eval(scriptText);
-	})
-	.catch(error => {
-		console.error('Error:', error);
-	});
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text();
+		})
+		.then((scriptText) => {
+			// Execute the returned JavaScript response
+			eval(scriptText);
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
 };
 
 nOL.bookmarkPin = (id) => {
@@ -709,51 +709,51 @@ nOL.bookmarkPin = (id) => {
 
 nOL.claimPin = (id) => {
 	fetch(`/locations/${id}`, {
-  	method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
 			caller: "claim",
 			"location[user_id]": nOL?.fb_session?.userID || null,
-			"location[user_token]": nOL.cookie("user_token")
-    }),
+			"location[user_token]": nOL.cookie("user_token"),
+		}),
 	})
-  .then(response => response.json())
-  .catch(error => {
-      console.error('Error:', error)
-  })
+		.then((response) => response.json())
+		.catch((error) => {
+			console.error("Error:", error);
+		});
 };
 
 nOL.createPin = (latLng, place, address, keywords) => {
 	fetch("/locations", {
-		method: 'POST',
+		method: "POST",
 		headers: {
-			'Content-Type': 'application/json',
-			'Accept': 'text/javascript'
+			"Content-Type": "application/json",
+			Accept: "text/javascript",
 		},
 		body: JSON.stringify({
-			"location": {
-        'address': address || "",
-        'book_keywords': keywords,
-			  'latLng': nOL.toLatLng(latLng).toUrlValue(),
-			  "tags": place,
-			  "user_id": nOL?.fb_session?.userID || null,
-			  "user_token": nOL.cookie("user_token")
-      }
+			location: {
+				address: address || "",
+				book_keywords: keywords,
+				latLng: nOL.toLatLng(latLng).toUrlValue(),
+				tags: place,
+				user_id: nOL?.fb_session?.userID || null,
+				user_token: nOL.cookie("user_token"),
+			},
+		}),
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text(); // Read response as plain text/javascript
 		})
-	})
-	.then(response => {
-		if (!response.ok) {
-			throw new Error(`Server returned status ${response.status}`);
-		}
-		return response.text(); // Read response as plain text/javascript
-	})
-	.then(scriptText => {
-		// Execute the returned JavaScript response
-		eval(scriptText);
-	})
-	.catch(error => {
-		console.error('Error:', error);
-	});
+		.then((scriptText) => {
+			// Execute the returned JavaScript response
+			eval(scriptText);
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
 };
 
 nOL.deletePin = (id) => {
@@ -761,22 +761,22 @@ nOL.deletePin = (id) => {
 		fetch(`/locations/${id}`, {
 			method: "DELETE",
 			headers: {
-				'Accept': 'text/javascript'
+				Accept: "text/javascript",
 			},
 		})
-		.then(response => {
-			if (!response.ok) {
-				throw new Error(`Server returned status ${response.status}`);
-			}
-			return response.text();
-		})
-		.then(scriptText => {
-			// Execute the returned JavaScript response
-			eval(scriptText);
-		})
-		.catch(error => {
-			console.error('Error:', error);
-		});
+			.then((response) => {
+				if (!response.ok) {
+					throw new Error(`Server returned status ${response.status}`);
+				}
+				return response.text();
+			})
+			.then((scriptText) => {
+				// Execute the returned JavaScript response
+				eval(scriptText);
+			})
+			.catch((error) => {
+				console.error("Error:", error);
+			});
 	}
 };
 
@@ -791,7 +791,7 @@ nOL.findBook = (gLatLng, place, address, keywords) => {
 	fetch(`/locations/new?${params}`, {
 		method: "GET",
 		headers: {
-			"Accept": "text/javascript"
+			Accept: "text/javascript",
 		},
 	})
 		.then((response) => {
@@ -811,80 +811,80 @@ nOL.findBook = (gLatLng, place, address, keywords) => {
 };
 
 nOL.getLocations = async (selectedLocationSlug) => {
-    try {
-        // 1. Build the query parameters
-        const params = new URLSearchParams({
-            t: Date.now(),
-            user_token: nOL.cookie("user_token")
-        });
+	try {
+		// 1. Build the query parameters
+		const params = new URLSearchParams({
+			t: Date.now(),
+			user_token: nOL.cookie("user_token"),
+		});
 
-        // 2. Fetch the data with the query string attached
-        const response = await fetch(`/locations.json?${params}`);
+		// 2. Fetch the data with the query string attached
+		const response = await fetch(`/locations.json?${params}`);
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
 
-        // 3. Parse the JSON response (automatically handled like jQuery did)
-        const data = await response.json();
+		// 3. Parse the JSON response (automatically handled like jQuery did)
+		const data = await response.json();
 
-        nOL.locations = data;
-        nOL.addPins(selectedLocationSlug);
-
-    } catch (error) {
-        console.error("Failed to load locations:", error);
-    }
-}
+		nOL.locations = data;
+		nOL.addPins(selectedLocationSlug);
+	} catch (error) {
+		console.error("Failed to load locations:", error);
+	}
+};
 
 nOL.movePin = (id, gLatLng) => {
 	fetch(`/locations/${id}`, {
-  	method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		body: JSON.stringify({
 			"location[latLng]": gLatLng.toUrlValue(),
-		})
+		}),
 	})
-  .then(response => response.json())
-  .catch(error => {
-      console.error('Error:', error)
-  })
+		.then((response) => response.json())
+		.catch((error) => {
+			console.error("Error:", error);
+		});
 };
 
 nOL.tagLinks = (location) => {
-const tags = location.tags.split(",")
-    .map(tag => {
-        const trimmedTag = tag.trim();
-        const tagPath = `/#!search-${escape(trimmedTag)}`;
-        const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(trimmedTag)}', '${tagPath}')" title="Show all locations with the tag ${trimmedTag}">${trimmedTag}</a>`;
-        return link;
-    })
-    .filter(link => link !== "");
+	const tags = location.tags
+		.split(",")
+		.map((tag) => {
+			const trimmedTag = tag.trim();
+			const tagPath = `/#!search-${escape(trimmedTag)}`;
+			const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(trimmedTag)}', '${tagPath}')" title="Show all locations with the tag ${trimmedTag}">${trimmedTag}</a>`;
+			return link;
+		})
+		.filter((link) => link !== "");
 
-return tags.join(", ");
+	return tags.join(", ");
 };
 
 nOL.tagPin = async (id, tags) => {
-    try {
-        const response = await fetch(`/locations/${id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-                // Include "X-CSRF-Token": token if your backend framework requires it
-            },
-            body: new URLSearchParams({
-                "location[tags]": tags,
-            }),
-        });
+	try {
+		const response = await fetch(`/locations/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+				// Include "X-CSRF-Token": token if your backend framework requires it
+			},
+			body: new URLSearchParams({
+				"location[tags]": tags,
+			}),
+		});
 
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
+		}
 
-        // Parse JSON response if your server returns data
-        return await response.json();
-    } catch (error) {
-        console.error("Failed to tag pin:", error);
-    }
+		// Parse JSON response if your server returns data
+		return await response.json();
+	} catch (error) {
+		console.error("Failed to tag pin:", error);
+	}
 };
 
 nOL.toLatLng = (latLng) => {
@@ -893,13 +893,13 @@ nOL.toLatLng = (latLng) => {
 
 nOL.unBookmarkPin = (id) => {
 	fetch(`/locations/${id}/unbookmark`, {
-		method: "DELETE"
+		method: "DELETE",
 	})
-  .then(response => response.json())
-  .catch(error => {
-      console.error('Error:', error);
-  })
-}
+		.then((response) => response.json())
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+};
 
 // Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html
 let applesearch;
