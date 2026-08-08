@@ -713,73 +713,127 @@ nOL.claimPin = (id) => {
 };
 
 nOL.createPin = (latLng, place, address, keywords) => {
-	$.post("/locations", {
-		"location[address]": address || "",
-		"location[book_keywords]": keywords,
-		"location[latLng]": nOL.toLatLng(latLng).toUrlValue(),
-		"location[tags]": place,
-		"location[user_id]": nOL?.fb_session?.userID || null,
-		"location[user_token]": nOL.cookie("user_token"),
-	});
-};
+	fetch("/locations", {
+	  method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      "location[address]": address || "",
+      "location[book_keywords]": keywords,
+      "location[latLng]": nOL.toLatLng(latLng).toUrlValue(),
+      "location[tags]": place,
+      "location[user_id]": nOL?.fb_session?.userID || null,
+      "location[user_token]": nOL.cookie("user_token"),
+  	})})
+  .then(response => response.json())
+  .catch(error => {
+      console.error('Error:', error);
+  })
+}
 
 nOL.deletePin = (id) => {
 	if (confirm("Are you sure? This action cannot be undone.")) {
-		$.ajax({
-			type: "DELETE",
-			url: `/locations/${id}`,
-		});
+		fetch(`/locations/${id}`, {
+			method: "DELETE",
+		})
+  .then(response => response.json())
+  .catch(error => {
+      console.error('Error:', error);
+  })
 	}
-};
+}
 
 nOL.findBook = (gLatLng, place, address, keywords) => {
-	$.get("/locations/new", {
-		"location[address]": address || "",
-		"location[tags]": place,
-		"location[book_keywords]": keywords,
-		"location[latLng]": gLatLng.toUrlValue(),
-	});
-};
+	fetch("/locations/new", {
+  	method: 'GET',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      "location[address]": address || "",
+      "location[tags]": place,
+      "location[book_keywords]": keywords,
+      "location[latLng]": gLatLng.toUrlValue(),
+    })
+  })
+  .then(response => response.json())
+  .catch(error => {
+      console.error('Error:', error);
+  })
+}
 
-nOL.getLocations = (selectedLocationSlug) => {
-	$.get(
-		"/locations.json",
-		{ t: Date.now(), user_token: nOL.cookie("user_token") },
-		(data) => {
-			nOL.locations = data;
-			nOL.addPins(selectedLocationSlug);
-		},
-	);
-};
+nOL.getLocations = async (selectedLocationSlug) => {
+    try {
+        // 1. Build the query parameters
+        const params = new URLSearchParams({
+            t: Date.now(),
+            user_token: nOL.cookie("user_token")
+        });
+
+        // 2. Fetch the data with the query string attached
+        const response = await fetch(`/locations.json?${params}`);
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        // 3. Parse the JSON response (automatically handled like jQuery did)
+        const data = await response.json();
+
+        nOL.locations = data;
+        nOL.addPins(selectedLocationSlug);
+
+    } catch (error) {
+        console.error("Failed to load locations:", error);
+    }
+}
 
 nOL.movePin = (id, gLatLng) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}`,
-		data: {
+	fetch(`/locations/${id}`, {
+  	method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
 			"location[latLng]": gLatLng.toUrlValue(),
-		},
-	});
+		})
+	})
+  .then(response => response.json())
+  .catch(error => {
+      console.error('Error:', error)
+  })
 };
 
 nOL.tagLinks = (location) => {
-	const tags = $.map(location.tags.split(","), (tag) => {
-		const trimmedTag = String.prototype.trim(tag);
-		const tagPath = `/#!search-${escape(trimmedTag)}`;
-		const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(trimmedTag)}', '${tagPath}')" title="Show all locations with the tag ${trimmedTag}">${trimmedTag}</a>`;
-		return link;
-	});
-	return tags.join(", ");
+const tags = location.tags.split(",")
+    .map(tag => {
+        const trimmedTag = tag.trim();
+        const tagPath = `/#!search-${escape(trimmedTag)}`;
+        const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(trimmedTag)}', '${tagPath}')" title="Show all locations with the tag ${trimmedTag}">${trimmedTag}</a>`;
+        return link;
+    })
+    .filter(link => link !== "");
+
+return tags.join(", ");
 };
 
-nOL.tagPin = (id, tags) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}`,
-		data: {
-			"location[tags]": tags,
-		},
-	});
+nOL.tagPin = async (id, tags) => {
+    try {
+        const response = await fetch(`/locations/${id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+                // Include "X-CSRF-Token": token if your backend framework requires it
+            },
+            body: new URLSearchParams({
+                "location[tags]": tags,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        // Parse JSON response if your server returns data
+        return await response.json();
+    } catch (error) {
+        console.error("Failed to tag pin:", error);
+    }
 };
 
 nOL.toLatLng = (latLng) => {
@@ -787,11 +841,14 @@ nOL.toLatLng = (latLng) => {
 };
 
 nOL.unBookmarkPin = (id) => {
-	$.ajax({
-		type: "DELETE",
-		url: `/locations/${id}/unbookmark`,
-	});
-};
+	fetch(`/locations/${id}/unbookmark`, {
+		method: "DELETE"
+	})
+  .then(response => response.json())
+  .catch(error => {
+      console.error('Error:', error);
+  })
+}
 
 // Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html
 let applesearch;
