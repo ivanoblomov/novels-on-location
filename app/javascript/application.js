@@ -452,10 +452,7 @@ nOL.hidePins = () => {
 };
 
 nOL.myBookmark = (location) => {
-	return (
-		location.bookmark_user_ids &&
-		location.bookmark_user_ids.includes(nOL.fb_session?.userID)
-	);
+	return location.bookmark_user_ids?.includes(nOL.fb_session?.userID);
 };
 
 nOL.myFriendsLocation = (location) => {
