@@ -9,8 +9,6 @@ NovelsOnLocation::Application.configure do
   config.action_mailer.delivery_method = :letter_opener
   config.active_support.deprecation = :log
   config.action_dispatch.best_standards_support = :builtin
-  config.assets.compress = false
-  config.assets.debug = true
   config.eager_load = false
   config.time_zone = 'America/New_York'
   # custom
