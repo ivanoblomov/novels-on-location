@@ -441,7 +441,7 @@ nOL.shouldAddPin = (googleResults) => {
 	const typesToPin = ["establishment", "point_of_interest", "street_address"];
 
 	for (let i = 0; i < typesToPin.length; i++) {
-		if ($.inArray(typesToPin[i], types)) return true;
+		if (types.includes(typesToPin[i])) return true;
 	}
 
 	return false;
@@ -460,12 +460,12 @@ nOL.hidePins = () => {
 nOL.myBookmark = (location) => {
 	return (
 		location.bookmark_user_ids &&
-		location.bookmark_user_ids.indexOf(nOL.fb_session?.userID) !== -1
+		location.bookmark_user_ids.includes(nOL.fb_session?.userID)
 	);
 };
 
 nOL.myFriendsLocation = (location) => {
-	return $.inArray(location.user_id, nOL.friendIds) !== -1;
+	return nOL.friendIds.includes(location.user_id);
 };
 
 nOL.myLocation = (location) => {
