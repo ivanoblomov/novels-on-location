@@ -72,37 +72,41 @@ nOL.init = (settings) => {
 	nOL.updateShareButtons();
 
 	// Register event listeners
-	document.querySelector("#book-input").blur(function () {
-		if ($(this).val() === "") {
-			$(this).val(nOL.bookPrompt);
+	document.querySelector("#book-input").addEventListener("blur", (e) => {
+	  const input = e.target;
+		if (input.value === "") {
+			input.value = nOL.bookPrompt;
 			nOL.showAllPinsAndUpdatePath();
 		}
-		$(this).css("color", "#777");
+		input.style.color = "#777";
 		nOL.listenForShortcuts();
 	});
-	document.querySelector("#book-input").focus(function () {
-		if ($(this).val() === nOL.bookPrompt) $(this).val("");
-		$(this).css("color", "black");
+	document.querySelector("#book-input").addEventListener("focus", (e) => {
+	  const input = e.target;
+		if (input === nOL.bookPrompt) input.value = "";
+		input.style.color = "black";
 		nOL.dontListenForShortcuts();
 	});
-	document.querySelector("#book-input").keyup(() => {
+	document.querySelector("#book-input").addEventListener("keyup", (e) => {
 		const keyword = document.querySelector("#book-input")[0].value;
 		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
 	});
-	document.querySelector("#mode-button").click(nOL.toggleMapMode);
-	document.querySelector("#pin-display-button").click(nOL.togglePinDisplay);
-	document.querySelector("#place-input").blur(function () {
-		$(this).val(nOL.placePrompt);
-		$(this).css("color", "#777");
+	document.querySelector("#mode-button").addEventListener("click", () => {(nOL.toggleMapMode)};
+	document.querySelector("#pin-display-button").addEventListener("click", () => {(nOL.togglePinDisplay)};
+	document.querySelector("#place-input").addEventListener("blur", (e) => {
+	  const input = e.target;
+		input.value = nOL.placePrompt;
+		input.style.color = "#777";
 		nOL.listenForShortcuts();
 	});
-	document.querySelector("#place-input").focus(function () {
-		$(this).val("");
-		$(this).css("color", "black");
+	document.querySelector("#place-input").addEventListener("focus", (e) => {
+	  const input = e.target;
+		input.value = "";
+		input.style.color = "black";
 		nOL.dontListenForShortcuts();
 	});
-	document.querySelector("#place-input").keypress((e) => {
-		if ((e.keyCode || e.which) === 13) nOL.codePlace(document.querySelector("#place-input").val());
+	document.querySelector("#place-input")..addEventListener("keypress", (e) => {
+		if ((e.keyCode || e.which) === 13) nOL.codePlace(document.querySelector("#place-input").value);
 	});
 
 	nOL.listenForLogin();
