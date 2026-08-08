@@ -682,13 +682,25 @@ nOL.openBalloon = (location) => {
 nOL.annotatePin = (id, notes) => {
 	fetch(`/locations/${id}`, {
 		method: "PUT",
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ "location[notes]": notes })
-    })
-    .then(response => response.json())
-    .catch(error => {
-        console.error('Error:', error)
-    })
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'text/javascript'
+		},
+		body: JSON.stringify({ "location[notes]": notes })
+	})
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(`Server returned status ${response.status}`);
+		}
+		return response.text();
+	})
+	.then(scriptText => {
+		// Execute the returned JavaScript response
+		eval(scriptText);
+	})
+	.catch(error => {
+		console.error('Error:', error);
+	});
 };
 
 nOL.bookmarkPin = (id) => {
@@ -713,52 +725,88 @@ nOL.claimPin = (id) => {
 
 nOL.createPin = (latLng, place, address, keywords) => {
 	fetch("/locations", {
-	  method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      "location[address]": address || "",
-      "location[book_keywords]": keywords,
-      "location[latLng]": nOL.toLatLng(latLng).toUrlValue(),
-      "location[tags]": place,
-      "location[user_id]": nOL?.fb_session?.userID || null,
-      "location[user_token]": nOL.cookie("user_token"),
-  	})})
-  .then(response => response.json())
-  .catch(error => {
-      console.error('Error:', error);
-  })
-}
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json',
+			'Accept': 'text/javascript'
+		},
+		body: JSON.stringify({
+			"location": {
+        'address': address || "",
+        'book_keywords': keywords,
+			  'latLng': nOL.toLatLng(latLng).toUrlValue(),
+			  "tags": place,
+			  "user_id": nOL?.fb_session?.userID || null,
+			  "user_token": nOL.cookie("user_token")
+      }
+		})
+	})
+	.then(response => {
+		if (!response.ok) {
+			throw new Error(`Server returned status ${response.status}`);
+		}
+		return response.text(); // Read response as plain text/javascript
+	})
+	.then(scriptText => {
+		// Execute the returned JavaScript response
+		eval(scriptText);
+	})
+	.catch(error => {
+		console.error('Error:', error);
+	});
+};
 
 nOL.deletePin = (id) => {
 	if (confirm("Are you sure? This action cannot be undone.")) {
 		fetch(`/locations/${id}`, {
 			method: "DELETE",
+			headers: {
+				'Accept': 'text/javascript'
+			},
 		})
-  .then(response => response.json())
-  .catch(error => {
-      console.error('Error:', error);
-  })
+		.then(response => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text();
+		})
+		.then(scriptText => {
+			// Execute the returned JavaScript response
+			eval(scriptText);
+		})
+		.catch(error => {
+			console.error('Error:', error);
+		});
 	}
-}
+};
 
 nOL.findBook = (gLatLng, place, address, keywords) => {
 	const params = new URLSearchParams({
 		"location[address]": address || "",
 		"location[tags]": place,
 		"location[book_keywords]": keywords,
-		"location[latLng]": gLatLng.toUrlValue(),
+		"location[latLng]": gLatLng ? gLatLng.toUrlValue() : "",
 	});
 
 	fetch(`/locations/new?${params}`, {
 		method: "GET",
-		headers: { "Content-Type": "application/json" },
+		headers: {
+			"Accept": "text/javascript"
+		},
 	})
 		.then((response) => {
-			if (!response.ok) throw new Error("Network response was not ok");
-			return response.json();
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text();
+		})
+		.then((scriptText) => {
+			// Execute the returned JavaScript string
+			// eslint-disable-next-line no-eval
+			eval(scriptText);
 		})
 		.catch((error) => {
-			console.log("Error:", error);
+			console.error("Error:", error);
 		});
 };
 
