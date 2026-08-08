@@ -438,13 +438,7 @@ nOL.addPins = (selectedLocationSlug) => {
 
 nOL.shouldAddPin = (googleResults) => {
 	const types = googleResults.types;
-	const typesToPin = ["establishment", "point_of_interest", "street_address"];
-
-	for (let i = 0; i < typesToPin.length; i++) {
-		if (types.includes(typesToPin[i])) return true;
-	}
-
-	return false;
+	return true;
 };
 
 nOL.hidePin = (id) => {
@@ -478,25 +472,30 @@ nOL.myLocation = (location) => {
 nOL.remapPin = (id, place) => {
 	nOL.geocoder.geocode({ address: place }, (results, status) => {
 		if (status === google.maps.GeocoderStatus.OK) {
-			r = results[0];
+			const r = results[0];
 			nOL.zoomIn(r.geometry.location);
 
 			if (nOL.shouldAddPin(r)) {
 				fetch(`/locations/${id}`, {
-				  headers: { 'Content-Type': 'application/json' },
 					method: "PUT",
-					body: JSON.stingify({
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify({
 						"location[address]": r.formatted_address,
 						"location[latLng]": r.geometry.location.toUrlValue(),
 						"location[tags]": place,
+					}),
+				})
+					.then((response) => {
+						if (!response.ok) throw new Error("Network response was not ok");
+						return response.json();
 					})
-				}).then(response => response.json())
-        .catch(error => { console.error('Error: ', error) });
+					.catch((error) => console.error("Error:", error));
 			}
-		} else alert(`Couldn't geocode! The error was ${status}`);
+		} else {
+			alert(`Couldn't geocode! The error was ${status}`);
+		}
 	});
 };
-
 nOL.removePin = (id) => {
 	nOL.hidePin(id);
 	delete nOL.pins[id];
@@ -743,21 +742,25 @@ nOL.deletePin = (id) => {
 }
 
 nOL.findBook = (gLatLng, place, address, keywords) => {
-	fetch("/locations/new", {
-  	method: 'GET',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      "location[address]": address || "",
-      "location[tags]": place,
-      "location[book_keywords]": keywords,
-      "location[latLng]": gLatLng.toUrlValue(),
-    })
-  })
-  .then(response => response.json())
-  .catch(error => {
-      console.error('Error:', error);
-  })
-}
+	const params = new URLSearchParams({
+		"location[address]": address || "",
+		"location[tags]": place,
+		"location[book_keywords]": keywords,
+		"location[latLng]": gLatLng.toUrlValue(),
+	});
+
+	fetch(`/locations/new?${params}`, {
+		method: "GET",
+		headers: { "Content-Type": "application/json" },
+	})
+		.then((response) => {
+			if (!response.ok) throw new Error("Network response was not ok");
+			return response.json();
+		})
+		.catch((error) => {
+			console.log("Error:", error);
+		});
+};
 
 nOL.getLocations = async (selectedLocationSlug) => {
     try {
