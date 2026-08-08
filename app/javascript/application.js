@@ -87,7 +87,7 @@ nOL.init = (settings) => {
 		input.style.color = "black";
 		nOL.dontListenForShortcuts();
 	});
-	document.querySelector("#book-input").addEventListener("keyup", (e) => {
+	document.querySelector("#book-input").addEventListener("keyup", () => {
 		const keyword = document.querySelector("#book-input").value;
 		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
 	});
