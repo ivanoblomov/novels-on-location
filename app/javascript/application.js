@@ -745,9 +745,8 @@ nOL.createPin = (latLng, place, address, keywords) => {
 		});
 };
 
-nOL.deletePin = (id) => {
-	if (confirm("Are you sure? This action cannot be undone.")) {
-		fetch(`/locations/${id}`, {
+nOL.delete(path) {
+		fetch(path, {
 			method: "DELETE",
 			headers: {
 				Accept: "text/javascript",
@@ -765,6 +764,11 @@ nOL.deletePin = (id) => {
 			.catch((error) => {
 				console.error("Error:", error);
 			});
+}
+
+nOL.deletePin = (id) => {
+	if (confirm("Are you sure? This action cannot be undone.")) {
+		nOL.delete(`/locations/${id}`);
 	}
 };
 
@@ -856,13 +860,7 @@ nOL.toLatLng = (latLng) => {
 };
 
 nOL.unBookmarkPin = (id) => {
-	fetch(`/locations/${id}/unbookmark`, {
-		method: "DELETE",
-	})
-		.then((response) => response.json())
-		.catch((error) => {
-			console.error("Error:", error);
-		});
+	nOL.delete(`/locations/${id}/unbookmark`);
 };
 
 // Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html
