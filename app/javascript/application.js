@@ -705,36 +705,26 @@ nOL.put = (path, json) => {
 		});
 };
 
+nOL.annotatePin = (id, notes) => {
+	nOL.put(`/locations/${id}`, {
+		location: {
+			notes: notes,
+		},
+	});
+};
+
 nOL.bookmarkPin = (id) => {
-	fetch(`/locations/${id}/bookmark`, { type: "PUT" });
+	nOL.put(`/locations/${id}/bookmark`, {});
 };
 
 nOL.claimPin = (id) => {
-	fetch(`/locations/${id}`, {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-			Accept: "text/javascript",
-		},
-		body: JSON.stringify({
+	nOL.put(`/locations/${id}`, {
 			location: {
 				user_id: nOL?.fb_session?.userID || null,
 				user_token: nOL.cookie("user_token"),
 			},
-		}),
-	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error(`Server returned status ${response.status}`);
-			}
-			return response.text();
 		})
-		.then((scriptText) => {
-			new Function(scriptText)();
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
+	}
 };
 
 nOL.createPin = (latLng, place, address, keywords) => {
