@@ -83,7 +83,7 @@ nOL.init = (settings) => {
 	});
 	document.querySelector("#book-input").addEventListener("focus", (e) => {
 		const input = e.target;
-		if (input === nOL.bookPrompt) input.value = "";
+		if (input.value === nOL.bookPrompt) input.value = "";
 		input.style.color = "black";
 		nOL.dontListenForShortcuts();
 	});
