@@ -676,7 +676,7 @@ nOL.put = (path, json) => {
 			"Content-Type": "application/json",
 			Accept: "text/javascript",
 		},
-		body: JSON.stringify({ json }),
+		body: JSON.stringify(json),
 	})
 		.then((response) => {
 			if (!response.ok) {
@@ -848,7 +848,7 @@ nOL.tagLinks = (location) => {
 };
 
 nOL.tagPin = (id, tags) => {
-	nOL(`/locations/${id}`, {
+	nOL.put(`/locations/${id}`, {
 		location: {
 			tags: tags,
 		},
