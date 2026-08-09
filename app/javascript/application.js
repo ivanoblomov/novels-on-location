@@ -92,7 +92,7 @@ nOL.init = (settings) => {
 		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
 	});
 	document.querySelector("#mode-button").addEventListener("click", () => {
-		nOL.toggleMapMode;
+		nOL.toggleMapMode();
 	});
 	document
 		.querySelector("#pin-display-button")
