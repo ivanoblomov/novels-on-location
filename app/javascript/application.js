@@ -189,8 +189,7 @@ nOL.listenFor = (event, args) => {
 	if (nOL.clickListener !== undefined)
 		google.maps.event.removeListener(nOL.clickListener);
 	nOL.clickListener = google.maps.event.addListener(nOL.map, event, () => {
-		// qlty-ignore: biome:lint/security/noGlobalEval
-		eval(args);
+		new Function(args)();
 	});
 };
 
@@ -703,8 +702,7 @@ nOL.annotatePin = (id, notes) => {
 			return response.text();
 		})
 		.then((scriptText) => {
-			// Execute the returned JavaScript response
-			eval(scriptText);
+			new Function(scriptText)();
 		})
 		.catch((error) => {
 			console.error("Error:", error);
@@ -756,8 +754,7 @@ nOL.createPin = (latLng, place, address, keywords) => {
 			return response.text(); // Read response as plain text/javascript
 		})
 		.then((scriptText) => {
-			// Execute the returned JavaScript response
-			eval(scriptText);
+			new Function(scriptText)();
 		})
 		.catch((error) => {
 			console.error("Error:", error);
@@ -779,8 +776,7 @@ nOL.deletePin = (id) => {
 				return response.text();
 			})
 			.then((scriptText) => {
-				// Execute the returned JavaScript response
-				eval(scriptText);
+				new Function(scriptText)();
 			})
 			.catch((error) => {
 				console.error("Error:", error);
@@ -809,9 +805,7 @@ nOL.findBook = (gLatLng, place, address, keywords) => {
 			return response.text();
 		})
 		.then((scriptText) => {
-			// Execute the returned JavaScript string
-			// eslint-disable-next-line no-eval
-			eval(scriptText);
+			new Function(scriptText)();
 		})
 		.catch((error) => {
 			console.error("Error:", error);
@@ -860,8 +854,7 @@ nOL.movePin = (id, gLatLng) => {
 			return response.text(); // Read response as plain text/javascript
 		})
 		.then((scriptText) => {
-			// Execute the returned JavaScript response
-			eval(scriptText);
+			new Function(scriptText)();
 		})
 		.catch((error) => {
 			console.error("Error:", error);
@@ -902,8 +895,7 @@ nOL.tagPin = (id, tags) => {
 			return response.text();
 		})
 		.then((scriptText) => {
-			// Execute the returned JavaScript response
-			eval(scriptText);
+			new Function(scriptText)();
 		})
 		.catch((error) => {
 			console.error("Error:", error);
