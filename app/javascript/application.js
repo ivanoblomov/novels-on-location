@@ -882,27 +882,32 @@ nOL.tagLinks = (location) => {
 	return tags.join(", ");
 };
 
-nOL.tagPin = async (id, tags) => {
-	try {
-		const response = await fetch(`/locations/${id}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-				Accept: "text/javascript",
+nOL.tagPin = (id, tags) => {
+	fetch(`/locations/${id}`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "text/javascript",
+		},
+		body: JSON.stringify({
+			location: {
+				tags: tags,
 			},
-			body: new URLSearchParams({
-				"location[tags]": tags,
-			}),
+		}),
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text();
+		})
+		.then((scriptText) => {
+			// Execute the returned JavaScript response
+			eval(scriptText);
+		})
+		.catch((error) => {
+			console.error("Error:", error);
 		});
-
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-		return eval(response.text());
-	} catch (error) {
-		console.error("Failed to tag pin:", error);
-		throw error;
-	}
 };
 
 nOL.toLatLng = (latLng) => {
