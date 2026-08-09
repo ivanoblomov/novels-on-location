@@ -884,7 +884,7 @@ nOL.tagPin = async (id, tags) => {
 			method: "PUT",
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-				// Include "X-CSRF-Token": token if your backend framework requires it
+				Accept: "text/javascript",
 			},
 			body: new URLSearchParams({
 				"location[tags]": tags,
@@ -895,10 +895,16 @@ nOL.tagPin = async (id, tags) => {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
 
-		// Parse JSON response if your server returns data
-		return await response.json();
+		// Read response as plain text first to prevent JSON-parsing crashes
+		const contentType = response.headers.get("content-type") || "";
+		const rawText = await response.text();
+
+		// Warning: eval executes code from the server.
+		// Only use this if you trust your backend completely.
+		return eval(rawText);
 	} catch (error) {
 		console.error("Failed to tag pin:", error);
+		throw error;
 	}
 };
 
