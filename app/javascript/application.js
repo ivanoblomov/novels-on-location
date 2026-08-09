@@ -486,7 +486,11 @@ nOL.remapPin = (id, place) => {
 				})
 					.then((response) => {
 						if (!response.ok) throw new Error("Network response was not ok");
-						return response.json();
+						return response.text();
+					})
+					.then((script) => {
+						// Executes the JavaScript returned by the server
+						new Function(script)();
 					})
 					.catch((error) => console.error("Error:", error));
 			}
