@@ -721,11 +721,11 @@ nOL.claimPin = (id) => {
 			Accept: "text/javascript",
 		},
 		body: JSON.stringify({
-		  location: {
-        user_id: nOL?.fb_session?.userID || null,
-        user_token: nOL.cookie("user_token")
-      }
-		})
+			location: {
+				user_id: nOL?.fb_session?.userID || null,
+				user_token: nOL.cookie("user_token"),
+			},
+		}),
 	})
 		.then((response) => {
 			if (!response.ok) {
