@@ -472,31 +472,17 @@ nOL.remapPin = (id, place) => {
 			nOL.zoomIn(r.geometry.location);
 
 			if (nOL.shouldAddPin(r)) {
-				fetch(`/locations/${id}`, {
-					method: "PUT",
-					headers: { "Content-Type": "application/json" },
-					body: JSON.stringify({
+				nOL.put(`/locations/${id}`, {
 						location: {
 							address: r.formatted_address,
 							latLng: r.geometry.location.toUrlValue(),
 							tags: place,
 						},
-					}),
-				})
-					.then((response) => {
-						if (!response.ok) throw new Error("Network response was not ok");
-						return response.text();
 					})
-					.then((script) => {
-						// Executes the JavaScript returned by the server
-						new Function(script)();
-					})
-					.catch((error) => console.error("Error:", error));
-			}
 		} else {
 			alert(`Couldn't geocode! The error was ${status}`);
 		}
-	});
+	}
 };
 
 nOL.removePin = (id) => {
@@ -836,28 +822,12 @@ nOL.getLocations = async (selectedLocationSlug) => {
 };
 
 nOL.movePin = (id, gLatLng) => {
-	fetch(`/locations/${id}`, {
-		method: "PUT",
-		headers: { "Content-Type": "application/json", Accept: "text/javascript" },
-		body: JSON.stringify({
+	nOL.put(`/locations/${id}`, {
 			location: {
 				latLng: gLatLng.toUrlValue(),
 			},
 		}),
-	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error(`Server returned status ${response.status}`);
-			}
-			return response.text(); // Read response as plain text/javascript
-		})
-		.then((scriptText) => {
-			new Function(scriptText)();
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
-};
+	}
 
 nOL.tagLinks = (location) => {
 	const tags = location.tags
@@ -874,31 +844,12 @@ nOL.tagLinks = (location) => {
 };
 
 nOL.tagPin = (id, tags) => {
-	fetch(`/locations/${id}`, {
-		method: "PUT",
-		headers: {
-			"Content-Type": "application/json",
-			Accept: "text/javascript",
-		},
-		body: JSON.stringify({
+	nOL(`/locations/${id}`, {
 			location: {
 				tags: tags,
 			},
 		}),
-	})
-		.then((response) => {
-			if (!response.ok) {
-				throw new Error(`Server returned status ${response.status}`);
-			}
-			return response.text();
-		})
-		.then((scriptText) => {
-			new Function(scriptText)();
-		})
-		.catch((error) => {
-			console.error("Error:", error);
-		});
-};
+	}
 
 nOL.toLatLng = (latLng) => {
 	return new google.maps.LatLng(latLng[0], latLng[1]);
