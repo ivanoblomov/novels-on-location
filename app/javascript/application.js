@@ -682,18 +682,14 @@ nOL.openBalloon = (location) => {
 	nOL.listenFor("click", "nOL.closeBalloon(); nOL.listenForDoubleClick()");
 };
 
-nOL.annotatePin = (id, notes) => {
-	fetch(`/locations/${id}`, {
+nOL.put = (path, json) => {
+	fetch(path, {
 		method: "PUT",
 		headers: {
 			"Content-Type": "application/json",
 			Accept: "text/javascript",
 		},
-		body: JSON.stringify({
-			location: {
-				notes: notes,
-			},
-		}),
+		body: JSON.stringify({ json }),
 	})
 		.then((response) => {
 			if (!response.ok) {
