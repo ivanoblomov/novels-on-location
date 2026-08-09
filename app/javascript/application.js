@@ -55,7 +55,7 @@ nOL.init = (settings) => {
 
 	nOL.bounds = new google.maps.LatLngBounds();
 	nOL.geocoder = new google.maps.Geocoder();
-	nOL.map = new google.maps.Map($("#map-canvas")[0], {
+	nOL.map = new google.maps.Map(document.querySelector("#map-canvas"), {
 		backgroundColor: "white",
 		center: new google.maps.LatLng(0, 0),
 		draggableCursor: "default",
@@ -66,43 +66,54 @@ nOL.init = (settings) => {
 	nOL.getLocations(settings.selectedLocationSlug);
 
 	// Set prompts
-	$("#book-input")[0].value = nOL.bookPrompt;
-	$("#place-input")[0].value = nOL.placePrompt;
+	document.querySelector("#book-input").value = nOL.bookPrompt;
+	document.querySelector("#place-input").value = nOL.placePrompt;
 
 	nOL.updateShareButtons();
 
 	// Register event listeners
-	$("#book-input").blur(function () {
-		if ($(this).val() === "") {
-			$(this).val(nOL.bookPrompt);
+	document.querySelector("#book-input").addEventListener("blur", (e) => {
+		const input = e.target;
+		if (input.value === "") {
+			input.value = nOL.bookPrompt;
 			nOL.showAllPinsAndUpdatePath();
 		}
-		$(this).css("color", "#777");
+		input.style.color = "#777";
 		nOL.listenForShortcuts();
 	});
-	$("#book-input").focus(function () {
-		if ($(this).val() === nOL.bookPrompt) $(this).val("");
-		$(this).css("color", "black");
+	document.querySelector("#book-input").addEventListener("focus", (e) => {
+		const input = e.target;
+		if (input.value === nOL.bookPrompt) input.value = "";
+		input.style.color = "black";
 		nOL.dontListenForShortcuts();
 	});
-	$("#book-input").keyup(() => {
-		const keyword = $("#book-input")[0].value;
+	document.querySelector("#book-input").addEventListener("keyup", () => {
+		const keyword = document.querySelector("#book-input").value;
 		nOL.showPins(keyword, `#!search-${escape(keyword)}`);
 	});
-	$("#mode-button").click(nOL.toggleMapMode);
-	$("#pin-display-button").click(nOL.togglePinDisplay);
-	$("#place-input").blur(function () {
-		$(this).val(nOL.placePrompt);
-		$(this).css("color", "#777");
+	document.querySelector("#mode-button").addEventListener("click", () => {
+		nOL.toggleMapMode();
+	});
+	document
+		.querySelector("#pin-display-button")
+		.addEventListener("click", () => {
+			nOL.togglePinDisplay();
+		});
+	document.querySelector("#place-input").addEventListener("blur", (e) => {
+		const input = e.target;
+		input.value = nOL.placePrompt;
+		input.style.color = "#777";
 		nOL.listenForShortcuts();
 	});
-	$("#place-input").focus(function () {
-		$(this).val("");
-		$(this).css("color", "black");
+	document.querySelector("#place-input").addEventListener("focus", (e) => {
+		const input = e.target;
+		input.value = "";
+		input.style.color = "black";
 		nOL.dontListenForShortcuts();
 	});
-	$("#place-input").keypress((e) => {
-		if ((e.keyCode || e.which) === 13) nOL.codePlace($("#place-input").val());
+	document.querySelector("#place-input").addEventListener("keypress", (e) => {
+		if ((e.keyCode || e.which) === 13)
+			nOL.codePlace(document.querySelector("#place-input").value);
 	});
 
 	nOL.listenForLogin();
@@ -116,13 +127,13 @@ nOL.statusChangeCallback = (response) => {
 	if (response.status === "connected") {
 		nOL.initSession(response.authResponse);
 	} else {
-		$.cookie("fb_id", null);
+		nOL.cookie("fb_id", null);
 	}
 };
 
 nOL.initSession = (session) => {
 	nOL.fb_session = session;
-	$.cookie("fb_id", nOL.fb_session?.userID);
+	nOL.cookie("fb_id", nOL.fb_session?.userID);
 	nOL.setPinDisplayPrompt();
 	nOL.getFriends();
 };
@@ -137,7 +148,7 @@ nOL.getFacebookName = (location) => {
 	if (location.user_name === undefined && location.user_id) {
 		typeof FB !== "undefined" &&
 			FB.api(`/${location.user_id}`, (response) => {
-				$(`#${location.user_id}`).text(response.name);
+				document.querySelector(`#${location.user_id}`).text(response.name);
 				location.user_name = response.name;
 			});
 	}
@@ -158,7 +169,7 @@ nOL.getFriends = () => {
 };
 
 nOL.updateFacebookLikeButton = () => {
-	$("#fb-like")[0].dataset.href = document.URL;
+	document.querySelector("#fb-like").dataset.href = document.URL;
 };
 
 nOL.updateShareButtons = () => {
@@ -167,7 +178,7 @@ nOL.updateShareButtons = () => {
 };
 
 nOL.updateTweetButton = () => {
-	const iframe = $("#tweet")[0];
+	const iframe = document.querySelector("#tweet");
 	iframe.src = iframe.src.replace(
 		/\?.+/,
 		`?related=${nOL.twitterAccount}&text=${nOL.sharingMessage}&url=${document.URL}`,
@@ -178,13 +189,12 @@ nOL.listenFor = (event, args) => {
 	if (nOL.clickListener !== undefined)
 		google.maps.event.removeListener(nOL.clickListener);
 	nOL.clickListener = google.maps.event.addListener(nOL.map, event, () => {
-		// qlty-ignore: biome:lint/security/noGlobalEval
-		eval(args);
+		new Function(args)();
 	});
 };
 
 nOL.listenForLogin = () => {
-	$("#login-button").click(() => {
+	document.querySelector("#login-button").click(() => {
 		nOL.toggleLogin();
 	});
 };
@@ -201,7 +211,7 @@ nOL.listenForShortcuts = () => {
 	shortcut.add("p", nOL.togglePinDisplay);
 };
 
-nOL.loggedIn = () => !!$.cookie("fb_id");
+nOL.loggedIn = () => !!nOL.cookie("fb_id");
 
 nOL.logIn = () => {
 	typeof FB !== "undefined" &&
@@ -220,10 +230,10 @@ nOL.logOut = () => {
 	console.log("logOut");
 	typeof FB !== "undefined" &&
 		FB.logout(() => {
-			$.cookie("fb_id", null);
+			nOL.cookie("fb_id", null);
 			nOL.listenForLogin();
 		});
-	console.log($.cookie("fb_id"));
+	console.log(nOL.cookie("fb_id"));
 	console.log("end");
 };
 
@@ -314,17 +324,18 @@ nOL.toggleMapMode = () => {
 	if (nOL.clickingZooms) {
 		if (nOL.clickListener !== undefined)
 			google.maps.event.removeListener(nOL.clickListener);
-		$("#mode-button")[0].title = "Double-click map to zoom. Click to toggle";
-		$("#mode-button")[0].value = "Mode: Zoom";
+		document.querySelector("#mode-button").title =
+			"Double-click map to zoom. Click to toggle";
+		document.querySelector("#mode-button").value = "Mode: Zoom";
 		nOL.map.setOptions({
 			draggableCursor: "default",
 			disableDoubleClickZoom: false,
 		});
 	} else {
 		nOL.listenFor("dblclick", "nOL.promptForBook(e.latLng)");
-		$("#mode-button")[0].title =
+		document.querySelector("#mode-button").title =
 			"Double-click map to add pins. Click to toggle";
-		$("#mode-button")[0].value = "Mode: Add Pins";
+		document.querySelector("#mode-button").value = "Mode: Add Pins";
 		nOL.map.setOptions({
 			draggableCursor: "crosshair",
 			disableDoubleClickZoom: true,
@@ -333,15 +344,17 @@ nOL.toggleMapMode = () => {
 };
 
 nOL.setPinDisplayPrompt = () => {
-	$("#pin-display-button")[0].title = "Click to change pins displayed";
+	document.querySelector("#pin-display-button").title =
+		"Click to change pins displayed";
 
-	if (nOL.pinType === 0) $("#pin-display-button")[0].value = "Pins: All";
+	if (nOL.pinType === 0)
+		document.querySelector("#pin-display-button").value = "Pins: All";
 	else if (nOL.pinType === 1)
-		$("#pin-display-button")[0].value = "Pins: My Pins";
+		document.querySelector("#pin-display-button").value = "Pins: My Pins";
 	else if (nOL.pinType === 2)
-		$("#pin-display-button")[0].value = "Pins: Bookmarks";
+		document.querySelector("#pin-display-button").value = "Pins: Bookmarks";
 	else if (nOL.pinType === 3)
-		$("#pin-display-button")[0].value = "Pins: Friends";
+		document.querySelector("#pin-display-button").value = "Pins: Friends";
 };
 
 nOL.setTitleAndPath = (title, path) => {
@@ -424,13 +437,7 @@ nOL.addPins = (selectedLocationSlug) => {
 
 nOL.shouldAddPin = (googleResults) => {
 	const types = googleResults.types;
-	const typesToPin = ["establishment", "point_of_interest", "street_address"];
-
-	for (let i = 0; i < typesToPin.length; i++) {
-		if ($.inArray(typesToPin[i], types)) return true;
-	}
-
-	return false;
+	return true;
 };
 
 nOL.hidePin = (id) => {
@@ -444,19 +451,16 @@ nOL.hidePins = () => {
 };
 
 nOL.myBookmark = (location) => {
-	return (
-		location.bookmark_user_ids &&
-		location.bookmark_user_ids.indexOf(nOL.fb_session?.userID) !== -1
-	);
+	return location.bookmark_user_ids?.includes(nOL.fb_session?.userID);
 };
 
 nOL.myFriendsLocation = (location) => {
-	return $.inArray(location.user_id, nOL.friendIds) !== -1;
+	return nOL.friendIds.includes(location.user_id);
 };
 
 nOL.myLocation = (location) => {
 	return (
-		$.cookie("user_token") === location.user_token ||
+		nOL.cookie("user_token") === location.user_token ||
 		(nOL.loggedIn() && location.user_id === nOL.fb_session?.userID)
 	);
 };
@@ -464,21 +468,21 @@ nOL.myLocation = (location) => {
 nOL.remapPin = (id, place) => {
 	nOL.geocoder.geocode({ address: place }, (results, status) => {
 		if (status === google.maps.GeocoderStatus.OK) {
-			r = results[0];
+			const r = results[0];
 			nOL.zoomIn(r.geometry.location);
 
 			if (nOL.shouldAddPin(r)) {
-				$.ajax({
-					type: "PUT",
-					url: `/locations/${id}`,
-					data: {
-						"location[address]": r.formatted_address,
-						"location[latLng]": r.geometry.location.toUrlValue(),
-						"location[tags]": place,
+				nOL.put(`/locations/${id}`, {
+					location: {
+						address: r.formatted_address,
+						latLng: r.geometry.location.toUrlValue(),
+						tags: place,
 					},
 				});
+			} else {
+				alert(`Couldn't geocode! The error was ${status}`);
 			}
-		} else alert(`Couldn't geocode! The error was ${status}`);
+		}
 	});
 };
 
@@ -665,101 +669,188 @@ nOL.openBalloon = (location) => {
 	nOL.listenFor("click", "nOL.closeBalloon(); nOL.listenForDoubleClick()");
 };
 
+nOL.put = (path, json) => {
+	fetch(path, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "text/javascript",
+		},
+		body: JSON.stringify(json),
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text();
+		})
+		.then((scriptText) => {
+			new Function(scriptText)();
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+};
+
 nOL.annotatePin = (id, notes) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}`,
-		data: {
-			"location[notes]": notes,
+	nOL.put(`/locations/${id}`, {
+		location: {
+			notes: notes,
 		},
 	});
 };
 
 nOL.bookmarkPin = (id) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}/bookmark`,
-	});
+	nOL.put(`/locations/${id}/bookmark`, {});
 };
 
 nOL.claimPin = (id) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}`,
-		data: {
-			caller: "claim",
-			"location[user_id]": nOL?.fb_session?.userID || null,
-			"location[user_token]": $.cookie("user_token"),
+	nOL.put(`/locations/${id}`, {
+		location: {
+			user_id: nOL?.fb_session?.userID || null,
+			user_token: nOL.cookie("user_token"),
 		},
 	});
 };
 
 nOL.createPin = (latLng, place, address, keywords) => {
-	$.post("/locations", {
-		"location[address]": address || "",
-		"location[book_keywords]": keywords,
-		"location[latLng]": nOL.toLatLng(latLng).toUrlValue(),
-		"location[tags]": place,
-		"location[user_id]": nOL?.fb_session?.userID || null,
-		"location[user_token]": $.cookie("user_token"),
-	});
+	fetch("/locations", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "text/javascript",
+		},
+		body: JSON.stringify({
+			location: {
+				address: address || "",
+				book_keywords: keywords,
+				latLng: nOL.toLatLng(latLng).toUrlValue(),
+				tags: place,
+				user_id: nOL?.fb_session?.userID || null,
+				user_token: nOL.cookie("user_token"),
+			},
+		}),
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text(); // Read response as plain text/javascript
+		})
+		.then((scriptText) => {
+			new Function(scriptText)();
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+};
+
+nOL.delete = (path) => {
+	fetch(path, {
+		method: "DELETE",
+		headers: {
+			Accept: "text/javascript",
+		},
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text();
+		})
+		.then((scriptText) => {
+			new Function(scriptText)();
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
 };
 
 nOL.deletePin = (id) => {
 	if (confirm("Are you sure? This action cannot be undone.")) {
-		$.ajax({
-			type: "DELETE",
-			url: `/locations/${id}`,
-		});
+		nOL.delete(`/locations/${id}`);
 	}
 };
 
 nOL.findBook = (gLatLng, place, address, keywords) => {
-	$.get("/locations/new", {
+	const params = new URLSearchParams({
 		"location[address]": address || "",
 		"location[tags]": place,
 		"location[book_keywords]": keywords,
-		"location[latLng]": gLatLng.toUrlValue(),
+		"location[latLng]": gLatLng ? gLatLng.toUrlValue() : "",
 	});
+
+	fetch(`/locations/new?${params}`, {
+		method: "GET",
+		headers: {
+			Accept: "text/javascript",
+		},
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text();
+		})
+		.then((scriptText) => {
+			new Function(scriptText)();
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
 };
 
-nOL.getLocations = (selectedLocationSlug) => {
-	$.get(
-		"/locations.json",
-		{ t: Date.now(), user_token: $.cookie("user_token") },
-		(data) => {
-			nOL.locations = data;
-			nOL.addPins(selectedLocationSlug);
-		},
-	);
+nOL.getLocations = async (selectedLocationSlug) => {
+	try {
+		// 1. Build the query parameters
+		const params = new URLSearchParams({
+			t: Date.now(),
+			user_token: nOL.cookie("user_token"),
+		});
+
+		// 2. Fetch the data with the query string attached
+		const response = await fetch(`/locations.json?${params}`);
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! status: ${response.status}`);
+		}
+
+		// 3. Parse the JSON response (automatically handled like jQuery did)
+		const data = await response.json();
+
+		nOL.locations = data;
+		nOL.addPins(selectedLocationSlug);
+	} catch (error) {
+		console.error("Failed to load locations:", error);
+	}
 };
 
 nOL.movePin = (id, gLatLng) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}`,
-		data: {
-			"location[latLng]": gLatLng.toUrlValue(),
+	nOL.put(`/locations/${id}`, {
+		location: {
+			latLng: gLatLng.toUrlValue(),
 		},
 	});
 };
 
 nOL.tagLinks = (location) => {
-	const tags = $.map(location.tags.split(","), (tag) => {
-		const trimmedTag = $.trim(tag);
-		const tagPath = `/#!search-${escape(trimmedTag)}`;
-		const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(trimmedTag)}', '${tagPath}')" title="Show all locations with the tag ${trimmedTag}">${trimmedTag}</a>`;
-		return link;
-	});
+	const tags = location.tags
+		.split(",")
+		.map((tag) => {
+			const trimmedTag = tag.trim();
+			const tagPath = `/#!search-${escape(trimmedTag)}`;
+			const link = `<a href="${tagPath}" onClick="nOL.showPins('${escape(trimmedTag)}', '${tagPath}')" title="Show all locations with the tag ${trimmedTag}">${trimmedTag}</a>`;
+			return link;
+		})
+		.filter((link) => link !== "");
+
 	return tags.join(", ");
 };
 
 nOL.tagPin = (id, tags) => {
-	$.ajax({
-		type: "PUT",
-		url: `/locations/${id}`,
-		data: {
-			"location[tags]": tags,
+	nOL.put(`/locations/${id}`, {
+		location: {
+			tags: tags,
 		},
 	});
 };
@@ -769,10 +860,7 @@ nOL.toLatLng = (latLng) => {
 };
 
 nOL.unBookmarkPin = (id) => {
-	$.ajax({
-		type: "DELETE",
-		url: `/locations/${id}/unbookmark`,
-	});
+	nOL.delete(`/locations/${id}/unbookmark`);
 };
 
 // Adapted from http://www.brandspankingnew.net/archive/2005/08/adding_an_os_x.html
@@ -811,7 +899,7 @@ applesearch.clearFld = function (fldID, btnID) {
 	this.onChange(fldID, btnID);
 
 	if (fldID === "book-input") {
-		nOL.showPins($("#book-input")[0].value, true);
+		nOL.showPins(document.querySelector("#book-input").value, true);
 	}
 };
 
@@ -833,13 +921,13 @@ applesearch.clearBtnClick = function () {
 /**
  * Create a cookie with the given name and value and other optional parameters.
  *
- * @example $.cookie('the_cookie', 'the_value');
+ * @example nOL.cookie('the_cookie', 'the_value');
  * @desc Set the value of a cookie.
- * @example $.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
+ * @example nOL.cookie('the_cookie', 'the_value', { expires: 7, path: '/', domain: 'jquery.com', secure: true });
  * @desc Create a cookie with all available options.
- * @example $.cookie('the_cookie', 'the_value');
+ * @example nOL.cookie('the_cookie', 'the_value');
  * @desc Create a session cookie.
- * @example $.cookie('the_cookie', null);
+ * @example nOL.cookie('the_cookie', null);
  * @desc Delete a cookie by passing null as value. Keep in mind that you have to use the same path and domain
  *       used when the cookie was set.
  *
@@ -856,7 +944,7 @@ applesearch.clearBtnClick = function () {
  *                        require a secure protocol (like HTTPS).
  * @type undefined
  *
- * @name $.cookie
+ * @name nOL.cookie
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
@@ -864,72 +952,71 @@ applesearch.clearBtnClick = function () {
 /**
  * Get the value of a cookie with the given name.
  *
- * @example $.cookie('the_cookie');
+ * @example nOL.cookie('the_cookie');
  * @desc Get the value of a cookie.
  *
  * @param String name The name of the cookie.
  * @return The value of the cookie.
  * @type String
  *
- * @name $.cookie
+ * @name nOL.cookie
  * @cat Plugins/Cookie
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
 // qlty-ignore: qlty:function-complexity
-typeof jQuery !== "undefined" &&
-	// qlty-ignore: biome:lint/suspicious/noAssignInExpressions
-	(jQuery.cookie = (name, value, options) => {
-		if (typeof value !== "undefined") {
-			// name and value given, set cookie
-			options = options || {};
-			if (value === null) {
-				value = "";
-				options.expires = -1;
-			}
-			let expires = "";
-			if (
-				options.expires &&
-				(typeof options.expires === "number" || options.expires.toUTCString)
-			) {
-				let date;
-				if (typeof options.expires === "number") {
-					date = new Date();
-					date.setTime(date.getTime() + options.expires * 24 * 60 * 60 * 1000);
-				} else {
-					date = options.expires;
-				}
-				expires = `; expires=${date.toUTCString()}`; // use expires attribute, max-age is not supported by IE
-			}
-			// CAUTION: Needed to parenthesize options.path and options.domain
-			// in the following expressions, otherwise they evaluate to undefined
-			// in the packed version for some reason...
-			const path = options.path ? `; path=${options.path}` : "";
-			const domain = options.domain ? `; domain=${options.domain}` : "";
-			const secure = options.secure ? "; secure" : "";
-			// qlty-ignore: biome:lint/suspicious/noDocumentCookie
-			document.cookie = [
-				name,
-				"=",
-				encodeURIComponent(value),
-				expires,
-				path,
-				domain,
-				secure,
-			].join("");
-		} else {
-			// only name given, get cookie
-			let cookieValue = null;
-			if (document.cookie && document.cookie !== "") {
-				const cookies = document.cookie.split(";");
-				for (let i = 0; i < cookies.length; i++) {
-					const cookie = jQuery.trim(cookies[i]);
-					// Does this cookie string begin with the name we want?
-					if (cookie.substring(0, name.length + 1) === `${name}=`) {
-						cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-						break;
-					}
-				}
-			}
-			return cookieValue;
+// qlty-ignore: biome:lint/suspicious/noAssignInExpressions
+nOL.cookie = (name, value, options) => {
+	if (typeof value !== "undefined") {
+		// name and value given, set cookie
+		options = options || {};
+		if (value === null) {
+			value = "";
+			options.expires = -1;
 		}
-	});
+		let expires = "";
+		if (
+			options.expires &&
+			(typeof options.expires === "number" || options.expires.toUTCString)
+		) {
+			let date;
+			if (typeof options.expires === "number") {
+				date = new Date();
+				date.setTime(date.getTime() + options.expires * 24 * 60 * 60 * 1000);
+			} else {
+				date = options.expires;
+			}
+			expires = `; expires=${date.toUTCString()}`; // use expires attribute, max-age is not supported by IE
+		}
+		// CAUTION: Needed to parenthesize options.path and options.domain
+		// in the following expressions, otherwise they evaluate to undefined
+		// in the packed version for some reason...
+		const path = options.path ? `; path=${options.path}` : "";
+		const domain = options.domain ? `; domain=${options.domain}` : "";
+		const secure = options.secure ? "; secure" : "";
+		// qlty-ignore: biome:lint/suspicious/noDocumentCookie
+		document.cookie = [
+			name,
+			"=",
+			encodeURIComponent(value),
+			expires,
+			path,
+			domain,
+			secure,
+		].join("");
+	} else {
+		// only name given, get cookie
+		let cookieValue = null;
+		if (document.cookie && document.cookie !== "") {
+			const cookies = document.cookie.split(";");
+			for (let i = 0; i < cookies.length; i++) {
+				const cookie = cookies[i].trim();
+				// Does this cookie string begin with the name we want?
+				if (cookie.substring(0, name.length + 1) === `${name}=`) {
+					cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+					break;
+				}
+			}
+		}
+		return cookieValue;
+	}
+};
