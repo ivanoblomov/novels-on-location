@@ -716,14 +716,26 @@ nOL.bookmarkPin = (id) => {
 nOL.claimPin = (id) => {
 	fetch(`/locations/${id}`, {
 		method: "PUT",
-		headers: { "Content-Type": "application/json" },
+		headers: {
+			"Content-Type": "application/json",
+			Accept: "text/javascript",
+		},
 		body: JSON.stringify({
-			caller: "claim",
-			"location[user_id]": nOL?.fb_session?.userID || null,
-			"location[user_token]": nOL.cookie("user_token"),
-		}),
+		  location: {
+        user_id: nOL?.fb_session?.userID || null,
+        user_token: nOL.cookie("user_token")
+      }
+		})
 	})
-		.then((response) => response.json())
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text();
+		})
+		.then((scriptText) => {
+			new Function(scriptText)();
+		})
 		.catch((error) => {
 			console.error("Error:", error);
 		});
