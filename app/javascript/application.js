@@ -473,16 +473,17 @@ nOL.remapPin = (id, place) => {
 
 			if (nOL.shouldAddPin(r)) {
 				nOL.put(`/locations/${id}`, {
-						location: {
-							address: r.formatted_address,
-							latLng: r.geometry.location.toUrlValue(),
-							tags: place,
-						},
-					})
-		} else {
-			alert(`Couldn't geocode! The error was ${status}`);
+					location: {
+						address: r.formatted_address,
+						latLng: r.geometry.location.toUrlValue(),
+						tags: place,
+					},
+				});
+			} else {
+				alert(`Couldn't geocode! The error was ${status}`);
+			}
 		}
-	}
+	});
 };
 
 nOL.removePin = (id) => {
@@ -705,12 +706,11 @@ nOL.bookmarkPin = (id) => {
 
 nOL.claimPin = (id) => {
 	nOL.put(`/locations/${id}`, {
-			location: {
-				user_id: nOL?.fb_session?.userID || null,
-				user_token: nOL.cookie("user_token"),
-			},
-		})
-	}
+		location: {
+			user_id: nOL?.fb_session?.userID || null,
+			user_token: nOL.cookie("user_token"),
+		},
+	});
 };
 
 nOL.createPin = (latLng, place, address, keywords) => {
@@ -745,26 +745,26 @@ nOL.createPin = (latLng, place, address, keywords) => {
 		});
 };
 
-nOL.delete(path) {
-		fetch(path, {
-			method: "DELETE",
-			headers: {
-				Accept: "text/javascript",
-			},
+nOL.delete = (path) => {
+	fetch(path, {
+		method: "DELETE",
+		headers: {
+			Accept: "text/javascript",
+		},
+	})
+		.then((response) => {
+			if (!response.ok) {
+				throw new Error(`Server returned status ${response.status}`);
+			}
+			return response.text();
 		})
-			.then((response) => {
-				if (!response.ok) {
-					throw new Error(`Server returned status ${response.status}`);
-				}
-				return response.text();
-			})
-			.then((scriptText) => {
-				new Function(scriptText)();
-			})
-			.catch((error) => {
-				console.error("Error:", error);
-			});
-}
+		.then((scriptText) => {
+			new Function(scriptText)();
+		})
+		.catch((error) => {
+			console.error("Error:", error);
+		});
+};
 
 nOL.deletePin = (id) => {
 	if (confirm("Are you sure? This action cannot be undone.")) {
@@ -827,11 +827,11 @@ nOL.getLocations = async (selectedLocationSlug) => {
 
 nOL.movePin = (id, gLatLng) => {
 	nOL.put(`/locations/${id}`, {
-			location: {
-				latLng: gLatLng.toUrlValue(),
-			},
-		}),
-	}
+		location: {
+			latLng: gLatLng.toUrlValue(),
+		},
+	});
+};
 
 nOL.tagLinks = (location) => {
 	const tags = location.tags
@@ -849,11 +849,11 @@ nOL.tagLinks = (location) => {
 
 nOL.tagPin = (id, tags) => {
 	nOL(`/locations/${id}`, {
-			location: {
-				tags: tags,
-			},
-		}),
-	}
+		location: {
+			tags: tags,
+		},
+	});
+};
 
 nOL.toLatLng = (latLng) => {
 	return new google.maps.LatLng(latLng[0], latLng[1]);
