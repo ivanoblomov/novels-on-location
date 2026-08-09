@@ -894,14 +894,7 @@ nOL.tagPin = async (id, tags) => {
 		if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
-
-		// Read response as plain text first to prevent JSON-parsing crashes
-		const contentType = response.headers.get("content-type") || "";
-		const rawText = await response.text();
-
-		// Warning: eval executes code from the server.
-		// Only use this if you trust your backend completely.
-		return eval(rawText);
+		return eval(response.text());
 	} catch (error) {
 		console.error("Failed to tag pin:", error);
 		throw error;
