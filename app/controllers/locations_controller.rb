@@ -32,9 +32,8 @@ class LocationsController < ApplicationController
     #     set_user_name
 
     respond_to do |format|
-      # rubocop:disable Lint/EmptyBlock
+      # rubocop:disable-next Lint/EmptyBlock
       format.html {}
-      # rubocop:enable Lint/EmptyBlock
       format.json do
         cookies.permanent[:user_token] = user_token
         render json: locations_json, layout: false

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # General view helpers
-# rubocop:disable Metrics/ModuleLength
+# rubocop:disable-next Metrics/ModuleLength
 module ApplicationHelper
   def author_link_to(location)
     return if location.author.blank?
@@ -21,18 +21,16 @@ module ApplicationHelper
   end
 
   def facebook_link_to(location)
-    # rubocop:disable Rails/HelperInstanceVariable
+    # rubocop:disable-next Rails/HelperInstanceVariable
     link_to @user_name || 'Reader',
             "https://www.facebook.com/pages/PageName/#{location.user_id}",
             target: '_blank',
             title: "Go to #{@user_name || 'Reader'}'s page on Facebook", rel: 'noopener'
-    # rubocop:enable Rails/HelperInstanceVariable
   end
 
   def filter_param!(value)
-    # rubocop:disable Rails/OutputSafety
+    # rubocop:disable-next Rails/OutputSafety
     "'#{j(value) if value.present?}'".html_safe
-    # rubocop:enable Rails/OutputSafety
   end
 
   def google_link_to(link_text, options = {})
@@ -66,11 +64,10 @@ module ApplicationHelper
   def reader_link_to(location)
     return if location.user_id.blank?
 
-    # rubocop:disable Rails/HelperInstanceVariable
+    # rubocop:disable-next Rails/HelperInstanceVariable
     link_to "All Pins by #{@user_name || 'Reader'}",
             reader_url(location),
             title: "Show all pins added by #{@user_name || 'Reader'}"
-    # rubocop:enable Rails/HelperInstanceVariable
   end
 
   def reader_url(location)
@@ -147,4 +144,3 @@ module ApplicationHelper
     url_params
   end
 end
-# rubocop:enable Metrics/ModuleLength

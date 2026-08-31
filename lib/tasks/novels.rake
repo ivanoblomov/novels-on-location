@@ -2,7 +2,7 @@
 
 TWEET_REGEX = /A fan just pinned "(.+)" to (.+). Learn more at (.+) #lp/
 
-# rubocop:disable Metrics/BlockLength
+# rubocop:disable-next Metrics/BlockLength
 namespace :novels do
   desc 'Clear assets/, log/, and tmp/'
   task clear: [:environment, 'assets:clobber', 'log:clear', 'tmp:clear']
@@ -74,4 +74,3 @@ namespace :novels do
     puts skipped.map(&:text)
   end
 end
-# rubocop:enable Metrics/BlockLength
