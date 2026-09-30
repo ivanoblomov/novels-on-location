@@ -21,9 +21,8 @@ FactoryBot.define do
     lat_lng { ['51.519326', '-0.074316'] }
     notes { nil }
     review do
-      # rubocop:disable Layout/LineLength
+      # rubocop:disable-next Layout/LineLength
       'FROM HELL is the story of Jack the Ripper, perhaps the most infamous man in the annals of murder. Detailing the events leading up to the Whitechapel killings and the cover-up that followed, FROM HELL is a meditation on the mind of a madman whose savagery and violence gave birth to the 20th century. The serialized story, presented in its entirety in this volume, has garnered widespread attention from critics and scholars. Often regarded as one of the most significant graphic novels ever published, FROM HELL combines meticulous research with educated speculation, resulting in a masterpiece of historical fiction both compelling and terrifying. This new edition, which has been completely re-mastered, is certainly the finest edition of the book produced to date.'
-      # rubocop:enable Layout/LineLength
     end
     state { nil }
     title { 'From Hell' }
@@ -53,9 +52,8 @@ FactoryBot.define do
     lat_lng { ['42.817422', '-1.64325'] }
     notes { nil }
     review do
-      # rubocop:disable Layout/LineLength
+      # rubocop:disable-next Layout/LineLength
       "The quintessential novel of the Lost Generation, <I>The Sun Also Rises</i> is one of Ernest Hemingway's masterpieces and a classic example of his spare but powerful writing style. A poignant look at the disillusionment and angst of the post-World War I generation, the novel introduces two of Hemingway's most unforgettable characters: Jake Barnes and Lady Brett Ashley. The story follows the flamboyant Brett and the hapless Jake as they journey from the wild nightlife of 1920s Paris to the brutal bullfighting rings of Spain with a motley group of expatriates. It is an age of moral bankruptcy, spiritual dissolution, unrealized love, and vanishing illusions. First published in 1926, <I>The Sun Also Rises</i> helped to establish Hemingway as one of the greatest writers of the twentieth century"
-      # rubocop:enable Layout/LineLength
     end
     state { nil }
     title { 'The Sun Also Rises' }

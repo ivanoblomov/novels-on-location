@@ -33,40 +33,36 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
         find('div[role=button]').click
       end
 
-      # rubocop:disable RSpec/MultipleExpectations
+      # rubocop:disable-next RSpec/MultipleExpectations
       it 'the map opens its balloon' do
         expect(page).to have_css 'div.map-balloon' and expect(page).to have_no_css 'h2', text: 'null'
       end
-      # rubocop:enable RSpec/MultipleExpectations
 
       it "the balloon shows the novel's title as a link" do
         expect(page).to have_link 'From Hell', href: from_hell.store_url
       end
 
-      # rubocop:disable RSpec/NoExpectationExample
+      # rubocop:disable-next RSpec/NoExpectationExample
       it "the balloon shows the novel's author linked to Wikipedia" do
         wait_for { page }.to have_link 'Alan Moore', href: 'https://en.wikipedia.org/wiki/Alan%20Moore'
       end
-      # rubocop:enable RSpec/NoExpectationExample
 
       it('the balloon shows a Zoom button') { expect(page).to have_button 'Zoom' }
       it('the balloon shows an Annotate button') { expect(page).to have_button 'Annotate' }
       it('the balloon shows a Remap button') { expect(page).to have_button 'Remap' }
       it('the balloon shows a Tag button') { expect(page).to have_button 'Tag' }
-      # rubocop:disable RSpec/NoExpectationExample
+      # rubocop:disable-next RSpec/NoExpectationExample
       it('the balloon shows a Delete button') { wait_for { page }.to have_button 'Delete' }
-      # rubocop:enable RSpec/NoExpectationExample
 
       it "the balloon shows the novel's reader linked to Facebook" do
         pending 'Facebook integration'
         expect(page).to have_link 'Roderick Monje', href: 'https://www.facebook.com/profile.php?id=666325406'
       end
 
-      # rubocop:disable RSpec/NoExpectationExample
+      # rubocop:disable-next RSpec/NoExpectationExample
       it 'the balloon shows an "All Locations for Novel" link' do
         wait_for { page }.to have_link 'All Locations for Novel'
       end
-      # rubocop:enable RSpec/NoExpectationExample
 
       it('the balloon shows an "All Novels by Author" link') { expect(page).to have_link 'All Novels by Author' }
       it('the balloon shows an "All Pins by Reader" link') { expect(page).to have_link 'All Pins by Reader' }
@@ -86,11 +82,10 @@ feature 'Browsing novel Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : :
 
         before { page.driver.browser.navigate.refresh }
 
-        # rubocop:disable RSpec/MultipleExpectations
+        # rubocop:disable-next RSpec/MultipleExpectations
         it 'the map opens its balloon' do
           expect(page).to have_css 'div.map-balloon' and expect(page).to have_no_css 'h2', text: 'null'
         end
-        # rubocop:enable RSpec/MultipleExpectations
 
         it('the map shows only one Location') { expect(visible_pins).to eq 1 }
       end

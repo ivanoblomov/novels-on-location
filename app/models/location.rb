@@ -137,11 +137,10 @@ class Location
     update_with_google_books
   end
 
-  # rubocop:disable Naming/MethodName
+  # rubocop:disable-next Naming/MethodName
   def latLng=(value)
     self.lat_lng = value.split ','
   end
-  # rubocop:enable Naming/MethodName
 
   def duplicate?
     duplicates.many?
@@ -255,7 +254,7 @@ class Location
     ]
   end
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable-next Metrics/AbcSize
   def geocode(coordinates_or_keyword)
     g = GoogleMapsGeocoder.new coordinates_or_keyword, logger: Rails.logger
     self.address = g.formatted_address
@@ -266,7 +265,6 @@ class Location
   rescue GoogleMapsGeocoder::GeocodingError => e
     Rails.logger.error "Location#geocode: Can't geocode '#{slug || to_s}': #{e}"
   end
-  # rubocop:enable Metrics/AbcSize
 
   def negate?
     rand(2).zero?

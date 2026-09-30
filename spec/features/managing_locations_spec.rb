@@ -12,13 +12,12 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
       accept_confirm { accept_prompt with: 'from hell alan moore' }
     end
 
-    # rubocop:disable RSpec/NoExpectationExample
+    # rubocop:disable-next RSpec/NoExpectationExample
     it('the Location is created', vcr: { cassette_name: 'the_location_is_created' }) {
       wait_for do
         Location.count
       end.to eq 1
     }
-    # rubocop:enable RSpec/NoExpectationExample
   end
 
   context 'when a User enters a specific place, keywords for the book, and some notes',
@@ -58,12 +57,11 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
       accept_confirm { source.drag_to target }
     end
 
-    # rubocop:disable RSpec/NoExpectationExample
+    # rubocop:disable-next RSpec/NoExpectationExample
     it "the Location's new coordinates persist" do
       wait_for { la_concha.reload.lat_lng[0].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[0].to_f) and
         wait_for { la_concha.reload.lat_lng[1].to_f }.to be_within(0.1).of(the_ritz.reload.lat_lng[1].to_f)
     end
-    # rubocop:enable RSpec/NoExpectationExample
   end
 
   context 'when a Location exists and its balloon is open',
@@ -79,11 +77,10 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     context 'when a User annotates it' do
       before { accept_prompt(with: 'Originally serialized in Taboo') { click_link_or_button 'Annotate' } }
 
-      # rubocop:disable RSpec/NoExpectationExample
+      # rubocop:disable-next RSpec/NoExpectationExample
       it("the Location's note persists") {
         wait_for { Location.first.reload.notes }.to eq 'Originally serialized in Taboo'
       }
-      # rubocop:enable RSpec/NoExpectationExample
     end
 
     context 'when a User remaps it' do
@@ -94,19 +91,17 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
 
       let(:original_coordinates) { Location.first.lat_lng }
 
-      # rubocop:disable RSpec/NoExpectationExample
+      # rubocop:disable-next RSpec/NoExpectationExample
       it("the Location's new coordinates persist") do
         wait_for { Location.first.reload.lat_lng }.not_to eq original_coordinates
       end
-      # rubocop:enable RSpec/NoExpectationExample
     end
 
     context 'when a User tags it' do
       before { accept_prompt(with: 'The Ten Bells') { click_link_or_button 'Tag' } }
 
-      # rubocop:disable RSpec/NoExpectationExample
+      # rubocop:disable-next RSpec/NoExpectationExample
       it("the Location's tag persists") { wait_for { Location.first.reload.tags }.to eq 'The Ten Bells' }
-      # rubocop:enable RSpec/NoExpectationExample
     end
 
     context 'when a User deletes it' do
@@ -115,9 +110,8 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
         accept_confirm
       end
 
-      # rubocop:disable RSpec/NoExpectationExample
+      # rubocop:disable-next RSpec/NoExpectationExample
       it('the Location no longer exists') { wait_for { Location.count }.to eq 0 }
-      # rubocop:enable RSpec/NoExpectationExample
     end
   end
 end
