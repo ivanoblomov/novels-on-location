@@ -9,6 +9,7 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
       visit root_path
       click_on 'Mode: Zoom'
       execute_script 'nOL.promptForBook(new google.maps.LatLng(51.519326, -.074316))' # HACK: since double-click fails
+      # rubocop:disable-next Capybara/ModalMethodWithoutBlock
       accept_confirm { accept_prompt with: 'from hell alan moore' }
     end
 
@@ -25,9 +26,11 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     before do
       visit root_path
       fill_in 'place-input', with: "san sebastian\n"
+      # rubocop:disable Capybara/ModalMethodWithoutBlock
       accept_prompt(with: 'sun also rises')
       accept_confirm
       accept_prompt(with: 'a swim after rejection')
+      # rubocop:enable Capybara/ModalMethodWithoutBlock
     end
 
     it('the Location is created') { expect(Location.count).to eq 1 }
@@ -107,6 +110,7 @@ RSpec.describe 'Managing Locations', js: ENV['DRIVER'] ? ENV['DRIVER'].to_sym : 
     context 'when a User deletes it' do
       before do
         click_link_or_button 'Delete'
+        # rubocop:disable-next Capybara/ModalMethodWithoutBlock
         accept_confirm
       end
 
