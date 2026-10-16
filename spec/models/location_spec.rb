@@ -16,12 +16,11 @@ describe Location do
 
       it { expect(look_up_itunes).to eq 1 }
 
-      # rubocop:disable RSpec/NestedGroups
+      # rubocop:disable-next RSpec/NestedGroups
       describe described_class do
         it { expect(location).to have_received(:update_with_google_books) }
         it { expect(location).to have_received(:save) }
       end
-      # rubocop:enable RSpec/NestedGroups
     end
   end
 
@@ -82,21 +81,19 @@ describe Location do
     context 'with user_id: 1' do
       subject(:location) { described_class.new(user_id: 1) }
 
-      # rubocop:disable RSpec/NestedGroups
+      # rubocop:disable-next RSpec/NestedGroups
       describe '#owned?' do
         it { expect(location.owned?).to be true }
       end
-      # rubocop:enable RSpec/NestedGroups
     end
 
     context 'with user_token: 1' do
       subject(:location) { described_class.new(user_token: 1) }
 
-      # rubocop:disable RSpec/NestedGroups
+      # rubocop:disable-next RSpec/NestedGroups
       describe '#owned?' do
         it { expect(location.owned?).to be true }
       end
-      # rubocop:enable RSpec/NestedGroups
     end
   end
 
@@ -117,20 +114,18 @@ describe Location do
 
       before { locations_matching_coordinates.map(&:save) }
 
-      # rubocop:disable RSpec/NestedGroups
+      # rubocop:disable-next RSpec/NestedGroups
       describe 'Location#matching_coordinates' do
         it { expect(location_matching_coordinates.matching_coordinates).to eq 2 }
       end
-      # rubocop:enable RSpec/NestedGroups
     end
   end
 
   describe '#duplicate?' do
     let(:many_locations) { [location, location] }
 
-    # rubocop:disable RSpec/SubjectStub
+    # rubocop:disable-next RSpec/SubjectStub
     before { allow(location).to receive(:duplicates).and_return many_locations }
-    # rubocop:enable RSpec/SubjectStub
 
     it { expect(location.duplicate?).to be true }
   end
@@ -148,12 +143,11 @@ describe Location do
     context 'with "white house"', vcr: { cassette_name: 'white_house' } do
       before { location.send :geocode, 'white house' }
 
-      # rubocop:disable RSpec/MultipleExpectations
+      # rubocop:disable-next RSpec/MultipleExpectations
       it 'sets Washington, DC' do
         lat, lng = location.lat_lng.map(&:to_f)
         expect(lat).to be_within(0.005).of(38.8976633) and expect(lng).to be_within(0.005).of(-77.0365739)
       end
-      # rubocop:enable RSpec/MultipleExpectations
     end
   end
 
