@@ -21,10 +21,14 @@ bin/dev
 
 ### Refresh server's connection to assets
 
+If asset changes fail to register, try one of the following:
+
+* Restart Puma:
 ```sh
 touch tmp/restart.txt
 ```
 
+* Recompile assets:
 ```sh
 rake assets:precompile
 rake assets:clobber
