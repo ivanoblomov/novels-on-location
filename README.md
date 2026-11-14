@@ -21,7 +21,11 @@ bin/dev
 
 ### Refresh server's connection to assets
 
+```sh
+touch tmp/restart.txt
 ```
+
+```sh
 rake assets:precompile
 rake assets:clobber
 ```
