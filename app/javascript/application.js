@@ -437,7 +437,7 @@ nOL.addPins = (selectedLocationSlug) => {
 
 nOL.shouldAddPin = (googleResults) => {
   const types = googleResults.types;
-  const typesToPin = ["establishment", "point_of_interest", "street_address"];
+  const typesToPin = ["establishment", "locality", "point_of_interest", "street_address"];
 
   return types.some(type => typesToPin.includes(type));
 };
