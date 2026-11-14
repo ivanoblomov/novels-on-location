@@ -15,7 +15,9 @@ h3 {
 }
 html {
 	background: #f7f5f5 url("paper.jpg") repeat;
-	font: 11px helvetica, sans-serif;
+	font:
+		11px helvetica,
+		sans-serif;
 }
 p {
 	margin: 10px 0;
