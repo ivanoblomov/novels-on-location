@@ -19,6 +19,13 @@ puma-dev -stop
 bin/dev
 ```
 
+### Refresh server's connection to assets
+
+```
+rake assets:precompile
+rake assets:clobber
+```
+
 ## Database
 
 ### Start MongoDB
