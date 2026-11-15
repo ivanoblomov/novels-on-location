@@ -24,15 +24,15 @@ bin/dev
 If asset changes fail to register, try one of the following:
 
 * Restart Puma:
-```sh
-touch tmp/restart.txt
-```
+  ```sh
+  touch tmp/restart.txt
+  ```
 
 * Recompile assets:
-```sh
-rake assets:precompile
-rake assets:clobber
-```
+  ```sh
+  rake assets:precompile
+  rake assets:clobber
+  ```
 
 ## Database
 
