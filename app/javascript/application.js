@@ -332,7 +332,7 @@ nOL.toggleMapMode = () => {
 			disableDoubleClickZoom: false,
 		});
 	} else {
-		nOL.listenFor("dblclick", "nOL.promptForBook(e.latLng)");
+		nOL.listenFor("dblclick", "nOL.promptForBook(event.latLng)");
 		document.querySelector("#mode-button").title =
 			"Double-click map to add pins. Click to toggle";
 		document.querySelector("#mode-button").value = "Mode: Add Pins";
