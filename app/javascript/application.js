@@ -487,7 +487,7 @@ nOL.remapPin = (id, place) => {
 					},
 				});
 			} else {
-				alert(`Couldn't geocode! The error was ${status}`);
+				alert(`Couldn't map "${place}"! The error was ${status}`);
 			}
 		}
 	});
@@ -594,7 +594,7 @@ nOL.codePlace = (input) => {
 
 			if (nOL.shouldAddPin(r))
 				nOL.promptForBook(r.geometry.location, input, r.formatted_address);
-		} else alert(`Couldn't geocode! The error was ${status}`);
+		} else alert(`Couldn't map "${input}"! The error was ${status}`);
 	});
 };
 
