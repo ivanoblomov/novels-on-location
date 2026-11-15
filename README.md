@@ -19,7 +19,7 @@ puma-dev -stop
 bin/dev
 ```
 
-### Refresh server's connection to assets
+### Reset asset pipeline
 
 If asset changes fail to register, try one of the following:
 
