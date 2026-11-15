@@ -185,12 +185,17 @@ nOL.updateTweetButton = () => {
 	);
 };
 
-nOL.listenFor = (event, args) => {
-	if (nOL.clickListener !== undefined)
+nOL.listenFor = (eventName, args) => {
+	if (nOL.clickListener !== undefined) {
 		google.maps.event.removeListener(nOL.clickListener);
-	nOL.clickListener = google.maps.event.addListener(nOL.map, event, () => {
-		new Function(args)();
-	});
+	}
+	nOL.clickListener = google.maps.event.addListener(
+		nOL.map,
+		eventName,
+		(mapsEvent) => {
+			new Function("event", args)(mapsEvent);
+		},
+	);
 };
 
 nOL.listenForLogin = () => {
