@@ -2,7 +2,7 @@
 name: Task
 about: Define a task to complete
 title: ''
-types: 'task'
+type: 'task'
 assignees: ''
 ---
 # Task
