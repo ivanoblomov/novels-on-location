@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '4.0.9'
+ruby '4.0.3'
 
 gem 'actionview-encoded_mail_to'
 gem 'cancancan'
