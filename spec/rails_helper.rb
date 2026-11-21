@@ -76,7 +76,9 @@ RSpec.configure do |config|
     WebMock.disable_net_connect! if defined?(WebMock)
   end
   config.after(:each, type: :system) do |example|
-    if Capybara.current_driver != :rack_test && page.evaluate_script('typeof window.__coverage__ !== "undefined"')
+    if example.exception
+      warn page.driver.browser.logs.get(:browser)
+    elsif Capybara.current_driver != :rack_test && page.evaluate_script('typeof window.__coverage__ !== "undefined"')
       coverage_data = page.evaluate_script('window.__coverage__')
 
       FileUtils.mkdir_p(Rails.root.join('coverage/js')) # write data to a unique JSON file per test
@@ -85,7 +87,6 @@ RSpec.configure do |config|
         coverage_data.to_json
       )
     end
-    warn page.driver.browser.logs.get(:browser) if example.exception
   end
 end
 Capybara.configure do |config|
