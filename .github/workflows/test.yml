@@ -22,6 +22,8 @@ jobs:
     - run: bundle exec rspec
       env:
         GOOGLE_MAPS_API_KEY: ${{ secrets.GOOGLE_MAPS_API_KEY }}
+    # combine JS coverage parts using nyc
+    - run: npx nyc report --temp-dir coverage/js --reporter lcov --report-dir coverage/
     - run: bundle exec rubocop
     - uses: actions/upload-artifact@65c4c4a1ddee5b72f698fdd19549f0f0fb45cf08
       with:
@@ -37,5 +39,7 @@ jobs:
 #     - run: bundle exec inch --pedantic
     - uses: qltysh/qlty-action/coverage@08a0a862c159eae9b9003081da6663d96efef637 # v2.3.0
       with:
-        files: coverage/.resultset.json
+        files: |
+          coverage/.resultset.json
+          coverage/lcov.info
         oidc: true
