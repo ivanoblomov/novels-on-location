@@ -78,7 +78,7 @@ RSpec.configure do |config|
   config.after(:each, type: :system) do |example|
     if example.exception
       warn page.driver.browser.logs.get(:browser)
-    elsif Capybara.current_driver != :rack_test && page.evaluate_script('typeof window.__coverage__ !== "undefined"')
+    elsif example.metadata[:skip_coverage].blank? && Capybara.current_driver != :rack_test && page.evaluate_script('typeof window.__coverage__ !== "undefined"')
       coverage_data = page.evaluate_script('window.__coverage__')
 
       FileUtils.mkdir_p(Rails.root.join('coverage/js')) # write data to a unique JSON file per test
